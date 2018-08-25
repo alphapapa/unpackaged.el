@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-08-25 Sat 11:10 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>unpackaged.el</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Adam Porter" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<style type="text/css">
+       <!--/*--><![CDATA[/*><!--*/
+         .timestamp, .timestamp-kwd { color: #268bd2 !important; }
+         blockquote > p { color: #333333 !important; font-size: 95% !important; }
+         /*]]>*/-->
+      </style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">unpackaged.el</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org7a014f9">Contents</a></li>
+<li><a href="#orga52475a">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></a>
+<ul>
+<li><a href="#org99881cd"><code>font-compare</code></a>
+<ul>
+<li><a href="#org98d9ade">Improvements</a>
+<ul>
+<li><a href="#orgf655311"><span class="todo TODO">TODO</span> Apply more face properties</a></li>
+<li><a href="#org7717304"><span class="todo TODO">TODO</span> Default size setting</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org3115a99">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></a>
+<ul>
+<li><a href="#orgfe5d219">Code emphasis</a></li>
+</ul>
+</li>
+<li><a href="#org8afe814">License</a></li>
+</ul>
+</div>
+</div>
+<a href=https://alphapapa.github.io/dont-tread-on-emacs/><img src="images/dont-tread-on-emacs-150.png" align="right"></a>
+
+<p>
+A collection of useful Emacs Lisp code that isn't substantial enough to be packaged.  This code will be maintained here so that it can be updated and improved over time.
+</p>
+
+<p>
+Contributions welcome!
+</p>
+
+<p>
+Functions in this file generally use these helper packages:
+</p>
+
+<ul class="org-ul">
+<li><a href="https://github.com/magnars/dash.el">dash.el</a></li>
+<li><a href="https://github.com/magnars/s.el">s.el</a></li>
+</ul>
+
+<div id="outline-container-org7a014f9" class="outline-2">
+<h2 id="org7a014f9">Contents</h2>
+<div class="outline-text-2" id="text-org7a014f9">
+<ul class="org-ul">
+<li><ul class="org-ul">
+<li></li>
+</ul></li>
+<li><ul class="org-ul">
+<li></li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orga52475a" class="outline-2">
+<h2 id="orga52475a">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></h2>
+<div class="outline-text-2" id="text-orga52475a">
+</div><div id="outline-container-org99881cd" class="outline-3">
+<h3 id="org99881cd"><code>font-compare</code></h3>
+<div class="outline-text-3" id="text-org99881cd">
+<p>
+Compare <code>TEXT</code> displayed in <code>FONTS</code>.  If <code>TEXT</code> is the empty string or nil, use <code>lorem-ipsum</code> text.
+</p>
+
+<p>
+Interactively, prompt for <code>TEXT</code>, and select <code>FONTS</code> with <code>x-select-font</code> (select an already-selected font to end font selection).
+</p>
+
+<p>
+<b>Requires:</b>
+</p>
+<ul class="org-ul">
+<li><a href="https://github.com/jschaf/emacs-lorem-ipsum">emacs-lorem-ipsum</a></li>
+</ul>
+
+<p>
+
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #2aa198;">(</span><span style="color: #859900; font-weight: bold;">defun</span> <span style="color: #268bd2;">unpackaged/font-compare</span> <span style="color: #b58900;">(</span><span style="color: #7a4685f22ca6;">text</span> <span style="color: #959995df9a66;">fonts</span><span style="color: #b58900;">)</span>
+  <span style="color: #2aa198;">"Compare TEXT displayed in FONTS.</span>
+<span style="color: #2aa198;">If TEXT is the empty string or nil, use `</span><span style="color: #268bd2; font-weight: bold;">lorem-ipsum</span><span style="color: #2aa198;">' text.</span>
+
+<span style="color: #2aa198;">Interactively, prompt for TEXT, and select FONTS with</span>
+<span style="color: #2aa198;">`</span><span style="color: #268bd2; font-weight: bold;">x-select-font</span><span style="color: #2aa198;">' (select an already-selected font to end font</span>
+<span style="color: #2aa198;">selection)."</span>
+  <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">interactive</span> <span style="color: #268bd2;">(</span><span style="color: #a8e97c777baf; text-decoration: underline;">list</span> <span style="color: #6c71c4;">(</span><span style="color: #859900; font-weight: bold;">pcase</span> <span style="color: #859900;">(</span><span style="color: #a961952b94d0; text-decoration: underline;">read</span><span style="text-decoration: underline;">-</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">string</span> <span style="color: #2aa198;">"Text: "</span><span style="color: #859900;">)</span>
+                       <span style="color: #859900;">(</span><span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">or</span> <span style="color: #859900; font-weight: bold;">'</span><span style="color: #a4cca4cca4cc; font-style: italic;">nil</span> <span style="color: #2aa198;">""</span><span style="color: #b58900;">)</span> <span style="color: #b58900;">(</span><span style="color: #57998258a066; text-decoration: underline;">s</span><span style="text-decoration: underline;">-</span><span style="color: #57998258a066; text-decoration: underline;">word</span><span style="text-decoration: underline;">-</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">wrap</span> <span style="color: #a19967658391;">80</span> <span style="color: #268bd2;">(</span><span style="color: #57998258a066; text-decoration: underline;">s</span><span style="text-decoration: underline;">-</span><span style="color: #52997866758a; text-decoration: underline;">join</span> <span style="color: #2aa198;">" "</span> <span style="color: #6c71c4;">(</span><span style="color: #859900; font-weight: bold;">progn</span>
+                                                                   <span style="color: #859900;">(</span><span style="color: #859900; font-weight: bold;">require</span> <span style="color: #859900; font-weight: bold;">'</span><span style="color: #268bd2; font-weight: bold;">lorem-ipsum</span><span style="color: #859900;">)</span>
+                                                                   <span style="color: #859900;">(</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">seq</span><span style="text-decoration: underline;">-</span><span style="color: #52997866758a; text-decoration: underline;">random</span><span style="text-decoration: underline;">-</span><span style="color: #959995df9a66; text-decoration: underline;">elt</span> <span style="color: #7a4685f22ca6;">lorem</span>-<span style="color: #a19967658391;">ipsum</span>-<span style="color: #7a4685f22ca6;">text</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
+                       <span style="color: #859900;">(</span><span style="color: #a050824890d1;">else</span> <span style="color: #a050824890d1;">else</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span>
+                     <span style="color: #6c71c4;">(</span><span style="color: #859900; font-weight: bold;">cl-loop</span> <span style="color: #71ba8cd29fdd;">for</span> <span style="color: #a19967658391;">font</span> = <span style="color: #859900;">(</span><span style="color: #6e667a661e98; text-decoration: underline;">x</span><span style="text-decoration: underline;">-</span><span style="color: #a8e97c777baf; text-decoration: underline;">select</span><span style="text-decoration: underline;">-</span><span style="color: #a19967658391; text-decoration: underline;">font</span><span style="color: #859900;">)</span>
+                              <span style="color: #586e75;">;; </span><span style="color: #990A1B;">HACK</span><span style="color: #586e75; font-weight: bold; font-style: italic;">: `</span><span style="color: #268bd2; font-weight: bold; font-style: italic;">x-select-font</span><span style="color: #586e75; font-weight: bold; font-style: italic;">' calls quit() when the Cancel button is</span>
+                              <span style="color: #586e75;">;; </span><span style="color: #586e75; font-weight: bold; font-style: italic;">pressed, so the only way I can find to not quit() is to select a</span>
+                              <span style="color: #586e75;">;; </span><span style="color: #586e75; font-weight: bold; font-style: italic;">font that has already been selected.</span>
+                              <span style="color: #9dff5da442ff;">while</span> <span style="color: #859900;">(</span><span style="color: #cb4b16; font-weight: bold;">not</span> <span style="color: #b58900;">(</span><span style="color: #a8e97c777baf; text-decoration: underline;">member</span> <span style="color: #a19967658391;">font</span> <span style="color: #959995df9a66;">fonts</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
+                              <span style="color: #a4cca4cca4cc;">collect</span> <span style="color: #a19967658391;">font</span> <span style="color: #a961952b94d0;">into</span> <span style="color: #959995df9a66;">fonts</span>
+                              <span style="color: #52997866758a;">finally</span> <span style="color: #90cc76662432;">return</span> <span style="color: #959995df9a66;">fonts</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span>
+  <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">with-current-buffer</span> <span style="color: #268bd2;">(</span><span style="color: #959995df9a66; text-decoration: underline;">get</span><span style="text-decoration: underline;">-</span><span style="color: #959995df9a66; text-decoration: underline;">buffer</span><span style="text-decoration: underline;">-</span><span style="color: #7a4685f22ca6; text-decoration: underline;">create</span> <span style="color: #2aa198;">"*Font Compare*"</span><span style="color: #268bd2;">)</span>
+    <span style="color: #268bd2;">(</span><span style="color: #9dff5da442ff; text-decoration: underline;">erase</span><span style="text-decoration: underline;">-</span><span style="color: #959995df9a66; text-decoration: underline;">buffer</span><span style="color: #268bd2;">)</span>
+    <span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">--each</span> <span style="color: #959995df9a66;">fonts</span>
+      <span style="color: #6c71c4;">(</span><span style="color: #71ba8cd29fdd; text-decoration: underline;">insert</span> <span style="color: #859900;">(</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">symbol</span><span style="text-decoration: underline;">-</span><span style="color: #68717c277aa9; text-decoration: underline;">name</span> <span style="color: #b58900;">(</span><span style="color: #a19967658391; text-decoration: underline;">font</span><span style="text-decoration: underline;">-</span><span style="color: #959995df9a66; text-decoration: underline;">get</span> <span style="color: #268bd2;">it</span> <span style="color: #839496; font-weight: bold;">:family</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span> <span style="color: #2aa198;">": "</span>
+              <span style="color: #859900;">(</span><span style="color: #90cc76662432; text-decoration: underline;">propertize</span> <span style="color: #7a4685f22ca6;">text</span>
+                          <span style="color: #859900; font-weight: bold;">'</span><span style="color: #52997866758a; font-style: italic;">face</span> <span style="color: #b58900;">(</span><span style="color: #a8e97c777baf; text-decoration: underline;">list</span> <span style="color: #839496; font-weight: bold;">:family</span> <span style="color: #268bd2;">(</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">symbol</span><span style="text-decoration: underline;">-</span><span style="color: #68717c277aa9; text-decoration: underline;">name</span> <span style="color: #6c71c4;">(</span><span style="color: #a19967658391; text-decoration: underline;">font</span><span style="text-decoration: underline;">-</span><span style="color: #959995df9a66; text-decoration: underline;">get</span> <span style="color: #268bd2;">it</span> <span style="color: #839496; font-weight: bold;">:family</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
+              <span style="color: #2aa198;">"\n\n"</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span>
+    <span style="color: #268bd2;">(</span><span style="color: #a8e97c777baf; text-decoration: underline;">pop</span><span style="text-decoration: underline;">-</span><span style="color: #a050824890d1; text-decoration: underline;">to</span><span style="text-decoration: underline;">-</span><span style="color: #959995df9a66; text-decoration: underline;">buffer</span> <span style="color: #6c71c4;">(</span><span style="color: #a961952b94d0; text-decoration: underline;">current</span><span style="text-decoration: underline;">-</span><span style="color: #959995df9a66; text-decoration: underline;">buffer</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org98d9ade" class="outline-4">
+<h4 id="org98d9ade">Improvements</h4>
+<div class="outline-text-4" id="text-org98d9ade">
+</div><div id="outline-container-orgf655311" class="outline-5">
+<h5 id="orgf655311"><span class="todo TODO">TODO</span> Apply more face properties</h5>
+<div class="outline-text-5" id="text-orgf655311">
+<p>
+e.g. weight, slant, etc.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7717304" class="outline-5">
+<h5 id="org7717304"><span class="todo TODO">TODO</span> Default size setting</h5>
+<div class="outline-text-5" id="text-org7717304">
+<p>
+It might be helpful to use a larger size by default.
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3115a99" class="outline-2">
+<h2 id="org3115a99">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></h2>
+<div class="outline-text-2" id="text-org3115a99">
+<p>
+Code used to help maintain this document.
+</p>
+</div>
+
+<div id="outline-container-orgfe5d219" class="outline-3">
+<h3 id="orgfe5d219">Code emphasis</h3>
+<div class="outline-text-3" id="text-orgfe5d219">
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #2aa198;">(</span><span style="color: #859900; font-weight: bold;">defun</span> <span style="color: #268bd2;">unpackaged/caps-to-code</span> <span style="color: #b58900;">(</span><span style="color: #90cc76662432;">beg</span> <span style="color: #a961952b94d0;">end</span><span style="color: #b58900;">)</span>
+  <span style="color: #2aa198;">"Convert all-caps words in region to Org code emphasis."</span>
+  <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">interactive</span> <span style="color: #2aa198;">"r"</span><span style="color: #b58900;">)</span>
+  <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">let</span> <span style="color: #268bd2;">(</span><span style="color: #6c71c4;">(</span><span style="color: #6e667a661e98;">case</span>-<span style="color: #a3726d7d5726;">fold</span>-<span style="color: #9dff5da442ff;">search</span> <span style="color: #a4cca4cca4cc;">nil</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span>
+    <span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">save-excursion</span>
+      <span style="color: #6c71c4;">(</span><span style="color: #859900; font-weight: bold;">save-restriction</span>
+        <span style="color: #859900;">(</span><span style="color: #90cc76662432; text-decoration: underline;">narrow</span><span style="text-decoration: underline;">-</span><span style="color: #a050824890d1; text-decoration: underline;">to</span><span style="text-decoration: underline;">-</span><span style="color: #6e667a661e98; text-decoration: underline;">region</span> <span style="color: #90cc76662432;">beg</span> <span style="color: #a961952b94d0;">end</span><span style="color: #859900;">)</span>
+        <span style="color: #859900;">(</span><span style="color: #959995df9a66; text-decoration: underline;">goto</span><span style="text-decoration: underline;">-</span><span style="color: #6e667a661e98; text-decoration: underline;">char</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #a19967658391; text-decoration: underline;">min</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
+        <span style="color: #859900;">(</span><span style="color: #859900; font-weight: bold;">while</span> <span style="color: #b58900;">(</span><span style="color: #9af381d633a6; text-decoration: underline;">re</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">search</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">forward</span> <span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">rx</span> <span style="color: #6c71c4;">(</span><span style="color: #859900; font-weight: bold;">or</span> <span style="color: #6e667a661e98;">space</span> <span style="color: #71ba8cd29fdd;">bol</span><span style="color: #6c71c4;">)</span>
+                                      <span style="color: #6c71c4;">(</span><span style="color: #a4cca4cca4cc;">group</span> <span style="color: #859900;">(</span><span style="color: #71ba8cd29fdd; text-decoration: underline;">1</span><span style="text-decoration: underline;">+</span> <span style="color: #a8e97c777baf;">upper</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span>
+                                      <span style="color: #6c71c4;">(</span><span style="color: #859900; font-weight: bold;">or</span> <span style="color: #6e667a661e98;">space</span> <span style="color: #7a4685f22ca6;">eol</span> <span style="color: #859900;">(</span><span style="color: #6e667a661e98;">char</span> <span style="color: #9dff5da442ff;">punct</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span>
+                                  <span style="color: #a4cca4cca4cc;">nil</span> <span style="color: #959995df9a66;">t</span><span style="color: #b58900;">)</span>
+          <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">setf</span> <span style="color: #268bd2;">(</span><span style="color: #959995df9a66; text-decoration: underline;">buffer</span><span style="text-decoration: underline;">-</span><span style="color: #a19967658391; text-decoration: underline;">substring</span> <span style="color: #6c71c4;">(</span><span style="color: #7a4685f22ca6; text-decoration: underline;">match</span><span style="text-decoration: underline;">-</span><span style="color: #6e667a661e98; text-decoration: underline;">beginning</span> <span style="color: #71ba8cd29fdd;">1</span><span style="color: #6c71c4;">)</span> <span style="color: #6c71c4;">(</span><span style="color: #7a4685f22ca6; text-decoration: underline;">match</span><span style="text-decoration: underline;">-</span><span style="color: #a961952b94d0; text-decoration: underline;">end</span> <span style="color: #71ba8cd29fdd;">1</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span>
+                <span style="color: #268bd2;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">concat</span> <span style="color: #2aa198;">"~"</span> <span style="color: #6c71c4;">(</span><span style="color: #7a4685f22ca6; text-decoration: underline;">match</span><span style="text-decoration: underline;">-</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">string</span> <span style="color: #71ba8cd29fdd;">1</span><span style="color: #6c71c4;">)</span> <span style="color: #2aa198;">"~"</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span>
+          <span style="color: #b58900;">(</span><span style="color: #959995df9a66; text-decoration: underline;">goto</span><span style="text-decoration: underline;">-</span><span style="color: #6e667a661e98; text-decoration: underline;">char</span> <span style="color: #268bd2;">(</span><span style="color: #7a4685f22ca6; text-decoration: underline;">match</span><span style="text-decoration: underline;">-</span><span style="color: #a961952b94d0; text-decoration: underline;">end</span> <span style="color: #68717c277aa9;">0</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
+
+<span style="color: #2aa198;">(</span><span style="color: #859900; font-weight: bold;">defun</span> <span style="color: #268bd2;">unpackaged/symbol-quotes-to-org-code</span> <span style="color: #b58900;">(</span><span style="color: #a4cca4cca4cc;">start</span> <span style="color: #a961952b94d0;">end</span><span style="color: #b58900;">)</span>
+  <span style="color: #2aa198;">"Change Emacs `</span><span style="color: #268bd2; font-weight: bold;">symbol</span><span style="color: #2aa198;">' quotes to Org =symbol= quotes in region or on current line."</span>
+  <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">interactive</span> <span style="color: #2aa198;">"r"</span><span style="color: #b58900;">)</span>
+  <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">let</span> <span style="color: #268bd2;">(</span><span style="color: #6c71c4;">(</span><span style="color: #7a4685f22ca6;">pairs</span> <span style="color: #859900; font-weight: bold;">`</span><span style="color: #859900;">(</span><span style="color: #b58900;">(</span><span style="color: #2aa198;">"&#8216;"</span> . <span style="color: #2aa198;">"="</span><span style="color: #b58900;">)</span>  <span style="color: #586e75;">; </span><span style="color: #586e75; font-weight: bold; font-style: italic;">These new automatic curly quotes...</span>
+                 <span style="color: #586e75;">;; </span><span style="color: #586e75; font-weight: bold; font-style: italic;">Have to handle these two cases separately, argh</span>
+                 <span style="color: #b58900;">(</span>,<span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">rx</span> <span style="color: #2aa198;">"&#8217;"</span> <span style="color: #6e667a661e98;">space</span><span style="color: #268bd2;">)</span> . <span style="color: #2aa198;">"= "</span><span style="color: #b58900;">)</span>
+                 <span style="color: #b58900;">(</span>,<span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">rx</span> <span style="color: #2aa198;">"&#8217;"</span> <span style="color: #959995df9a66;">eow</span><span style="color: #268bd2;">)</span> . <span style="color: #2aa198;">"="</span><span style="color: #b58900;">)</span>
+                 <span style="color: #b58900;">(</span><span style="color: #2aa198;">"`"</span> . <span style="color: #2aa198;">"="</span><span style="color: #b58900;">)</span>
+                 <span style="color: #b58900;">(</span>,<span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">rx</span> <span style="color: #2aa198;">"'"</span> <span style="color: #959995df9a66;">eow</span><span style="color: #268bd2;">)</span> . <span style="color: #2aa198;">"="</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span>
+        <span style="color: #6c71c4;">(</span><span style="color: #a4cca4cca4cc;">start</span> <span style="color: #859900;">(</span><span style="color: #859900; font-weight: bold;">or</span> <span style="color: #a4cca4cca4cc;">start</span> <span style="color: #b58900;">(</span><span style="color: #a8e97c777baf; text-decoration: underline;">line</span><span style="text-decoration: underline;">-</span><span style="color: #6e667a661e98; text-decoration: underline;">beginning</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">position</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span>
+        <span style="color: #6c71c4;">(</span><span style="color: #a961952b94d0;">end</span> <span style="color: #859900;">(</span><span style="color: #859900; font-weight: bold;">or</span> <span style="color: #a961952b94d0;">end</span> <span style="color: #b58900;">(</span><span style="color: #a8e97c777baf; text-decoration: underline;">line</span><span style="text-decoration: underline;">-</span><span style="color: #a961952b94d0; text-decoration: underline;">end</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">position</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span>
+    <span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">save-excursion</span>
+      <span style="color: #6c71c4;">(</span><span style="color: #859900; font-weight: bold;">cl-loop</span> <span style="color: #71ba8cd29fdd;">for</span> <span style="color: #859900;">(</span><span style="color: #7a4685f22ca6;">match</span> . <span style="color: #a4cca4cca4cc;">replace</span><span style="color: #859900;">)</span> <span style="color: #a961952b94d0;">in</span> <span style="color: #7a4685f22ca6;">pairs</span>
+               <span style="color: #7a4685f22ca6;">do</span> <span style="color: #859900;">(</span><span style="color: #859900; font-weight: bold;">progn</span>
+                    <span style="color: #b58900;">(</span><span style="color: #959995df9a66; text-decoration: underline;">goto</span><span style="text-decoration: underline;">-</span><span style="color: #6e667a661e98; text-decoration: underline;">char</span> <span style="color: #a4cca4cca4cc;">start</span><span style="color: #b58900;">)</span>
+                    <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">while</span> <span style="color: #268bd2;">(</span><span style="color: #9af381d633a6; text-decoration: underline;">re</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">search</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">forward</span> <span style="color: #7a4685f22ca6;">match</span> <span style="color: #a961952b94d0;">end</span> <span style="color: #859900; font-weight: bold;">'</span><span style="color: #52997866758a; font-style: italic;">noerror</span><span style="color: #268bd2;">)</span>
+                      <span style="color: #268bd2;">(</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">replace</span><span style="text-decoration: underline;">-</span><span style="color: #7a4685f22ca6; text-decoration: underline;">match</span> <span style="color: #a4cca4cca4cc;">replace</span> <span style="color: #859900; font-weight: bold;">'</span><span style="color: #a4cca4cca4cc; font-style: italic;">fixedcase</span> <span style="color: #859900; font-weight: bold;">'</span><span style="color: #a3726d7d5726; font-style: italic;">literal</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8afe814" class="outline-2">
+<h2 id="org8afe814">License</h2>
+<div class="outline-text-2" id="text-org8afe814">
+<p>
+GPLv3
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Adam Porter</p>
+<p class="date">Created: 2018-08-25 Sat 11:10</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

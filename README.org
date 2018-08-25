@@ -1,0 +1,145 @@
+#+TITLE: unpackaged.el
+#+OPTIONS: broken-links:t num:nil H:8
+#+TAGS: Emacs
+
+#+HTML: <a href=https://alphapapa.github.io/dont-tread-on-emacs/><img src="images/dont-tread-on-emacs-150.png" align="right"></a>
+
+A collection of useful Emacs Lisp code that isn't substantial enough to be packaged.  This code will be maintained here so that it can be updated and improved over time.
+
+Contributions welcome!
+
+Functions in this file generally use these helper packages:
+
++  [[https://github.com/magnars/dash.el][dash.el]]
++  [[https://github.com/magnars/s.el][s.el]]
+
+* Contents
+:PROPERTIES:
+:TOC:    this
+:END:
+  -  [[#faces-fonts][Faces, fonts]]
+    -  [[#font-compare][~font-compare~]]
+  -  [[#meta][Meta]]
+    -  [[#code-emphasis][Code emphasis]]
+
+* Faces, fonts                                                  :faces:fonts:
+
+** ~font-compare~
+:PROPERTIES:
+:TOC:      0
+:END:
+
+Compare ~TEXT~ displayed in ~FONTS~.  If ~TEXT~ is the empty string or nil, use =lorem-ipsum= text.
+
+Interactively, prompt for ~TEXT~, and select ~FONTS~ with =x-select-font= (select an already-selected font to end font selection).
+
+*Requires:*
++  [[https://github.com/jschaf/emacs-lorem-ipsum][emacs-lorem-ipsum]]
+
+[[images/font-compare.png]]
+
+#+BEGIN_SRC elisp
+  (defun unpackaged/font-compare (text fonts)
+    "Compare TEXT displayed in FONTS.
+  If TEXT is the empty string or nil, use `lorem-ipsum' text.
+
+  Interactively, prompt for TEXT, and select FONTS with
+  `x-select-font' (select an already-selected font to end font
+  selection)."
+    (interactive (list (pcase (read-string "Text: ")
+                         ((or 'nil "") (s-word-wrap 80 (s-join " " (progn
+                                                                     (require 'lorem-ipsum)
+                                                                     (seq-random-elt lorem-ipsum-text)))))
+                         (else else))
+                       (cl-loop for font = (x-select-font)
+                                ;; HACK: `x-select-font' calls quit() when the Cancel button is
+                                ;; pressed, so the only way I can find to not quit() is to select a
+                                ;; font that has already been selected.
+                                while (not (member font fonts))
+                                collect font into fonts
+                                finally return fonts)))
+    (with-current-buffer (get-buffer-create "*Font Compare*")
+      (erase-buffer)
+      (--each fonts
+        (insert (symbol-name (font-get it :family)) ": "
+                (propertize text
+                            'face (list :family (symbol-name (font-get it :family))))
+                "\n\n"))
+      (pop-to-buffer (current-buffer))))
+#+END_SRC
+
+*** Improvements
+
+**** TODO Apply more face properties
+
+e.g. weight, slant, etc.
+
+**** TODO Default size setting
+
+It might be helpful to use a larger size by default.
+
+* Meta                                                                 :meta:
+
+Code used to help maintain this document.
+
+** Code emphasis
+
+#+BEGIN_SRC elisp
+  (defun unpackaged/caps-to-code (beg end)
+    "Convert all-caps words in region to Org code emphasis."
+    (interactive "r")
+    (let ((case-fold-search nil))
+      (save-excursion
+        (save-restriction
+          (narrow-to-region beg end)
+          (goto-char (point-min))
+          (while (re-search-forward (rx (or space bol)
+                                        (group (1+ upper))
+                                        (or space eol (char punct)))
+                                    nil t)
+            (setf (buffer-substring (match-beginning 1) (match-end 1))
+                  (concat "~" (match-string 1) "~"))
+            (goto-char (match-end 0)))))))
+
+  (defun unpackaged/symbol-quotes-to-org-code (start end)
+    "Change Emacs `symbol' quotes to Org =symbol= quotes in region or on current line."
+    (interactive "r")
+    (let ((pairs `(("‘" . "=")  ; These new automatic curly quotes...
+                   ;; Have to handle these two cases separately, argh
+                   (,(rx "’" space) . "= ")
+                   (,(rx "’" eow) . "=")
+                   ("`" . "=")
+                   (,(rx "'" eow) . "=")))
+          (start (or start (line-beginning-position)))
+          (end (or end (line-end-position))))
+      (save-excursion
+        (cl-loop for (match . replace) in pairs
+                 do (progn
+                      (goto-char start)
+                      (while (re-search-forward match end 'noerror)
+                        (replace-match replace 'fixedcase 'literal)))))))
+#+END_SRC
+
+* License
+:PROPERTIES:
+:TOC:      ignore
+:END:
+
+GPLv3
+
+* COMMENT Config
+:PROPERTIES:
+:TOC:      ignore
+:END:
+
+I love Emacs and Org mode.  This makes it so easy to make the document...alive!  And automated!  Beautiful.
+
+# Local Variables:
+# eval: (require 'org-make-toc)
+# before-save-hook: org-make-toc
+# after-save-hook: (lambda nil (when (org-html-export-to-html) (rename-file "README.html" "index.html" t)))
+# org-export-with-properties: ()
+# org-export-with-title: t
+# End:
+
+
