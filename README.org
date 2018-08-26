@@ -90,6 +90,37 @@ Code used to help maintain this document.
 ** Code emphasis
 
 #+BEGIN_SRC elisp
+  (defun unpackaged/docstring-to-org (docstring)
+    "Return DOCSTRING as formatted Org text.
+
+  Interactively, get text from region, and kill formatted Org text
+  to kill-ring."
+    (interactive (list (buffer-substring (region-beginning) (region-end))))
+    (cl-macrolet ((string-buffer--> (string &rest forms)
+                                    `(with-temp-buffer
+                                       (insert ,string)
+                                       ,@(cl-loop for form in forms
+                                                  collect `(goto-char (point-min))
+                                                  collect form)
+                                       (buffer-string))))
+      (--> (string-buffer--> docstring
+                             (unpackaged/caps-to-code (point-min) (point-max))
+                             (unpackaged/symbol-quotes-to-org-code (point-min) (point-max))
+                             (unfill-region (point-min) (point-max))
+                             (while (re-search-forward (rx bol (group (1+ blank))) nil t)
+                               (replace-match "" t t nil 1))
+                             (when (looking-at "\"")
+                               (delete-char 1))
+                             (when (progn
+                                     (goto-char (point-max))
+                                     (looking-back "\""))
+                               (delete-char -1)))
+           (if (called-interactively-p)
+               (progn
+                 (message it)
+                 (kill-new it))
+             it))))
+
   (defun unpackaged/caps-to-code (beg end)
     "Convert all-caps words in region to Org code emphasis."
     (interactive "r")
@@ -106,23 +137,15 @@ Code used to help maintain this document.
                   (concat "~" (match-string 1) "~"))
             (goto-char (match-end 0)))))))
 
-  (defun unpackaged/symbol-quotes-to-org-code (start end)
-    "Change Emacs `symbol' quotes to Org =symbol= quotes in region or on current line."
+  (defun unpackaged/symbol-quotes-to-org-code (beg end)
+    "Change Emacs `symbol' quotes to Org =symbol= quotes in region."
     (interactive "r")
-    (let ((pairs `(("‘" . "=")  ; These new automatic curly quotes...
-                   ;; Have to handle these two cases separately, argh
-                   (,(rx "’" space) . "= ")
-                   (,(rx "’" eow) . "=")
-                   ("`" . "=")
-                   (,(rx "'" eow) . "=")))
-          (start (or start (line-beginning-position)))
-          (end (or end (line-end-position))))
-      (save-excursion
-        (cl-loop for (match . replace) in pairs
-                 do (progn
-                      (goto-char start)
-                      (while (re-search-forward match end 'noerror)
-                        (replace-match replace 'fixedcase 'literal)))))))
+    (save-excursion
+      (save-restriction
+        (goto-char beg)
+        (narrow-to-region beg end)
+        (while (re-search-forward (rx (or "`" "‘") (group (1+ (or "-" word))) "'") nil t)
+          (replace-match (concat "~" (match-string 1) "~") t)))))
 #+END_SRC
 
 * Version control                                           :version_control:
