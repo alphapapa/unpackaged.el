@@ -32,9 +32,9 @@ Functions in this file generally use these helper packages:
 :TOC:      0
 :END:
 
-Compare ~TEXT~ displayed in ~FONTS~.  If ~TEXT~ is the empty string or nil, use =lorem-ipsum= text.  ~FONTS~ is a list of font specs.
+Compare ~TEXT~ displayed in ~FONTS~.  ~FONTS~ is a list of font specs.
 
-Interactively, prompt for ~TEXT~, and select ~FONTS~ with =x-select-font= (select an already-selected font to end font selection).
+Interactively, prompt for ~TEXT~, using ~lorem-ipsum~ text if nil or the empty string, and select ~FONTS~ with ~x-select-font~ (select an already-selected font to end font selection).
 
 *Requires:*
 +  [[https://github.com/jschaf/emacs-lorem-ipsum][emacs-lorem-ipsum]]
@@ -44,10 +44,10 @@ Interactively, prompt for ~TEXT~, and select ~FONTS~ with =x-select-font= (selec
 #+BEGIN_SRC elisp
   (defun unpackaged/font-compare (text fonts)
     "Compare TEXT displayed in FONTS.
-  If TEXT is the empty string or nil, use `lorem-ipsum' text.
   FONTS is a list of font specs.
 
-  Interactively, prompt for TEXT, and select FONTS with
+  Interactively, prompt for TEXT, using `lorem-ipsum' text if nil
+  or the empty string, and select FONTS with
   `x-select-font' (select an already-selected font to end font
   selection)."
     (interactive (list (pcase (read-string "Text: ")
@@ -148,13 +148,23 @@ Code used to help maintain this document.
           (replace-match (concat "~" (match-string 1) "~") t)))))
 #+END_SRC
 
+
+*** COMMENT Tasks
+:PROPERTIES:
+:TOC:      ignore
+:END:
+
+**** MAYBE Publish these on emacs-package-dev-handbook instead
+
+Not sure which place they best belong, but they should at least be linked in both.
+
 * Version control                                           :version_control:
 
 ** Magit                                                             :Magit:
 
 *** ~magit-log~ date headers
 
-Display date headers in Magit log buffers.
+Add date headers to Magit log buffers.
 
 *Requires:*
 +  [[https://github.com/ShingoFukuyama/ov.el][ov.el]]
@@ -163,7 +173,7 @@ Display date headers in Magit log buffers.
 
 #+BEGIN_SRC elisp
   (defun unpackaged/magit-log--add-date-headers (&rest _ignore)
-    "Add date headers to Magit log buffer."
+    "Add date headers to Magit log buffers."
     (when (derived-mode-p 'magit-log-mode)
       (save-excursion
         (goto-char (point-min))
@@ -201,6 +211,15 @@ This isn't always perfect, because dates in a git commit log are not always in o
 :END:
 
 GPLv3
+
+* COMMENT Tasks / Ideas
+:PROPERTIES:
+:TOC:      ignore
+:END:
+
+** MAYBE Tangle with Babel
+
+Might be nice to be able to tangle all of the ~unpackaged/~ functions into a single file.
 
 * COMMENT Config
 :PROPERTIES:
