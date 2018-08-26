@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-08-26 Sun 12:15 -->
+<!-- 2018-08-26 Sun 16:21 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>unpackaged.el</title>
@@ -239,27 +239,27 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orga092b3a">Contents</a></li>
-<li><a href="#orgff253ab">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></a>
+<li><a href="#org1c1226a">Contents</a></li>
+<li><a href="#orgad4412b">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></a>
 <ul>
-<li><a href="#org6c8be32"><code>font-compare</code></a></li>
+<li><a href="#orga010846"><code>font-compare</code></a></li>
 </ul>
 </li>
-<li><a href="#orgec2361c">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></a>
+<li><a href="#orgd5e9d45">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></a>
 <ul>
-<li><a href="#orgb407de5">Code emphasis</a></li>
+<li><a href="#org4841545">Code emphasis</a></li>
 </ul>
 </li>
-<li><a href="#org062d45a">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></a>
+<li><a href="#orge3d6295">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></a>
 <ul>
-<li><a href="#org39c59f2">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></a>
+<li><a href="#orgfc6b8ac">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></a>
 <ul>
-<li><a href="#org4de2b4a"><code>magit-log</code> date headers</a></li>
+<li><a href="#org6396608"><code>magit-log</code> date headers</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orgc4dc4ee">License</a></li>
+<li><a href="#orgf2164f7">License</a></li>
 </ul>
 </div>
 </div>
@@ -278,13 +278,13 @@ Functions in this file generally use these helper packages:
 </p>
 
 <ul class="org-ul">
-<li><a href="https://github.com/magnars/dash.el">dash.el</a></li>
+<li><a href="https://github.com/magnars/dash.el">dash.el</a> (including <code>dash-functional</code>)</li>
 <li><a href="https://github.com/magnars/s.el">s.el</a></li>
 </ul>
 
-<div id="outline-container-orga092b3a" class="outline-2">
-<h2 id="orga092b3a">Contents</h2>
-<div class="outline-text-2" id="text-orga092b3a">
+<div id="outline-container-org1c1226a" class="outline-2">
+<h2 id="org1c1226a">Contents</h2>
+<div class="outline-text-2" id="text-org1c1226a">
 <ul class="org-ul">
 <li><ul class="org-ul">
 <li></li>
@@ -301,12 +301,12 @@ Functions in this file generally use these helper packages:
 </div>
 </div>
 
-<div id="outline-container-orgff253ab" class="outline-2">
-<h2 id="orgff253ab">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></h2>
-<div class="outline-text-2" id="text-orgff253ab">
-</div><div id="outline-container-org6c8be32" class="outline-3">
-<h3 id="org6c8be32"><code>font-compare</code></h3>
-<div class="outline-text-3" id="text-org6c8be32">
+<div id="outline-container-orgad4412b" class="outline-2">
+<h2 id="orgad4412b">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></h2>
+<div class="outline-text-2" id="text-orgad4412b">
+</div><div id="outline-container-orga010846" class="outline-3">
+<h3 id="orga010846"><code>font-compare</code></h3>
+<div class="outline-text-3" id="text-orga010846">
 <p>
 Compare <code>TEXT</code> displayed in <code>FONTS</code>.  <code>FONTS</code> is a list of font specs.
 </p>
@@ -362,17 +362,17 @@ Interactively, prompt for <code>TEXT</code>, using <code>lorem-ipsum</code> text
 </div>
 </div>
 
-<div id="outline-container-orgec2361c" class="outline-2">
-<h2 id="orgec2361c">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></h2>
-<div class="outline-text-2" id="text-orgec2361c">
+<div id="outline-container-orgd5e9d45" class="outline-2">
+<h2 id="orgd5e9d45">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></h2>
+<div class="outline-text-2" id="text-orgd5e9d45">
 <p>
 Code used to help maintain this document.
 </p>
 </div>
 
-<div id="outline-container-orgb407de5" class="outline-3">
-<h3 id="orgb407de5">Code emphasis</h3>
-<div class="outline-text-3" id="text-orgb407de5">
+<div id="outline-container-org4841545" class="outline-3">
+<h3 id="org4841545">Code emphasis</h3>
+<div class="outline-text-3" id="text-org4841545">
 <div class="org-src-container">
 <pre class="src src-elisp"><span style="color: #2aa198;">(</span><span style="color: #859900; font-weight: bold;">defun</span> <span style="color: #268bd2;">unpackaged/docstring-to-org</span> <span style="color: #b58900;">(</span><span style="color: #a8e97c777baf;">docstring</span><span style="color: #b58900;">)</span>
   <span style="color: #2aa198;">"Return DOCSTRING as formatted Org text.</span>
@@ -388,8 +388,8 @@ Code used to help maintain this document.
                                                 <span style="color: #a4cca4cca4cc;">collect</span> <span style="color: #a8e97c777baf;">form</span><span style="color: #b58900;">)</span>
                                      <span style="color: #b58900;">(</span><span style="color: #959995df9a66; text-decoration: underline;">buffer</span><span style="text-decoration: underline;">-</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">string</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span>
     <span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">--&gt;</span> <span style="color: #6c71c4;">(</span><span style="color: #a4cca4cca4cc;">string</span>-<span style="color: #959995df9a66;">buffer</span>--&gt; <span style="color: #a8e97c777baf;">docstring</span>
-                           <span style="color: #859900;">(</span><span style="color: #a961952b94d0; text-decoration: underline;">unpackaged</span><span style="text-decoration: underline;">/</span><span style="color: #57998258a066; text-decoration: underline;">caps</span><span style="text-decoration: underline;">-</span><span style="color: #a050824890d1; text-decoration: underline;">to</span><span style="text-decoration: underline;">-</span><span style="color: #a050824890d1; text-decoration: underline;">code</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #a19967658391; text-decoration: underline;">min</span><span style="color: #b58900;">)</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">max</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
-                           <span style="color: #859900;">(</span><span style="color: #a961952b94d0; text-decoration: underline;">unpackaged</span><span style="text-decoration: underline;">/</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">symbol</span><span style="text-decoration: underline;">-</span><span style="color: #57998258a066; text-decoration: underline;">quotes</span><span style="text-decoration: underline;">-</span><span style="color: #a050824890d1; text-decoration: underline;">to</span><span style="text-decoration: underline;">-</span><span style="color: #57998258a066; text-decoration: underline;">org</span><span style="text-decoration: underline;">-</span><span style="color: #a050824890d1; text-decoration: underline;">code</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #a19967658391; text-decoration: underline;">min</span><span style="color: #b58900;">)</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">max</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
+                           <span style="color: #859900;">(</span><span style="color: #a961952b94d0;">unpackaged</span>/<span style="color: #57998258a066;">caps</span>-<span style="color: #a050824890d1;">to</span>-<span style="color: #a050824890d1;">code</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #a19967658391; text-decoration: underline;">min</span><span style="color: #b58900;">)</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">max</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
+                           <span style="color: #859900;">(</span><span style="color: #a961952b94d0;">unpackaged</span>/<span style="color: #a4cca4cca4cc;">symbol</span>-<span style="color: #57998258a066;">quotes</span>-<span style="color: #a050824890d1;">to</span>-<span style="color: #57998258a066;">org</span>-<span style="color: #a050824890d1;">code</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #a19967658391; text-decoration: underline;">min</span><span style="color: #b58900;">)</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">max</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
                            <span style="color: #859900;">(</span><span style="color: #959995df9a66; text-decoration: underline;">unfill</span><span style="text-decoration: underline;">-</span><span style="color: #6e667a661e98; text-decoration: underline;">region</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #a19967658391; text-decoration: underline;">min</span><span style="color: #b58900;">)</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">max</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
                            <span style="color: #859900;">(</span><span style="color: #859900; font-weight: bold;">while</span> <span style="color: #b58900;">(</span><span style="color: #9af381d633a6; text-decoration: underline;">re</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">search</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">forward</span> <span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">rx</span> <span style="color: #71ba8cd29fdd;">bol</span> <span style="color: #6c71c4;">(</span><span style="color: #a4cca4cca4cc;">group</span> <span style="color: #859900;">(</span><span style="color: #71ba8cd29fdd; text-decoration: underline;">1</span><span style="text-decoration: underline;">+</span> <span style="color: #a961952b94d0;">blank</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span> <span style="color: #a4cca4cca4cc;">nil</span> <span style="color: #959995df9a66;">t</span><span style="color: #b58900;">)</span>
                              <span style="color: #b58900;">(</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">replace</span><span style="text-decoration: underline;">-</span><span style="color: #7a4685f22ca6; text-decoration: underline;">match</span> <span style="color: #2aa198;">""</span> <span style="color: #959995df9a66;">t</span> <span style="color: #959995df9a66;">t</span> <span style="color: #a4cca4cca4cc;">nil</span> <span style="color: #71ba8cd29fdd;">1</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
@@ -437,15 +437,15 @@ Code used to help maintain this document.
 </div>
 
 
-<div id="outline-container-org062d45a" class="outline-2">
-<h2 id="org062d45a">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></h2>
-<div class="outline-text-2" id="text-org062d45a">
-</div><div id="outline-container-org39c59f2" class="outline-3">
-<h3 id="org39c59f2">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></h3>
-<div class="outline-text-3" id="text-org39c59f2">
-</div><div id="outline-container-org4de2b4a" class="outline-4">
-<h4 id="org4de2b4a"><code>magit-log</code> date headers</h4>
-<div class="outline-text-4" id="text-org4de2b4a">
+<div id="outline-container-orge3d6295" class="outline-2">
+<h2 id="orge3d6295">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></h2>
+<div class="outline-text-2" id="text-orge3d6295">
+</div><div id="outline-container-orgfc6b8ac" class="outline-3">
+<h3 id="orgfc6b8ac">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></h3>
+<div class="outline-text-3" id="text-orgfc6b8ac">
+</div><div id="outline-container-org6396608" class="outline-4">
+<h4 id="org6396608"><code>magit-log</code> date headers</h4>
+<div class="outline-text-4" id="text-org6396608">
 <p>
 Add date headers to Magit log buffers.
 </p>
@@ -502,9 +502,9 @@ This isn't always perfect, because dates in a git commit log are not always in o
 </div>
 </div>
 
-<div id="outline-container-orgc4dc4ee" class="outline-2">
-<h2 id="orgc4dc4ee">License</h2>
-<div class="outline-text-2" id="text-orgc4dc4ee">
+<div id="outline-container-orgf2164f7" class="outline-2">
+<h2 id="orgf2164f7">License</h2>
+<div class="outline-text-2" id="text-orgf2164f7">
 <p>
 GPLv3
 </p>
@@ -513,7 +513,7 @@ GPLv3
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Adam Porter</p>
-<p class="date">Created: 2018-08-26 Sun 12:15</p>
+<p class="date">Created: 2018-08-26 Sun 16:21</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

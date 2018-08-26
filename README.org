@@ -10,7 +10,7 @@ Contributions welcome!
 
 Functions in this file generally use these helper packages:
 
-+  [[https://github.com/magnars/dash.el][dash.el]]
++  [[https://github.com/magnars/dash.el][dash.el]] (including ~dash-functional~)
 +  [[https://github.com/magnars/s.el][s.el]]
 
 * Contents
