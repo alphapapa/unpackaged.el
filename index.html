@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-08-25 Sat 19:47 -->
+<!-- 2018-08-26 Sun 11:06 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>unpackaged.el</title>
@@ -239,36 +239,27 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgf36a7d6">Contents</a></li>
-<li><a href="#org0776be4">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></a>
+<li><a href="#orgbee4936">Contents</a></li>
+<li><a href="#org91a37d3">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></a>
 <ul>
-<li><a href="#org8a1524a"><code>font-compare</code></a>
+<li><a href="#orgf180f21"><code>font-compare</code></a></li>
+</ul>
+</li>
+<li><a href="#orgbeb4631">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></a>
 <ul>
-<li><a href="#org72fb0e4">Improvements</a>
+<li><a href="#orgc8bb470">Code emphasis</a></li>
+</ul>
+</li>
+<li><a href="#org8446859">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></a>
 <ul>
-<li><a href="#org4a28cff"><span class="todo TODO">TODO</span> Apply more face properties</a></li>
-<li><a href="#org12b6d31"><span class="todo TODO">TODO</span> Default size setting</a></li>
+<li><a href="#orgda388cf">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></a>
+<ul>
+<li><a href="#orgf840779"><code>magit-log</code> date headers</a></li>
 </ul>
 </li>
 </ul>
 </li>
-</ul>
-</li>
-<li><a href="#org60bad59">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></a>
-<ul>
-<li><a href="#org2f879eb">Code emphasis</a></li>
-</ul>
-</li>
-<li><a href="#orgce44626">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></a>
-<ul>
-<li><a href="#org2fdbd4f">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></a>
-<ul>
-<li><a href="#org1d859ca"><code>magit-log</code> date headers</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#orgde86305">License</a></li>
+<li><a href="#org1e39436">License</a></li>
 </ul>
 </div>
 </div>
@@ -291,9 +282,9 @@ Functions in this file generally use these helper packages:
 <li><a href="https://github.com/magnars/s.el">s.el</a></li>
 </ul>
 
-<div id="outline-container-orgf36a7d6" class="outline-2">
-<h2 id="orgf36a7d6">Contents</h2>
-<div class="outline-text-2" id="text-orgf36a7d6">
+<div id="outline-container-orgbee4936" class="outline-2">
+<h2 id="orgbee4936">Contents</h2>
+<div class="outline-text-2" id="text-orgbee4936">
 <ul class="org-ul">
 <li><ul class="org-ul">
 <li></li>
@@ -310,14 +301,14 @@ Functions in this file generally use these helper packages:
 </div>
 </div>
 
-<div id="outline-container-org0776be4" class="outline-2">
-<h2 id="org0776be4">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></h2>
-<div class="outline-text-2" id="text-org0776be4">
-</div><div id="outline-container-org8a1524a" class="outline-3">
-<h3 id="org8a1524a"><code>font-compare</code></h3>
-<div class="outline-text-3" id="text-org8a1524a">
+<div id="outline-container-org91a37d3" class="outline-2">
+<h2 id="org91a37d3">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></h2>
+<div class="outline-text-2" id="text-org91a37d3">
+</div><div id="outline-container-orgf180f21" class="outline-3">
+<h3 id="orgf180f21"><code>font-compare</code></h3>
+<div class="outline-text-3" id="text-orgf180f21">
 <p>
-Compare <code>TEXT</code> displayed in <code>FONTS</code>.  If <code>TEXT</code> is the empty string or nil, use <code>lorem-ipsum</code> text.
+Compare <code>TEXT</code> displayed in <code>FONTS</code>.  If <code>TEXT</code> is the empty string or nil, use <code>lorem-ipsum</code> text.  <code>FONTS</code> is a list of font specs.
 </p>
 
 <p>
@@ -339,6 +330,7 @@ Interactively, prompt for <code>TEXT</code>, and select <code>FONTS</code> with 
 <pre class="src src-elisp"><span style="color: #2aa198;">(</span><span style="color: #859900; font-weight: bold;">defun</span> <span style="color: #268bd2;">unpackaged/font-compare</span> <span style="color: #b58900;">(</span><span style="color: #7a4685f22ca6;">text</span> <span style="color: #959995df9a66;">fonts</span><span style="color: #b58900;">)</span>
   <span style="color: #2aa198;">"Compare TEXT displayed in FONTS.</span>
 <span style="color: #2aa198;">If TEXT is the empty string or nil, use `</span><span style="color: #268bd2; font-weight: bold;">lorem-ipsum</span><span style="color: #2aa198;">' text.</span>
+<span style="color: #2aa198;">FONTS is a list of font specs.</span>
 
 <span style="color: #2aa198;">Interactively, prompt for TEXT, and select FONTS with</span>
 <span style="color: #2aa198;">`</span><span style="color: #268bd2; font-weight: bold;">x-select-font</span><span style="color: #2aa198;">' (select an already-selected font to end font</span>
@@ -350,7 +342,7 @@ Interactively, prompt for <code>TEXT</code>, and select <code>FONTS</code> with 
                        <span style="color: #859900;">(</span><span style="color: #a050824890d1;">else</span> <span style="color: #a050824890d1;">else</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span>
                      <span style="color: #6c71c4;">(</span><span style="color: #859900; font-weight: bold;">cl-loop</span> <span style="color: #71ba8cd29fdd;">for</span> <span style="color: #a19967658391;">font</span> = <span style="color: #859900;">(</span><span style="color: #6e667a661e98; text-decoration: underline;">x</span><span style="text-decoration: underline;">-</span><span style="color: #a8e97c777baf; text-decoration: underline;">select</span><span style="text-decoration: underline;">-</span><span style="color: #a19967658391; text-decoration: underline;">font</span><span style="color: #859900;">)</span>
                               <span style="color: #586e75;">;; </span><span style="color: #990A1B;">HACK</span><span style="color: #586e75; font-weight: bold; font-style: italic;">: `</span><span style="color: #268bd2; font-weight: bold; font-style: italic;">x-select-font</span><span style="color: #586e75; font-weight: bold; font-style: italic;">' calls quit() when the Cancel button is</span>
-                              <span style="color: #586e75;">;; </span><span style="color: #586e75; font-weight: bold; font-style: italic;">pressed, so the only way I can find to not quit() is to select a</span>
+                              <span style="color: #586e75;">;; </span><span style="color: #586e75; font-weight: bold; font-style: italic;">pressed, so to avoid quit()'ing, we signal in-band by selecting a</span>
                               <span style="color: #586e75;">;; </span><span style="color: #586e75; font-weight: bold; font-style: italic;">font that has already been selected.</span>
                               <span style="color: #9dff5da442ff;">while</span> <span style="color: #859900;">(</span><span style="color: #cb4b16; font-weight: bold;">not</span> <span style="color: #b58900;">(</span><span style="color: #a8e97c777baf; text-decoration: underline;">member</span> <span style="color: #a19967658391;">font</span> <span style="color: #959995df9a66;">fonts</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
                               <span style="color: #a4cca4cca4cc;">collect</span> <span style="color: #a19967658391;">font</span> <span style="color: #a961952b94d0;">into</span> <span style="color: #959995df9a66;">fonts</span>
@@ -358,50 +350,29 @@ Interactively, prompt for <code>TEXT</code>, and select <code>FONTS</code> with 
   <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">with-current-buffer</span> <span style="color: #268bd2;">(</span><span style="color: #959995df9a66; text-decoration: underline;">get</span><span style="text-decoration: underline;">-</span><span style="color: #959995df9a66; text-decoration: underline;">buffer</span><span style="text-decoration: underline;">-</span><span style="color: #7a4685f22ca6; text-decoration: underline;">create</span> <span style="color: #2aa198;">"*Font Compare*"</span><span style="color: #268bd2;">)</span>
     <span style="color: #268bd2;">(</span><span style="color: #9dff5da442ff; text-decoration: underline;">erase</span><span style="text-decoration: underline;">-</span><span style="color: #959995df9a66; text-decoration: underline;">buffer</span><span style="color: #268bd2;">)</span>
     <span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">--each</span> <span style="color: #959995df9a66;">fonts</span>
-      <span style="color: #6c71c4;">(</span><span style="color: #71ba8cd29fdd; text-decoration: underline;">insert</span> <span style="color: #859900;">(</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">symbol</span><span style="text-decoration: underline;">-</span><span style="color: #68717c277aa9; text-decoration: underline;">name</span> <span style="color: #b58900;">(</span><span style="color: #a19967658391; text-decoration: underline;">font</span><span style="text-decoration: underline;">-</span><span style="color: #959995df9a66; text-decoration: underline;">get</span> <span style="color: #268bd2;">it</span> <span style="color: #839496; font-weight: bold;">:family</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span> <span style="color: #2aa198;">": "</span>
-              <span style="color: #859900;">(</span><span style="color: #90cc76662432; text-decoration: underline;">propertize</span> <span style="color: #7a4685f22ca6;">text</span>
-                          <span style="color: #859900; font-weight: bold;">'</span><span style="color: #52997866758a; font-style: italic;">face</span> <span style="color: #b58900;">(</span><span style="color: #a8e97c777baf; text-decoration: underline;">list</span> <span style="color: #839496; font-weight: bold;">:family</span> <span style="color: #268bd2;">(</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">symbol</span><span style="text-decoration: underline;">-</span><span style="color: #68717c277aa9; text-decoration: underline;">name</span> <span style="color: #6c71c4;">(</span><span style="color: #a19967658391; text-decoration: underline;">font</span><span style="text-decoration: underline;">-</span><span style="color: #959995df9a66; text-decoration: underline;">get</span> <span style="color: #268bd2;">it</span> <span style="color: #839496; font-weight: bold;">:family</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
-              <span style="color: #2aa198;">"\n\n"</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span>
+      <span style="color: #6c71c4;">(</span><span style="color: #859900; font-weight: bold;">let</span> <span style="color: #859900;">(</span><span style="color: #b58900;">(</span><span style="color: #52997866758a;">family</span> <span style="color: #268bd2;">(</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">symbol</span><span style="text-decoration: underline;">-</span><span style="color: #68717c277aa9; text-decoration: underline;">name</span> <span style="color: #6c71c4;">(</span><span style="color: #a19967658391; text-decoration: underline;">font</span><span style="text-decoration: underline;">-</span><span style="color: #959995df9a66; text-decoration: underline;">get</span> <span style="color: #268bd2;">it</span> <span style="color: #839496; font-weight: bold;">:family</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
+        <span style="color: #859900;">(</span><span style="color: #71ba8cd29fdd; text-decoration: underline;">insert</span> <span style="color: #52997866758a;">family</span> <span style="color: #2aa198;">": "</span>
+                <span style="color: #b58900;">(</span><span style="color: #90cc76662432; text-decoration: underline;">propertize</span> <span style="color: #7a4685f22ca6;">text</span>
+                            <span style="color: #859900; font-weight: bold;">'</span><span style="color: #52997866758a; font-style: italic;">face</span> <span style="color: #268bd2;">(</span><span style="color: #a8e97c777baf; text-decoration: underline;">list</span> <span style="color: #839496; font-weight: bold;">:family</span> <span style="color: #52997866758a;">family</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span>
+                <span style="color: #2aa198;">"\n\n"</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span>
     <span style="color: #268bd2;">(</span><span style="color: #a8e97c777baf; text-decoration: underline;">pop</span><span style="text-decoration: underline;">-</span><span style="color: #a050824890d1; text-decoration: underline;">to</span><span style="text-decoration: underline;">-</span><span style="color: #959995df9a66; text-decoration: underline;">buffer</span> <span style="color: #6c71c4;">(</span><span style="color: #a961952b94d0; text-decoration: underline;">current</span><span style="text-decoration: underline;">-</span><span style="color: #959995df9a66; text-decoration: underline;">buffer</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
 </pre>
 </div>
 </div>
-
-<div id="outline-container-org72fb0e4" class="outline-4">
-<h4 id="org72fb0e4">Improvements</h4>
-<div class="outline-text-4" id="text-org72fb0e4">
-</div><div id="outline-container-org4a28cff" class="outline-5">
-<h5 id="org4a28cff"><span class="todo TODO">TODO</span> Apply more face properties</h5>
-<div class="outline-text-5" id="text-org4a28cff">
-<p>
-e.g. weight, slant, etc.
-</p>
 </div>
 </div>
 
-<div id="outline-container-org12b6d31" class="outline-5">
-<h5 id="org12b6d31"><span class="todo TODO">TODO</span> Default size setting</h5>
-<div class="outline-text-5" id="text-org12b6d31">
-<p>
-It might be helpful to use a larger size by default.
-</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org60bad59" class="outline-2">
-<h2 id="org60bad59">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></h2>
-<div class="outline-text-2" id="text-org60bad59">
+<div id="outline-container-orgbeb4631" class="outline-2">
+<h2 id="orgbeb4631">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></h2>
+<div class="outline-text-2" id="text-orgbeb4631">
 <p>
 Code used to help maintain this document.
 </p>
 </div>
 
-<div id="outline-container-org2f879eb" class="outline-3">
-<h3 id="org2f879eb">Code emphasis</h3>
-<div class="outline-text-3" id="text-org2f879eb">
+<div id="outline-container-orgc8bb470" class="outline-3">
+<h3 id="orgc8bb470">Code emphasis</h3>
+<div class="outline-text-3" id="text-orgc8bb470">
 <div class="org-src-container">
 <pre class="src src-elisp"><span style="color: #2aa198;">(</span><span style="color: #859900; font-weight: bold;">defun</span> <span style="color: #268bd2;">unpackaged/caps-to-code</span> <span style="color: #b58900;">(</span><span style="color: #90cc76662432;">beg</span> <span style="color: #a961952b94d0;">end</span><span style="color: #b58900;">)</span>
   <span style="color: #2aa198;">"Convert all-caps words in region to Org code emphasis."</span>
@@ -442,15 +413,15 @@ Code used to help maintain this document.
 </div>
 </div>
 
-<div id="outline-container-orgce44626" class="outline-2">
-<h2 id="orgce44626">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></h2>
-<div class="outline-text-2" id="text-orgce44626">
-</div><div id="outline-container-org2fdbd4f" class="outline-3">
-<h3 id="org2fdbd4f">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></h3>
-<div class="outline-text-3" id="text-org2fdbd4f">
-</div><div id="outline-container-org1d859ca" class="outline-4">
-<h4 id="org1d859ca"><code>magit-log</code> date headers</h4>
-<div class="outline-text-4" id="text-org1d859ca">
+<div id="outline-container-org8446859" class="outline-2">
+<h2 id="org8446859">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></h2>
+<div class="outline-text-2" id="text-org8446859">
+</div><div id="outline-container-orgda388cf" class="outline-3">
+<h3 id="orgda388cf">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></h3>
+<div class="outline-text-3" id="text-orgda388cf">
+</div><div id="outline-container-orgf840779" class="outline-4">
+<h4 id="orgf840779"><code>magit-log</code> date headers</h4>
+<div class="outline-text-4" id="text-orgf840779">
 <p>
 Display date headers in Magit log buffers.
 </p>
@@ -507,9 +478,9 @@ This isn't always perfect, because dates in a git commit log are not always in o
 </div>
 </div>
 
-<div id="outline-container-orgde86305" class="outline-2">
-<h2 id="orgde86305">License</h2>
-<div class="outline-text-2" id="text-orgde86305">
+<div id="outline-container-org1e39436" class="outline-2">
+<h2 id="org1e39436">License</h2>
+<div class="outline-text-2" id="text-org1e39436">
 <p>
 GPLv3
 </p>
@@ -518,7 +489,7 @@ GPLv3
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Adam Porter</p>
-<p class="date">Created: 2018-08-25 Sat 19:47</p>
+<p class="date">Created: 2018-08-26 Sun 11:06</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

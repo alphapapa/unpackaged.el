@@ -32,7 +32,7 @@ Functions in this file generally use these helper packages:
 :TOC:      0
 :END:
 
-Compare ~TEXT~ displayed in ~FONTS~.  If ~TEXT~ is the empty string or nil, use =lorem-ipsum= text.
+Compare ~TEXT~ displayed in ~FONTS~.  If ~TEXT~ is the empty string or nil, use =lorem-ipsum= text.  ~FONTS~ is a list of font specs.
 
 Interactively, prompt for ~TEXT~, and select ~FONTS~ with =x-select-font= (select an already-selected font to end font selection).
 
@@ -45,6 +45,7 @@ Interactively, prompt for ~TEXT~, and select ~FONTS~ with =x-select-font= (selec
   (defun unpackaged/font-compare (text fonts)
     "Compare TEXT displayed in FONTS.
   If TEXT is the empty string or nil, use `lorem-ipsum' text.
+  FONTS is a list of font specs.
 
   Interactively, prompt for TEXT, and select FONTS with
   `x-select-font' (select an already-selected font to end font
@@ -56,7 +57,7 @@ Interactively, prompt for ~TEXT~, and select ~FONTS~ with =x-select-font= (selec
                          (else else))
                        (cl-loop for font = (x-select-font)
                                 ;; HACK: `x-select-font' calls quit() when the Cancel button is
-                                ;; pressed, so the only way I can find to not quit() is to select a
+                                ;; pressed, so to avoid quit()'ing, we signal in-band by selecting a
                                 ;; font that has already been selected.
                                 while (not (member font fonts))
                                 collect font into fonts
@@ -64,14 +65,15 @@ Interactively, prompt for ~TEXT~, and select ~FONTS~ with =x-select-font= (selec
     (with-current-buffer (get-buffer-create "*Font Compare*")
       (erase-buffer)
       (--each fonts
-        (insert (symbol-name (font-get it :family)) ": "
-                (propertize text
-                            'face (list :family (symbol-name (font-get it :family))))
-                "\n\n"))
+        (let ((family (symbol-name (font-get it :family))))
+          (insert family ": "
+                  (propertize text
+                              'face (list :family family))
+                  "\n\n")))
       (pop-to-buffer (current-buffer))))
 #+END_SRC
 
-*** Improvements
+*** COMMENT Potential improvements                               :noexport:
 
 **** TODO Apply more face properties
 
