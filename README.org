@@ -44,16 +44,14 @@ Interactively, prompt for ~TEXT~, using ~lorem-ipsum~ text if nil or the empty s
 #+BEGIN_SRC elisp
   (defun unpackaged/font-compare (text fonts)
     "Compare TEXT displayed in FONTS.
-  FONTS is a list of font specs.
+  If TEXT is nil, use `lorem-ipsum' text.  FONTS is a list of font
+  family strings and/or font specs.
 
-  Interactively, prompt for TEXT, using `lorem-ipsum' text if nil
-  or the empty string, and select FONTS with
-  `x-select-font' (select an already-selected font to end font
-  selection)."
+  Interactively, prompt for TEXT, using `lorem-ipsum' if left
+  empty, and select FONTS with `x-select-font' (select an
+  already-selected font to end font selection)."
     (interactive (list (pcase (read-string "Text: ")
-                         ((or 'nil "") (s-word-wrap 80 (s-join " " (progn
-                                                                     (require 'lorem-ipsum)
-                                                                     (seq-random-elt lorem-ipsum-text)))))
+                         ("" nil)
                          (else else))
                        (cl-loop for font = (x-select-font)
                                 ;; HACK: `x-select-font' calls quit() when the Cancel button is
@@ -62,10 +60,15 @@ Interactively, prompt for ~TEXT~, using ~lorem-ipsum~ text if nil or the empty s
                                 while (not (member font fonts))
                                 collect font into fonts
                                 finally return fonts)))
+    (setq text (or text (s-word-wrap 80 (s-join " " (progn
+                                                      (require 'lorem-ipsum)
+                                                      (seq-random-elt lorem-ipsum-text))))))
     (with-current-buffer (get-buffer-create "*Font Compare*")
       (erase-buffer)
       (--each fonts
-        (let ((family (symbol-name (font-get it :family))))
+        (let ((family (cl-typecase it
+                        (font (symbol-name (font-get it :family)))
+                        (string it))))
           (insert family ": "
                   (propertize text
                               'face (list :family family))

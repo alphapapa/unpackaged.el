@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-08-26 Sun 16:21 -->
+<!-- 2018-08-26 Sun 19:41 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>unpackaged.el</title>
@@ -239,27 +239,27 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org1c1226a">Contents</a></li>
-<li><a href="#orgad4412b">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></a>
+<li><a href="#org4e3d8ac">Contents</a></li>
+<li><a href="#org00f27c3">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></a>
 <ul>
-<li><a href="#orga010846"><code>font-compare</code></a></li>
+<li><a href="#org2c075f4"><code>font-compare</code></a></li>
 </ul>
 </li>
-<li><a href="#orgd5e9d45">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></a>
+<li><a href="#org75b1eb1">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></a>
 <ul>
-<li><a href="#org4841545">Code emphasis</a></li>
+<li><a href="#org28f23bb">Code emphasis</a></li>
 </ul>
 </li>
-<li><a href="#orge3d6295">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></a>
+<li><a href="#org6885777">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></a>
 <ul>
-<li><a href="#orgfc6b8ac">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></a>
+<li><a href="#org1612c8e">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></a>
 <ul>
-<li><a href="#org6396608"><code>magit-log</code> date headers</a></li>
+<li><a href="#orgc38def5"><code>magit-log</code> date headers</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orgf2164f7">License</a></li>
+<li><a href="#orgb89909b">License</a></li>
 </ul>
 </div>
 </div>
@@ -282,9 +282,9 @@ Functions in this file generally use these helper packages:
 <li><a href="https://github.com/magnars/s.el">s.el</a></li>
 </ul>
 
-<div id="outline-container-org1c1226a" class="outline-2">
-<h2 id="org1c1226a">Contents</h2>
-<div class="outline-text-2" id="text-org1c1226a">
+<div id="outline-container-org4e3d8ac" class="outline-2">
+<h2 id="org4e3d8ac">Contents</h2>
+<div class="outline-text-2" id="text-org4e3d8ac">
 <ul class="org-ul">
 <li><ul class="org-ul">
 <li></li>
@@ -301,12 +301,12 @@ Functions in this file generally use these helper packages:
 </div>
 </div>
 
-<div id="outline-container-orgad4412b" class="outline-2">
-<h2 id="orgad4412b">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></h2>
-<div class="outline-text-2" id="text-orgad4412b">
-</div><div id="outline-container-orga010846" class="outline-3">
-<h3 id="orga010846"><code>font-compare</code></h3>
-<div class="outline-text-3" id="text-orga010846">
+<div id="outline-container-org00f27c3" class="outline-2">
+<h2 id="org00f27c3">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></h2>
+<div class="outline-text-2" id="text-org00f27c3">
+</div><div id="outline-container-org2c075f4" class="outline-3">
+<h3 id="org2c075f4"><code>font-compare</code></h3>
+<div class="outline-text-3" id="text-org2c075f4">
 <p>
 Compare <code>TEXT</code> displayed in <code>FONTS</code>.  <code>FONTS</code> is a list of font specs.
 </p>
@@ -329,16 +329,14 @@ Interactively, prompt for <code>TEXT</code>, using <code>lorem-ipsum</code> text
 <div class="org-src-container">
 <pre class="src src-elisp"><span style="color: #2aa198;">(</span><span style="color: #859900; font-weight: bold;">defun</span> <span style="color: #268bd2;">unpackaged/font-compare</span> <span style="color: #b58900;">(</span><span style="color: #7a4685f22ca6;">text</span> <span style="color: #959995df9a66;">fonts</span><span style="color: #b58900;">)</span>
   <span style="color: #2aa198;">"Compare TEXT displayed in FONTS.</span>
-<span style="color: #2aa198;">FONTS is a list of font specs.</span>
+<span style="color: #2aa198;">If TEXT is nil, use `</span><span style="color: #268bd2; font-weight: bold;">lorem-ipsum</span><span style="color: #2aa198;">' text.  FONTS is a list of font</span>
+<span style="color: #2aa198;">family strings and/or font specs.</span>
 
-<span style="color: #2aa198;">Interactively, prompt for TEXT, using `</span><span style="color: #268bd2; font-weight: bold;">lorem-ipsum</span><span style="color: #2aa198;">' text if nil</span>
-<span style="color: #2aa198;">or the empty string, and select FONTS with</span>
-<span style="color: #2aa198;">`</span><span style="color: #268bd2; font-weight: bold;">x-select-font</span><span style="color: #2aa198;">' (select an already-selected font to end font</span>
-<span style="color: #2aa198;">selection)."</span>
+<span style="color: #2aa198;">Interactively, prompt for TEXT, using `</span><span style="color: #268bd2; font-weight: bold;">lorem-ipsum</span><span style="color: #2aa198;">' if left</span>
+<span style="color: #2aa198;">empty, and select FONTS with `</span><span style="color: #268bd2; font-weight: bold;">x-select-font</span><span style="color: #2aa198;">' (select an</span>
+<span style="color: #2aa198;">already-selected font to end font selection)."</span>
   <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">interactive</span> <span style="color: #268bd2;">(</span><span style="color: #a8e97c777baf; text-decoration: underline;">list</span> <span style="color: #6c71c4;">(</span><span style="color: #859900; font-weight: bold;">pcase</span> <span style="color: #859900;">(</span><span style="color: #a961952b94d0; text-decoration: underline;">read</span><span style="text-decoration: underline;">-</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">string</span> <span style="color: #2aa198;">"Text: "</span><span style="color: #859900;">)</span>
-                       <span style="color: #859900;">(</span><span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">or</span> <span style="color: #859900; font-weight: bold;">'</span><span style="color: #a4cca4cca4cc; font-style: italic;">nil</span> <span style="color: #2aa198;">""</span><span style="color: #b58900;">)</span> <span style="color: #b58900;">(</span><span style="color: #57998258a066; text-decoration: underline;">s</span><span style="text-decoration: underline;">-</span><span style="color: #57998258a066; text-decoration: underline;">word</span><span style="text-decoration: underline;">-</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">wrap</span> <span style="color: #a19967658391;">80</span> <span style="color: #268bd2;">(</span><span style="color: #57998258a066; text-decoration: underline;">s</span><span style="text-decoration: underline;">-</span><span style="color: #52997866758a; text-decoration: underline;">join</span> <span style="color: #2aa198;">" "</span> <span style="color: #6c71c4;">(</span><span style="color: #859900; font-weight: bold;">progn</span>
-                                                                   <span style="color: #859900;">(</span><span style="color: #859900; font-weight: bold;">require</span> <span style="color: #859900; font-weight: bold;">'</span><span style="color: #268bd2; font-weight: bold;">lorem-ipsum</span><span style="color: #859900;">)</span>
-                                                                   <span style="color: #859900;">(</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">seq</span><span style="text-decoration: underline;">-</span><span style="color: #52997866758a; text-decoration: underline;">random</span><span style="text-decoration: underline;">-</span><span style="color: #959995df9a66; text-decoration: underline;">elt</span> <span style="color: #7a4685f22ca6;">lorem</span>-<span style="color: #a19967658391;">ipsum</span>-<span style="color: #7a4685f22ca6;">text</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
+                       <span style="color: #859900;">(</span><span style="color: #2aa198;">""</span> <span style="color: #a4cca4cca4cc;">nil</span><span style="color: #859900;">)</span>
                        <span style="color: #859900;">(</span><span style="color: #a050824890d1;">else</span> <span style="color: #a050824890d1;">else</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span>
                      <span style="color: #6c71c4;">(</span><span style="color: #859900; font-weight: bold;">cl-loop</span> <span style="color: #71ba8cd29fdd;">for</span> <span style="color: #a19967658391;">font</span> = <span style="color: #859900;">(</span><span style="color: #6e667a661e98; text-decoration: underline;">x</span><span style="text-decoration: underline;">-</span><span style="color: #a8e97c777baf; text-decoration: underline;">select</span><span style="text-decoration: underline;">-</span><span style="color: #a19967658391; text-decoration: underline;">font</span><span style="color: #859900;">)</span>
                               <span style="color: #586e75;">;; </span><span style="color: #990A1B;">HACK</span><span style="color: #586e75; font-weight: bold; font-style: italic;">: `</span><span style="color: #268bd2; font-weight: bold; font-style: italic;">x-select-font</span><span style="color: #586e75; font-weight: bold; font-style: italic;">' calls quit() when the Cancel button is</span>
@@ -347,10 +345,15 @@ Interactively, prompt for <code>TEXT</code>, using <code>lorem-ipsum</code> text
                               <span style="color: #9dff5da442ff;">while</span> <span style="color: #859900;">(</span><span style="color: #cb4b16; font-weight: bold;">not</span> <span style="color: #b58900;">(</span><span style="color: #a8e97c777baf; text-decoration: underline;">member</span> <span style="color: #a19967658391;">font</span> <span style="color: #959995df9a66;">fonts</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
                               <span style="color: #a4cca4cca4cc;">collect</span> <span style="color: #a19967658391;">font</span> <span style="color: #a961952b94d0;">into</span> <span style="color: #959995df9a66;">fonts</span>
                               <span style="color: #52997866758a;">finally</span> <span style="color: #90cc76662432;">return</span> <span style="color: #959995df9a66;">fonts</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span>
+  <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">setq</span> <span style="color: #7a4685f22ca6;">text</span> <span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">or</span> <span style="color: #7a4685f22ca6;">text</span> <span style="color: #6c71c4;">(</span><span style="color: #57998258a066; text-decoration: underline;">s</span><span style="text-decoration: underline;">-</span><span style="color: #57998258a066; text-decoration: underline;">word</span><span style="text-decoration: underline;">-</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">wrap</span> <span style="color: #a19967658391;">80</span> <span style="color: #859900;">(</span><span style="color: #57998258a066; text-decoration: underline;">s</span><span style="text-decoration: underline;">-</span><span style="color: #52997866758a; text-decoration: underline;">join</span> <span style="color: #2aa198;">" "</span> <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">progn</span>
+                                                    <span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">require</span> <span style="color: #859900; font-weight: bold;">'</span><span style="color: #268bd2; font-weight: bold;">lorem-ipsum</span><span style="color: #268bd2;">)</span>
+                                                    <span style="color: #268bd2;">(</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">seq</span><span style="text-decoration: underline;">-</span><span style="color: #52997866758a; text-decoration: underline;">random</span><span style="text-decoration: underline;">-</span><span style="color: #959995df9a66; text-decoration: underline;">elt</span> <span style="color: #7a4685f22ca6;">lorem</span>-<span style="color: #a19967658391;">ipsum</span>-<span style="color: #7a4685f22ca6;">text</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span>
   <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">with-current-buffer</span> <span style="color: #268bd2;">(</span><span style="color: #959995df9a66; text-decoration: underline;">get</span><span style="text-decoration: underline;">-</span><span style="color: #959995df9a66; text-decoration: underline;">buffer</span><span style="text-decoration: underline;">-</span><span style="color: #7a4685f22ca6; text-decoration: underline;">create</span> <span style="color: #2aa198;">"*Font Compare*"</span><span style="color: #268bd2;">)</span>
     <span style="color: #268bd2;">(</span><span style="color: #9dff5da442ff; text-decoration: underline;">erase</span><span style="text-decoration: underline;">-</span><span style="color: #959995df9a66; text-decoration: underline;">buffer</span><span style="color: #268bd2;">)</span>
     <span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">--each</span> <span style="color: #959995df9a66;">fonts</span>
-      <span style="color: #6c71c4;">(</span><span style="color: #859900; font-weight: bold;">let</span> <span style="color: #859900;">(</span><span style="color: #b58900;">(</span><span style="color: #52997866758a;">family</span> <span style="color: #268bd2;">(</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">symbol</span><span style="text-decoration: underline;">-</span><span style="color: #68717c277aa9; text-decoration: underline;">name</span> <span style="color: #6c71c4;">(</span><span style="color: #a19967658391; text-decoration: underline;">font</span><span style="text-decoration: underline;">-</span><span style="color: #959995df9a66; text-decoration: underline;">get</span> <span style="color: #268bd2;">it</span> <span style="color: #839496; font-weight: bold;">:family</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
+      <span style="color: #6c71c4;">(</span><span style="color: #859900; font-weight: bold;">let</span> <span style="color: #859900;">(</span><span style="color: #b58900;">(</span><span style="color: #52997866758a;">family</span> <span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">cl-typecase</span> <span style="color: #268bd2;">it</span>
+                      <span style="color: #6c71c4;">(</span><span style="color: #a19967658391;">font</span> <span style="color: #859900;">(</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">symbol</span><span style="text-decoration: underline;">-</span><span style="color: #68717c277aa9; text-decoration: underline;">name</span> <span style="color: #2aa198;">(</span><span style="color: #a19967658391; text-decoration: underline;">font</span><span style="text-decoration: underline;">-</span><span style="color: #959995df9a66; text-decoration: underline;">get</span> <span style="color: #268bd2;">it</span> <span style="color: #839496; font-weight: bold;">:family</span><span style="color: #2aa198;">)</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span>
+                      <span style="color: #6c71c4;">(</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">string</span> <span style="color: #268bd2;">it</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
         <span style="color: #859900;">(</span><span style="color: #71ba8cd29fdd; text-decoration: underline;">insert</span> <span style="color: #52997866758a;">family</span> <span style="color: #2aa198;">": "</span>
                 <span style="color: #b58900;">(</span><span style="color: #90cc76662432; text-decoration: underline;">propertize</span> <span style="color: #7a4685f22ca6;">text</span>
                             <span style="color: #859900; font-weight: bold;">'</span><span style="color: #52997866758a; font-style: italic;">face</span> <span style="color: #268bd2;">(</span><span style="color: #a8e97c777baf; text-decoration: underline;">list</span> <span style="color: #839496; font-weight: bold;">:family</span> <span style="color: #52997866758a;">family</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span>
@@ -362,17 +365,17 @@ Interactively, prompt for <code>TEXT</code>, using <code>lorem-ipsum</code> text
 </div>
 </div>
 
-<div id="outline-container-orgd5e9d45" class="outline-2">
-<h2 id="orgd5e9d45">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></h2>
-<div class="outline-text-2" id="text-orgd5e9d45">
+<div id="outline-container-org75b1eb1" class="outline-2">
+<h2 id="org75b1eb1">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></h2>
+<div class="outline-text-2" id="text-org75b1eb1">
 <p>
 Code used to help maintain this document.
 </p>
 </div>
 
-<div id="outline-container-org4841545" class="outline-3">
-<h3 id="org4841545">Code emphasis</h3>
-<div class="outline-text-3" id="text-org4841545">
+<div id="outline-container-org28f23bb" class="outline-3">
+<h3 id="org28f23bb">Code emphasis</h3>
+<div class="outline-text-3" id="text-org28f23bb">
 <div class="org-src-container">
 <pre class="src src-elisp"><span style="color: #2aa198;">(</span><span style="color: #859900; font-weight: bold;">defun</span> <span style="color: #268bd2;">unpackaged/docstring-to-org</span> <span style="color: #b58900;">(</span><span style="color: #a8e97c777baf;">docstring</span><span style="color: #b58900;">)</span>
   <span style="color: #2aa198;">"Return DOCSTRING as formatted Org text.</span>
@@ -437,15 +440,15 @@ Code used to help maintain this document.
 </div>
 
 
-<div id="outline-container-orge3d6295" class="outline-2">
-<h2 id="orge3d6295">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></h2>
-<div class="outline-text-2" id="text-orge3d6295">
-</div><div id="outline-container-orgfc6b8ac" class="outline-3">
-<h3 id="orgfc6b8ac">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></h3>
-<div class="outline-text-3" id="text-orgfc6b8ac">
-</div><div id="outline-container-org6396608" class="outline-4">
-<h4 id="org6396608"><code>magit-log</code> date headers</h4>
-<div class="outline-text-4" id="text-org6396608">
+<div id="outline-container-org6885777" class="outline-2">
+<h2 id="org6885777">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></h2>
+<div class="outline-text-2" id="text-org6885777">
+</div><div id="outline-container-org1612c8e" class="outline-3">
+<h3 id="org1612c8e">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></h3>
+<div class="outline-text-3" id="text-org1612c8e">
+</div><div id="outline-container-orgc38def5" class="outline-4">
+<h4 id="orgc38def5"><code>magit-log</code> date headers</h4>
+<div class="outline-text-4" id="text-orgc38def5">
 <p>
 Add date headers to Magit log buffers.
 </p>
@@ -502,9 +505,9 @@ This isn't always perfect, because dates in a git commit log are not always in o
 </div>
 </div>
 
-<div id="outline-container-orgf2164f7" class="outline-2">
-<h2 id="orgf2164f7">License</h2>
-<div class="outline-text-2" id="text-orgf2164f7">
+<div id="outline-container-orgb89909b" class="outline-2">
+<h2 id="orgb89909b">License</h2>
+<div class="outline-text-2" id="text-orgb89909b">
 <p>
 GPLv3
 </p>
@@ -513,7 +516,7 @@ GPLv3
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Adam Porter</p>
-<p class="date">Created: 2018-08-26 Sun 16:21</p>
+<p class="date">Created: 2018-08-26 Sun 19:41</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
