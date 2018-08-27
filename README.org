@@ -41,7 +41,7 @@ Interactively, prompt for ~TEXT~, using ~lorem-ipsum~ text if nil or the empty s
 
 [[images/font-compare.png]]
 
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :results silent
   (defun unpackaged/font-compare (text fonts)
     "Compare TEXT displayed in FONTS.
   If TEXT is nil, use `lorem-ipsum' text.  FONTS is a list of font
@@ -92,7 +92,7 @@ Code used to help maintain this document.
 
 ** Code emphasis
 
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :results silent
   (defun unpackaged/docstring-to-org (docstring)
     "Return DOCSTRING as formatted Org text.
 
@@ -174,7 +174,7 @@ Add date headers to Magit log buffers.
 
 [[images/magit-log-date-headers.png]]
 
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :results silent
   (defun unpackaged/magit-log--add-date-headers (&rest _ignore)
     "Add date headers to Magit log buffers."
     (when (derived-mode-p 'magit-log-mode)
