@@ -18,18 +18,18 @@ Functions in this file generally use these helper packages:
 :TOC:    this
 :END:
   -  [[#faces-fonts][Faces, fonts]]
-    -  [[#font-compare][~font-compare~]]
+    -  [[#font-compare][font-compare]]
   -  [[#meta][Meta]]
     -  [[#code-emphasis][Code emphasis]]
   -  [[#version-control][Version control]]
     -  [[#magit][Magit]]
-      -  [[#magit-log-date-headers][~magit-log~ date headers]]
+      -  [[#magit-log-date-headers][magit-log date headers]]
   -  [[#web][Web]]
-    -  [[#feed-for-url][~feed-for-url~]]
+    -  [[#feed-for-url][feed-for-url]]
 
 * Faces, fonts                                                  :faces:fonts:
 
-** ~font-compare~
+** font-compare
 :PROPERTIES:
 :TOC:      0
 :END:
@@ -167,7 +167,7 @@ Not sure which place they best belong, but they should at least be linked in bot
 
 ** Magit                                                             :Magit:
 
-*** ~magit-log~ date headers
+*** magit-log date headers
 
 Add date headers to Magit log buffers.
 
@@ -212,7 +212,7 @@ This isn't always perfect, because dates in a git commit log are not always in o
 
 * Web                                                                   :web:
 
-** ~feed-for-url~                                               :RSS:Atom:XML:
+** feed-for-url                                               :RSS:Atom:XML:
 
 Return ATOM or RSS feed ~URL~ for web page at ~URL~.  Interactively, insert the ~URL~ at point.  ~PREFER~ may be ~atom~ (the default) or ~rss~.  When ~ALL~ is non-nil, return all feed URLs of all types; otherwise, return only one feed ~URL~, preferring the preferred type.
 
