@@ -24,6 +24,8 @@ Functions in this file generally use these helper packages:
   -  [[#version-control][Version control]]
     -  [[#magit][Magit]]
       -  [[#magit-log-date-headers][~magit-log~ date headers]]
+  -  [[#web][Web]]
+    -  [[#feed-for-url][~feed-for-url~]]
 
 * Faces, fonts                                                  :faces:fonts:
 
@@ -207,6 +209,57 @@ Add date headers to Magit log buffers.
 #+END_SRC
 
 This isn't always perfect, because dates in a git commit log are not always in order (e.g. when commits are merged at a later date), but it's often very helpful to visually group commits by their age.
+
+* Web                                                                   :web:
+
+** ~feed-for-url~                                               :RSS:Atom:XML:
+
+Return ATOM or RSS feed ~URL~ for web page at ~URL~.  Interactively, insert the ~URL~ at point.  ~PREFER~ may be ~atom~ (the default) or ~rss~.  When ~ALL~ is non-nil, return all feed URLs of all types; otherwise, return only one feed ~URL~, preferring the preferred type.
+
+*Requires:*
++  [[https://github.com/tali713/esxml][esxml]]
++  [[https://github.com/alphapapa/org-web-tools][org-web-tools]]
+
+#+BEGIN_SRC elisp :results silent
+  (cl-defun unpackaged/feed-for-url (url &key (prefer 'atom) (all nil))
+    "Return feed URL for web page at URL.
+  Interactively, insert the URL at point.  PREFER may be
+  `atom' (the default) or `rss'.  When ALL is non-nil, return all
+  feed URLs of all types; otherwise, return only one feed URL,
+  preferring the preferred type."
+    (interactive (list (org-web-tools--get-first-url)))
+    (require 'esxml-query)
+    (require 'org-web-tools)
+    (cl-flet ((feed-p (type)
+                      ;; Return t if TYPE appears to be an RSS/ATOM feed
+                      (string-match-p (rx "application/" (or "rss" "atom") "+xml")
+                                      type)))
+      (let* ((preferred-type (format "application/%s+xml" (symbol-name prefer)))
+             (html (org-web-tools--get-url url))
+             (dom (with-temp-buffer
+                    (insert html)
+                    (libxml-parse-html-region (point-min) (point-max))))
+             (potential-feeds (esxml-query-all "link[rel=alternate]" dom))
+             (return (if all
+                         ;; Return all URLs
+                         (cl-loop for (tag attrs) in potential-feeds
+                                  when (feed-p (alist-get 'type attrs))
+                                  collect (url-expand-file-name (alist-get 'href attrs) url))
+                       (or
+                        ;; Return the first URL of preferred type
+                        (cl-loop for (tag attrs) in potential-feeds
+                                 when (equal preferred-type (alist-get 'type attrs))
+                                 return (url-expand-file-name (alist-get 'href attrs) url))
+                        ;; Return the first URL of non-preferred type
+                        (cl-loop for (tag attrs) in potential-feeds
+                                 when (feed-p (alist-get 'type attrs))
+                                 return (url-expand-file-name (alist-get 'href attrs) url))))))
+        (if (called-interactively-p)
+            (insert (if (listp return)
+                        (s-join " " return)
+                      return))
+          return))))
+#+END_SRC
 
 * License
 :PROPERTIES:
