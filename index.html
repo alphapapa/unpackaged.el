@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-09-01 Sat 23:50 -->
+<!-- 2018-09-04 Tue 11:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>unpackaged.el</title>
@@ -239,32 +239,37 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org3bcf537">Contents</a></li>
-<li><a href="#orgbe31893">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></a>
+<li><a href="#org75e22fa">Contents</a></li>
+<li><a href="#org5620696">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></a>
 <ul>
-<li><a href="#orgf7d4325">font-compare</a></li>
+<li><a href="#orga915536">font-compare</a></li>
 </ul>
 </li>
-<li><a href="#orgb9847d9">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></a>
+<li><a href="#org3d43dac">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></a>
 <ul>
-<li><a href="#orgd6f6ef2">Code emphasis</a></li>
+<li><a href="#orgbc810b4">Code emphasis</a></li>
 </ul>
 </li>
-<li><a href="#orgbf416af">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></a>
+<li><a href="#org6fea622">Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Org">Org</span></span></a>
 <ul>
-<li><a href="#org9b4f9ae">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></a>
+<li><a href="#org34a1382">Read-only trees</a></li>
+</ul>
+</li>
+<li><a href="#org798ae8d">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></a>
 <ul>
-<li><a href="#org581833c">magit-log date headers</a></li>
+<li><a href="#org389a3d2">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></a>
+<ul>
+<li><a href="#org8d72966">magit-log date headers</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orgcbe38cd">Web&#xa0;&#xa0;&#xa0;<span class="tag"><span class="web">web</span></span></a>
+<li><a href="#org956b7ef">Web&#xa0;&#xa0;&#xa0;<span class="tag"><span class="web">web</span></span></a>
 <ul>
-<li><a href="#orgfcafa80">feed-for-url&#xa0;&#xa0;&#xa0;<span class="tag"><span class="RSS">RSS</span>&#xa0;<span class="Atom">Atom</span>&#xa0;<span class="XML">XML</span></span></a></li>
+<li><a href="#org299fb6e">feed-for-url&#xa0;&#xa0;&#xa0;<span class="tag"><span class="RSS">RSS</span>&#xa0;<span class="Atom">Atom</span>&#xa0;<span class="XML">XML</span></span></a></li>
 </ul>
 </li>
-<li><a href="#org969fe48">License</a></li>
+<li><a href="#org18e3f16">License</a></li>
 </ul>
 </div>
 </div>
@@ -287,10 +292,13 @@ Functions in this file generally use these helper packages:
 <li><a href="https://github.com/magnars/s.el">s.el</a></li>
 </ul>
 
-<div id="outline-container-org3bcf537" class="outline-2">
-<h2 id="org3bcf537">Contents</h2>
-<div class="outline-text-2" id="text-org3bcf537">
+<div id="outline-container-org75e22fa" class="outline-2">
+<h2 id="org75e22fa">Contents</h2>
+<div class="outline-text-2" id="text-org75e22fa">
 <ul class="org-ul">
+<li><ul class="org-ul">
+<li></li>
+</ul></li>
 <li><ul class="org-ul">
 <li></li>
 </ul></li>
@@ -309,12 +317,12 @@ Functions in this file generally use these helper packages:
 </div>
 </div>
 
-<div id="outline-container-orgbe31893" class="outline-2">
-<h2 id="orgbe31893">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></h2>
-<div class="outline-text-2" id="text-orgbe31893">
-</div><div id="outline-container-orgf7d4325" class="outline-3">
-<h3 id="orgf7d4325">font-compare</h3>
-<div class="outline-text-3" id="text-orgf7d4325">
+<div id="outline-container-org5620696" class="outline-2">
+<h2 id="org5620696">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></h2>
+<div class="outline-text-2" id="text-org5620696">
+</div><div id="outline-container-orga915536" class="outline-3">
+<h3 id="orga915536">font-compare</h3>
+<div class="outline-text-3" id="text-orga915536">
 <p>
 Compare <code>TEXT</code> displayed in <code>FONTS</code>.  <code>FONTS</code> is a list of font specs.
 </p>
@@ -373,17 +381,17 @@ Interactively, prompt for <code>TEXT</code>, using <code>lorem-ipsum</code> text
 </div>
 </div>
 
-<div id="outline-container-orgb9847d9" class="outline-2">
-<h2 id="orgb9847d9">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></h2>
-<div class="outline-text-2" id="text-orgb9847d9">
+<div id="outline-container-org3d43dac" class="outline-2">
+<h2 id="org3d43dac">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></h2>
+<div class="outline-text-2" id="text-org3d43dac">
 <p>
 Code used to help maintain this document.
 </p>
 </div>
 
-<div id="outline-container-orgd6f6ef2" class="outline-3">
-<h3 id="orgd6f6ef2">Code emphasis</h3>
-<div class="outline-text-3" id="text-orgd6f6ef2">
+<div id="outline-container-orgbc810b4" class="outline-3">
+<h3 id="orgbc810b4">Code emphasis</h3>
+<div class="outline-text-3" id="text-orgbc810b4">
 <div class="org-src-container">
 <pre class="src src-elisp"><span style="color: #2aa198;">(</span><span style="color: #859900; font-weight: bold;">defun</span> <span style="color: #268bd2;">unpackaged/docstring-to-org</span> <span style="color: #b58900;">(</span><span style="color: #a8e97c777baf;">docstring</span><span style="color: #b58900;">)</span>
   <span style="color: #2aa198;">"Return DOCSTRING as formatted Org text.</span>
@@ -399,8 +407,8 @@ Code used to help maintain this document.
                                                 <span style="color: #a4cca4cca4cc;">collect</span> <span style="color: #a8e97c777baf;">form</span><span style="color: #b58900;">)</span>
                                      <span style="color: #b58900;">(</span><span style="color: #959995df9a66; text-decoration: underline;">buffer</span><span style="text-decoration: underline;">-</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">string</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span>
     <span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">--&gt;</span> <span style="color: #6c71c4;">(</span><span style="color: #a4cca4cca4cc;">string</span>-<span style="color: #959995df9a66;">buffer</span>--&gt; <span style="color: #a8e97c777baf;">docstring</span>
-                           <span style="color: #859900;">(</span><span style="color: #a961952b94d0; text-decoration: underline;">unpackaged</span><span style="text-decoration: underline;">/</span><span style="color: #57998258a066; text-decoration: underline;">caps</span><span style="text-decoration: underline;">-</span><span style="color: #a050824890d1; text-decoration: underline;">to</span><span style="text-decoration: underline;">-</span><span style="color: #a050824890d1; text-decoration: underline;">code</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #a19967658391; text-decoration: underline;">min</span><span style="color: #b58900;">)</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">max</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
-                           <span style="color: #859900;">(</span><span style="color: #a961952b94d0; text-decoration: underline;">unpackaged</span><span style="text-decoration: underline;">/</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">symbol</span><span style="text-decoration: underline;">-</span><span style="color: #57998258a066; text-decoration: underline;">quotes</span><span style="text-decoration: underline;">-</span><span style="color: #a050824890d1; text-decoration: underline;">to</span><span style="text-decoration: underline;">-</span><span style="color: #57998258a066; text-decoration: underline;">org</span><span style="text-decoration: underline;">-</span><span style="color: #a050824890d1; text-decoration: underline;">code</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #a19967658391; text-decoration: underline;">min</span><span style="color: #b58900;">)</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">max</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
+                           <span style="color: #859900;">(</span><span style="color: #a961952b94d0;">unpackaged</span>/<span style="color: #57998258a066;">caps</span>-<span style="color: #a050824890d1;">to</span>-<span style="color: #a050824890d1;">code</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #a19967658391; text-decoration: underline;">min</span><span style="color: #b58900;">)</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">max</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
+                           <span style="color: #859900;">(</span><span style="color: #a961952b94d0;">unpackaged</span>/<span style="color: #a4cca4cca4cc;">symbol</span>-<span style="color: #57998258a066;">quotes</span>-<span style="color: #a050824890d1;">to</span>-<span style="color: #57998258a066;">org</span>-<span style="color: #a050824890d1;">code</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #a19967658391; text-decoration: underline;">min</span><span style="color: #b58900;">)</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">max</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
                            <span style="color: #859900;">(</span><span style="color: #959995df9a66; text-decoration: underline;">unfill</span><span style="text-decoration: underline;">-</span><span style="color: #6e667a661e98; text-decoration: underline;">region</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #a19967658391; text-decoration: underline;">min</span><span style="color: #b58900;">)</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">max</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
                            <span style="color: #859900;">(</span><span style="color: #859900; font-weight: bold;">while</span> <span style="color: #b58900;">(</span><span style="color: #9af381d633a6; text-decoration: underline;">re</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">search</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">forward</span> <span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">rx</span> <span style="color: #71ba8cd29fdd;">bol</span> <span style="color: #6c71c4;">(</span><span style="color: #a4cca4cca4cc;">group</span> <span style="color: #859900;">(</span><span style="color: #71ba8cd29fdd; text-decoration: underline;">1</span><span style="text-decoration: underline;">+</span> <span style="color: #a961952b94d0;">blank</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span> <span style="color: #a4cca4cca4cc;">nil</span> <span style="color: #959995df9a66;">t</span><span style="color: #b58900;">)</span>
                              <span style="color: #b58900;">(</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">replace</span><span style="text-decoration: underline;">-</span><span style="color: #7a4685f22ca6; text-decoration: underline;">match</span> <span style="color: #2aa198;">""</span> <span style="color: #959995df9a66;">t</span> <span style="color: #959995df9a66;">t</span> <span style="color: #a4cca4cca4cc;">nil</span> <span style="color: #71ba8cd29fdd;">1</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
@@ -448,15 +456,79 @@ Code used to help maintain this document.
 </div>
 
 
-<div id="outline-container-orgbf416af" class="outline-2">
-<h2 id="orgbf416af">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></h2>
-<div class="outline-text-2" id="text-orgbf416af">
-</div><div id="outline-container-org9b4f9ae" class="outline-3">
-<h3 id="org9b4f9ae">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></h3>
-<div class="outline-text-3" id="text-org9b4f9ae">
-</div><div id="outline-container-org581833c" class="outline-4">
-<h4 id="org581833c">magit-log date headers</h4>
-<div class="outline-text-4" id="text-org581833c">
+<div id="outline-container-org6fea622" class="outline-2">
+<h2 id="org6fea622">Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Org">Org</span></span></h2>
+<div class="outline-text-2" id="text-org6fea622">
+<p>
+Code for <a href="https://orgmode.org/">Org Mode</a>.
+</p>
+</div>
+
+<div id="outline-container-org34a1382" class="outline-3">
+<h3 id="org34a1382">Read-only trees</h3>
+<div class="outline-text-3" id="text-org34a1382">
+<p>
+This code applies the <code>read-only</code> text-property to trees tagged <code>read_only</code>, preventing them from being modified accidentally.  (Note: If read-only headings appear in an Agenda buffer, it can cause slightly unusual behavior.  Usually this is not an issue.)  This was originally inspired by John Kitchin's <a href="http://kitchingroup.cheme.cmu.edu/blog/2014/09/13/Make-some-org-sections-read-only/">blog article</a> and later <a href="https://www.reddit.com/r/emacs/comments/92k7n1/guide_to_profiling_and_optimizing_an_orgrelated/">rewritten</a> in a faster version.
+</p>
+
+<p>
+To use, load these functions, and then add to this hook to automatically mark read-only sections when an Org file is loaded:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #2aa198;">(</span><span style="color: #71ba8cd29fdd; text-decoration: underline;">add</span><span style="text-decoration: underline;">-</span><span style="color: #a8e97c777baf; text-decoration: underline;">hook</span> <span style="color: #859900; font-weight: bold;">'</span><span style="color: #57998258a066; font-style: italic;">org</span><span style="font-style: italic;">-</span><span style="color: #68717c277aa9; font-style: italic;">mode</span><span style="font-style: italic;">-</span><span style="color: #a8e97c777baf; font-style: italic;">hook</span> <span style="color: #859900; font-weight: bold;">'</span><span style="color: #a961952b94d0; font-style: italic;">unpackaged</span><span style="font-style: italic;">/</span><span style="color: #57998258a066; font-style: italic;">org</span><span style="font-style: italic;">-</span><span style="color: #52997866758a; font-style: italic;">mark</span><span style="font-style: italic;">-</span><span style="color: #a961952b94d0; font-style: italic;">read</span><span style="font-style: italic;">-</span><span style="color: #71ba8cd29fdd; font-style: italic;">only</span><span style="color: #2aa198;">)</span>
+</pre>
+</div>
+
+<p>
+The functions may also be called interactively as needed.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #2aa198;">(</span><span style="color: #859900; font-weight: bold;">defun</span> <span style="color: #268bd2;">unpackaged/org-next-heading-tagged</span> <span style="color: #b58900;">(</span><span style="color: #6e667a661e98;">tag</span><span style="color: #b58900;">)</span>
+  <span style="color: #2aa198;">"Move to beginning of next heading tagged with TAG and return point, or return nil if none found."</span>
+  <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">when</span> <span style="color: #268bd2;">(</span><span style="color: #9af381d633a6; text-decoration: underline;">re</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">search</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">forward</span> <span style="color: #6c71c4;">(</span><span style="color: #959995df9a66; text-decoration: underline;">rx</span><span style="text-decoration: underline;">-</span><span style="color: #a050824890d1; text-decoration: underline;">to</span><span style="text-decoration: underline;">-</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">string</span> <span style="color: #859900; font-weight: bold;">`</span><span style="color: #859900;">(</span><span style="color: #a4cca4cca4cc;">seq</span> <span style="color: #71ba8cd29fdd;">bol</span> <span style="color: #b58900;">(</span><span style="color: #71ba8cd29fdd; text-decoration: underline;">1</span><span style="text-decoration: underline;">+</span> <span style="color: #2aa198;">"*"</span><span style="color: #b58900;">)</span> <span style="color: #b58900;">(</span><span style="color: #71ba8cd29fdd; text-decoration: underline;">1</span><span style="text-decoration: underline;">+</span> <span style="color: #a961952b94d0;">blank</span><span style="color: #b58900;">)</span> <span style="color: #b58900;">(</span><span style="color: #90cc76662432;">optional</span> <span style="color: #268bd2;">(</span><span style="color: #71ba8cd29fdd; text-decoration: underline;">1</span><span style="text-decoration: underline;">+</span> <span style="color: #57998258a066;">not</span>-<span style="color: #52997866758a;">newline</span><span style="color: #268bd2;">)</span> <span style="color: #268bd2;">(</span><span style="color: #71ba8cd29fdd; text-decoration: underline;">1</span><span style="text-decoration: underline;">+</span> <span style="color: #a961952b94d0;">blank</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span>
+                                               <span style="color: #586e75;">;; </span><span style="color: #586e75; font-weight: bold; font-style: italic;">Beginning of tags</span>
+                                               <span style="color: #2aa198;">":"</span>
+                                               <span style="color: #586e75;">;; </span><span style="color: #586e75; font-weight: bold; font-style: italic;">Possible other tags</span>
+                                               <span style="color: #b58900;">(</span><span style="color: #68717c277aa9;">0</span>+ <span style="color: #268bd2;">(</span><span style="color: #a4cca4cca4cc;">seq</span> <span style="color: #6c71c4;">(</span><span style="color: #71ba8cd29fdd; text-decoration: underline;">1</span><span style="text-decoration: underline;">+</span> <span style="color: #859900;">(</span><span style="color: #cb4b16; font-weight: bold;">not</span> <span style="color: #2aa198;">(</span><span style="color: #9dff5da442ff;">any</span> <span style="color: #2aa198;">":"</span> <span style="color: #a961952b94d0;">blank</span><span style="color: #2aa198;">)</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span> <span style="color: #2aa198;">":"</span><span style="color: #268bd2;">)</span> <span style="color: #b58900;">)</span>
+                                               <span style="color: #586e75;">;; </span><span style="color: #586e75; font-weight: bold; font-style: italic;">The tag that matters</span>
+                                               ,<span style="color: #6e667a661e98;">tag</span> <span style="color: #2aa198;">":"</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span>
+                           <span style="color: #a4cca4cca4cc;">nil</span> <span style="color: #859900; font-weight: bold;">'</span><span style="color: #52997866758a; font-style: italic;">noerror</span><span style="color: #268bd2;">)</span>
+    <span style="color: #268bd2;">(</span><span style="color: #959995df9a66; text-decoration: underline;">goto</span><span style="text-decoration: underline;">-</span><span style="color: #6e667a661e98; text-decoration: underline;">char</span> <span style="color: #6c71c4;">(</span><span style="color: #7a4685f22ca6; text-decoration: underline;">match</span><span style="text-decoration: underline;">-</span><span style="color: #6e667a661e98; text-decoration: underline;">beginning</span> <span style="color: #68717c277aa9;">0</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
+
+<span style="color: #2aa198;">(</span><span style="color: #859900; font-weight: bold;">defun</span> <span style="color: #268bd2;">unpackaged/org-mark-read-only</span> <span style="color: #b58900;">()</span>
+  <span style="color: #2aa198;">"Mark all entries in the buffer tagged \"read_only\" with read-only text properties."</span>
+  <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">interactive</span><span style="color: #b58900;">)</span>
+  <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">org-with-wide-buffer</span>
+   <span style="color: #268bd2;">(</span><span style="color: #959995df9a66; text-decoration: underline;">goto</span><span style="text-decoration: underline;">-</span><span style="color: #6e667a661e98; text-decoration: underline;">char</span> <span style="color: #6c71c4;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #a19967658391; text-decoration: underline;">min</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span>
+   <span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">while</span> <span style="color: #6c71c4;">(</span><span style="color: #a961952b94d0;">unpackaged</span>/<span style="color: #57998258a066;">org</span>-<span style="color: #6e667a661e98;">next</span>-<span style="color: #6e667a661e98;">heading</span>-<span style="color: #7a4685f22ca6;">tagged</span> <span style="color: #2aa198;">"read_only"</span><span style="color: #6c71c4;">)</span>
+     <span style="color: #6c71c4;">(</span><span style="color: #71ba8cd29fdd; text-decoration: underline;">add</span><span style="text-decoration: underline;">-</span><span style="color: #7a4685f22ca6; text-decoration: underline;">text</span><span style="text-decoration: underline;">-</span><span style="color: #7a4685f22ca6; text-decoration: underline;">properties</span> <span style="color: #859900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="color: #859900;">)</span> <span style="color: #859900;">(</span><span style="color: #57998258a066; text-decoration: underline;">org</span><span style="text-decoration: underline;">-</span><span style="color: #a961952b94d0; text-decoration: underline;">end</span><span style="text-decoration: underline;">-</span><span style="color: #52997866758a; text-decoration: underline;">of</span><span style="text-decoration: underline;">-</span><span style="color: #a3726d7d5726; text-decoration: underline;">subtree</span> <span style="color: #959995df9a66;">t</span><span style="color: #859900;">)</span>
+                          <span style="color: #859900; font-weight: bold;">'</span><span style="color: #859900;">(</span><span style="color: #a961952b94d0;">read</span>-<span style="color: #71ba8cd29fdd;">only</span> <span style="color: #959995df9a66;">t</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
+
+<span style="color: #2aa198;">(</span><span style="color: #859900; font-weight: bold;">defun</span> <span style="color: #268bd2;">unpackaged/org-remove-read-only</span> <span style="color: #b58900;">()</span>
+  <span style="color: #2aa198;">"Remove read-only text properties from Org entries tagged \"read_only\" in current buffer."</span>
+  <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">let</span> <span style="color: #268bd2;">(</span><span style="color: #6c71c4;">(</span><span style="color: #57998258a066;">inhibit</span>-<span style="color: #a961952b94d0;">read</span>-<span style="color: #71ba8cd29fdd;">only</span> <span style="color: #959995df9a66;">t</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span>
+    <span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">org-with-wide-buffer</span>
+     <span style="color: #6c71c4;">(</span><span style="color: #959995df9a66; text-decoration: underline;">goto</span><span style="text-decoration: underline;">-</span><span style="color: #6e667a661e98; text-decoration: underline;">char</span> <span style="color: #859900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #a19967658391; text-decoration: underline;">min</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span>
+     <span style="color: #6c71c4;">(</span><span style="color: #859900; font-weight: bold;">while</span> <span style="color: #859900;">(</span><span style="color: #a961952b94d0;">unpackaged</span>/<span style="color: #57998258a066;">org</span>-<span style="color: #6e667a661e98;">next</span>-<span style="color: #6e667a661e98;">heading</span>-<span style="color: #7a4685f22ca6;">tagged</span> <span style="color: #2aa198;">"read_only"</span><span style="color: #859900;">)</span>
+       <span style="color: #859900;">(</span><span style="color: #a961952b94d0; text-decoration: underline;">remove</span><span style="text-decoration: underline;">-</span><span style="color: #7a4685f22ca6; text-decoration: underline;">text</span><span style="text-decoration: underline;">-</span><span style="color: #7a4685f22ca6; text-decoration: underline;">properties</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="color: #b58900;">)</span> <span style="color: #b58900;">(</span><span style="color: #57998258a066; text-decoration: underline;">org</span><span style="text-decoration: underline;">-</span><span style="color: #a961952b94d0; text-decoration: underline;">end</span><span style="text-decoration: underline;">-</span><span style="color: #52997866758a; text-decoration: underline;">of</span><span style="text-decoration: underline;">-</span><span style="color: #a3726d7d5726; text-decoration: underline;">subtree</span> <span style="color: #959995df9a66;">t</span><span style="color: #b58900;">)</span>
+                               <span style="color: #859900; font-weight: bold;">'</span><span style="color: #b58900;">(</span><span style="color: #a961952b94d0;">read</span>-<span style="color: #71ba8cd29fdd;">only</span> <span style="color: #959995df9a66;">t</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org798ae8d" class="outline-2">
+<h2 id="org798ae8d">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></h2>
+<div class="outline-text-2" id="text-org798ae8d">
+</div><div id="outline-container-org389a3d2" class="outline-3">
+<h3 id="org389a3d2">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></h3>
+<div class="outline-text-3" id="text-org389a3d2">
+</div><div id="outline-container-org8d72966" class="outline-4">
+<h4 id="org8d72966">magit-log date headers</h4>
+<div class="outline-text-4" id="text-org8d72966">
 <p>
 Add date headers to Magit log buffers.
 </p>
@@ -490,8 +562,8 @@ Add date headers to Magit log buffers.
                                                   <span style="color: #959995df9a66;">margin</span>-<span style="color: #7a4685f22ca6;">text</span><span style="color: #268bd2;">)</span>
                                 <span style="color: #268bd2;">(</span><span style="color: #7a4685f22ca6; text-decoration: underline;">match</span><span style="text-decoration: underline;">-</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">string</span><span style="text-decoration: underline;">-</span><span style="color: #a19967658391; text-decoration: underline;">no</span><span style="text-decoration: underline;">-</span><span style="color: #7a4685f22ca6; text-decoration: underline;">properties</span> <span style="color: #71ba8cd29fdd;">1</span> <span style="color: #959995df9a66;">margin</span>-<span style="color: #7a4685f22ca6;">text</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span>
                     <span style="color: #a4cca4cca4cc;">collect</span> <span style="color: #b58900;">(</span><span style="color: #a19967658391; text-decoration: underline;">cons</span> <span style="color: #6e667a661e98;">age</span> <span style="color: #268bd2;">(</span><span style="color: #71ba8cd29fdd; text-decoration: underline;">ov</span><span style="text-decoration: underline;">-</span><span style="color: #90cc76662432; text-decoration: underline;">beg</span> <span style="color: #71ba8cd29fdd;">ov</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
-           <span style="color: #859900;">(</span><span style="color: #859900; font-weight: bold; text-decoration: underline;">-group-by</span> <span style="color: #859900; font-weight: bold;">#'</span><span style="color: #a19967658391; font-style: italic;">car</span> <span style="color: #268bd2;">it</span><span style="color: #859900;">)</span>
-           <span style="color: #859900;">(</span><span style="color: #859900; font-weight: bold;">--map</span> <span style="color: #b58900;">(</span><span style="color: #a19967658391; text-decoration: underline;">cons</span> <span style="color: #268bd2;">(</span><span style="color: #a19967658391; text-decoration: underline;">car</span> <span style="color: #268bd2;">it</span><span style="color: #268bd2;">)</span> <span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold; text-decoration: underline;">-sort</span> <span style="color: #6c71c4;">(</span><span style="color: #859900; font-weight: bold; text-decoration: underline;">-on</span> <span style="color: #859900; font-weight: bold;">#'</span><span style="font-style: italic;">&lt;</span> <span style="color: #859900; font-weight: bold;">#'</span><span style="color: #71ba8cd29fdd; font-style: italic;">cdr</span><span style="color: #6c71c4;">)</span> <span style="color: #6c71c4;">(</span><span style="color: #71ba8cd29fdd; text-decoration: underline;">cdr</span> <span style="color: #268bd2;">it</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span>
+           <span style="color: #859900;">(</span><span style="text-decoration: underline;">-</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">group</span><span style="text-decoration: underline;">-</span><span style="color: #68717c277aa9; text-decoration: underline;">by</span> <span style="color: #859900; font-weight: bold;">#'</span><span style="color: #a19967658391; font-style: italic;">car</span> <span style="color: #268bd2;">it</span><span style="color: #859900;">)</span>
+           <span style="color: #859900;">(</span><span style="color: #859900; font-weight: bold;">--map</span> <span style="color: #b58900;">(</span><span style="color: #a19967658391; text-decoration: underline;">cons</span> <span style="color: #268bd2;">(</span><span style="color: #a19967658391; text-decoration: underline;">car</span> <span style="color: #268bd2;">it</span><span style="color: #268bd2;">)</span> <span style="color: #268bd2;">(</span><span style="text-decoration: underline;">-</span><span style="color: #6e667a661e98; text-decoration: underline;">sort</span> <span style="color: #6c71c4;">(</span><span style="text-decoration: underline;">-</span><span style="color: #6e667a661e98; text-decoration: underline;">on</span> <span style="color: #859900; font-weight: bold;">#'</span><span style="font-style: italic;">&lt;</span> <span style="color: #859900; font-weight: bold;">#'</span><span style="color: #71ba8cd29fdd; font-style: italic;">cdr</span><span style="color: #6c71c4;">)</span> <span style="color: #6c71c4;">(</span><span style="color: #71ba8cd29fdd; text-decoration: underline;">cdr</span> <span style="color: #268bd2;">it</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span>
                   <span style="color: #268bd2;">it</span><span style="color: #859900;">)</span>
            <span style="color: #859900;">(</span><span style="color: #859900; font-weight: bold;">--map</span> <span style="color: #b58900;">(</span><span style="color: #a19967658391; text-decoration: underline;">cons</span> <span style="color: #268bd2;">(</span><span style="color: #a19967658391; text-decoration: underline;">car</span> <span style="color: #268bd2;">it</span><span style="color: #268bd2;">)</span> <span style="color: #268bd2;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">cdadr</span> <span style="color: #268bd2;">it</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span> <span style="color: #268bd2;">it</span><span style="color: #859900;">)</span>
            <span style="color: #859900;">(</span><span style="color: #859900; font-weight: bold;">cl-loop</span> <span style="color: #71ba8cd29fdd;">for</span> <span style="color: #b58900;">(</span><span style="color: #6e667a661e98;">age</span> . <span style="color: #959995df9a66;">pos</span><span style="color: #b58900;">)</span> <span style="color: #a961952b94d0;">in</span> <span style="color: #268bd2;">it</span>
@@ -513,12 +585,12 @@ This isn't always perfect, because dates in a git commit log are not always in o
 </div>
 </div>
 
-<div id="outline-container-orgcbe38cd" class="outline-2">
-<h2 id="orgcbe38cd">Web&#xa0;&#xa0;&#xa0;<span class="tag"><span class="web">web</span></span></h2>
-<div class="outline-text-2" id="text-orgcbe38cd">
-</div><div id="outline-container-orgfcafa80" class="outline-3">
-<h3 id="orgfcafa80">feed-for-url&#xa0;&#xa0;&#xa0;<span class="tag"><span class="RSS">RSS</span>&#xa0;<span class="Atom">Atom</span>&#xa0;<span class="XML">XML</span></span></h3>
-<div class="outline-text-3" id="text-orgfcafa80">
+<div id="outline-container-org956b7ef" class="outline-2">
+<h2 id="org956b7ef">Web&#xa0;&#xa0;&#xa0;<span class="tag"><span class="web">web</span></span></h2>
+<div class="outline-text-2" id="text-org956b7ef">
+</div><div id="outline-container-org299fb6e" class="outline-3">
+<h3 id="org299fb6e">feed-for-url&#xa0;&#xa0;&#xa0;<span class="tag"><span class="RSS">RSS</span>&#xa0;<span class="Atom">Atom</span>&#xa0;<span class="XML">XML</span></span></h3>
+<div class="outline-text-3" id="text-org299fb6e">
 <p>
 Return ATOM or RSS feed <code>URL</code> for web page at <code>URL</code>.  Interactively, insert the <code>URL</code> at point.  <code>PREFER</code> may be <code>atom</code> (the default) or <code>rss</code>.  When <code>ALL</code> is non-nil, return all feed URLs of all types; otherwise, return only one feed <code>URL</code>, preferring the preferred type.
 </p>
@@ -576,9 +648,9 @@ Return ATOM or RSS feed <code>URL</code> for web page at <code>URL</code>.  Inte
 </div>
 </div>
 
-<div id="outline-container-org969fe48" class="outline-2">
-<h2 id="org969fe48">License</h2>
-<div class="outline-text-2" id="text-org969fe48">
+<div id="outline-container-org18e3f16" class="outline-2">
+<h2 id="org18e3f16">License</h2>
+<div class="outline-text-2" id="text-org18e3f16">
 <p>
 GPLv3
 </p>
@@ -587,7 +659,7 @@ GPLv3
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Adam Porter</p>
-<p class="date">Created: 2018-09-01 Sat 23:50</p>
+<p class="date">Created: 2018-09-04 Tue 11:30</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

@@ -21,6 +21,8 @@ Functions in this file generally use these helper packages:
     -  [[#font-compare][font-compare]]
   -  [[#meta][Meta]]
     -  [[#code-emphasis][Code emphasis]]
+  -  [[#org][Org]]
+    -  [[#read-only-trees][Read-only trees]]
   -  [[#version-control][Version control]]
     -  [[#magit][Magit]]
       -  [[#magit-log-date-headers][magit-log date headers]]
@@ -162,6 +164,54 @@ Code used to help maintain this document.
 **** MAYBE Publish these on emacs-package-dev-handbook instead
 
 Not sure which place they best belong, but they should at least be linked in both.
+
+* Org                                                                   :Org:
+
+Code for [[https://orgmode.org/][Org Mode]].
+
+** Read-only trees
+
+This code applies the =read-only= text-property to trees tagged =read_only=, preventing them from being modified accidentally.  (Note: If read-only headings appear in an Agenda buffer, it can cause slightly unusual behavior.  Usually this is not an issue.)  This was originally inspired by John Kitchin's [[http://kitchingroup.cheme.cmu.edu/blog/2014/09/13/Make-some-org-sections-read-only/][blog article]] and later [[https://www.reddit.com/r/emacs/comments/92k7n1/guide_to_profiling_and_optimizing_an_orgrelated/][rewritten]] in a faster version.
+
+To use, load these functions, and then add to this hook to automatically mark read-only sections when an Org file is loaded:
+
+#+BEGIN_SRC elisp
+  (add-hook 'org-mode-hook 'unpackaged/org-mark-read-only)
+#+END_SRC
+
+The functions may also be called interactively as needed.
+
+#+BEGIN_SRC elisp
+  (defun unpackaged/org-next-heading-tagged (tag)
+    "Move to beginning of next heading tagged with TAG and return point, or return nil if none found."
+    (when (re-search-forward (rx-to-string `(seq bol (1+ "*") (1+ blank) (optional (1+ not-newline) (1+ blank))
+                                                 ;; Beginning of tags
+                                                 ":"
+                                                 ;; Possible other tags
+                                                 (0+ (seq (1+ (not (any ":" blank))) ":") )
+                                                 ;; The tag that matters
+                                                 ,tag ":"))
+                             nil 'noerror)
+      (goto-char (match-beginning 0))))
+
+  (defun unpackaged/org-mark-read-only ()
+    "Mark all entries in the buffer tagged \"read_only\" with read-only text properties."
+    (interactive)
+    (org-with-wide-buffer
+     (goto-char (point-min))
+     (while (unpackaged/org-next-heading-tagged "read_only")
+       (add-text-properties (point) (org-end-of-subtree t)
+                            '(read-only t)))))
+
+  (defun unpackaged/org-remove-read-only ()
+    "Remove read-only text properties from Org entries tagged \"read_only\" in current buffer."
+    (let ((inhibit-read-only t))
+      (org-with-wide-buffer
+       (goto-char (point-min))
+       (while (unpackaged/org-next-heading-tagged "read_only")
+         (remove-text-properties (point) (org-end-of-subtree t)
+                                 '(read-only t))))))
+#+END_SRC
 
 * Version control                                           :version_control:
 
