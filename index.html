@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-09-04 Tue 11:30 -->
+<!-- 2018-09-04 Tue 11:40 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>unpackaged.el</title>
@@ -239,37 +239,34 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org75e22fa">Contents</a></li>
-<li><a href="#org5620696">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></a>
+<li><a href="#org49facf3">Contents</a></li>
+<li><a href="#org306ef80">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></a>
 <ul>
-<li><a href="#orga915536">font-compare</a></li>
+<li><a href="#org28cee7b">font-compare</a></li>
 </ul>
 </li>
-<li><a href="#org3d43dac">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></a>
+<li><a href="#orgcc31512">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></a></li>
+<li><a href="#orgdad358c">Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Org">Org</span></span></a>
 <ul>
-<li><a href="#orgbc810b4">Code emphasis</a></li>
+<li><a href="#orgff8ce0c">Convert Elisp docstrings to Org format&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></a></li>
+<li><a href="#org67022a8">Read-only trees</a></li>
 </ul>
 </li>
-<li><a href="#org6fea622">Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Org">Org</span></span></a>
+<li><a href="#org2a77c5e">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></a>
 <ul>
-<li><a href="#org34a1382">Read-only trees</a></li>
-</ul>
-</li>
-<li><a href="#org798ae8d">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></a>
+<li><a href="#org786b4a1">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></a>
 <ul>
-<li><a href="#org389a3d2">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></a>
-<ul>
-<li><a href="#org8d72966">magit-log date headers</a></li>
+<li><a href="#orgc195e40">magit-log date headers</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org956b7ef">Web&#xa0;&#xa0;&#xa0;<span class="tag"><span class="web">web</span></span></a>
+<li><a href="#orgd2d768f">Web&#xa0;&#xa0;&#xa0;<span class="tag"><span class="web">web</span></span></a>
 <ul>
-<li><a href="#org299fb6e">feed-for-url&#xa0;&#xa0;&#xa0;<span class="tag"><span class="RSS">RSS</span>&#xa0;<span class="Atom">Atom</span>&#xa0;<span class="XML">XML</span></span></a></li>
+<li><a href="#org3d53862">feed-for-url&#xa0;&#xa0;&#xa0;<span class="tag"><span class="RSS">RSS</span>&#xa0;<span class="Atom">Atom</span>&#xa0;<span class="XML">XML</span></span></a></li>
 </ul>
 </li>
-<li><a href="#org18e3f16">License</a></li>
+<li><a href="#org29667ea">License</a></li>
 </ul>
 </div>
 </div>
@@ -292,17 +289,16 @@ Functions in this file generally use these helper packages:
 <li><a href="https://github.com/magnars/s.el">s.el</a></li>
 </ul>
 
-<div id="outline-container-org75e22fa" class="outline-2">
-<h2 id="org75e22fa">Contents</h2>
-<div class="outline-text-2" id="text-org75e22fa">
+<div id="outline-container-org49facf3" class="outline-2">
+<h2 id="org49facf3">Contents</h2>
+<div class="outline-text-2" id="text-org49facf3">
 <ul class="org-ul">
 <li><ul class="org-ul">
 <li></li>
 </ul></li>
+<li></li>
 <li><ul class="org-ul">
 <li></li>
-</ul></li>
-<li><ul class="org-ul">
 <li></li>
 </ul></li>
 <li><ul class="org-ul">
@@ -317,12 +313,12 @@ Functions in this file generally use these helper packages:
 </div>
 </div>
 
-<div id="outline-container-org5620696" class="outline-2">
-<h2 id="org5620696">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></h2>
-<div class="outline-text-2" id="text-org5620696">
-</div><div id="outline-container-orga915536" class="outline-3">
-<h3 id="orga915536">font-compare</h3>
-<div class="outline-text-3" id="text-orga915536">
+<div id="outline-container-org306ef80" class="outline-2">
+<h2 id="org306ef80">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></h2>
+<div class="outline-text-2" id="text-org306ef80">
+</div><div id="outline-container-org28cee7b" class="outline-3">
+<h3 id="org28cee7b">font-compare</h3>
+<div class="outline-text-3" id="text-org28cee7b">
 <p>
 Compare <code>TEXT</code> displayed in <code>FONTS</code>.  <code>FONTS</code> is a list of font specs.
 </p>
@@ -381,17 +377,34 @@ Interactively, prompt for <code>TEXT</code>, using <code>lorem-ipsum</code> text
 </div>
 </div>
 
-<div id="outline-container-org3d43dac" class="outline-2">
-<h2 id="org3d43dac">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></h2>
-<div class="outline-text-2" id="text-org3d43dac">
+<div id="outline-container-orgcc31512" class="outline-2">
+<h2 id="orgcc31512">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></h2>
+<div class="outline-text-2" id="text-orgcc31512">
 <p>
 Code used to help maintain this document.
 </p>
+
+<ul class="org-ul">
+<li><a href="#orgff8ce0c">Convert Elisp docstrings to Org format</a></li>
+</ul>
+</div>
 </div>
 
-<div id="outline-container-orgbc810b4" class="outline-3">
-<h3 id="orgbc810b4">Code emphasis</h3>
-<div class="outline-text-3" id="text-orgbc810b4">
+<div id="outline-container-orgdad358c" class="outline-2">
+<h2 id="orgdad358c">Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Org">Org</span></span></h2>
+<div class="outline-text-2" id="text-orgdad358c">
+<p>
+Code for <a href="https://orgmode.org/">Org Mode</a>.
+</p>
+</div>
+
+<div id="outline-container-orgff8ce0c" class="outline-3">
+<h3 id="orgff8ce0c"><a id="ID-b86d14ff-b87c-4e2a-a513-067c0a5d3490"></a>Convert Elisp docstrings to Org format&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></h3>
+<div class="outline-text-3" id="text-orgff8ce0c">
+<p>
+These functions convert Emacs Lisp docstrings to Org-formatted text, helpful for inserting into readme files.
+</p>
+
 <div class="org-src-container">
 <pre class="src src-elisp"><span style="color: #2aa198;">(</span><span style="color: #859900; font-weight: bold;">defun</span> <span style="color: #268bd2;">unpackaged/docstring-to-org</span> <span style="color: #b58900;">(</span><span style="color: #a8e97c777baf;">docstring</span><span style="color: #b58900;">)</span>
   <span style="color: #2aa198;">"Return DOCSTRING as formatted Org text.</span>
@@ -453,20 +466,10 @@ Code used to help maintain this document.
 </div>
 </div>
 </div>
-</div>
 
-
-<div id="outline-container-org6fea622" class="outline-2">
-<h2 id="org6fea622">Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Org">Org</span></span></h2>
-<div class="outline-text-2" id="text-org6fea622">
-<p>
-Code for <a href="https://orgmode.org/">Org Mode</a>.
-</p>
-</div>
-
-<div id="outline-container-org34a1382" class="outline-3">
-<h3 id="org34a1382">Read-only trees</h3>
-<div class="outline-text-3" id="text-org34a1382">
+<div id="outline-container-org67022a8" class="outline-3">
+<h3 id="org67022a8">Read-only trees</h3>
+<div class="outline-text-3" id="text-org67022a8">
 <p>
 This code applies the <code>read-only</code> text-property to trees tagged <code>read_only</code>, preventing them from being modified accidentally.  (Note: If read-only headings appear in an Agenda buffer, it can cause slightly unusual behavior.  Usually this is not an issue.)  This was originally inspired by John Kitchin's <a href="http://kitchingroup.cheme.cmu.edu/blog/2014/09/13/Make-some-org-sections-read-only/">blog article</a> and later <a href="https://www.reddit.com/r/emacs/comments/92k7n1/guide_to_profiling_and_optimizing_an_orgrelated/">rewritten</a> in a faster version.
 </p>
@@ -520,15 +523,15 @@ The functions may also be called interactively as needed.
 </div>
 </div>
 
-<div id="outline-container-org798ae8d" class="outline-2">
-<h2 id="org798ae8d">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></h2>
-<div class="outline-text-2" id="text-org798ae8d">
-</div><div id="outline-container-org389a3d2" class="outline-3">
-<h3 id="org389a3d2">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></h3>
-<div class="outline-text-3" id="text-org389a3d2">
-</div><div id="outline-container-org8d72966" class="outline-4">
-<h4 id="org8d72966">magit-log date headers</h4>
-<div class="outline-text-4" id="text-org8d72966">
+<div id="outline-container-org2a77c5e" class="outline-2">
+<h2 id="org2a77c5e">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></h2>
+<div class="outline-text-2" id="text-org2a77c5e">
+</div><div id="outline-container-org786b4a1" class="outline-3">
+<h3 id="org786b4a1">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></h3>
+<div class="outline-text-3" id="text-org786b4a1">
+</div><div id="outline-container-orgc195e40" class="outline-4">
+<h4 id="orgc195e40">magit-log date headers</h4>
+<div class="outline-text-4" id="text-orgc195e40">
 <p>
 Add date headers to Magit log buffers.
 </p>
@@ -585,12 +588,12 @@ This isn't always perfect, because dates in a git commit log are not always in o
 </div>
 </div>
 
-<div id="outline-container-org956b7ef" class="outline-2">
-<h2 id="org956b7ef">Web&#xa0;&#xa0;&#xa0;<span class="tag"><span class="web">web</span></span></h2>
-<div class="outline-text-2" id="text-org956b7ef">
-</div><div id="outline-container-org299fb6e" class="outline-3">
-<h3 id="org299fb6e">feed-for-url&#xa0;&#xa0;&#xa0;<span class="tag"><span class="RSS">RSS</span>&#xa0;<span class="Atom">Atom</span>&#xa0;<span class="XML">XML</span></span></h3>
-<div class="outline-text-3" id="text-org299fb6e">
+<div id="outline-container-orgd2d768f" class="outline-2">
+<h2 id="orgd2d768f">Web&#xa0;&#xa0;&#xa0;<span class="tag"><span class="web">web</span></span></h2>
+<div class="outline-text-2" id="text-orgd2d768f">
+</div><div id="outline-container-org3d53862" class="outline-3">
+<h3 id="org3d53862">feed-for-url&#xa0;&#xa0;&#xa0;<span class="tag"><span class="RSS">RSS</span>&#xa0;<span class="Atom">Atom</span>&#xa0;<span class="XML">XML</span></span></h3>
+<div class="outline-text-3" id="text-org3d53862">
 <p>
 Return ATOM or RSS feed <code>URL</code> for web page at <code>URL</code>.  Interactively, insert the <code>URL</code> at point.  <code>PREFER</code> may be <code>atom</code> (the default) or <code>rss</code>.  When <code>ALL</code> is non-nil, return all feed URLs of all types; otherwise, return only one feed <code>URL</code>, preferring the preferred type.
 </p>
@@ -648,9 +651,9 @@ Return ATOM or RSS feed <code>URL</code> for web page at <code>URL</code>.  Inte
 </div>
 </div>
 
-<div id="outline-container-org18e3f16" class="outline-2">
-<h2 id="org18e3f16">License</h2>
-<div class="outline-text-2" id="text-org18e3f16">
+<div id="outline-container-org29667ea" class="outline-2">
+<h2 id="org29667ea">License</h2>
+<div class="outline-text-2" id="text-org29667ea">
 <p>
 GPLv3
 </p>
@@ -659,7 +662,7 @@ GPLv3
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Adam Porter</p>
-<p class="date">Created: 2018-09-04 Tue 11:30</p>
+<p class="date">Created: 2018-09-04 Tue 11:40</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

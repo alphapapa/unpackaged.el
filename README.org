@@ -20,8 +20,8 @@ Functions in this file generally use these helper packages:
   -  [[#faces-fonts][Faces, fonts]]
     -  [[#font-compare][font-compare]]
   -  [[#meta][Meta]]
-    -  [[#code-emphasis][Code emphasis]]
   -  [[#org][Org]]
+    -  [[#convert-elisp-docstrings-to-org-format][Convert Elisp docstrings to Org format]]
     -  [[#read-only-trees][Read-only trees]]
   -  [[#version-control][Version control]]
     -  [[#magit][Magit]]
@@ -91,10 +91,24 @@ e.g. weight, slant, etc.
 It might be helpful to use a larger size by default.
 
 * Meta                                                                 :meta:
+:PROPERTIES:
+:TOC:      0
+:END:
 
 Code used to help maintain this document.
 
-** Code emphasis
++  [[*Convert Elisp docstrings to Org format][Convert Elisp docstrings to Org format]]
+
+* Org                                                                   :Org:
+
+Code for [[https://orgmode.org/][Org Mode]].
+
+** Convert Elisp docstrings to Org format                             :meta:
+:PROPERTIES:
+:ID:       b86d14ff-b87c-4e2a-a513-067c0a5d3490
+:END:
+
+These functions convert Emacs Lisp docstrings to Org-formatted text, helpful for inserting into readme files.
 
 #+BEGIN_SRC elisp :results silent
   (defun unpackaged/docstring-to-org (docstring)
@@ -155,7 +169,6 @@ Code used to help maintain this document.
           (replace-match (concat "~" (match-string 1) "~") t)))))
 #+END_SRC
 
-
 *** COMMENT Tasks
 :PROPERTIES:
 :TOC:      ignore
@@ -164,10 +177,6 @@ Code used to help maintain this document.
 **** MAYBE Publish these on emacs-package-dev-handbook instead
 
 Not sure which place they best belong, but they should at least be linked in both.
-
-* Org                                                                   :Org:
-
-Code for [[https://orgmode.org/][Org Mode]].
 
 ** Read-only trees
 
