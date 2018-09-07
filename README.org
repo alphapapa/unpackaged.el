@@ -336,6 +336,58 @@ GPLv3
 
 Might be nice to be able to tangle all of the ~unpackaged/~ functions into a single file.
 
+** TODO Select image with Helm
+:PROPERTIES:
+:ID:       c3bb6423-e0e6-478c-bb72-c0fb525b6c0f
+:END:
+
+#+BEGIN_SRC elisp
+  (defun unpackaged/helm-read-image (&rest directories)
+    "Return path to image file found in DIRECTORIES, completing with `helm-comp-read'."
+    (helm-comp-read "Image: "
+                    (cl-loop for file in (-flatten (mapcar #'f-files directories))
+                             for image = (unpackaged/rescale-image (f-read-bytes file)
+                                                                   :max-width 48
+                                                                   :max-height 48)
+                             for string = (with-temp-buffer
+                                            (insert " ")
+                                            (insert-image image file)
+                                            (buffer-string))
+                             collect (cons string file))))
+
+  (cl-defun unpackaged/rescale-image (data &key max-width max-height &allow-other-keys)
+    "Return image DATA, rescaled if too big to fit the current buffer.
+  MAX-WIDTH and MAX-HEIGHT are used if set, otherwise they are
+  determined by the size of the buffer's window."
+    ;; Based on image.el
+    (when (fboundp 'imagemagick-types)
+      (cond ((and max-width max-height)
+             ;; Use given size
+             )
+            ((get-buffer-window (current-buffer))
+             ;; Use window size
+             (setq max-width (or max-width (window-pixel-width))
+                   max-height (or max-height (/ (window-pixel-height) 2))))
+            ((current-buffer)
+             ;; Buffer not displayed; use frame
+             (setq max-width (or max-width (frame-pixel-width))
+                   max-height (or max-height (/ (frame-pixel-height) 2))))
+            (t
+             ;; This should not happen with the fixes above, but just in case:
+             (warn "Weird error rescaling image, please report.  Buffer: %s" (current-buffer))))
+      (create-image data 'imagemagick 'data-p
+                    :max-width max-width
+                    :max-height max-height)))
+#+END_SRC
+
+*** Tasks
+
+**** TODO Instructions/example
+
+**** TODO Make useful interactively
+
+e.g. it should allow selecting directories, and then presenting the images in them.  Maybe filenames should also be displayed next to each image.  So maybe it should somehow be a wrapper or advice to ~helm-find-files~ or ~helm-comp-read~ that simply adds images to the filename strings.
+
 * COMMENT Config
 :PROPERTIES:
 :TOC:      ignore
