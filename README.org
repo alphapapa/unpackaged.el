@@ -22,6 +22,7 @@ Functions in this file generally use these helper packages:
   -  [[#meta][Meta]]
   -  [[#org][Org]]
     -  [[#convert-elisp-docstrings-to-org-format][Convert Elisp docstrings to Org format]]
+    -  [[#download-and-attach-remote-files][Download and attach remote files]]
     -  [[#read-only-trees][Read-only trees]]
   -  [[#version-control][Version control]]
     -  [[#magit][Magit]]
@@ -177,6 +178,30 @@ These functions convert Emacs Lisp docstrings to Org-formatted text, helpful for
 **** MAYBE Publish these on emacs-package-dev-handbook instead
 
 Not sure which place they best belong, but they should at least be linked in both.
+
+** Download and attach remote files
+
+Download file at ~URL~ and attach with ~org-attach~.  Interactively, look for ~URL~ at point, in X clipboard, and in kill-ring.
+
+*Requires:*
++  [[https://github.com/alphapapa/org-web-tools][org-web-tools]]
+
+#+BEGIN_SRC elisp :results silent
+  (defun unpackaged/org-attach-download (url)
+    "Download file at URL and attach with `org-attach'.
+  Interactively, look for URL at point, in X clipboard, and in
+  kill-ring."
+    (interactive (list (or (org-element-property :raw-link (org-element-context))
+                           (org-web-tools--get-first-url)
+                           (user-error "Can't find URL at point, in clipboard, or in kill-ring"))))
+    (when (yes-or-no-p (concat "Attach file at URL: " url))
+      (when-let* ((local-file (url-file-local-copy url))
+                  (size (file-size-human-readable
+                         (file-attribute-size
+                          (file-attributes local-file)))))
+        (org-attach-attach local-file nil 'mv)
+        (message "Attached %s (%s)" url size))))
+#+END_SRC
 
 ** Read-only trees
 

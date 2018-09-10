@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-09-04 Tue 11:49 -->
+<!-- 2018-09-10 Mon 03:19 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>unpackaged.el</title>
@@ -239,34 +239,35 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org362fb36">Contents</a></li>
-<li><a href="#orge12a475">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></a>
+<li><a href="#orga65312a">Contents</a></li>
+<li><a href="#org3a0b4b9">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></a>
 <ul>
-<li><a href="#org63f9859">font-compare</a></li>
+<li><a href="#org0e151c3">font-compare</a></li>
 </ul>
 </li>
-<li><a href="#org5d54c7c">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></a></li>
-<li><a href="#orgb65ca06">Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Org">Org</span></span></a>
+<li><a href="#org9f341f6">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></a></li>
+<li><a href="#org0fd190f">Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Org">Org</span></span></a>
 <ul>
-<li><a href="#org4352984">Convert Elisp docstrings to Org format&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></a></li>
-<li><a href="#orga971149">Read-only trees</a></li>
+<li><a href="#orge1a03b0">Convert Elisp docstrings to Org format&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></a></li>
+<li><a href="#org7546931">Download and attach remote files</a></li>
+<li><a href="#org54dfb3b">Read-only trees</a></li>
 </ul>
 </li>
-<li><a href="#org90501b8">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></a>
+<li><a href="#org9d3a683">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></a>
 <ul>
-<li><a href="#orga0e1918">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></a>
+<li><a href="#orgacd4eb8">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></a>
 <ul>
-<li><a href="#org57fea6b">magit-log date headers</a></li>
+<li><a href="#orgc9b954b">magit-log date headers</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org4738b0b">Web&#xa0;&#xa0;&#xa0;<span class="tag"><span class="web">web</span></span></a>
+<li><a href="#orgad10676">Web&#xa0;&#xa0;&#xa0;<span class="tag"><span class="web">web</span></span></a>
 <ul>
-<li><a href="#org7746560">feed-for-url&#xa0;&#xa0;&#xa0;<span class="tag"><span class="RSS">RSS</span>&#xa0;<span class="Atom">Atom</span>&#xa0;<span class="XML">XML</span></span></a></li>
+<li><a href="#org61e73e4">feed-for-url&#xa0;&#xa0;&#xa0;<span class="tag"><span class="RSS">RSS</span>&#xa0;<span class="Atom">Atom</span>&#xa0;<span class="XML">XML</span></span></a></li>
 </ul>
 </li>
-<li><a href="#orgaac8c0d">License</a></li>
+<li><a href="#org96be417">License</a></li>
 </ul>
 </div>
 </div>
@@ -289,15 +290,16 @@ Functions in this file generally use these helper packages:
 <li><a href="https://github.com/magnars/s.el">s.el</a></li>
 </ul>
 
-<div id="outline-container-org362fb36" class="outline-2">
-<h2 id="org362fb36">Contents</h2>
-<div class="outline-text-2" id="text-org362fb36">
+<div id="outline-container-orga65312a" class="outline-2">
+<h2 id="orga65312a">Contents</h2>
+<div class="outline-text-2" id="text-orga65312a">
 <ul class="org-ul">
 <li><ul class="org-ul">
 <li></li>
 </ul></li>
 <li></li>
 <li><ul class="org-ul">
+<li></li>
 <li></li>
 <li></li>
 </ul></li>
@@ -313,12 +315,12 @@ Functions in this file generally use these helper packages:
 </div>
 </div>
 
-<div id="outline-container-orge12a475" class="outline-2">
-<h2 id="orge12a475">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></h2>
-<div class="outline-text-2" id="text-orge12a475">
-</div><div id="outline-container-org63f9859" class="outline-3">
-<h3 id="org63f9859">font-compare</h3>
-<div class="outline-text-3" id="text-org63f9859">
+<div id="outline-container-org3a0b4b9" class="outline-2">
+<h2 id="org3a0b4b9">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></h2>
+<div class="outline-text-2" id="text-org3a0b4b9">
+</div><div id="outline-container-org0e151c3" class="outline-3">
+<h3 id="org0e151c3">font-compare</h3>
+<div class="outline-text-3" id="text-org0e151c3">
 <p>
 Compare <code>TEXT</code> displayed in <code>FONTS</code>.  <code>FONTS</code> is a list of font specs.
 </p>
@@ -377,30 +379,30 @@ Interactively, prompt for <code>TEXT</code>, using <code>lorem-ipsum</code> text
 </div>
 </div>
 
-<div id="outline-container-org5d54c7c" class="outline-2">
-<h2 id="org5d54c7c">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></h2>
-<div class="outline-text-2" id="text-org5d54c7c">
+<div id="outline-container-org9f341f6" class="outline-2">
+<h2 id="org9f341f6">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></h2>
+<div class="outline-text-2" id="text-org9f341f6">
 <p>
 Code used to help maintain this document.  (Note: These links don't work in GitHub's renderer.)
 </p>
 
 <ul class="org-ul">
-<li><a href="#org4352984">Convert Elisp docstrings to Org format</a></li>
+<li><a href="#orge1a03b0">Convert Elisp docstrings to Org format</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgb65ca06" class="outline-2">
-<h2 id="orgb65ca06">Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Org">Org</span></span></h2>
-<div class="outline-text-2" id="text-orgb65ca06">
+<div id="outline-container-org0fd190f" class="outline-2">
+<h2 id="org0fd190f">Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Org">Org</span></span></h2>
+<div class="outline-text-2" id="text-org0fd190f">
 <p>
 Code for <a href="https://orgmode.org/">Org Mode</a>.
 </p>
 </div>
 
-<div id="outline-container-org4352984" class="outline-3">
-<h3 id="org4352984"><a id="ID-b86d14ff-b87c-4e2a-a513-067c0a5d3490"></a>Convert Elisp docstrings to Org format&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></h3>
-<div class="outline-text-3" id="text-org4352984">
+<div id="outline-container-orge1a03b0" class="outline-3">
+<h3 id="orge1a03b0"><a id="ID-b86d14ff-b87c-4e2a-a513-067c0a5d3490"></a>Convert Elisp docstrings to Org format&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></h3>
+<div class="outline-text-3" id="text-orge1a03b0">
 <p>
 These functions convert Emacs Lisp docstrings to Org-formatted text, helpful for inserting into readme files.
 </p>
@@ -420,8 +422,8 @@ These functions convert Emacs Lisp docstrings to Org-formatted text, helpful for
                                                 <span style="color: #a4cca4cca4cc;">collect</span> <span style="color: #a8e97c777baf;">form</span><span style="color: #b58900;">)</span>
                                      <span style="color: #b58900;">(</span><span style="color: #959995df9a66; text-decoration: underline;">buffer</span><span style="text-decoration: underline;">-</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">string</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span>
     <span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">--&gt;</span> <span style="color: #6c71c4;">(</span><span style="color: #a4cca4cca4cc;">string</span>-<span style="color: #959995df9a66;">buffer</span>--&gt; <span style="color: #a8e97c777baf;">docstring</span>
-                           <span style="color: #859900;">(</span><span style="color: #a961952b94d0;">unpackaged</span>/<span style="color: #57998258a066;">caps</span>-<span style="color: #a050824890d1;">to</span>-<span style="color: #a050824890d1;">code</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #a19967658391; text-decoration: underline;">min</span><span style="color: #b58900;">)</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">max</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
-                           <span style="color: #859900;">(</span><span style="color: #a961952b94d0;">unpackaged</span>/<span style="color: #a4cca4cca4cc;">symbol</span>-<span style="color: #57998258a066;">quotes</span>-<span style="color: #a050824890d1;">to</span>-<span style="color: #57998258a066;">org</span>-<span style="color: #a050824890d1;">code</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #a19967658391; text-decoration: underline;">min</span><span style="color: #b58900;">)</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">max</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
+                           <span style="color: #859900;">(</span><span style="color: #a961952b94d0; text-decoration: underline;">unpackaged</span><span style="text-decoration: underline;">/</span><span style="color: #57998258a066; text-decoration: underline;">caps</span><span style="text-decoration: underline;">-</span><span style="color: #a050824890d1; text-decoration: underline;">to</span><span style="text-decoration: underline;">-</span><span style="color: #a050824890d1; text-decoration: underline;">code</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #a19967658391; text-decoration: underline;">min</span><span style="color: #b58900;">)</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">max</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
+                           <span style="color: #859900;">(</span><span style="color: #a961952b94d0; text-decoration: underline;">unpackaged</span><span style="text-decoration: underline;">/</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">symbol</span><span style="text-decoration: underline;">-</span><span style="color: #57998258a066; text-decoration: underline;">quotes</span><span style="text-decoration: underline;">-</span><span style="color: #a050824890d1; text-decoration: underline;">to</span><span style="text-decoration: underline;">-</span><span style="color: #57998258a066; text-decoration: underline;">org</span><span style="text-decoration: underline;">-</span><span style="color: #a050824890d1; text-decoration: underline;">code</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #a19967658391; text-decoration: underline;">min</span><span style="color: #b58900;">)</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">max</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
                            <span style="color: #859900;">(</span><span style="color: #959995df9a66; text-decoration: underline;">unfill</span><span style="text-decoration: underline;">-</span><span style="color: #6e667a661e98; text-decoration: underline;">region</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #a19967658391; text-decoration: underline;">min</span><span style="color: #b58900;">)</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">max</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
                            <span style="color: #859900;">(</span><span style="color: #859900; font-weight: bold;">while</span> <span style="color: #b58900;">(</span><span style="color: #9af381d633a6; text-decoration: underline;">re</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">search</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">forward</span> <span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">rx</span> <span style="color: #71ba8cd29fdd;">bol</span> <span style="color: #6c71c4;">(</span><span style="color: #a4cca4cca4cc;">group</span> <span style="color: #859900;">(</span><span style="color: #71ba8cd29fdd; text-decoration: underline;">1</span><span style="text-decoration: underline;">+</span> <span style="color: #a961952b94d0;">blank</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span> <span style="color: #a4cca4cca4cc;">nil</span> <span style="color: #959995df9a66;">t</span><span style="color: #b58900;">)</span>
                              <span style="color: #b58900;">(</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">replace</span><span style="text-decoration: underline;">-</span><span style="color: #7a4685f22ca6; text-decoration: underline;">match</span> <span style="color: #2aa198;">""</span> <span style="color: #959995df9a66;">t</span> <span style="color: #959995df9a66;">t</span> <span style="color: #a4cca4cca4cc;">nil</span> <span style="color: #71ba8cd29fdd;">1</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
@@ -467,9 +469,43 @@ These functions convert Emacs Lisp docstrings to Org-formatted text, helpful for
 </div>
 </div>
 
-<div id="outline-container-orga971149" class="outline-3">
-<h3 id="orga971149">Read-only trees</h3>
-<div class="outline-text-3" id="text-orga971149">
+<div id="outline-container-org7546931" class="outline-3">
+<h3 id="org7546931">Download and attach remote files</h3>
+<div class="outline-text-3" id="text-org7546931">
+<p>
+Download file at <code>URL</code> and attach with <code>org-attach</code>.  Interactively, look for <code>URL</code> at point, in X clipboard, and in kill-ring.
+</p>
+
+<p>
+<b>Requires:</b>
+</p>
+<ul class="org-ul">
+<li><a href="https://github.com/alphapapa/org-web-tools">org-web-tools</a></li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #2aa198;">(</span><span style="color: #859900; font-weight: bold;">defun</span> <span style="color: #268bd2;">unpackaged/org-attach-download</span> <span style="color: #b58900;">(</span><span style="color: #68717c277aa9;">url</span><span style="color: #b58900;">)</span>
+  <span style="color: #2aa198;">"Download file at URL and attach with `</span><span style="color: #268bd2; font-weight: bold;">org-attach</span><span style="color: #2aa198;">'.</span>
+<span style="color: #2aa198;">Interactively, look for URL at point, in X clipboard, and in</span>
+<span style="color: #2aa198;">kill-ring."</span>
+  <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">interactive</span> <span style="color: #268bd2;">(</span><span style="color: #a8e97c777baf; text-decoration: underline;">list</span> <span style="color: #6c71c4;">(</span><span style="color: #859900; font-weight: bold;">or</span> <span style="color: #859900;">(</span><span style="color: #57998258a066; text-decoration: underline;">org</span><span style="text-decoration: underline;">-</span><span style="color: #a8e97c777baf; text-decoration: underline;">element</span><span style="text-decoration: underline;">-</span><span style="color: #68717c277aa9; text-decoration: underline;">property</span> <span style="color: #839496; font-weight: bold;">:raw-link</span> <span style="color: #b58900;">(</span><span style="color: #57998258a066; text-decoration: underline;">org</span><span style="text-decoration: underline;">-</span><span style="color: #a8e97c777baf; text-decoration: underline;">element</span><span style="text-decoration: underline;">-</span><span style="color: #6e667a661e98; text-decoration: underline;">context</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
+                         <span style="color: #859900;">(</span><span style="color: #57998258a066; text-decoration: underline;">org</span><span style="text-decoration: underline;">-</span><span style="color: #a3726d7d5726; text-decoration: underline;">web</span><span style="text-decoration: underline;">-</span><span style="color: #90cc76662432; text-decoration: underline;">tools</span><span style="text-decoration: underline;">--</span><span style="color: #959995df9a66; text-decoration: underline;">get</span><span style="text-decoration: underline;">-</span><span style="color: #90cc76662432; text-decoration: underline;">first</span><span style="text-decoration: underline;">-</span><span style="color: #68717c277aa9; text-decoration: underline;">url</span><span style="color: #859900;">)</span>
+                         <span style="color: #859900;">(</span><span style="color: #cb4b16; font-weight: bold;">user-error</span> <span style="color: #2aa198;">"Can't find URL at point, in clipboard, or in kill-ring"</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span>
+  <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">when</span> <span style="color: #268bd2;">(</span><span style="color: #9dff5da442ff; text-decoration: underline;">yes</span><span style="text-decoration: underline;">-</span><span style="color: #a961952b94d0; text-decoration: underline;">or</span><span style="text-decoration: underline;">-</span><span style="color: #a19967658391; text-decoration: underline;">no</span><span style="text-decoration: underline;">-</span><span style="color: #9af381d633a6; text-decoration: underline;">p</span> <span style="color: #6c71c4;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">concat</span> <span style="color: #2aa198;">"Attach file at URL: "</span> <span style="color: #68717c277aa9;">url</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span>
+    <span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">when-let*</span> <span style="color: #6c71c4;">(</span><span style="color: #859900;">(</span><span style="color: #9dff5da442ff;">local</span>-<span style="color: #6e667a661e98;">file</span> <span style="color: #b58900;">(</span><span style="color: #68717c277aa9; text-decoration: underline;">url</span><span style="text-decoration: underline;">-</span><span style="color: #6e667a661e98; text-decoration: underline;">file</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">local</span><span style="text-decoration: underline;">-</span><span style="color: #90cc76662432; text-decoration: underline;">copy</span> <span style="color: #68717c277aa9;">url</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
+                <span style="color: #859900;">(</span><span style="color: #57998258a066;">size</span> <span style="color: #b58900;">(</span><span style="color: #6e667a661e98; text-decoration: underline;">file</span><span style="text-decoration: underline;">-</span><span style="color: #57998258a066; text-decoration: underline;">size</span><span style="text-decoration: underline;">-</span><span style="color: #a961952b94d0; text-decoration: underline;">human</span><span style="text-decoration: underline;">-</span><span style="color: #57998258a066; text-decoration: underline;">readable</span>
+                       <span style="color: #268bd2;">(</span><span style="color: #6e667a661e98; text-decoration: underline;">file</span><span style="text-decoration: underline;">-</span><span style="color: #a961952b94d0; text-decoration: underline;">attribute</span><span style="text-decoration: underline;">-</span><span style="color: #57998258a066; text-decoration: underline;">size</span>
+                        <span style="color: #6c71c4;">(</span><span style="color: #6e667a661e98; text-decoration: underline;">file</span><span style="text-decoration: underline;">-</span><span style="color: #9af381d633a6; text-decoration: underline;">attributes</span> <span style="color: #9dff5da442ff;">local</span>-<span style="color: #6e667a661e98;">file</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span>
+      <span style="color: #6c71c4;">(</span><span style="color: #57998258a066; text-decoration: underline;">org</span><span style="text-decoration: underline;">-</span><span style="color: #6e667a661e98; text-decoration: underline;">attach</span><span style="text-decoration: underline;">-</span><span style="color: #6e667a661e98; text-decoration: underline;">attach</span> <span style="color: #9dff5da442ff;">local</span>-<span style="color: #6e667a661e98;">file</span> <span style="color: #a4cca4cca4cc;">nil</span> <span style="color: #859900; font-weight: bold;">'</span><span style="color: #a8e97c777baf; font-style: italic;">mv</span><span style="color: #6c71c4;">)</span>
+      <span style="color: #6c71c4;">(</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">message</span> <span style="color: #2aa198;">"Attached %s (%s)"</span> <span style="color: #68717c277aa9;">url</span> <span style="color: #57998258a066;">size</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org54dfb3b" class="outline-3">
+<h3 id="org54dfb3b">Read-only trees</h3>
+<div class="outline-text-3" id="text-org54dfb3b">
 <p>
 This code applies the <code>read-only</code> text-property to trees tagged <code>read_only</code>, preventing them from being modified accidentally.  (Note: If read-only headings appear in an Agenda buffer, it can cause slightly unusual behavior.  Usually this is not an issue.)  This was originally inspired by John Kitchin's <a href="http://kitchingroup.cheme.cmu.edu/blog/2014/09/13/Make-some-org-sections-read-only/">blog article</a> and later <a href="https://www.reddit.com/r/emacs/comments/92k7n1/guide_to_profiling_and_optimizing_an_orgrelated/">rewritten</a> in a faster version.
 </p>
@@ -523,15 +559,15 @@ The functions may also be called interactively as needed.
 </div>
 </div>
 
-<div id="outline-container-org90501b8" class="outline-2">
-<h2 id="org90501b8">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></h2>
-<div class="outline-text-2" id="text-org90501b8">
-</div><div id="outline-container-orga0e1918" class="outline-3">
-<h3 id="orga0e1918">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></h3>
-<div class="outline-text-3" id="text-orga0e1918">
-</div><div id="outline-container-org57fea6b" class="outline-4">
-<h4 id="org57fea6b">magit-log date headers</h4>
-<div class="outline-text-4" id="text-org57fea6b">
+<div id="outline-container-org9d3a683" class="outline-2">
+<h2 id="org9d3a683">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></h2>
+<div class="outline-text-2" id="text-org9d3a683">
+</div><div id="outline-container-orgacd4eb8" class="outline-3">
+<h3 id="orgacd4eb8">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></h3>
+<div class="outline-text-3" id="text-orgacd4eb8">
+</div><div id="outline-container-orgc9b954b" class="outline-4">
+<h4 id="orgc9b954b">magit-log date headers</h4>
+<div class="outline-text-4" id="text-orgc9b954b">
 <p>
 Add date headers to Magit log buffers.
 </p>
@@ -588,12 +624,12 @@ This isn't always perfect, because dates in a git commit log are not always in o
 </div>
 </div>
 
-<div id="outline-container-org4738b0b" class="outline-2">
-<h2 id="org4738b0b">Web&#xa0;&#xa0;&#xa0;<span class="tag"><span class="web">web</span></span></h2>
-<div class="outline-text-2" id="text-org4738b0b">
-</div><div id="outline-container-org7746560" class="outline-3">
-<h3 id="org7746560">feed-for-url&#xa0;&#xa0;&#xa0;<span class="tag"><span class="RSS">RSS</span>&#xa0;<span class="Atom">Atom</span>&#xa0;<span class="XML">XML</span></span></h3>
-<div class="outline-text-3" id="text-org7746560">
+<div id="outline-container-orgad10676" class="outline-2">
+<h2 id="orgad10676">Web&#xa0;&#xa0;&#xa0;<span class="tag"><span class="web">web</span></span></h2>
+<div class="outline-text-2" id="text-orgad10676">
+</div><div id="outline-container-org61e73e4" class="outline-3">
+<h3 id="org61e73e4">feed-for-url&#xa0;&#xa0;&#xa0;<span class="tag"><span class="RSS">RSS</span>&#xa0;<span class="Atom">Atom</span>&#xa0;<span class="XML">XML</span></span></h3>
+<div class="outline-text-3" id="text-org61e73e4">
 <p>
 Return ATOM or RSS feed <code>URL</code> for web page at <code>URL</code>.  Interactively, insert the <code>URL</code> at point.  <code>PREFER</code> may be <code>atom</code> (the default) or <code>rss</code>.  When <code>ALL</code> is non-nil, return all feed URLs of all types; otherwise, return only one feed <code>URL</code>, preferring the preferred type.
 </p>
@@ -651,9 +687,9 @@ Return ATOM or RSS feed <code>URL</code> for web page at <code>URL</code>.  Inte
 </div>
 </div>
 
-<div id="outline-container-orgaac8c0d" class="outline-2">
-<h2 id="orgaac8c0d">License</h2>
-<div class="outline-text-2" id="text-orgaac8c0d">
+<div id="outline-container-org96be417" class="outline-2">
+<h2 id="org96be417">License</h2>
+<div class="outline-text-2" id="text-org96be417">
 <p>
 GPLv3
 </p>
@@ -662,7 +698,7 @@ GPLv3
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Adam Porter</p>
-<p class="date">Created: 2018-09-04 Tue 11:49</p>
+<p class="date">Created: 2018-09-10 Mon 03:19</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
