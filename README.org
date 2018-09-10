@@ -198,12 +198,19 @@ Download file at ~URL~ and attach with ~org-attach~.  Interactively, look for ~U
                            (org-web-tools--get-first-url)
                            (user-error "Can't find URL at point, in clipboard, or in kill-ring"))))
     (when (yes-or-no-p (concat "Attach file at URL: " url))
-      (when-let* ((local-file (url-file-local-copy url))
-                  (size (file-size-human-readable
-                         (file-attribute-size
-                          (file-attributes local-file)))))
-        (org-attach-attach local-file nil 'mv)
-        (message "Attached %s (%s)" url size))))
+      (let* ((temp-dir (make-temp-file "org-attach-" 'dir))
+             (basename (file-name-nondirectory url))
+             (local-path (expand-file-name basename temp-dir))
+             size)
+        (unwind-protect
+            (progn
+              (url-copy-file url local-path 'ok-if-exists 'keep-time)
+              (setq size (file-size-human-readable
+                          (file-attribute-size
+                           (file-attributes local-path))))
+              (org-attach-attach local-path nil 'mv)
+              (message "Attached %s (%s)" url size))
+          (delete-directory temp-dir)))))
 #+END_SRC
 
 ** Read-only trees
