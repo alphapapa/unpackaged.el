@@ -201,7 +201,7 @@ Download file at ~URL~ and attach with ~org-attach~.  Interactively, look for ~U
                              (read-string "URL: ")))))
     (when (yes-or-no-p (concat "Attach file at URL: " url))
       (let* ((temp-dir (make-temp-file "org-attach-download-" 'dir))
-             (basename (file-name-nondirectory url))
+             (basename (file-name-nondirectory (directory-file-name url)))
              (local-path (expand-file-name basename temp-dir))
              size)
         (unwind-protect
