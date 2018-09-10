@@ -1,4 +1,4 @@
-// bigblow.js --- BigBlow JS file
+// darksun.js --- darksun JS file
 //
 // Copyright (C) 2011-2016 All Right Reserved, Fabrice Niessen
 //
@@ -210,10 +210,10 @@ function copyToClipboard(text)
 }
 
 $(document).ready(function() {
-    // Assuming that the ZeroClipboard swf file is in the same folder than bigblow,
+    // Assuming that the ZeroClipboard swf file is in the same folder than darksun,
     // get the path to it (it will be relative to the current page location).
-    var bbScriptPath = $('script[src$="bigblow.js"]').attr('src');  // the js file path
-    var bbPathToZeroClipboardSwf = bbScriptPath.replace('bigblow.js', 'ZeroClipboard.swf');
+    var bbScriptPath = $('script[src$="darksun.js"]').attr('src');  // the js file path
+    var bbPathToZeroClipboardSwf = bbScriptPath.replace('darksun.js', 'ZeroClipboard.swf');
 
     // Add copy to clipboard snippets
     $('.org-src-container').prepend('<div class="snippet-copy-to-clipboard"><span class="copy-to-clipboard-button">[copy]</span></div>');
@@ -227,7 +227,7 @@ $(document).ready(function() {
         if ((window.location.protocol != 'file:') && ($(this).find('.zclip').length == 0)) {
             $(this).find('.copy-to-clipboard-button').zclip({
                 //path: 'http://www.steamdev.com/zclip/js/ZeroClipboard.swf',
-                //path: 'styles/bigblow/js/ZeroClipboard.swf',
+                //path: 'styles/darksun/js/ZeroClipboard.swf',
                 path: bbPathToZeroClipboardSwf,
                 copy: function() {
                     return $(this).parent().parent().find('.src').text();
