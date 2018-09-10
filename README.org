@@ -184,7 +184,7 @@ Not sure which place they best belong, but they should at least be linked in bot
 
 ** Download and attach remote files
 
-Download file at ~URL~ and attach with ~org-attach~.  Interactively, look for ~URL~ at point, in X clipboard, and in kill-ring.
+Download file at ~URL~ and attach with ~org-attach~.  Interactively, look for ~URL~ at point, in X clipboard, and in kill-ring, prompting if not found.  With prefix, prompt for ~URL~.
 
 *Requires:*
 +  [[https://github.com/alphapapa/org-web-tools][org-web-tools]]
