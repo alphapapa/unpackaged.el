@@ -193,10 +193,12 @@ Download file at ~URL~ and attach with ~org-attach~.  Interactively, look for ~U
   (defun unpackaged/org-attach-download (url)
     "Download file at URL and attach with `org-attach'.
   Interactively, look for URL at point, in X clipboard, and in
-  kill-ring."
-    (interactive (list (or (org-element-property :raw-link (org-element-context))
-                           (org-web-tools--get-first-url)
-                           (user-error "Can't find URL at point, in clipboard, or in kill-ring"))))
+  kill-ring, prompting if not found.  With prefix, prompt for URL."
+    (interactive (list (if current-prefix-arg
+                           (read-string "URL: ")
+                         (or (org-element-property :raw-link (org-element-context))
+                             (org-web-tools--get-first-url)
+                             (read-string "URL: ")))))
     (when (yes-or-no-p (concat "Attach file at URL: " url))
       (let* ((temp-dir (make-temp-file "org-attach-" 'dir))
              (basename (file-name-nondirectory url))
