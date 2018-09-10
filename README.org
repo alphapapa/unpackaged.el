@@ -27,6 +27,8 @@ Functions in this file generally use these helper packages:
     -  [[#convert-elisp-docstrings-to-org-format][Convert Elisp docstrings to Org format]]
     -  [[#download-and-attach-remote-files][Download and attach remote files]]
     -  [[#read-only-trees][Read-only trees]]
+  -  [[#regular-expressions][Regular expressions]]
+    -  [[#query-replace-rx][query-replace-rx]]
   -  [[#version-control][Version control]]
     -  [[#magit][Magit]]
       -  [[#magit-log-date-headers][magit-log date headers]]
@@ -257,6 +259,27 @@ The functions may also be called interactively as needed.
        (while (unpackaged/org-next-heading-tagged "read_only")
          (remove-text-properties (point) (org-end-of-subtree t)
                                  '(read-only t))))))
+#+END_SRC
+
+* Regular expressions                                   :regular_expressions:
+
+** query-replace-rx
+
+Call ~query-replace-regexp~, reading regexp in ~rx~ syntax.  Automatically wraps in parens and adds ~seq~ to the beginning of the form.
+
+#+BEGIN_SRC elisp
+  (defun unpackaged/query-replace-rx (&rest _)
+    "Call `query-replace-regexp', reading regexp in `rx' syntax.
+  Automatically wraps in parens and adds `seq' to the beginning of
+  the form."
+    (interactive)
+    (cl-letf (((symbol-function #'query-replace-read-from) (lambda (&rest _)
+                                                             (--> (read-string "rx form: ")
+                                                                  (concat "'(seq " it ")")
+                                                                  (read it)
+                                                                  (cadr it)
+                                                                  (rx-to-string it)))))
+      (call-interactively #'query-replace-regexp)))
 #+END_SRC
 
 * Version control                                           :version_control:
