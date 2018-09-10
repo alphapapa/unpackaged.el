@@ -1,10 +1,13 @@
 #+TITLE: unpackaged.el
 #+OPTIONS: broken-links:t num:nil H:8
 #+TAGS: Emacs
+#+SETUPFILE: export/setup/theme-bigblow-local.setup
 
 #+HTML: <a href=https://alphapapa.github.io/dont-tread-on-emacs/><img src="images/dont-tread-on-emacs-150.png" align="right"></a>
 
 A collection of useful Emacs Lisp code that isn't substantial enough to be packaged.  This code will be maintained here so that it can be updated and improved over time.
+
+This can be viewed directly on the [[http://github.com/alphapapa/unpackaged.el][repository]] or as [[http://alphapapa.github.io/unpackaged.el][HTML]].
 
 Contributions welcome!
 
@@ -13,7 +16,7 @@ Functions in this file generally use these helper packages:
 +  [[https://github.com/magnars/dash.el][dash.el]] (including ~dash-functional~)
 +  [[https://github.com/magnars/s.el][s.el]]
 
-* Contents
+* Contents                                                         :noexport:
 :PROPERTIES:
 :TOC:    this
 :END:
@@ -427,6 +430,7 @@ I love Emacs and Org mode.  This makes it so easy to make the document...alive! 
 # org-export-with-properties: ()
 # org-export-with-title: t
 # org-id-link-to-org-use-id: nil
+# org-export-initial-scope: buffer
 # End:
 
 
