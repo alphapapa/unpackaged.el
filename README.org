@@ -23,6 +23,8 @@ Functions in this file generally use these helper packages:
   -  [[#faces-fonts][Faces, fonts]]
     -  [[#font-compare][font-compare]]
   -  [[#meta][Meta]]
+  -  [[#misc][Misc]]
+    -  [[#track-metadata-from-mpris-supporting-media-player][Track metadata from MPRIS-supporting media player]]
   -  [[#org][Org]]
     -  [[#convert-elisp-docstrings-to-org-format][Convert Elisp docstrings to Org format]]
     -  [[#download-and-attach-remote-files][Download and attach remote files]]
@@ -104,6 +106,51 @@ It might be helpful to use a larger size by default.
 Code used to help maintain this document.  (Note: These links don't work in GitHub's renderer.)
 
 +  [[Convert Elisp docstrings to Org format][Convert Elisp docstrings to Org format]]
+
+* Misc
+
+** Track metadata from MPRIS-supporting media player                  :DBus:
+
+Return the artist, album, and title of the track playing in MPRIS-supporting player.  Returns a string in format =ARTIST - ~ALBUM~: ~TITLE~ [PLAYER]=.  If no track is playing, returns nil.  If more than one player is playing, uses the first one found in DBus.  If ~PLAYER~ is non-nil, include the name of the player in the output string.
+
+DBus is not a straightforward system to work with, so this may serve as a useful example, or save someone the trouble of figuring out how to get this metadata.
+
+#+BEGIN_SRC elisp
+  (cl-defun unpackaged/mpris-track (&optional player)
+    "Return the artist, album, and title of the track playing in MPRIS-supporting player.
+  Returns a string in format \"ARTIST - ALBUM: TITLE [PLAYER]\".  If no track is
+  playing, returns nil.  If more than one player is playing, uses
+  the first one found in DBus.
+
+  If PLAYER is non-nil, include the name of the player in the
+  output string."
+    (require 'dbus)
+    (when-let* ((mpris-services (--select (string-prefix-p "org.mpris.MediaPlayer2." it)
+                                          (dbus-list-known-names :session)))
+                (playing-service (--first (string= "Playing"
+                                                   (dbus-get-property :session it
+                                                                      "/org/mpris/MediaPlayer2"
+                                                                      "org.mpris.MediaPlayer2.Player"
+                                                                      "PlaybackStatus"))
+                                          mpris-services))
+                (player-name (dbus-get-property :session playing-service
+                                                "/org/mpris/MediaPlayer2"
+                                                "org.mpris.MediaPlayer2"
+                                                "Identity"))
+                (metadata (dbus-get-property :session playing-service
+                                             "/org/mpris/MediaPlayer2"
+                                             "org.mpris.MediaPlayer2.Player"
+                                             "Metadata")))
+      ;; `-let' makes it easy to get the actual strings out of the nested lists of lists of strings.
+      (-let (((&alist "xesam:artist" ((artists))
+                      "xesam:album" ((album))
+                      "xesam:title" ((title)))
+              metadata))
+        (format "%s - %s: %s%s" (s-join ", " artists) album title
+                (if player
+                    (format " [%s]" player-name)
+                  "")))))
+#+END_SRC
 
 * Org                                                                   :Org:
 

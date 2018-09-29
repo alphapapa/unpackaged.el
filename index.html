@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-09-10 Mon 08:42 -->
+<!-- 2018-09-28 Fri 22:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>unpackaged.el</title>
@@ -244,39 +244,44 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org4075389">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></a>
+<li><a href="#org6150d45">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></a>
 <ul>
-<li><a href="#orgabe898f">font-compare</a></li>
+<li><a href="#org9c497a7">font-compare</a></li>
 </ul>
 </li>
-<li><a href="#org2ee9003">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></a></li>
-<li><a href="#orgc6c5511">Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Org">Org</span></span></a>
+<li><a href="#org0c37430">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></a></li>
+<li><a href="#orgadbfb66">Misc</a>
 <ul>
-<li><a href="#orgc73b6f4">Convert Elisp docstrings to Org format&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></a></li>
-<li><a href="#orgcb21d9d">Download and attach remote files</a></li>
-<li><a href="#org5b84fec">Read-only trees</a></li>
+<li><a href="#orgee7ee3a">Track metadata from MPRIS-supporting media player&#xa0;&#xa0;&#xa0;<span class="tag"><span class="DBus">DBus</span></span></a></li>
 </ul>
 </li>
-<li><a href="#org25165f0">Regular expressions&#xa0;&#xa0;&#xa0;<span class="tag"><span class="regular_expressions">regular_expressions</span></span></a>
+<li><a href="#org0b6a366">Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Org">Org</span></span></a>
 <ul>
-<li><a href="#orgd698003">query-replace-rx</a></li>
+<li><a href="#org7625d5e">Convert Elisp docstrings to Org format&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></a></li>
+<li><a href="#orgaba6d19">Download and attach remote files</a></li>
+<li><a href="#orgcc8c8ca">Read-only trees</a></li>
 </ul>
 </li>
-<li><a href="#org7dd739d">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></a>
+<li><a href="#orgf47d3fc">Regular expressions&#xa0;&#xa0;&#xa0;<span class="tag"><span class="regular_expressions">regular_expressions</span></span></a>
 <ul>
-<li><a href="#org5dd113b">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></a>
+<li><a href="#org1e6feb6">query-replace-rx</a></li>
+</ul>
+</li>
+<li><a href="#org93b3670">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></a>
 <ul>
-<li><a href="#org30c67b8">magit-log date headers</a></li>
+<li><a href="#org62448d6">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></a>
+<ul>
+<li><a href="#orgd28629d">magit-log date headers</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org7f014f4">Web&#xa0;&#xa0;&#xa0;<span class="tag"><span class="web">web</span></span></a>
+<li><a href="#org7900519">Web&#xa0;&#xa0;&#xa0;<span class="tag"><span class="web">web</span></span></a>
 <ul>
-<li><a href="#orgd3f994d">feed-for-url&#xa0;&#xa0;&#xa0;<span class="tag"><span class="RSS">RSS</span>&#xa0;<span class="Atom">Atom</span>&#xa0;<span class="XML">XML</span></span></a></li>
+<li><a href="#orga393224">feed-for-url&#xa0;&#xa0;&#xa0;<span class="tag"><span class="RSS">RSS</span>&#xa0;<span class="Atom">Atom</span>&#xa0;<span class="XML">XML</span></span></a></li>
 </ul>
 </li>
-<li><a href="#orgd4cbba5">License</a></li>
+<li><a href="#org7fee29b">License</a></li>
 </ul>
 </div>
 </div>
@@ -303,12 +308,12 @@ Functions in this file generally use these helper packages:
 <li><a href="https://github.com/magnars/s.el">s.el</a></li>
 </ul>
 
-<div id="outline-container-org4075389" class="outline-2">
-<h2 id="org4075389">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></h2>
-<div class="outline-text-2" id="text-org4075389">
-</div><div id="outline-container-orgabe898f" class="outline-3">
-<h3 id="orgabe898f">font-compare</h3>
-<div class="outline-text-3" id="text-orgabe898f">
+<div id="outline-container-org6150d45" class="outline-2">
+<h2 id="org6150d45">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></h2>
+<div class="outline-text-2" id="text-org6150d45">
+</div><div id="outline-container-org9c497a7" class="outline-3">
+<h3 id="org9c497a7">font-compare</h3>
+<div class="outline-text-3" id="text-org9c497a7">
 <p>
 Compare <code>TEXT</code> displayed in <code>FONTS</code>.  <code>FONTS</code> is a list of font specs.
 </p>
@@ -367,30 +372,85 @@ Interactively, prompt for <code>TEXT</code>, using <code>lorem-ipsum</code> text
 </div>
 </div>
 
-<div id="outline-container-org2ee9003" class="outline-2">
-<h2 id="org2ee9003">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></h2>
-<div class="outline-text-2" id="text-org2ee9003">
+<div id="outline-container-org0c37430" class="outline-2">
+<h2 id="org0c37430">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></h2>
+<div class="outline-text-2" id="text-org0c37430">
 <p>
 Code used to help maintain this document.  (Note: These links don't work in GitHub's renderer.)
 </p>
 
 <ul class="org-ul">
-<li><a href="#orgc73b6f4">Convert Elisp docstrings to Org format</a></li>
+<li><a href="#org7625d5e">Convert Elisp docstrings to Org format</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgc6c5511" class="outline-2">
-<h2 id="orgc6c5511">Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Org">Org</span></span></h2>
-<div class="outline-text-2" id="text-orgc6c5511">
+<div id="outline-container-orgadbfb66" class="outline-2">
+<h2 id="orgadbfb66">Misc</h2>
+<div class="outline-text-2" id="text-orgadbfb66">
+</div><div id="outline-container-orgee7ee3a" class="outline-3">
+<h3 id="orgee7ee3a">Track metadata from MPRIS-supporting media player&#xa0;&#xa0;&#xa0;<span class="tag"><span class="DBus">DBus</span></span></h3>
+<div class="outline-text-3" id="text-orgee7ee3a">
+<p>
+Return the artist, album, and title of the track playing in MPRIS-supporting player.  Returns a string in format <code>ARTIST - ~ALBUM~: ~TITLE~ [PLAYER]</code>.  If no track is playing, returns nil.  If more than one player is playing, uses the first one found in DBus.  If <code>PLAYER</code> is non-nil, include the name of the player in the output string.
+</p>
+
+<p>
+DBus is not a straightforward system to work with, so this may serve as a useful example, or save someone the trouble of figuring out how to get this metadata.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #2aa198;">(</span><span style="color: #859900; font-weight: bold;">cl-defun</span> <span style="color: #268bd2;">unpackaged/mpris-track</span> <span style="color: #b58900;">(</span><span style="color: #b58900;">&amp;optional</span> <span style="color: #a19967658391;">player</span><span style="color: #b58900;">)</span>
+  <span style="color: #2aa198;">"Return the artist, album, and title of the track playing in MPRIS-supporting player.</span>
+<span style="color: #2aa198;">Returns a string in format \"ARTIST - ALBUM: TITLE [PLAYER]\".  If no track is</span>
+<span style="color: #2aa198;">playing, returns nil.  If more than one player is playing, uses</span>
+<span style="color: #2aa198;">the first one found in DBus.</span>
+
+<span style="color: #2aa198;">If PLAYER is non-nil, include the name of the player in the</span>
+<span style="color: #2aa198;">output string."</span>
+  <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">require</span> <span style="color: #859900; font-weight: bold;">'</span><span style="color: #268bd2; font-weight: bold;">dbus</span><span style="color: #b58900;">)</span>
+  <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">when-let*</span> <span style="color: #268bd2;">(</span><span style="color: #6c71c4;">(</span><span style="color: #9dff5da442ff;">mpris</span>-<span style="color: #a8e97c777baf;">services</span> <span style="color: #859900;">(</span><span style="color: #859900; font-weight: bold;">--select</span> <span style="color: #b58900;">(</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">string</span><span style="text-decoration: underline;">-</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">prefix</span><span style="text-decoration: underline;">-</span><span style="color: #9af381d633a6; text-decoration: underline;">p</span> <span style="color: #2aa198;">"org.mpris.MediaPlayer2."</span> <span style="color: #268bd2;">it</span><span style="color: #b58900;">)</span>
+                                        <span style="color: #b58900;">(</span><span style="color: #6e667a661e98; text-decoration: underline;">dbus</span><span style="text-decoration: underline;">-</span><span style="color: #a8e97c777baf; text-decoration: underline;">list</span><span style="text-decoration: underline;">-</span><span style="color: #a050824890d1; text-decoration: underline;">known</span><span style="text-decoration: underline;">-</span><span style="color: #a8e97c777baf; text-decoration: underline;">names</span> <span style="color: #839496; font-weight: bold;">:session</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span>
+              <span style="color: #6c71c4;">(</span><span style="color: #9af381d633a6;">playing</span>-<span style="color: #a050824890d1;">service</span> <span style="color: #859900;">(</span><span style="color: #859900; font-weight: bold;">--first</span> <span style="color: #b58900;">(</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">string</span><span style="text-decoration: underline;">=</span> <span style="color: #2aa198;">"Playing"</span>
+                                                 <span style="color: #268bd2;">(</span><span style="color: #6e667a661e98; text-decoration: underline;">dbus</span><span style="text-decoration: underline;">-</span><span style="color: #959995df9a66; text-decoration: underline;">get</span><span style="text-decoration: underline;">-</span><span style="color: #68717c277aa9; text-decoration: underline;">property</span> <span style="color: #839496; font-weight: bold;">:session</span> <span style="color: #268bd2;">it</span>
+                                                                    <span style="color: #2aa198;">"/org/mpris/MediaPlayer2"</span>
+                                                                    <span style="color: #2aa198;">"org.mpris.MediaPlayer2.Player"</span>
+                                                                    <span style="color: #2aa198;">"PlaybackStatus"</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span>
+                                        <span style="color: #9dff5da442ff;">mpris</span>-<span style="color: #a8e97c777baf;">services</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span>
+              <span style="color: #6c71c4;">(</span><span style="color: #a19967658391;">player</span>-<span style="color: #68717c277aa9;">name</span> <span style="color: #859900;">(</span><span style="color: #6e667a661e98; text-decoration: underline;">dbus</span><span style="text-decoration: underline;">-</span><span style="color: #959995df9a66; text-decoration: underline;">get</span><span style="text-decoration: underline;">-</span><span style="color: #68717c277aa9; text-decoration: underline;">property</span> <span style="color: #839496; font-weight: bold;">:session</span> <span style="color: #9af381d633a6;">playing</span>-<span style="color: #a050824890d1;">service</span>
+                                              <span style="color: #2aa198;">"/org/mpris/MediaPlayer2"</span>
+                                              <span style="color: #2aa198;">"org.mpris.MediaPlayer2"</span>
+                                              <span style="color: #2aa198;">"Identity"</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span>
+              <span style="color: #6c71c4;">(</span><span style="color: #a8e97c777baf;">metadata</span> <span style="color: #859900;">(</span><span style="color: #6e667a661e98; text-decoration: underline;">dbus</span><span style="text-decoration: underline;">-</span><span style="color: #959995df9a66; text-decoration: underline;">get</span><span style="text-decoration: underline;">-</span><span style="color: #68717c277aa9; text-decoration: underline;">property</span> <span style="color: #839496; font-weight: bold;">:session</span> <span style="color: #9af381d633a6;">playing</span>-<span style="color: #a050824890d1;">service</span>
+                                           <span style="color: #2aa198;">"/org/mpris/MediaPlayer2"</span>
+                                           <span style="color: #2aa198;">"org.mpris.MediaPlayer2.Player"</span>
+                                           <span style="color: #2aa198;">"Metadata"</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span>
+    <span style="color: #586e75;">;; </span><span style="color: #586e75; font-weight: bold; font-style: italic;">`</span><span style="color: #268bd2; font-weight: bold; font-style: italic;">-let</span><span style="color: #586e75; font-weight: bold; font-style: italic;">' makes it easy to get the actual strings out of the nested lists of lists of strings.</span>
+    <span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">-let</span> <span style="color: #6c71c4;">(</span><span style="color: #859900;">(</span><span style="color: #b58900;">(</span><span style="color: #b58900;">&amp;alist</span> <span style="color: #2aa198;">"xesam:artist"</span> <span style="color: #268bd2;">(</span><span style="color: #6c71c4;">(</span><span style="color: #71ba8cd29fdd;">artists</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span>
+                    <span style="color: #2aa198;">"xesam:album"</span> <span style="color: #268bd2;">(</span><span style="color: #6c71c4;">(</span><span style="color: #6e667a661e98;">album</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span>
+                    <span style="color: #2aa198;">"xesam:title"</span> <span style="color: #268bd2;">(</span><span style="color: #6c71c4;">(</span><span style="color: #a3726d7d5726;">title</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span>
+            <span style="color: #a8e97c777baf;">metadata</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span>
+      <span style="color: #6c71c4;">(</span><span style="color: #57998258a066; text-decoration: underline;">format</span> <span style="color: #2aa198;">"%s - %s: %s%s"</span> <span style="color: #859900;">(</span><span style="color: #57998258a066; text-decoration: underline;">s</span><span style="text-decoration: underline;">-</span><span style="color: #52997866758a; text-decoration: underline;">join</span> <span style="color: #2aa198;">", "</span> <span style="color: #71ba8cd29fdd;">artists</span><span style="color: #859900;">)</span> <span style="color: #6e667a661e98;">album</span> <span style="color: #a3726d7d5726;">title</span>
+              <span style="color: #859900;">(</span><span style="color: #859900; font-weight: bold;">if</span> <span style="color: #a19967658391;">player</span>
+                  <span style="color: #b58900;">(</span><span style="color: #57998258a066; text-decoration: underline;">format</span> <span style="color: #2aa198;">" [%s]"</span> <span style="color: #a19967658391;">player</span>-<span style="color: #68717c277aa9;">name</span><span style="color: #b58900;">)</span>
+                <span style="color: #2aa198;">""</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0b6a366" class="outline-2">
+<h2 id="org0b6a366">Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Org">Org</span></span></h2>
+<div class="outline-text-2" id="text-org0b6a366">
 <p>
 Code for <a href="https://orgmode.org/">Org Mode</a>.
 </p>
 </div>
 
-<div id="outline-container-orgc73b6f4" class="outline-3">
-<h3 id="orgc73b6f4"><a id="ID-b86d14ff-b87c-4e2a-a513-067c0a5d3490"></a>Convert Elisp docstrings to Org format&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></h3>
-<div class="outline-text-3" id="text-orgc73b6f4">
+<div id="outline-container-org7625d5e" class="outline-3">
+<h3 id="org7625d5e"><a id="ID-b86d14ff-b87c-4e2a-a513-067c0a5d3490"></a>Convert Elisp docstrings to Org format&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></h3>
+<div class="outline-text-3" id="text-org7625d5e">
 <p>
 These functions convert Emacs Lisp docstrings to Org-formatted text, helpful for inserting into readme files.
 </p>
@@ -457,9 +517,9 @@ These functions convert Emacs Lisp docstrings to Org-formatted text, helpful for
 </div>
 </div>
 
-<div id="outline-container-orgcb21d9d" class="outline-3">
-<h3 id="orgcb21d9d">Download and attach remote files</h3>
-<div class="outline-text-3" id="text-orgcb21d9d">
+<div id="outline-container-orgaba6d19" class="outline-3">
+<h3 id="orgaba6d19">Download and attach remote files</h3>
+<div class="outline-text-3" id="text-orgaba6d19">
 <p>
 Download file at <code>URL</code> and attach with <code>org-attach</code>.  Interactively, look for <code>URL</code> at point, in X clipboard, and in kill-ring, prompting if not found.  With prefix, prompt for <code>URL</code>.
 </p>
@@ -492,7 +552,7 @@ Download file at <code>URL</code> and attach with <code>org-attach</code>.  Inte
             <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">setq</span> <span style="color: #57998258a066;">size</span> <span style="color: #268bd2;">(</span><span style="color: #6e667a661e98; text-decoration: underline;">file</span><span style="text-decoration: underline;">-</span><span style="color: #57998258a066; text-decoration: underline;">size</span><span style="text-decoration: underline;">-</span><span style="color: #a961952b94d0; text-decoration: underline;">human</span><span style="text-decoration: underline;">-</span><span style="color: #57998258a066; text-decoration: underline;">readable</span>
                         <span style="color: #6c71c4;">(</span><span style="color: #6e667a661e98; text-decoration: underline;">file</span><span style="text-decoration: underline;">-</span><span style="color: #a961952b94d0; text-decoration: underline;">attribute</span><span style="text-decoration: underline;">-</span><span style="color: #57998258a066; text-decoration: underline;">size</span>
                          <span style="color: #859900;">(</span><span style="color: #6e667a661e98; text-decoration: underline;">file</span><span style="text-decoration: underline;">-</span><span style="color: #9af381d633a6; text-decoration: underline;">attributes</span> <span style="color: #9dff5da442ff;">local</span>-<span style="color: #52997866758a;">path</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span>
-            <span style="color: #b58900;">(</span><span style="color: #57998258a066; text-decoration: underline;">org</span><span style="text-decoration: underline;">-</span><span style="color: #6e667a661e98; text-decoration: underline;">attach</span><span style="text-decoration: underline;">-</span><span style="color: #6e667a661e98; text-decoration: underline;">attach</span> <span style="color: #9dff5da442ff;">local</span>-<span style="color: #52997866758a;">path</span> <span style="color: #a4cca4cca4cc;">nil</span> <span style="color: #859900; font-weight: bold;">'</span><span style="color: #a8e97c777baf; font-style: italic;">mv</span><span style="color: #b58900;">)</span>
+            <span style="color: #b58900;">(</span><span style="color: #57998258a066;">org</span>-<span style="color: #6e667a661e98;">attach</span>-<span style="color: #6e667a661e98;">attach</span> <span style="color: #9dff5da442ff;">local</span>-<span style="color: #52997866758a;">path</span> <span style="color: #a4cca4cca4cc;">nil</span> <span style="color: #859900; font-weight: bold;">'</span><span style="color: #a8e97c777baf; font-style: italic;">mv</span><span style="color: #b58900;">)</span>
             <span style="color: #b58900;">(</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">message</span> <span style="color: #2aa198;">"Attached %s (%s)"</span> <span style="color: #68717c277aa9;">url</span> <span style="color: #57998258a066;">size</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
         <span style="color: #859900;">(</span><span style="color: #a8e97c777baf; text-decoration: underline;">delete</span><span style="text-decoration: underline;">-</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">directory</span> <span style="color: #52997866758a;">temp</span>-<span style="color: #a3726d7d5726;">dir</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
 </pre>
@@ -500,9 +560,9 @@ Download file at <code>URL</code> and attach with <code>org-attach</code>.  Inte
 </div>
 </div>
 
-<div id="outline-container-org5b84fec" class="outline-3">
-<h3 id="org5b84fec">Read-only trees</h3>
-<div class="outline-text-3" id="text-org5b84fec">
+<div id="outline-container-orgcc8c8ca" class="outline-3">
+<h3 id="orgcc8c8ca">Read-only trees</h3>
+<div class="outline-text-3" id="text-orgcc8c8ca">
 <p>
 This code applies the <code>read-only</code> text-property to trees tagged <code>read_only</code>, preventing them from being modified accidentally.  (Note: If read-only headings appear in an Agenda buffer, it can cause slightly unusual behavior.  Usually this is not an issue.)  This was originally inspired by John Kitchin's <a href="http://kitchingroup.cheme.cmu.edu/blog/2014/09/13/Make-some-org-sections-read-only/">blog article</a> and later <a href="https://www.reddit.com/r/emacs/comments/92k7n1/guide_to_profiling_and_optimizing_an_orgrelated/">rewritten</a> in a faster version.
 </p>
@@ -556,12 +616,12 @@ The functions may also be called interactively as needed.
 </div>
 </div>
 
-<div id="outline-container-org25165f0" class="outline-2">
-<h2 id="org25165f0">Regular expressions&#xa0;&#xa0;&#xa0;<span class="tag"><span class="regular_expressions">regular_expressions</span></span></h2>
-<div class="outline-text-2" id="text-org25165f0">
-</div><div id="outline-container-orgd698003" class="outline-3">
-<h3 id="orgd698003">query-replace-rx</h3>
-<div class="outline-text-3" id="text-orgd698003">
+<div id="outline-container-orgf47d3fc" class="outline-2">
+<h2 id="orgf47d3fc">Regular expressions&#xa0;&#xa0;&#xa0;<span class="tag"><span class="regular_expressions">regular_expressions</span></span></h2>
+<div class="outline-text-2" id="text-orgf47d3fc">
+</div><div id="outline-container-org1e6feb6" class="outline-3">
+<h3 id="org1e6feb6">query-replace-rx</h3>
+<div class="outline-text-3" id="text-org1e6feb6">
 <p>
 Call <code>query-replace-regexp</code>, reading regexp in <code>rx</code> syntax.  Automatically wraps in parens and adds <code>seq</code> to the beginning of the form.
 </p>
@@ -585,15 +645,15 @@ Call <code>query-replace-regexp</code>, reading regexp in <code>rx</code> syntax
 </div>
 </div>
 
-<div id="outline-container-org7dd739d" class="outline-2">
-<h2 id="org7dd739d">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></h2>
-<div class="outline-text-2" id="text-org7dd739d">
-</div><div id="outline-container-org5dd113b" class="outline-3">
-<h3 id="org5dd113b">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></h3>
-<div class="outline-text-3" id="text-org5dd113b">
-</div><div id="outline-container-org30c67b8" class="outline-4">
-<h4 id="org30c67b8">magit-log date headers</h4>
-<div class="outline-text-4" id="text-org30c67b8">
+<div id="outline-container-org93b3670" class="outline-2">
+<h2 id="org93b3670">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></h2>
+<div class="outline-text-2" id="text-org93b3670">
+</div><div id="outline-container-org62448d6" class="outline-3">
+<h3 id="org62448d6">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></h3>
+<div class="outline-text-3" id="text-org62448d6">
+</div><div id="outline-container-orgd28629d" class="outline-4">
+<h4 id="orgd28629d">magit-log date headers</h4>
+<div class="outline-text-4" id="text-orgd28629d">
 <p>
 Add date headers to Magit log buffers.
 </p>
@@ -650,12 +710,12 @@ This isn't always perfect, because dates in a git commit log are not always in o
 </div>
 </div>
 
-<div id="outline-container-org7f014f4" class="outline-2">
-<h2 id="org7f014f4">Web&#xa0;&#xa0;&#xa0;<span class="tag"><span class="web">web</span></span></h2>
-<div class="outline-text-2" id="text-org7f014f4">
-</div><div id="outline-container-orgd3f994d" class="outline-3">
-<h3 id="orgd3f994d">feed-for-url&#xa0;&#xa0;&#xa0;<span class="tag"><span class="RSS">RSS</span>&#xa0;<span class="Atom">Atom</span>&#xa0;<span class="XML">XML</span></span></h3>
-<div class="outline-text-3" id="text-orgd3f994d">
+<div id="outline-container-org7900519" class="outline-2">
+<h2 id="org7900519">Web&#xa0;&#xa0;&#xa0;<span class="tag"><span class="web">web</span></span></h2>
+<div class="outline-text-2" id="text-org7900519">
+</div><div id="outline-container-orga393224" class="outline-3">
+<h3 id="orga393224">feed-for-url&#xa0;&#xa0;&#xa0;<span class="tag"><span class="RSS">RSS</span>&#xa0;<span class="Atom">Atom</span>&#xa0;<span class="XML">XML</span></span></h3>
+<div class="outline-text-3" id="text-orga393224">
 <p>
 Return ATOM or RSS feed <code>URL</code> for web page at <code>URL</code>.  Interactively, insert the <code>URL</code> at point.  <code>PREFER</code> may be <code>atom</code> (the default) or <code>rss</code>.  When <code>ALL</code> is non-nil, return all feed URLs of all types; otherwise, return only one feed <code>URL</code>, preferring the preferred type.
 </p>
@@ -713,9 +773,9 @@ Return ATOM or RSS feed <code>URL</code> for web page at <code>URL</code>.  Inte
 </div>
 </div>
 
-<div id="outline-container-orgd4cbba5" class="outline-2">
-<h2 id="orgd4cbba5">License</h2>
-<div class="outline-text-2" id="text-orgd4cbba5">
+<div id="outline-container-org7fee29b" class="outline-2">
+<h2 id="org7fee29b">License</h2>
+<div class="outline-text-2" id="text-org7fee29b">
 <p>
 GPLv3
 </p>
@@ -724,7 +784,7 @@ GPLv3
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Adam Porter</p>
-<p class="date">Created: 2018-09-10 Mon 08:42</p>
+<p class="date">Created: 2018-09-28 Fri 22:29</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
