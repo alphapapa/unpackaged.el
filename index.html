@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-09-28 Fri 22:29 -->
+<!-- 2018-12-07 Fri 14:20 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>unpackaged.el</title>
@@ -244,44 +244,54 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org6150d45">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></a>
+<li><a href="#orgd4a8c56">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></a>
 <ul>
-<li><a href="#org9c497a7">font-compare</a></li>
+<li><a href="#orged33459">font-compare</a></li>
 </ul>
 </li>
-<li><a href="#org0c37430">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></a></li>
-<li><a href="#orgadbfb66">Misc</a>
+<li><a href="#org4fcfbe5">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></a></li>
+<li><a href="#org7171f73">Misc</a>
 <ul>
-<li><a href="#orgee7ee3a">Track metadata from MPRIS-supporting media player&#xa0;&#xa0;&#xa0;<span class="tag"><span class="DBus">DBus</span></span></a></li>
+<li><a href="#orga1a1d16">Track metadata from MPRIS-supporting media player&#xa0;&#xa0;&#xa0;<span class="tag"><span class="DBus">DBus</span></span></a></li>
 </ul>
 </li>
-<li><a href="#org0b6a366">Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Org">Org</span></span></a>
+<li><a href="#org4a1cf9e">Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Org">Org</span></span></a>
 <ul>
-<li><a href="#org7625d5e">Convert Elisp docstrings to Org format&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></a></li>
-<li><a href="#orgaba6d19">Download and attach remote files</a></li>
-<li><a href="#orgcc8c8ca">Read-only trees</a></li>
+<li><a href="#org739c7bd">Convert Elisp to Org format&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></a></li>
+<li><a href="#orgd8cdc48">Download and attach remote files</a></li>
+<li><a href="#org622cf3b">Read-only trees</a></li>
 </ul>
 </li>
-<li><a href="#orgf47d3fc">Regular expressions&#xa0;&#xa0;&#xa0;<span class="tag"><span class="regular_expressions">regular_expressions</span></span></a>
+<li><a href="#orgbcc2343">Programming&#xa0;&#xa0;&#xa0;<span class="tag"><span class="programming">programming</span></span></a>
 <ul>
-<li><a href="#org1e6feb6">query-replace-rx</a></li>
-</ul>
-</li>
-<li><a href="#org93b3670">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></a>
+<li><a href="#orgc34eddd"><code>iedit</code>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="iedit">iedit</span>&#xa0;<span class="refactoring">refactoring</span></span></a>
 <ul>
-<li><a href="#org62448d6">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></a>
-<ul>
-<li><a href="#orgd28629d">magit-log date headers</a></li>
+<li><a href="#orgb76772a"><code>iedit-scoped</code></a></li>
+<li><a href="#org7b40158"><code>iedit-or-flyspell</code>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="flyspell">flyspell</span>&#xa0;<span class="spell_checking">spell_checking</span></span></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org7900519">Web&#xa0;&#xa0;&#xa0;<span class="tag"><span class="web">web</span></span></a>
+<li><a href="#orgf5322be">Regular expressions&#xa0;&#xa0;&#xa0;<span class="tag"><span class="regular_expressions">regular_expressions</span></span></a>
 <ul>
-<li><a href="#orga393224">feed-for-url&#xa0;&#xa0;&#xa0;<span class="tag"><span class="RSS">RSS</span>&#xa0;<span class="Atom">Atom</span>&#xa0;<span class="XML">XML</span></span></a></li>
+<li><a href="#orgdefc46b">query-replace-rx</a></li>
 </ul>
 </li>
-<li><a href="#org7fee29b">License</a></li>
+<li><a href="#orgf9a8796">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></a>
+<ul>
+<li><a href="#orgace5c63">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></a>
+<ul>
+<li><a href="#org6176214">magit-log date headers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org5082b21">Web&#xa0;&#xa0;&#xa0;<span class="tag"><span class="web">web</span></span></a>
+<ul>
+<li><a href="#org6b1c5dc">feed-for-url&#xa0;&#xa0;&#xa0;<span class="tag"><span class="RSS">RSS</span>&#xa0;<span class="Atom">Atom</span>&#xa0;<span class="XML">XML</span></span></a></li>
+</ul>
+</li>
+<li><a href="#org61b9add">License</a></li>
 </ul>
 </div>
 </div>
@@ -308,12 +318,12 @@ Functions in this file generally use these helper packages:
 <li><a href="https://github.com/magnars/s.el">s.el</a></li>
 </ul>
 
-<div id="outline-container-org6150d45" class="outline-2">
-<h2 id="org6150d45">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></h2>
-<div class="outline-text-2" id="text-org6150d45">
-</div><div id="outline-container-org9c497a7" class="outline-3">
-<h3 id="org9c497a7">font-compare</h3>
-<div class="outline-text-3" id="text-org9c497a7">
+<div id="outline-container-orgd4a8c56" class="outline-2">
+<h2 id="orgd4a8c56">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></h2>
+<div class="outline-text-2" id="text-orgd4a8c56">
+</div><div id="outline-container-orged33459" class="outline-3">
+<h3 id="orged33459">font-compare</h3>
+<div class="outline-text-3" id="text-orged33459">
 <p>
 Compare <code>TEXT</code> displayed in <code>FONTS</code>.  <code>FONTS</code> is a list of font specs.
 </p>
@@ -372,25 +382,25 @@ Interactively, prompt for <code>TEXT</code>, using <code>lorem-ipsum</code> text
 </div>
 </div>
 
-<div id="outline-container-org0c37430" class="outline-2">
-<h2 id="org0c37430">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></h2>
-<div class="outline-text-2" id="text-org0c37430">
+<div id="outline-container-org4fcfbe5" class="outline-2">
+<h2 id="org4fcfbe5">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></h2>
+<div class="outline-text-2" id="text-org4fcfbe5">
 <p>
 Code used to help maintain this document.  (Note: These links don't work in GitHub's renderer.)
 </p>
 
 <ul class="org-ul">
-<li><a href="#org7625d5e">Convert Elisp docstrings to Org format</a></li>
+<li></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgadbfb66" class="outline-2">
-<h2 id="orgadbfb66">Misc</h2>
-<div class="outline-text-2" id="text-orgadbfb66">
-</div><div id="outline-container-orgee7ee3a" class="outline-3">
-<h3 id="orgee7ee3a">Track metadata from MPRIS-supporting media player&#xa0;&#xa0;&#xa0;<span class="tag"><span class="DBus">DBus</span></span></h3>
-<div class="outline-text-3" id="text-orgee7ee3a">
+<div id="outline-container-org7171f73" class="outline-2">
+<h2 id="org7171f73">Misc</h2>
+<div class="outline-text-2" id="text-org7171f73">
+</div><div id="outline-container-orga1a1d16" class="outline-3">
+<h3 id="orga1a1d16">Track metadata from MPRIS-supporting media player&#xa0;&#xa0;&#xa0;<span class="tag"><span class="DBus">DBus</span></span></h3>
+<div class="outline-text-3" id="text-orga1a1d16">
 <p>
 Return the artist, album, and title of the track playing in MPRIS-supporting player.  Returns a string in format <code>ARTIST - ~ALBUM~: ~TITLE~ [PLAYER]</code>.  If no track is playing, returns nil.  If more than one player is playing, uses the first one found in DBus.  If <code>PLAYER</code> is non-nil, include the name of the player in the output string.
 </p>
@@ -440,23 +450,39 @@ DBus is not a straightforward system to work with, so this may serve as a useful
 </div>
 </div>
 
-<div id="outline-container-org0b6a366" class="outline-2">
-<h2 id="org0b6a366">Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Org">Org</span></span></h2>
-<div class="outline-text-2" id="text-org0b6a366">
+<div id="outline-container-org4a1cf9e" class="outline-2">
+<h2 id="org4a1cf9e">Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Org">Org</span></span></h2>
+<div class="outline-text-2" id="text-org4a1cf9e">
 <p>
 Code for <a href="https://orgmode.org/">Org Mode</a>.
 </p>
 </div>
 
-<div id="outline-container-org7625d5e" class="outline-3">
-<h3 id="org7625d5e"><a id="ID-b86d14ff-b87c-4e2a-a513-067c0a5d3490"></a>Convert Elisp docstrings to Org format&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></h3>
-<div class="outline-text-3" id="text-org7625d5e">
+<div id="outline-container-org739c7bd" class="outline-3">
+<h3 id="org739c7bd"><a id="ID-b86d14ff-b87c-4e2a-a513-067c0a5d3490"></a>Convert Elisp to Org format&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></h3>
+<div class="outline-text-3" id="text-org739c7bd">
 <p>
-These functions convert Emacs Lisp docstrings to Org-formatted text, helpful for inserting into readme files.
+These functions convert Emacs Lisp code and docstrings to Org-formatted text, helpful for inserting into readme files (like this one).
 </p>
 
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #2aa198;">(</span><span style="color: #859900; font-weight: bold;">defun</span> <span style="color: #268bd2;">unpackaged/docstring-to-org</span> <span style="color: #b58900;">(</span><span style="color: #a8e97c777baf;">docstring</span><span style="color: #b58900;">)</span>
+<pre class="src src-elisp"><span style="color: #2aa198;">(</span><span style="color: #859900; font-weight: bold;">defun</span> <span style="color: #268bd2;">unpackaged/elisp-to-org</span> <span style="color: #b58900;">()</span>
+  <span style="color: #2aa198;">"Convert elisp code in region to Org syntax and put in kill-ring.</span>
+<span style="color: #2aa198;">Extracts and converts docstring to Org text, and places code in</span>
+<span style="color: #2aa198;">source block."</span>
+  <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">interactive</span><span style="color: #b58900;">)</span>
+  <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">let*</span> <span style="color: #268bd2;">(</span><span style="color: #6c71c4;">(</span><span style="color: #52997866758a;">raw</span> <span style="color: #859900;">(</span><span style="color: #859900; font-weight: bold;">-&gt;&gt;</span> <span style="color: #b58900;">(</span><span style="color: #959995df9a66; text-decoration: underline;">buffer</span><span style="text-decoration: underline;">-</span><span style="color: #a19967658391; text-decoration: underline;">substring</span> <span style="color: #268bd2;">(</span><span style="color: #6e667a661e98; text-decoration: underline;">region</span><span style="text-decoration: underline;">-</span><span style="color: #6e667a661e98; text-decoration: underline;">beginning</span><span style="color: #268bd2;">)</span> <span style="color: #268bd2;">(</span><span style="color: #6e667a661e98; text-decoration: underline;">region</span><span style="text-decoration: underline;">-</span><span style="color: #a961952b94d0; text-decoration: underline;">end</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span>
+                   <span style="color: #b58900;">(</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">replace</span><span style="text-decoration: underline;">-</span><span style="color: #52997866758a; text-decoration: underline;">regexp</span><span style="text-decoration: underline;">-</span><span style="color: #a961952b94d0; text-decoration: underline;">in</span><span style="text-decoration: underline;">-</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">string</span> <span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">rx</span> <span style="color: #71ba8cd29fdd;">bol</span><span style="color: #268bd2;">)</span> <span style="color: #2aa198;">"  "</span><span style="color: #b58900;">)</span>
+                   <span style="color: #b58900;">(</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">replace</span><span style="text-decoration: underline;">-</span><span style="color: #52997866758a; text-decoration: underline;">regexp</span><span style="text-decoration: underline;">-</span><span style="color: #a961952b94d0; text-decoration: underline;">in</span><span style="text-decoration: underline;">-</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">string</span> <span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">rx</span> <span style="color: #71ba8cd29fdd;">bol</span> <span style="color: #6c71c4;">(</span><span style="color: #71ba8cd29fdd; text-decoration: underline;">1</span><span style="text-decoration: underline;">+</span> <span style="color: #a961952b94d0;">blank</span><span style="color: #6c71c4;">)</span> <span style="color: #7a4685f22ca6;">eol</span><span style="color: #268bd2;">)</span> <span style="color: #2aa198;">""</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span>
+         <span style="color: #6c71c4;">(</span><span style="color: #a19967658391;">sexp</span> <span style="color: #859900;">(</span><span style="color: #a961952b94d0; text-decoration: underline;">read</span> <span style="color: #52997866758a;">raw</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span>
+         <span style="color: #6c71c4;">(</span><span style="color: #a8e97c777baf;">docstring</span> <span style="color: #859900;">(</span><span style="color: #859900; font-weight: bold;">--when-let</span> <span style="color: #b58900;">(</span><span style="text-decoration: underline;">-</span><span style="color: #90cc76662432; text-decoration: underline;">first</span> <span style="color: #859900; font-weight: bold;">#'</span><span style="color: #a19967658391; font-style: italic;">stringp</span> <span style="color: #a19967658391;">sexp</span><span style="color: #b58900;">)</span>
+                      <span style="color: #b58900;">(</span><span style="color: #a961952b94d0; text-decoration: underline;">unpackaged</span><span style="text-decoration: underline;">/</span><span style="color: #a8e97c777baf; text-decoration: underline;">docstring</span><span style="text-decoration: underline;">-</span><span style="color: #a050824890d1; text-decoration: underline;">to</span><span style="text-decoration: underline;">-</span><span style="color: #57998258a066; text-decoration: underline;">org</span> <span style="color: #268bd2;">it</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span>
+    <span style="color: #268bd2;">(</span><span style="color: #7a4685f22ca6; text-decoration: underline;">kill</span><span style="text-decoration: underline;">-</span><span style="color: #68717c277aa9; text-decoration: underline;">new</span> <span style="color: #6c71c4;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">concat</span> <span style="color: #a8e97c777baf;">docstring</span> <span style="color: #859900;">(</span><span style="color: #859900; font-weight: bold;">when</span> <span style="color: #a8e97c777baf;">docstring</span> <span style="color: #2aa198;">"\n\n"</span><span style="color: #859900;">)</span>
+                      <span style="color: #2aa198;">"#+BEGIN_SRC elisp"</span> <span style="color: #2aa198;">"\n"</span>
+                      <span style="color: #52997866758a;">raw</span> <span style="color: #2aa198;">"\n"</span>
+                      <span style="color: #2aa198;">"#+END_SRC"</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
+
+<span style="color: #2aa198;">(</span><span style="color: #859900; font-weight: bold;">defun</span> <span style="color: #268bd2;">unpackaged/docstring-to-org</span> <span style="color: #b58900;">(</span><span style="color: #a8e97c777baf;">docstring</span><span style="color: #b58900;">)</span>
   <span style="color: #2aa198;">"Return DOCSTRING as formatted Org text.</span>
 
 <span style="color: #2aa198;">Interactively, get text from region, and kill formatted Org text</span>
@@ -517,9 +543,9 @@ These functions convert Emacs Lisp docstrings to Org-formatted text, helpful for
 </div>
 </div>
 
-<div id="outline-container-orgaba6d19" class="outline-3">
-<h3 id="orgaba6d19">Download and attach remote files</h3>
-<div class="outline-text-3" id="text-orgaba6d19">
+<div id="outline-container-orgd8cdc48" class="outline-3">
+<h3 id="orgd8cdc48">Download and attach remote files</h3>
+<div class="outline-text-3" id="text-orgd8cdc48">
 <p>
 Download file at <code>URL</code> and attach with <code>org-attach</code>.  Interactively, look for <code>URL</code> at point, in X clipboard, and in kill-ring, prompting if not found.  With prefix, prompt for <code>URL</code>.
 </p>
@@ -560,9 +586,9 @@ Download file at <code>URL</code> and attach with <code>org-attach</code>.  Inte
 </div>
 </div>
 
-<div id="outline-container-orgcc8c8ca" class="outline-3">
-<h3 id="orgcc8c8ca">Read-only trees</h3>
-<div class="outline-text-3" id="text-orgcc8c8ca">
+<div id="outline-container-org622cf3b" class="outline-3">
+<h3 id="org622cf3b">Read-only trees</h3>
+<div class="outline-text-3" id="text-org622cf3b">
 <p>
 This code applies the <code>read-only</code> text-property to trees tagged <code>read_only</code>, preventing them from being modified accidentally.  (Note: If read-only headings appear in an Agenda buffer, it can cause slightly unusual behavior.  Usually this is not an issue.)  This was originally inspired by John Kitchin's <a href="http://kitchingroup.cheme.cmu.edu/blog/2014/09/13/Make-some-org-sections-read-only/">blog article</a> and later <a href="https://www.reddit.com/r/emacs/comments/92k7n1/guide_to_profiling_and_optimizing_an_orgrelated/">rewritten</a> in a faster version.
 </p>
@@ -616,12 +642,93 @@ The functions may also be called interactively as needed.
 </div>
 </div>
 
-<div id="outline-container-orgf47d3fc" class="outline-2">
-<h2 id="orgf47d3fc">Regular expressions&#xa0;&#xa0;&#xa0;<span class="tag"><span class="regular_expressions">regular_expressions</span></span></h2>
-<div class="outline-text-2" id="text-orgf47d3fc">
-</div><div id="outline-container-org1e6feb6" class="outline-3">
-<h3 id="org1e6feb6">query-replace-rx</h3>
-<div class="outline-text-3" id="text-org1e6feb6">
+<div id="outline-container-orgbcc2343" class="outline-2">
+<h2 id="orgbcc2343">Programming&#xa0;&#xa0;&#xa0;<span class="tag"><span class="programming">programming</span></span></h2>
+<div class="outline-text-2" id="text-orgbcc2343">
+</div><div id="outline-container-orgc34eddd" class="outline-3">
+<h3 id="orgc34eddd"><code>iedit</code>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="iedit">iedit</span>&#xa0;<span class="refactoring">refactoring</span></span></h3>
+<div class="outline-text-3" id="text-orgc34eddd">
+<p>
+These commands make <code>iedit-mode</code> a bit easier to use.
+</p>
+</div>
+
+<div id="outline-container-orgb76772a" class="outline-4">
+<h4 id="orgb76772a"><code>iedit-scoped</code></h4>
+<div class="outline-text-4" id="text-orgb76772a">
+<p>
+Call <code>iedit-mode</code> with function-local scope, or global scope if called with a universal prefix.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #2aa198;">(</span><span style="color: #859900; font-weight: bold;">defun</span> <span style="color: #268bd2;">unpackaged/iedit-scoped</span> <span style="color: #b58900;">(</span><span style="color: #68717c277aa9;">orig</span>-<span style="color: #57998258a066;">fn</span><span style="color: #b58900;">)</span>
+  <span style="color: #2aa198;">"Call `</span><span style="color: #268bd2; font-weight: bold;">iedit-mode</span><span style="color: #2aa198;">' with function-local scope, or global scope if called with a universal prefix."</span>
+  <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">interactive</span><span style="color: #b58900;">)</span>
+  <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">pcase-exhaustive</span> <span style="color: #a961952b94d0;">current</span>-<span style="color: #a4cca4cca4cc;">prefix</span>-<span style="color: #68717c277aa9;">arg</span>
+    <span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">'</span><span style="color: #a4cca4cca4cc; font-style: italic;">nil</span> <span style="color: #6c71c4;">(</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">funcall</span> <span style="color: #68717c277aa9;">orig</span>-<span style="color: #57998258a066;">fn</span> <span style="color: #859900; font-weight: bold;">'</span><span style="color: #859900;">(</span><span style="color: #68717c277aa9;">0</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span>
+    <span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">'</span><span style="color: #6c71c4;">(</span><span style="color: #7a4685f22ca6;">4</span><span style="color: #6c71c4;">)</span> <span style="color: #6c71c4;">(</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">funcall</span> <span style="color: #68717c277aa9;">orig</span>-<span style="color: #57998258a066;">fn</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
+
+<span style="color: #2aa198;">(</span><span style="color: #6e667a661e98; text-decoration: underline;">advice</span><span style="text-decoration: underline;">-</span><span style="color: #71ba8cd29fdd; text-decoration: underline;">add</span> <span style="color: #859900; font-weight: bold;">#'</span><span style="color: #a19967658391; font-style: italic;">iedit</span><span style="font-style: italic;">-</span><span style="color: #68717c277aa9; font-style: italic;">mode</span> <span style="color: #839496; font-weight: bold;">:around</span> <span style="color: #859900; font-weight: bold;">#'</span><span style="color: #a961952b94d0; font-style: italic;">unpackaged</span><span style="font-style: italic;">/</span><span style="color: #a19967658391; font-style: italic;">iedit</span><span style="font-style: italic;">-</span><span style="color: #6e667a661e98; font-style: italic;">scoped</span><span style="color: #2aa198;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7b40158" class="outline-4">
+<h4 id="org7b40158"><code>iedit-or-flyspell</code>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="flyspell">flyspell</span>&#xa0;<span class="spell_checking">spell_checking</span></span></h4>
+<div class="outline-text-4" id="text-org7b40158">
+<p>
+Toggle <code>iedit-mode</code> or correct previous misspelling with <code>flyspell</code>, depending on context.
+</p>
+
+<p>
+With point in code or when <code>iedit-mode</code> is already active, toggle <code>iedit-mode</code>.  With point in a comment or string, and when <code>iedit-mode</code> is not already active, auto-correct previous misspelled word with <code>flyspell</code>.  Call this command a second time to choose a different correction.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #2aa198;">(</span><span style="color: #859900; font-weight: bold;">defun</span> <span style="color: #268bd2;">unpackaged/iedit-or-flyspell</span> <span style="color: #b58900;">()</span>
+  <span style="color: #2aa198;">"Toggle `</span><span style="color: #268bd2; font-weight: bold;">iedit-mode</span><span style="color: #2aa198;">' or correct previous misspelling with `</span><span style="color: #268bd2; font-weight: bold;">flyspell</span><span style="color: #2aa198;">', depending on context.</span>
+
+<span style="color: #2aa198;">With point in code or when `</span><span style="color: #268bd2; font-weight: bold;">iedit-mode</span><span style="color: #2aa198;">' is already active, toggle</span>
+<span style="color: #2aa198;">`</span><span style="color: #268bd2; font-weight: bold;">iedit-mode</span><span style="color: #2aa198;">'.  With point in a comment or string, and when</span>
+<span style="color: #2aa198;">`</span><span style="color: #268bd2; font-weight: bold;">iedit-mode</span><span style="color: #2aa198;">' is not already active, auto-correct previous</span>
+<span style="color: #2aa198;">misspelled word with `</span><span style="color: #268bd2; font-weight: bold;">flyspell</span><span style="color: #2aa198;">'.  Call this command a second time</span>
+<span style="color: #2aa198;">to choose a different correction."</span>
+  <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">interactive</span><span style="color: #b58900;">)</span>
+  <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">if</span> <span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">or</span> <span style="color: #a19967658391;">iedit</span>-<span style="color: #68717c277aa9;">mode</span>
+          <span style="color: #6c71c4;">(</span><span style="color: #859900; font-weight: bold;">and</span> <span style="color: #859900;">(</span><span style="color: #a19967658391; text-decoration: underline;">derived</span><span style="text-decoration: underline;">-</span><span style="color: #68717c277aa9; text-decoration: underline;">mode</span><span style="text-decoration: underline;">-</span><span style="color: #9af381d633a6; text-decoration: underline;">p</span> <span style="color: #859900; font-weight: bold;">'</span><span style="color: #959995df9a66; font-style: italic;">prog</span><span style="font-style: italic;">-</span><span style="color: #68717c277aa9; font-style: italic;">mode</span><span style="color: #859900;">)</span>
+               <span style="color: #859900;">(</span><span style="color: #cb4b16; font-weight: bold;">not</span> <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">or</span> <span style="color: #268bd2;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">nth</span> <span style="color: #7a4685f22ca6;">4</span> <span style="color: #6c71c4;">(</span><span style="color: #6e667a661e98; text-decoration: underline;">syntax</span><span style="text-decoration: underline;">-</span><span style="color: #57998258a066; text-decoration: underline;">ppss</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span>
+                        <span style="color: #268bd2;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">nth</span> <span style="color: #71ba8cd29fdd;">3</span> <span style="color: #6c71c4;">(</span><span style="color: #6e667a661e98; text-decoration: underline;">syntax</span><span style="text-decoration: underline;">-</span><span style="color: #57998258a066; text-decoration: underline;">ppss</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span>
+      <span style="color: #586e75;">;; </span><span style="color: #586e75; font-weight: bold; font-style: italic;">prog-mode is active and point is in a comment, string, or</span>
+      <span style="color: #586e75;">;; </span><span style="color: #586e75; font-weight: bold; font-style: italic;">already in iedit-mode</span>
+      <span style="color: #268bd2;">(</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">call</span><span style="text-decoration: underline;">-</span><span style="color: #a3726d7d5726; text-decoration: underline;">interactively</span> <span style="color: #859900; font-weight: bold;">#'</span><span style="color: #a19967658391; font-style: italic;">iedit</span><span style="font-style: italic;">-</span><span style="color: #68717c277aa9; font-style: italic;">mode</span><span style="color: #268bd2;">)</span>
+    <span style="color: #586e75;">;; </span><span style="color: #586e75; font-weight: bold; font-style: italic;">Not prog-mode or not in comment or string</span>
+    <span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">if</span> <span style="color: #6c71c4;">(</span><span style="color: #cb4b16; font-weight: bold;">not</span> <span style="color: #859900;">(</span><span style="color: #9dff5da442ff; text-decoration: underline;">equal</span> <span style="color: #71ba8cd29fdd;">flyspell</span>-<span style="color: #a8e97c777baf;">previous</span>-<span style="color: #a4cca4cca4cc;">command</span> <span style="color: #a050824890d1;">this</span>-<span style="color: #a4cca4cca4cc;">command</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span>
+        <span style="color: #586e75;">;; </span><span style="color: #cb4b16;">FIXME</span><span style="color: #586e75; font-weight: bold; font-style: italic;">: This mostly works, but if there are two words on the</span>
+        <span style="color: #586e75;">;; </span><span style="color: #586e75; font-weight: bold; font-style: italic;">same line that are misspelled, it doesn't work quite right</span>
+        <span style="color: #586e75;">;; </span><span style="color: #586e75; font-weight: bold; font-style: italic;">when correcting the earlier word after correcting the later</span>
+        <span style="color: #586e75;">;; </span><span style="color: #586e75; font-weight: bold; font-style: italic;">one</span>
+
+        <span style="color: #586e75;">;; </span><span style="color: #586e75; font-weight: bold; font-style: italic;">First correction; autocorrect</span>
+        <span style="color: #6c71c4;">(</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">call</span><span style="text-decoration: underline;">-</span><span style="color: #a3726d7d5726; text-decoration: underline;">interactively</span> <span style="color: #859900; font-weight: bold;">'</span><span style="color: #71ba8cd29fdd; font-style: italic;">flyspell</span><span style="font-style: italic;">-</span><span style="color: #a3726d7d5726; font-style: italic;">auto</span><span style="font-style: italic;">-</span><span style="color: #959995df9a66; font-style: italic;">correct</span><span style="font-style: italic;">-</span><span style="color: #a8e97c777baf; font-style: italic;">previous</span><span style="font-style: italic;">-</span><span style="color: #57998258a066; font-style: italic;">word</span><span style="color: #6c71c4;">)</span>
+      <span style="color: #586e75;">;; </span><span style="color: #586e75; font-weight: bold; font-style: italic;">First correction was not wanted; use popup to choose</span>
+      <span style="color: #6c71c4;">(</span><span style="color: #859900; font-weight: bold;">progn</span>
+        <span style="color: #859900;">(</span><span style="color: #859900; font-weight: bold;">save-excursion</span>
+          <span style="color: #b58900;">(</span><span style="color: #57998258a066; text-decoration: underline;">undo</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>                       <span style="color: #586e75;">; </span><span style="color: #586e75; font-weight: bold; font-style: italic;">This doesn't move point, which I think may be the problem.</span>
+        <span style="color: #859900;">(</span><span style="color: #71ba8cd29fdd; text-decoration: underline;">flyspell</span><span style="text-decoration: underline;">-</span><span style="color: #6e667a661e98; text-decoration: underline;">region</span> <span style="color: #b58900;">(</span><span style="color: #a8e97c777baf; text-decoration: underline;">line</span><span style="text-decoration: underline;">-</span><span style="color: #6e667a661e98; text-decoration: underline;">beginning</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">position</span><span style="color: #b58900;">)</span> <span style="color: #b58900;">(</span><span style="color: #a8e97c777baf; text-decoration: underline;">line</span><span style="text-decoration: underline;">-</span><span style="color: #a961952b94d0; text-decoration: underline;">end</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">position</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
+        <span style="color: #859900;">(</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">call</span><span style="text-decoration: underline;">-</span><span style="color: #a3726d7d5726; text-decoration: underline;">interactively</span> <span style="color: #859900; font-weight: bold;">'</span><span style="color: #71ba8cd29fdd; font-style: italic;">flyspell</span><span style="font-style: italic;">-</span><span style="color: #959995df9a66; font-style: italic;">correct</span><span style="font-style: italic;">-</span><span style="color: #a8e97c777baf; font-style: italic;">previous</span><span style="font-style: italic;">-</span><span style="color: #57998258a066; font-style: italic;">word</span><span style="font-style: italic;">-</span><span style="color: #9af381d633a6; font-style: italic;">generic</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf5322be" class="outline-2">
+<h2 id="orgf5322be">Regular expressions&#xa0;&#xa0;&#xa0;<span class="tag"><span class="regular_expressions">regular_expressions</span></span></h2>
+<div class="outline-text-2" id="text-orgf5322be">
+</div><div id="outline-container-orgdefc46b" class="outline-3">
+<h3 id="orgdefc46b">query-replace-rx</h3>
+<div class="outline-text-3" id="text-orgdefc46b">
 <p>
 Call <code>query-replace-regexp</code>, reading regexp in <code>rx</code> syntax.  Automatically wraps in parens and adds <code>seq</code> to the beginning of the form.
 </p>
@@ -645,15 +752,15 @@ Call <code>query-replace-regexp</code>, reading regexp in <code>rx</code> syntax
 </div>
 </div>
 
-<div id="outline-container-org93b3670" class="outline-2">
-<h2 id="org93b3670">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></h2>
-<div class="outline-text-2" id="text-org93b3670">
-</div><div id="outline-container-org62448d6" class="outline-3">
-<h3 id="org62448d6">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></h3>
-<div class="outline-text-3" id="text-org62448d6">
-</div><div id="outline-container-orgd28629d" class="outline-4">
-<h4 id="orgd28629d">magit-log date headers</h4>
-<div class="outline-text-4" id="text-orgd28629d">
+<div id="outline-container-orgf9a8796" class="outline-2">
+<h2 id="orgf9a8796">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></h2>
+<div class="outline-text-2" id="text-orgf9a8796">
+</div><div id="outline-container-orgace5c63" class="outline-3">
+<h3 id="orgace5c63">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></h3>
+<div class="outline-text-3" id="text-orgace5c63">
+</div><div id="outline-container-org6176214" class="outline-4">
+<h4 id="org6176214">magit-log date headers</h4>
+<div class="outline-text-4" id="text-org6176214">
 <p>
 Add date headers to Magit log buffers.
 </p>
@@ -710,12 +817,12 @@ This isn't always perfect, because dates in a git commit log are not always in o
 </div>
 </div>
 
-<div id="outline-container-org7900519" class="outline-2">
-<h2 id="org7900519">Web&#xa0;&#xa0;&#xa0;<span class="tag"><span class="web">web</span></span></h2>
-<div class="outline-text-2" id="text-org7900519">
-</div><div id="outline-container-orga393224" class="outline-3">
-<h3 id="orga393224">feed-for-url&#xa0;&#xa0;&#xa0;<span class="tag"><span class="RSS">RSS</span>&#xa0;<span class="Atom">Atom</span>&#xa0;<span class="XML">XML</span></span></h3>
-<div class="outline-text-3" id="text-orga393224">
+<div id="outline-container-org5082b21" class="outline-2">
+<h2 id="org5082b21">Web&#xa0;&#xa0;&#xa0;<span class="tag"><span class="web">web</span></span></h2>
+<div class="outline-text-2" id="text-org5082b21">
+</div><div id="outline-container-org6b1c5dc" class="outline-3">
+<h3 id="org6b1c5dc">feed-for-url&#xa0;&#xa0;&#xa0;<span class="tag"><span class="RSS">RSS</span>&#xa0;<span class="Atom">Atom</span>&#xa0;<span class="XML">XML</span></span></h3>
+<div class="outline-text-3" id="text-org6b1c5dc">
 <p>
 Return ATOM or RSS feed <code>URL</code> for web page at <code>URL</code>.  Interactively, insert the <code>URL</code> at point.  <code>PREFER</code> may be <code>atom</code> (the default) or <code>rss</code>.  When <code>ALL</code> is non-nil, return all feed URLs of all types; otherwise, return only one feed <code>URL</code>, preferring the preferred type.
 </p>
@@ -773,9 +880,9 @@ Return ATOM or RSS feed <code>URL</code> for web page at <code>URL</code>.  Inte
 </div>
 </div>
 
-<div id="outline-container-org7fee29b" class="outline-2">
-<h2 id="org7fee29b">License</h2>
-<div class="outline-text-2" id="text-org7fee29b">
+<div id="outline-container-org61b9add" class="outline-2">
+<h2 id="org61b9add">License</h2>
+<div class="outline-text-2" id="text-org61b9add">
 <p>
 GPLv3
 </p>
@@ -784,7 +891,7 @@ GPLv3
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Adam Porter</p>
-<p class="date">Created: 2018-09-28 Fri 22:29</p>
+<p class="date">Created: 2018-12-07 Fri 14:20</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
