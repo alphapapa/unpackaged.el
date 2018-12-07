@@ -26,7 +26,7 @@ Functions in this file generally use these helper packages:
   -  [[#misc][Misc]]
     -  [[#track-metadata-from-mpris-supporting-media-player][Track metadata from MPRIS-supporting media player]]
   -  [[#org][Org]]
-    -  [[#convert-elisp-docstrings-to-org-format][Convert Elisp docstrings to Org format]]
+    -  [[#convert-elisp-to-org-format][Convert Elisp to Org format]]
     -  [[#download-and-attach-remote-files][Download and attach remote files]]
     -  [[#read-only-trees][Read-only trees]]
   -  [[#regular-expressions][Regular expressions]]
@@ -156,14 +156,30 @@ DBus is not a straightforward system to work with, so this may serve as a useful
 
 Code for [[https://orgmode.org/][Org Mode]].
 
-** Convert Elisp docstrings to Org format                             :meta:
+** Convert Elisp to Org format                             :meta:
 :PROPERTIES:
 :ID:       b86d14ff-b87c-4e2a-a513-067c0a5d3490
 :END:
 
-These functions convert Emacs Lisp docstrings to Org-formatted text, helpful for inserting into readme files.
+These functions convert Emacs Lisp code and docstrings to Org-formatted text, helpful for inserting into readme files (like this one).
 
 #+BEGIN_SRC elisp :results silent
+  (defun unpackaged/elisp-to-org ()
+    "Convert elisp code in region to Org syntax and put in kill-ring.
+  Extracts and converts docstring to Org text, and places code in
+  source block."
+    (interactive)
+    (let* ((raw (->> (buffer-substring (region-beginning) (region-end))
+                     (replace-regexp-in-string (rx bol) "  ")
+                     (replace-regexp-in-string (rx bol (1+ blank) eol) "")))
+           (sexp (read raw))
+           (docstring (--when-let (-first #'stringp sexp)
+                        (unpackaged/docstring-to-org it))))
+      (kill-new (concat docstring (when docstring "\n\n")
+                        "#+BEGIN_SRC elisp" "\n"
+                        raw "\n"
+                        "#+END_SRC"))))
+
   (defun unpackaged/docstring-to-org (docstring)
     "Return DOCSTRING as formatted Org text.
 
