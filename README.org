@@ -29,6 +29,10 @@ Functions in this file generally use these helper packages:
     -  [[#convert-elisp-to-org-format][Convert Elisp to Org format]]
     -  [[#download-and-attach-remote-files][Download and attach remote files]]
     -  [[#read-only-trees][Read-only trees]]
+  -  [[#programming][Programming]]
+    -  [[#iedit][~iedit~]]
+      -  [[#iedit-scoped][~iedit-scoped~]]
+      -  [[#iedit-or-flyspell][~iedit-or-flyspell~]]
   -  [[#regular-expressions][Regular expressions]]
     -  [[#query-replace-rx][query-replace-rx]]
   -  [[#version-control][Version control]]
@@ -324,6 +328,66 @@ The functions may also be called interactively as needed.
                                  '(read-only t))))))
 #+END_SRC
 
+* Programming                                                   :programming:
+
+** ~iedit~                                                 :iedit:refactoring:
+
+These commands make ~iedit-mode~ a bit easier to use.
+
+*** ~iedit-scoped~
+
+Call ~iedit-mode~ with function-local scope, or global scope if called with a universal prefix.
+
+#+BEGIN_SRC elisp
+  (defun unpackaged/iedit-scoped (orig-fn)
+    "Call `iedit-mode' with function-local scope, or global scope if called with a universal prefix."
+    (interactive)
+    (pcase-exhaustive current-prefix-arg
+      ('nil (funcall orig-fn '(0)))
+      ('(4) (funcall orig-fn))))
+
+  (advice-add #'iedit-mode :around #'unpackaged/iedit-scoped)
+#+END_SRC
+
+*** ~iedit-or-flyspell~                             :flyspell:spell_checking:
+
+Toggle ~iedit-mode~ or correct previous misspelling with ~flyspell~, depending on context.
+
+With point in code or when ~iedit-mode~ is already active, toggle ~iedit-mode~.  With point in a comment or string, and when ~iedit-mode~ is not already active, auto-correct previous misspelled word with ~flyspell~.  Call this command a second time to choose a different correction.
+
+#+BEGIN_SRC elisp
+  (defun unpackaged/iedit-or-flyspell ()
+    "Toggle `iedit-mode' or correct previous misspelling with `flyspell', depending on context.
+
+  With point in code or when `iedit-mode' is already active, toggle
+  `iedit-mode'.  With point in a comment or string, and when
+  `iedit-mode' is not already active, auto-correct previous
+  misspelled word with `flyspell'.  Call this command a second time
+  to choose a different correction."
+    (interactive)
+    (if (or iedit-mode
+            (and (derived-mode-p 'prog-mode)
+                 (not (or (nth 4 (syntax-ppss))
+                          (nth 3 (syntax-ppss))))))
+        ;; prog-mode is active and point is in a comment, string, or
+        ;; already in iedit-mode
+        (call-interactively #'iedit-mode)
+      ;; Not prog-mode or not in comment or string
+      (if (not (equal flyspell-previous-command this-command))
+          ;; FIXME: This mostly works, but if there are two words on the
+          ;; same line that are misspelled, it doesn't work quite right
+          ;; when correcting the earlier word after correcting the later
+          ;; one
+
+          ;; First correction; autocorrect
+          (call-interactively 'flyspell-auto-correct-previous-word)
+        ;; First correction was not wanted; use popup to choose
+        (progn
+          (save-excursion
+            (undo))                       ; This doesn't move point, which I think may be the problem.
+          (flyspell-region (line-beginning-position) (line-end-position))
+          (call-interactively 'flyspell-correct-previous-word-generic)))))
+#+END_SRC
 * Regular expressions                                   :regular_expressions:
 
 ** query-replace-rx
