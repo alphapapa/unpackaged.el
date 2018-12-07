@@ -15,6 +15,7 @@ Functions in this file generally use these helper packages:
 
 +  [[https://github.com/magnars/dash.el][dash.el]] (including ~dash-functional~)
 +  [[https://github.com/magnars/s.el][s.el]]
++  [[https://github.com/jwiegley/use-package][use-package]]
 
 * Contents                                                         :noexport:
 :PROPERTIES:
@@ -30,14 +31,16 @@ Functions in this file generally use these helper packages:
     -  [[#download-and-attach-remote-files][Download and attach remote files]]
     -  [[#read-only-trees][Read-only trees]]
   -  [[#programming][Programming]]
-    -  [[#iedit][~iedit~]]
-      -  [[#iedit-scoped][~iedit-scoped~]]
-      -  [[#iedit-or-flyspell][~iedit-or-flyspell~]]
+    -  [[#iedit][iedit]]
+      -  [[#iedit-scoped][iedit-scoped]]
+      -  [[#iedit-or-flyspell][iedit-or-flyspell]]
   -  [[#regular-expressions][Regular expressions]]
     -  [[#query-replace-rx][query-replace-rx]]
   -  [[#version-control][Version control]]
     -  [[#magit][Magit]]
       -  [[#magit-log-date-headers][magit-log date headers]]
+    -  [[#smerge-mode][smerge-mode]]
+      -  [[#hydra][Hydra]]
   -  [[#web][Web]]
     -  [[#feed-for-url][feed-for-url]]
 
@@ -388,6 +391,7 @@ With point in code or when ~iedit-mode~ is already active, toggle ~iedit-mode~. 
           (flyspell-region (line-beginning-position) (line-end-position))
           (call-interactively 'flyspell-correct-previous-word-generic)))))
 #+END_SRC
+
 * Regular expressions                                   :regular_expressions:
 
 ** query-replace-rx
@@ -455,6 +459,57 @@ Add date headers to Magit log buffers.
 #+END_SRC
 
 This isn't always perfect, because dates in a git commit log are not always in order (e.g. when commits are merged at a later date), but it's often very helpful to visually group commits by their age.
+
+** ~smerge-mode~
+:PROPERTIES:
+:ID:       9d6983a6-3765-45c2-a140-34c23f381361
+:END:
+
+*** Hydra
+
+This configuration automatically activates a helpful ~smerge-mode~ hydra when a file containing merge conflicts is visited from a Magit diff section.  You can manually activate the hydra with the command ~unpackaged/smerge-hydra/body~.  (Inspired by [[https://github.com/kaushalmodi/.emacs.d/blob/master/setup-files/setup-diff.el][Kaushal Modi's Emacs config]].)
+
+*Requires*:
++  [[https://github.com/abo-abo/hydra][hydra]]
++  [[https://magit.vc/][Magit]]
+
+[[images/smerge-mode-hydra.png]]
+
+#+BEGIN_SRC elisp
+  (use-package smerge-mode
+    :config
+    (defhydra unpackaged/smerge-hydra
+      (:color pink :hint nil :post (smerge-auto-leave))
+      "
+  ^Move^       ^Keep^               ^Diff^                 ^Other^
+  ^^-----------^^-------------------^^---------------------^^-------
+  _n_ext       _b_ase               _<_: upper/base        _C_ombine
+  _p_rev       _u_pper              _=_: upper/lower       _r_esolve
+  ^^           _l_ower              _>_: base/lower        _k_ill current
+  ^^           _a_ll                _R_efine
+  ^^           _RET_: current       _E_diff
+  "
+      ("n" smerge-next)
+      ("p" smerge-prev)
+      ("b" smerge-keep-base)
+      ("u" smerge-keep-upper)
+      ("l" smerge-keep-lower)
+      ("a" smerge-keep-all)
+      ("RET" smerge-keep-current)
+      ("\C-m" smerge-keep-current)
+      ("<" smerge-diff-base-upper)
+      ("=" smerge-diff-upper-lower)
+      (">" smerge-diff-base-lower)
+      ("R" smerge-refine)
+      ("E" smerge-ediff)
+      ("C" smerge-combine-with-next)
+      ("r" smerge-resolve)
+      ("k" smerge-kill-current)
+      ("q" nil "cancel" :color blue))
+    :hook (magit-diff-visit-file . (lambda ()
+                                     (when smerge-mode
+                                       (unpackaged/smerge-hydra/body)))))
+#+END_SRC
 
 * Web                                                                   :web:
 
