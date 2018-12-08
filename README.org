@@ -29,6 +29,7 @@ Functions in this file generally use these helper packages:
   -  [[#org][Org]]
     -  [[#org-return-dwim][org-return-dwim]]
     -  [[#convert-elisp-to-org-format][Convert Elisp to Org format]]
+    -  [[#agenda-previews][Agenda previews]]
     -  [[#download-and-attach-remote-files][Download and attach remote files]]
     -  [[#read-only-trees][Read-only trees]]
   -  [[#programming][Programming]]
@@ -350,6 +351,59 @@ These functions convert Emacs Lisp code and docstrings to Org-formatted text, he
 **** MAYBE Publish these on emacs-package-dev-handbook instead
 
 Not sure which place they best belong, but they should at least be linked in both.
+
+** Agenda previews                                                  :agenda:
+
+/Before:/
+
+[[images/org-agenda-preview-before.png]]
+
+/After:/
+
+[[images/org-agenda-preview-after.png]]
+
+*Requires:*
++  [[https://github.com/ShingoFukuyama/ov.el][ov]]
+
+#+BEGIN_SRC elisp :results silent
+  (defface unpackaged/org-agenda-preview
+    '((t (:background "black")))
+    "Face for Org Agenda previews.")
+
+  (defun unpackaged/org-agenda-toggle-preview ()
+    "Toggle overlay of current item in agenda."
+    (interactive)
+    (if-let* ((overlay (ov-in 'unpackaged/org-agenda-preview t (line-end-position) (line-end-position))))
+        ;; Hide existing preview
+        (ov-reset overlay)
+      ;; Show preview
+      (let* ((entry-contents (--> (org-agenda-with-point-at-orig-entry
+                                   nil (buffer-substring (save-excursion
+                                                           (unpackaged/org-forward-to-entry-content t)
+                                                           (point))
+                                                         (org-entry-end-position)))
+                                  s-trim
+                                  (concat "\n" it "\n"))))
+        (add-face-text-property 0 (length entry-contents)
+                                'unpackaged/org-agenda-preview nil entry-contents)
+        (ov (line-end-position) (line-end-position)
+            'unpackaged/org-agenda-preview t
+            'before-string entry-contents))))
+
+  (defun unpackaged/org-forward-to-entry-content (&optional unsafe)
+    "Skip headline, planning line, and all drawers in current entry.
+  If UNSAFE is non-nil, assume point is on headline."
+    (unless unsafe
+      ;; To improve performance in loops (e.g. with `org-map-entries')
+      (org-back-to-heading))
+    (cl-loop for element = (org-element-at-point)
+             for pos = (pcase element
+                         (`(headline . ,_) (org-element-property :contents-begin element))
+                         (`(,(or 'planning 'property-drawer 'drawer) . ,_) (org-element-property :end element)))
+             while pos
+             do (goto-char pos)))
+#+END_SRC
+
 ** Download and attach remote files
 
 Download file at ~URL~ and attach with ~org-attach~.  Interactively, look for ~URL~ at point, in X clipboard, and in kill-ring, prompting if not found.  With prefix, prompt for ~URL~.
