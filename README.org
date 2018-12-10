@@ -32,6 +32,8 @@ Functions in this file generally use these helper packages:
     -  [[#agenda-previews][Agenda previews]]
     -  [[#download-and-attach-remote-files][Download and attach remote files]]
     -  [[#read-only-trees][Read-only trees]]
+  -  [[#packages][Packages]]
+    -  [[#package-menu-upgrade-package-upgrade-one-package][package-menu-upgrade-package: Upgrade one package]]
   -  [[#programming][Programming]]
     -  [[#iedit][iedit]]
       -  [[#iedit-scoped][iedit-scoped]]
@@ -479,6 +481,38 @@ The functions may also be called interactively as needed.
        (while (unpackaged/org-next-heading-tagged "read_only")
          (remove-text-properties (point) (org-end-of-subtree t)
                                  '(read-only t))))))
+#+END_SRC
+
+* Packages                                                         :packages:
+
+** ~package-menu-upgrade-package~: Upgrade one package
+
+Mark current package for upgrading (i.e. also mark obsolete version for deletion.)
+
+#+BEGIN_SRC elisp
+  (use-package package
+    :bind (:map package-menu-mode-map
+                ("t" . #'package-menu-upgrade-package))
+    :config
+    (defun package-menu-upgrade-package ()
+      "Mark current package for upgrading (i.e. also mark obsolete version for deletion.)"
+      (interactive)
+      (when-let ((upgrades (package-menu--find-upgrades))
+                 (description (tabulated-list-get-id))
+                 (name (package-desc-name description))
+                 (upgradable (cdr (assq name upgrades))))
+        ;; Package is upgradable
+        (save-excursion
+          (goto-char (point-min))
+          (while (not (eobp))
+            (let* ((current-description (tabulated-list-get-id))
+                   (current-name (package-desc-name current-description)))
+              (when (equal current-name name)
+                (cond ((equal description current-description)
+                       (package-menu-mark-install)
+                       (forward-line -1))
+                      (t (package-menu-mark-delete)))))
+            (forward-line 1))))))
 #+END_SRC
 
 * Programming                                                   :programming:
