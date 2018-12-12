@@ -659,6 +659,8 @@ This configuration automatically activates a helpful ~smerge-mode~ hydra when a 
 
 [[images/smerge-mode-hydra.png]]
 
+See these screencasts comparing what it's like to resolve the conflict with [[images/smerge-hydra-vs-ediff.gif][ediff]] and with this [[images/smerge-hydra.gif][smerge-hydra]].
+
 #+BEGIN_SRC elisp
   (use-package smerge-mode
     :config
@@ -689,6 +691,11 @@ This configuration automatically activates a helpful ~smerge-mode~ hydra when a 
       ("C" smerge-combine-with-next)
       ("r" smerge-resolve)
       ("k" smerge-kill-current)
+      ("ZZ" (lambda ()
+              (interactive)
+              (save-buffer)
+              (bury-buffer))
+       "Save and bury buffer" :color blue)
       ("q" nil "cancel" :color blue))
     :hook (magit-diff-visit-file . (lambda ()
                                      (when smerge-mode
