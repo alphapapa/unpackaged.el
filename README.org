@@ -28,6 +28,7 @@ Functions in this file generally use these helper packages:
     -  [[#track-metadata-from-mpris-supporting-media-player][Track metadata from MPRIS-supporting media player]]
   -  [[#org][Org]]
     -  [[#org-return-dwim][org-return-dwim]]
+    -  [[#ensure-blank-lines-between-headings-and-before-contents][Ensure blank lines between headings and before contents]]
     -  [[#convert-elisp-to-org-format][Convert Elisp to Org format]]
     -  [[#agenda-previews][Agenda previews]]
     -  [[#download-and-attach-remote-files][Download and attach remote files]]
@@ -261,6 +262,47 @@ Inspired by [[http://kitchingroup.cheme.cmu.edu/blog/2017/04/09/A-better-return-
        (t
         ;; All other cases: call `org-return'.
         (org-return)))))
+#+END_SRC
+
+** Ensure blank lines between headings and before contents
+
+Ensure that blank lines exist between headings and between headings and their contents.  With prefix, operate on whole buffer.  Ensures that blank lines exist after each headings's drawers.
+
+For those who prefer to maintain blank lines between headings, this makes it easy to automatically add them where necessary, to a subtree or the whole buffer.  It also adds blank lines after drawers.  Works well with [[*~org-return-dwim~]].
+
+#+BEGIN_SRC elisp
+  (defun unpackaged/org-fix-blank-lines (prefix)
+      "Ensure that blank lines exist between headings and between headings and their contents.
+  With prefix, operate on whole buffer.  Ensures that blank lines
+  exist after each headings's drawers."
+      (interactive "P")
+      (org-map-entries (lambda ()
+                         (org-with-wide-buffer
+                          ;; `org-map-entries' narrows the buffer, which prevents us from seeing
+                          ;; newlines before the current heading, so we do this part widened.
+                          (while (not (looking-back "\n\n"))
+                            ;; Insert blank lines before heading.
+                            (insert "\n")))
+                         (let ((end (org-entry-end-position)))
+                           ;; Insert blank lines before entry content
+                           (forward-line)
+                           (while (and (org-at-planning-p)
+                                       (< (point) (point-max)))
+                             ;; Skip planning lines
+                             (forward-line))
+                           (while (re-search-forward org-drawer-regexp end t)
+                             ;; Skip drawers.  You might think that `org-at-drawer-p' would suffice, but
+                             ;; for some reason it doesn't work correctly when operating on hidden text.
+                             ;; This works, taken from `org-agenda-get-some-entry-text'.
+                             (re-search-forward "^[ \t]*:END:.*\n?" end t)
+                             (goto-char (match-end 0)))
+                           (unless (or (= (point) (point-max))
+                                       (org-at-heading-p)
+                                       (looking-at-p "\n"))
+                             (insert "\n"))))
+                       t (if prefix
+                             nil
+                           'tree)))
 #+END_SRC
 
 ** Convert Elisp to Org format                                        :meta:
