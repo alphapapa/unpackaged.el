@@ -33,6 +33,7 @@ Functions in this file generally use these helper packages:
     -  [[#agenda-previews][Agenda previews]]
     -  [[#download-and-attach-remote-files][Download and attach remote files]]
     -  [[#read-only-trees][Read-only trees]]
+    -  [[#sort-tree-by-multiple-methods-at-once][Sort tree by multiple methods at once]]
   -  [[#packages][Packages]]
     -  [[#package-menu-upgrade-package-upgrade-one-package][package-menu-upgrade-package: Upgrade one package]]
   -  [[#programming][Programming]]
@@ -523,6 +524,24 @@ The functions may also be called interactively as needed.
        (while (unpackaged/org-next-heading-tagged "read_only")
          (remove-text-properties (point) (org-end-of-subtree t)
                                  '(read-only t))))))
+#+END_SRC
+
+** Sort tree by multiple methods at once
+
+Call ~org-sort-entries~ with multiple sorting methods specified in ~KEYS~.
+
+This is much easier than doing @@html:<kbd>@@C-c ^ KEY@@html:</kbd>@@ several times in a row.
+
+#+BEGIN_SRC elisp
+  (defun unpackaged/org-sort-multi (keys)
+      "Call `org-sort-entries' with multiple sorting methods specified in KEYS."
+      ;; Message copied from `org-sort-entries'.
+      (interactive (list (read-string "Sort by: [a]lpha  [n]umeric  [p]riority  p[r]operty  todo[o]rder  [f]unc
+           [t]ime [s]cheduled  [d]eadline  [c]reated  cloc[k]ing
+           A/N/P/R/O/F/T/S/D/C/K means reversed: ")))
+      (seq-do (lambda (key)
+                (org-sort-entries nil key))
+              (nreverse keys)))
 #+END_SRC
 
 * Packages                                                         :packages:
