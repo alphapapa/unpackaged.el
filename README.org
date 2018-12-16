@@ -27,11 +27,11 @@ Functions in this file generally use these helper packages:
   -  [[#misc][Misc]]
     -  [[#track-metadata-from-mpris-supporting-media-player][Track metadata from MPRIS-supporting media player]]
   -  [[#org][Org]]
-    -  [[#org-return-dwim][org-return-dwim]]
-    -  [[#ensure-blank-lines-between-headings-and-before-contents][Ensure blank lines between headings and before contents]]
-    -  [[#convert-elisp-to-org-format][Convert Elisp to Org format]]
     -  [[#agenda-previews][Agenda previews]]
+    -  [[#convert-elisp-to-org-format][Convert Elisp to Org format]]
     -  [[#download-and-attach-remote-files][Download and attach remote files]]
+    -  [[#ensure-blank-lines-between-headings-and-before-contents][Ensure blank lines between headings and before contents]]
+    -  [[#org-return-dwim][org-return-dwim]]
     -  [[#read-only-trees][Read-only trees]]
     -  [[#sort-tree-by-multiple-methods-at-once][Sort tree by multiple methods at once]]
   -  [[#packages][Packages]]
@@ -169,6 +169,223 @@ DBus is not a straightforward system to work with, so this may serve as a useful
 
 Code for [[https://orgmode.org/][Org Mode]].
 
+** Agenda previews                                                  :agenda:
+
+/Before:/
+
+[[images/org-agenda-preview-before.png]]
+
+/After:/
+
+[[images/org-agenda-preview-after.png]]
+
+*Requires:*
++  [[https://github.com/ShingoFukuyama/ov.el][ov]]
+
+#+BEGIN_SRC elisp :results silent
+  (defface unpackaged/org-agenda-preview
+    '((t (:background "black")))
+    "Face for Org Agenda previews.")
+
+  (defun unpackaged/org-agenda-toggle-preview ()
+    "Toggle overlay of current item in agenda."
+    (interactive)
+    (if-let* ((overlay (ov-in 'unpackaged/org-agenda-preview t (line-end-position) (line-end-position))))
+        ;; Hide existing preview
+        (ov-reset overlay)
+      ;; Show preview
+      (let* ((entry-contents (--> (org-agenda-with-point-at-orig-entry
+                                   nil (buffer-substring (save-excursion
+                                                           (unpackaged/org-forward-to-entry-content t)
+                                                           (point))
+                                                         (org-entry-end-position)))
+                                  s-trim
+                                  (concat "\n" it "\n"))))
+        (add-face-text-property 0 (length entry-contents)
+                                'unpackaged/org-agenda-preview nil entry-contents)
+        (ov (line-end-position) (line-end-position)
+            'unpackaged/org-agenda-preview t
+            'before-string entry-contents))))
+
+  (defun unpackaged/org-forward-to-entry-content (&optional unsafe)
+    "Skip headline, planning line, and all drawers in current entry.
+  If UNSAFE is non-nil, assume point is on headline."
+    (unless unsafe
+      ;; To improve performance in loops (e.g. with `org-map-entries')
+      (org-back-to-heading))
+    (cl-loop for element = (org-element-at-point)
+             for pos = (pcase element
+                         (`(headline . ,_) (org-element-property :contents-begin element))
+                         (`(,(or 'planning 'property-drawer 'drawer) . ,_) (org-element-property :end element)))
+             while pos
+             do (goto-char pos)))
+#+END_SRC
+
+** Convert Elisp to Org format                                        :meta:
+:PROPERTIES:
+:ID:       b86d14ff-b87c-4e2a-a513-067c0a5d3490
+:END:
+
+These functions convert Emacs Lisp code and docstrings to Org-formatted text, helpful for inserting into readme files (like this one).
+
+#+BEGIN_SRC elisp :results silent
+  (defun unpackaged/elisp-to-org ()
+    "Convert elisp code in region to Org syntax and put in kill-ring.
+  Extracts and converts docstring to Org text, and places code in
+  source block."
+    (interactive)
+    (let* ((raw (->> (buffer-substring (region-beginning) (region-end))
+                     (replace-regexp-in-string (rx bol) "  ")
+                     (replace-regexp-in-string (rx bol (1+ blank) eol) "")))
+           (sexp (read raw))
+           (docstring (--when-let (-first #'stringp sexp)
+                        (unpackaged/docstring-to-org it))))
+      (kill-new (concat docstring (when docstring "\n\n")
+                        "#+BEGIN_SRC elisp" "\n"
+                        raw "\n"
+                        "#+END_SRC"))))
+
+  (defun unpackaged/docstring-to-org (docstring)
+    "Return DOCSTRING as formatted Org text.
+
+  Interactively, get text from region, and kill formatted Org text
+  to kill-ring."
+    (interactive (list (buffer-substring (region-beginning) (region-end))))
+    (cl-macrolet ((string-buffer--> (string &rest forms)
+                                    `(with-temp-buffer
+                                       (insert ,string)
+                                       ,@(cl-loop for form in forms
+                                                  collect `(goto-char (point-min))
+                                                  collect form)
+                                       (buffer-string))))
+      (--> (string-buffer--> docstring
+                             (unpackaged/caps-to-code (point-min) (point-max))
+                             (unpackaged/symbol-quotes-to-org-code (point-min) (point-max))
+                             (unfill-region (point-min) (point-max))
+                             (while (re-search-forward (rx bol (group (1+ blank))) nil t)
+                               (replace-match "" t t nil 1))
+                             (when (looking-at "\"")
+                               (delete-char 1))
+                             (when (progn
+                                     (goto-char (point-max))
+                                     (looking-back "\""))
+                               (delete-char -1)))
+           (if (called-interactively-p)
+               (progn
+                 (message it)
+                 (kill-new it))
+             it))))
+
+  (defun unpackaged/caps-to-code (beg end)
+    "Convert all-caps words in region to Org code emphasis."
+    (interactive "r")
+    (let ((case-fold-search nil))
+      (save-excursion
+        (save-restriction
+          (narrow-to-region beg end)
+          (goto-char (point-min))
+          (while (re-search-forward (rx (or space bol)
+                                        (group (1+ upper))
+                                        (or space eol (char punct)))
+                                    nil t)
+            (setf (buffer-substring (match-beginning 1) (match-end 1))
+                  (concat "~" (match-string 1) "~"))
+            (goto-char (match-end 0)))))))
+
+  (defun unpackaged/symbol-quotes-to-org-code (beg end)
+    "Change Emacs `symbol' quotes to Org =symbol= quotes in region."
+    (interactive "r")
+    (save-excursion
+      (save-restriction
+        (goto-char beg)
+        (narrow-to-region beg end)
+        (while (re-search-forward (rx (or "`" "‘") (group (1+ (or "-" word))) "'") nil t)
+          (replace-match (concat "~" (match-string 1) "~") t)))))
+#+END_SRC
+
+*** COMMENT Tasks
+:PROPERTIES:
+:TOC:      ignore
+:END:
+
+**** MAYBE Publish these on emacs-package-dev-handbook instead
+
+Not sure which place they best belong, but they should at least be linked in both.
+
+** Download and attach remote files
+
+Download file at ~URL~ and attach with ~org-attach~.  Interactively, look for ~URL~ at point, in X clipboard, and in kill-ring, prompting if not found.  With prefix, prompt for ~URL~.
+
+*Requires:*
++  [[https://github.com/alphapapa/org-web-tools][org-web-tools]]
+
+#+BEGIN_SRC elisp :results silent
+  (defun unpackaged/org-attach-download (url)
+    "Download file at URL and attach with `org-attach'.
+  Interactively, look for URL at point, in X clipboard, and in
+  kill-ring, prompting if not found.  With prefix, prompt for URL."
+    (interactive (list (if current-prefix-arg
+                           (read-string "URL: ")
+                         (or (org-element-property :raw-link (org-element-context))
+                             (org-web-tools--get-first-url)
+                             (read-string "URL: ")))))
+    (when (yes-or-no-p (concat "Attach file at URL: " url))
+      (let* ((temp-dir (make-temp-file "org-attach-download-" 'dir))
+             (basename (file-name-nondirectory (directory-file-name url)))
+             (local-path (expand-file-name basename temp-dir))
+             size)
+        (unwind-protect
+            (progn
+              (url-copy-file url local-path 'ok-if-exists 'keep-time)
+              (setq size (file-size-human-readable
+                          (file-attribute-size
+                           (file-attributes local-path))))
+              (org-attach-attach local-path nil 'mv)
+              (message "Attached %s (%s)" url size))
+          (delete-directory temp-dir)))))
+#+END_SRC
+
+** Ensure blank lines between headings and before contents
+
+Ensure that blank lines exist between headings and between headings and their contents.  With prefix, operate on whole buffer.  Ensures that blank lines exist after each headings's drawers.
+
+For those who prefer to maintain blank lines between headings, this makes it easy to automatically add them where necessary, to a subtree or the whole buffer.  It also adds blank lines after drawers.  Works well with [[*~org-return-dwim~]].
+
+#+BEGIN_SRC elisp
+  (defun unpackaged/org-fix-blank-lines (prefix)
+      "Ensure that blank lines exist between headings and between headings and their contents.
+  With prefix, operate on whole buffer.  Ensures that blank lines
+  exist after each headings's drawers."
+      (interactive "P")
+      (org-map-entries (lambda ()
+                         (org-with-wide-buffer
+                          ;; `org-map-entries' narrows the buffer, which prevents us from seeing
+                          ;; newlines before the current heading, so we do this part widened.
+                          (while (not (looking-back "\n\n"))
+                            ;; Insert blank lines before heading.
+                            (insert "\n")))
+                         (let ((end (org-entry-end-position)))
+                           ;; Insert blank lines before entry content
+                           (forward-line)
+                           (while (and (org-at-planning-p)
+                                       (< (point) (point-max)))
+                             ;; Skip planning lines
+                             (forward-line))
+                           (while (re-search-forward org-drawer-regexp end t)
+                             ;; Skip drawers.  You might think that `org-at-drawer-p' would suffice, but
+                             ;; for some reason it doesn't work correctly when operating on hidden text.
+                             ;; This works, taken from `org-agenda-get-some-entry-text'.
+                             (re-search-forward "^[ \t]*:END:.*\n?" end t)
+                             (goto-char (match-end 0)))
+                           (unless (or (= (point) (point-max))
+                                       (org-at-heading-p)
+                                       (looking-at-p "\n"))
+                             (insert "\n"))))
+                       t (if prefix
+                             nil
+                           'tree)))
+#+END_SRC
+
 ** ~org-return-dwim~
 
 A helpful replacement for ~org-return~.  With prefix, call ~org-return~.
@@ -263,223 +480,6 @@ Inspired by [[http://kitchingroup.cheme.cmu.edu/blog/2017/04/09/A-better-return-
        (t
         ;; All other cases: call `org-return'.
         (org-return)))))
-#+END_SRC
-
-** Ensure blank lines between headings and before contents
-
-Ensure that blank lines exist between headings and between headings and their contents.  With prefix, operate on whole buffer.  Ensures that blank lines exist after each headings's drawers.
-
-For those who prefer to maintain blank lines between headings, this makes it easy to automatically add them where necessary, to a subtree or the whole buffer.  It also adds blank lines after drawers.  Works well with [[*~org-return-dwim~]].
-
-#+BEGIN_SRC elisp
-  (defun unpackaged/org-fix-blank-lines (prefix)
-      "Ensure that blank lines exist between headings and between headings and their contents.
-  With prefix, operate on whole buffer.  Ensures that blank lines
-  exist after each headings's drawers."
-      (interactive "P")
-      (org-map-entries (lambda ()
-                         (org-with-wide-buffer
-                          ;; `org-map-entries' narrows the buffer, which prevents us from seeing
-                          ;; newlines before the current heading, so we do this part widened.
-                          (while (not (looking-back "\n\n"))
-                            ;; Insert blank lines before heading.
-                            (insert "\n")))
-                         (let ((end (org-entry-end-position)))
-                           ;; Insert blank lines before entry content
-                           (forward-line)
-                           (while (and (org-at-planning-p)
-                                       (< (point) (point-max)))
-                             ;; Skip planning lines
-                             (forward-line))
-                           (while (re-search-forward org-drawer-regexp end t)
-                             ;; Skip drawers.  You might think that `org-at-drawer-p' would suffice, but
-                             ;; for some reason it doesn't work correctly when operating on hidden text.
-                             ;; This works, taken from `org-agenda-get-some-entry-text'.
-                             (re-search-forward "^[ \t]*:END:.*\n?" end t)
-                             (goto-char (match-end 0)))
-                           (unless (or (= (point) (point-max))
-                                       (org-at-heading-p)
-                                       (looking-at-p "\n"))
-                             (insert "\n"))))
-                       t (if prefix
-                             nil
-                           'tree)))
-#+END_SRC
-
-** Convert Elisp to Org format                                        :meta:
-:PROPERTIES:
-:ID:       b86d14ff-b87c-4e2a-a513-067c0a5d3490
-:END:
-
-These functions convert Emacs Lisp code and docstrings to Org-formatted text, helpful for inserting into readme files (like this one).
-
-#+BEGIN_SRC elisp :results silent
-  (defun unpackaged/elisp-to-org ()
-    "Convert elisp code in region to Org syntax and put in kill-ring.
-  Extracts and converts docstring to Org text, and places code in
-  source block."
-    (interactive)
-    (let* ((raw (->> (buffer-substring (region-beginning) (region-end))
-                     (replace-regexp-in-string (rx bol) "  ")
-                     (replace-regexp-in-string (rx bol (1+ blank) eol) "")))
-           (sexp (read raw))
-           (docstring (--when-let (-first #'stringp sexp)
-                        (unpackaged/docstring-to-org it))))
-      (kill-new (concat docstring (when docstring "\n\n")
-                        "#+BEGIN_SRC elisp" "\n"
-                        raw "\n"
-                        "#+END_SRC"))))
-
-  (defun unpackaged/docstring-to-org (docstring)
-    "Return DOCSTRING as formatted Org text.
-
-  Interactively, get text from region, and kill formatted Org text
-  to kill-ring."
-    (interactive (list (buffer-substring (region-beginning) (region-end))))
-    (cl-macrolet ((string-buffer--> (string &rest forms)
-                                    `(with-temp-buffer
-                                       (insert ,string)
-                                       ,@(cl-loop for form in forms
-                                                  collect `(goto-char (point-min))
-                                                  collect form)
-                                       (buffer-string))))
-      (--> (string-buffer--> docstring
-                             (unpackaged/caps-to-code (point-min) (point-max))
-                             (unpackaged/symbol-quotes-to-org-code (point-min) (point-max))
-                             (unfill-region (point-min) (point-max))
-                             (while (re-search-forward (rx bol (group (1+ blank))) nil t)
-                               (replace-match "" t t nil 1))
-                             (when (looking-at "\"")
-                               (delete-char 1))
-                             (when (progn
-                                     (goto-char (point-max))
-                                     (looking-back "\""))
-                               (delete-char -1)))
-           (if (called-interactively-p)
-               (progn
-                 (message it)
-                 (kill-new it))
-             it))))
-
-  (defun unpackaged/caps-to-code (beg end)
-    "Convert all-caps words in region to Org code emphasis."
-    (interactive "r")
-    (let ((case-fold-search nil))
-      (save-excursion
-        (save-restriction
-          (narrow-to-region beg end)
-          (goto-char (point-min))
-          (while (re-search-forward (rx (or space bol)
-                                        (group (1+ upper))
-                                        (or space eol (char punct)))
-                                    nil t)
-            (setf (buffer-substring (match-beginning 1) (match-end 1))
-                  (concat "~" (match-string 1) "~"))
-            (goto-char (match-end 0)))))))
-
-  (defun unpackaged/symbol-quotes-to-org-code (beg end)
-    "Change Emacs `symbol' quotes to Org =symbol= quotes in region."
-    (interactive "r")
-    (save-excursion
-      (save-restriction
-        (goto-char beg)
-        (narrow-to-region beg end)
-        (while (re-search-forward (rx (or "`" "‘") (group (1+ (or "-" word))) "'") nil t)
-          (replace-match (concat "~" (match-string 1) "~") t)))))
-#+END_SRC
-
-*** COMMENT Tasks
-:PROPERTIES:
-:TOC:      ignore
-:END:
-
-**** MAYBE Publish these on emacs-package-dev-handbook instead
-
-Not sure which place they best belong, but they should at least be linked in both.
-
-** Agenda previews                                                  :agenda:
-
-/Before:/
-
-[[images/org-agenda-preview-before.png]]
-
-/After:/
-
-[[images/org-agenda-preview-after.png]]
-
-*Requires:*
-+  [[https://github.com/ShingoFukuyama/ov.el][ov]]
-
-#+BEGIN_SRC elisp :results silent
-  (defface unpackaged/org-agenda-preview
-    '((t (:background "black")))
-    "Face for Org Agenda previews.")
-
-  (defun unpackaged/org-agenda-toggle-preview ()
-    "Toggle overlay of current item in agenda."
-    (interactive)
-    (if-let* ((overlay (ov-in 'unpackaged/org-agenda-preview t (line-end-position) (line-end-position))))
-        ;; Hide existing preview
-        (ov-reset overlay)
-      ;; Show preview
-      (let* ((entry-contents (--> (org-agenda-with-point-at-orig-entry
-                                   nil (buffer-substring (save-excursion
-                                                           (unpackaged/org-forward-to-entry-content t)
-                                                           (point))
-                                                         (org-entry-end-position)))
-                                  s-trim
-                                  (concat "\n" it "\n"))))
-        (add-face-text-property 0 (length entry-contents)
-                                'unpackaged/org-agenda-preview nil entry-contents)
-        (ov (line-end-position) (line-end-position)
-            'unpackaged/org-agenda-preview t
-            'before-string entry-contents))))
-
-  (defun unpackaged/org-forward-to-entry-content (&optional unsafe)
-    "Skip headline, planning line, and all drawers in current entry.
-  If UNSAFE is non-nil, assume point is on headline."
-    (unless unsafe
-      ;; To improve performance in loops (e.g. with `org-map-entries')
-      (org-back-to-heading))
-    (cl-loop for element = (org-element-at-point)
-             for pos = (pcase element
-                         (`(headline . ,_) (org-element-property :contents-begin element))
-                         (`(,(or 'planning 'property-drawer 'drawer) . ,_) (org-element-property :end element)))
-             while pos
-             do (goto-char pos)))
-#+END_SRC
-
-** Download and attach remote files
-
-Download file at ~URL~ and attach with ~org-attach~.  Interactively, look for ~URL~ at point, in X clipboard, and in kill-ring, prompting if not found.  With prefix, prompt for ~URL~.
-
-*Requires:*
-+  [[https://github.com/alphapapa/org-web-tools][org-web-tools]]
-
-#+BEGIN_SRC elisp :results silent
-  (defun unpackaged/org-attach-download (url)
-    "Download file at URL and attach with `org-attach'.
-  Interactively, look for URL at point, in X clipboard, and in
-  kill-ring, prompting if not found.  With prefix, prompt for URL."
-    (interactive (list (if current-prefix-arg
-                           (read-string "URL: ")
-                         (or (org-element-property :raw-link (org-element-context))
-                             (org-web-tools--get-first-url)
-                             (read-string "URL: ")))))
-    (when (yes-or-no-p (concat "Attach file at URL: " url))
-      (let* ((temp-dir (make-temp-file "org-attach-download-" 'dir))
-             (basename (file-name-nondirectory (directory-file-name url)))
-             (local-path (expand-file-name basename temp-dir))
-             size)
-        (unwind-protect
-            (progn
-              (url-copy-file url local-path 'ok-if-exists 'keep-time)
-              (setq size (file-size-human-readable
-                          (file-attribute-size
-                           (file-attributes local-path))))
-              (org-attach-attach local-path nil 'mv)
-              (message "Attached %s (%s)" url size))
-          (delete-directory temp-dir)))))
 #+END_SRC
 
 ** Read-only trees
