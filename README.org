@@ -32,6 +32,7 @@ Functions in this file generally use these helper packages:
     -  [[#download-and-attach-remote-files][Download and attach remote files]]
     -  [[#ensure-blank-lines-between-headings-and-before-contents][Ensure blank lines between headings and before contents]]
     -  [[#surround-region-with-emphasis-or-syntax-characters][Surround region with emphasis or syntax characters]]
+    -  [[#refile-to-datetree-file-using-earliestlatest-timestamp-in-entry][Refile to datetree file using earliest/latest timestamp in entry]]
     -  [[#org-return-dwim][org-return-dwim]]
     -  [[#read-only-trees][Read-only trees]]
     -  [[#sort-tree-by-multiple-methods-at-once][Sort tree by multiple methods at once]]
@@ -420,6 +421,77 @@ Used like:
 
 #+BEGIN_SRC elisp
   (unpackaged/def-org-maybe-surround "~" "=" "*" "/" "+")
+#+END_SRC
+
+** Refile to datetree file using earliest/latest timestamp in entry
+
+Refile current entry to datetree using timestamp found in entry.  ~WHICH~ should be ~earliest~ or ~latest~. If ~SUBTREE~-P is non-nil, search whole subtree.
+
+This is sort of like archiving to a datetree, but it uses either the earliest or latest timestamp found in the entry or subtree rather than the current date.  It's helpful if you have an entry with lots of timestamps or log entries, and you're done with it, and you want to file it in a datetree in a leaf matching either when you started working on the entry or when you finished, using the first or last timestamp found anywhere in the entry.
+
+/Note:/ If you can think of a more concise name for this command, please send it in!
+
+*Requires:* [[https://github.com/alphapapa/ts.el][ts]]
+
+#+BEGIN_SRC elisp
+  (require 'ts)
+
+  (defun unpackaged/org-refile-to-datetree-using-ts-in-entry (which-ts file &optional subtree-p)
+    "Refile current entry to datetree in FILE using timestamp found in entry.
+  WHICH should be `earliest' or `latest'. If SUBTREE-P is non-nil,
+  search whole subtree."
+    (interactive (list (intern (completing-read "Which timestamp? " '(earliest latest)))
+                       (read-file-name "File: " (concat org-directory "/") nil 'mustmatch nil
+                                       (lambda (filename)
+                                         (string-suffix-p ".org" filename)))
+                       current-prefix-arg))
+    (let* ((sorter (pcase which-ts
+                     ('earliest #'ts<)
+                     ('latest #'ts>)))
+           (tss (unpackaged/org-timestamps-in-entry subtree-p))
+           (ts (car (sort tss sorter)))
+           (date (list (ts-month ts) (ts-day ts) (ts-year ts))))
+      (unpackaged/org-refile-to-datetree file :date date)))
+
+  (defun unpackaged/org-timestamps-in-entry (&optional subtree-p)
+    "Return timestamp objects for all Org timestamps in entry.
+   If SUBTREE-P is non-nil (interactively, with prefix), search
+   whole subtree."
+    (interactive (list current-prefix-arg))
+    (save-excursion
+      (let* ((beg (org-entry-beginning-position))
+             (end (if subtree-p
+                      (org-end-of-subtree)
+                    (org-entry-end-position))))
+        (goto-char beg)
+        (cl-loop while (re-search-forward org-tsr-regexp-both end t)
+                 for ts = (save-excursion
+                            (goto-char (match-beginning 0))
+                            (org-element-timestamp-parser))
+                 collect (ts-parse-org ts)))))
+
+  (cl-defun unpackaged/org-refile-to-datetree (file &key (date (calendar-current-date)) entry)
+    "Refile ENTRY or current node to entry for DATE in datetree in FILE."
+    (interactive (list (read-file-name "File: " (concat org-directory "/") nil 'mustmatch nil
+                                       (lambda (filename)
+                                         (string-suffix-p ".org" filename)))))
+    ;; If org-datetree isn't loaded, it will cut the tree but not file
+    ;; it anywhere, losing data. I don't know why
+    ;; org-datetree-file-entry-under is in a separate package, not
+    ;; loaded with the rest of org-mode.
+    (require 'org-datetree)
+    (unless entry
+      (org-cut-subtree))
+    ;; Using a condition-case to be extra careful. In case the refile
+    ;; fails in any way, put cut subtree back.
+    (condition-case err
+        (with-current-buffer (or (org-find-base-buffer-visiting file)
+                                 (find-file-noselect file))
+          (org-datetree-file-entry-under (or entry (car kill-ring)) date)
+          (save-buffer))
+      (error (unless entry
+               (org-paste-subtree))
+             (message "Unable to refile!  %s" err))))
 #+END_SRC
 
 ** ~org-return-dwim~
