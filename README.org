@@ -31,6 +31,7 @@ Functions in this file generally use these helper packages:
     -  [[#convert-elisp-to-org-format][Convert Elisp to Org format]]
     -  [[#download-and-attach-remote-files][Download and attach remote files]]
     -  [[#ensure-blank-lines-between-headings-and-before-contents][Ensure blank lines between headings and before contents]]
+    -  [[#surround-region-with-emphasis-or-syntax-characters][Surround region with emphasis or syntax characters]]
     -  [[#org-return-dwim][org-return-dwim]]
     -  [[#read-only-trees][Read-only trees]]
     -  [[#sort-tree-by-multiple-methods-at-once][Sort tree by multiple methods at once]]
@@ -384,6 +385,41 @@ For those who prefer to maintain blank lines between headings, this makes it eas
                        t (if prefix
                              nil
                            'tree)))
+#+END_SRC
+
+** Surround region with emphasis or syntax characters
+
+Define and bind interactive commands for each of ~KEYS~ that surround the region or insert text.  Commands are bound in ~org-mode-map~ to each of ~KEYS~.  If the region is active, commands surround it with the key character, otherwise call ~org-self-insert-command~.
+
+#+BEGIN_SRC elisp
+  (defmacro unpackaged/def-org-maybe-surround (&rest keys)
+    "Define and bind interactive commands for each of KEYS that surround the region or insert text.
+  Commands are bound in `org-mode-map' to each of KEYS.  If the
+  region is active, commands surround it with the key character,
+  otherwise call `org-self-insert-command'."
+    `(progn
+       ,@(cl-loop for key in keys
+                  for name = (intern (concat "unpackaged/org-maybe-surround-" key))
+                  for docstring = (format "If region is active, surround it with \"%s\", otherwise call `org-self-insert-command'." key)
+                  collect `(defun ,name ()
+                             ,docstring
+                             (interactive)
+                             (if (region-active-p)
+                                 (let ((beg (region-beginning))
+                                       (end (region-end)))
+                                   (save-excursion
+                                     (goto-char end)
+                                     (insert ,key)
+                                     (goto-char beg)
+                                     (insert ,key)))
+                               (call-interactively #'org-self-insert-command)))
+                  collect `(define-key org-mode-map (kbd ,key) #',name))))
+#+END_SRC
+
+Used like:
+
+#+BEGIN_SRC elisp
+  (unpackaged/def-org-maybe-surround "~" "=" "*" "/" "+")
 #+END_SRC
 
 ** ~org-return-dwim~
