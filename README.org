@@ -42,6 +42,7 @@ Functions in this file generally use these helper packages:
     -  [[#iedit][iedit]]
       -  [[#iedit-scoped][iedit-scoped]]
       -  [[#iedit-or-flyspell][iedit-or-flyspell]]
+    -  [[#sort-sexps][Sort sexps]]
   -  [[#regular-expressions][Regular expressions]]
     -  [[#query-replace-rx][query-replace-rx]]
   -  [[#version-control][Version control]]
@@ -743,6 +744,57 @@ With point in code or when ~iedit-mode~ is already active, toggle ~iedit-mode~. 
             (undo))                       ; This doesn't move point, which I think may be the problem.
           (flyspell-region (line-beginning-position) (line-end-position))
           (call-interactively 'flyspell-correct-previous-word-generic)))))
+#+END_SRC
+
+** Sort sexps
+
+Sort sexps in region.  Comments stay with the code below.
+
+#+BEGIN_SRC elisp
+  (defun unpackaged/sort-sexps (beg end)
+    "Sort sexps in region.
+  Comments stay with the code below."
+    (interactive "r")
+    (cl-flet ((skip-whitespace () (while (looking-at (rx (1+ (or space "\n"))))
+                                    (goto-char (match-end 0))))
+              (skip-both () (while (cond ((or (nth 4 (syntax-ppss))
+                                              (ignore-errors
+                                                (save-excursion
+                                                  (forward-char 1)
+                                                  (nth 4 (syntax-ppss)))))
+                                          (forward-line 1))
+                                         ((looking-at (rx (1+ (or space "\n"))))
+                                          (goto-char (match-end 0)))))))
+      (save-excursion
+        (save-restriction
+          (narrow-to-region beg end)
+          (goto-char beg)
+          (skip-both)
+          (cl-destructuring-bind (sexps markers)
+              (cl-loop do (skip-whitespace)
+                       for start = (point-marker)
+                       for sexp = (ignore-errors
+                                    (read (current-buffer)))
+                       for end = (point-marker)
+                       while sexp
+                       ;; Collect the real string, then one used for sorting.
+                       collect (cons (buffer-substring (marker-position start) (marker-position end))
+                                     (save-excursion
+                                       (goto-char (marker-position start))
+                                       (skip-both)
+                                       (buffer-substring (point) (marker-position end))))
+                       into sexps
+                       collect (cons start end)
+                       into markers
+                       finally return (list sexps markers))
+            (setq sexps (sort sexps (lambda (a b)
+                                      (string< (cdr a) (cdr b)))))
+            (cl-loop for (real . sort) in sexps
+                     for (start . end) in markers
+                     do (progn
+                          (goto-char (marker-position start))
+                          (insert-before-markers real)
+                          (delete-region (point) (marker-position end)))))))))
 #+END_SRC
 
 * Regular expressions                                   :regular_expressions:
