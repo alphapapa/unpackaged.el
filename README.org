@@ -47,6 +47,7 @@ Functions in this file generally use these helper packages:
     -  [[#query-replace-rx][query-replace-rx]]
   -  [[#version-control][Version control]]
     -  [[#magit][Magit]]
+      -  [[#improved-magit-status-command][Improved magit-status command]]
       -  [[#magit-log-date-headers][magit-log date headers]]
     -  [[#smerge-mode][smerge-mode]]
       -  [[#hydra][Hydra]]
@@ -821,6 +822,33 @@ Call ~query-replace-regexp~, reading regexp in ~rx~ syntax.  Automatically wraps
 * Version control                                           :version_control:
 
 ** Magit                                                             :Magit:
+
+*** Improved ~magit-status~ command
+
+Open a ~magit-status~ buffer and close the other window so only Magit is visible.  If a file was visited in the buffer that was active when this command was called, go to its unstaged changes section.
+
+#+BEGIN_SRC elisp
+  (defun unpackaged/magit-status ()
+    "Open a `magit-status' buffer and close the other window so only Magit is visible.
+  If a file was visited in the buffer that was active when this
+  command was called, go to its unstaged changes section."
+    (interactive)
+    (let* ((buffer-file-path (when buffer-file-name
+                               (file-relative-name buffer-file-name
+                                                   (locate-dominating-file buffer-file-name ".git"))))
+           (section-ident `((file . ,buffer-file-path) (unstaged) (status))))
+      (magit-status)
+      (delete-other-windows)
+      (when buffer-file-path
+        (goto-char (point-min))
+        (cl-loop until (when (equal section-ident (magit-section-ident (magit-current-section)))
+                         (magit-section-show (magit-current-section))
+                         (recenter)
+                         t)
+                 do (condition-case nil
+                        (magit-section-forward)
+                      (error (cl-return (magit-status-goto-initial-section-1))))))))
+#+END_SRC
 
 *** magit-log date headers
 
