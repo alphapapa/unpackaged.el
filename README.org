@@ -663,9 +663,9 @@ Mark current package for upgrading (i.e. also mark obsolete version for deletion
 #+BEGIN_SRC elisp
   (use-package package
     :bind (:map package-menu-mode-map
-                ("t" . #'package-menu-upgrade-package))
+                ("t" . #'unpackaged/package-menu-upgrade-package))
     :config
-    (defun package-menu-upgrade-package ()
+    (defun unpackaged/package-menu-upgrade-package ()
       "Mark current package for upgrading (i.e. also mark obsolete version for deletion.)"
       (interactive)
       (when-let ((upgrades (package-menu--find-upgrades))
