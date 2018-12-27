@@ -37,7 +37,9 @@ Functions in this file generally use these helper packages:
     -  [[#read-only-trees][Read-only trees]]
     -  [[#sort-tree-by-multiple-methods-at-once][Sort tree by multiple methods at once]]
   -  [[#packages][Packages]]
-    -  [[#package-menu-upgrade-package-upgrade-one-package][package-menu-upgrade-package: Upgrade one package]]
+    -  [[#delete-all-installed-versions-of-a-package][Delete all installed versions of a package]]
+    -  [[#upgrade-a-quelpa-use-package-forms-package][Upgrade a quelpa-use-package form's package]]
+    -  [[#upgrade-one-package-in-the-package-menu][Upgrade one package in the package menu]]
   -  [[#programming][Programming]]
     -  [[#iedit][iedit]]
       -  [[#iedit-scoped][iedit-scoped]]
@@ -656,7 +658,67 @@ This is much easier than doing @@html:<kbd>@@C-c ^ KEY@@html:</kbd>@@ several ti
 
 * Packages                                                         :packages:
 
-** ~package-menu-upgrade-package~: Upgrade one package
+** Delete all installed versions of a package
+
+Delete all versions of package named ~NAME~.  ~NAME~ may be a string or symbol.
+
+#+BEGIN_SRC elisp
+  (defun unpackaged/package-delete-all-versions (name &optional force)
+    "Delete all versions of package named NAME.
+  NAME may be a string or symbol."
+    ;; Copied from `package-delete'.
+    (let* ((package-name (cl-typecase name
+                           (string (intern name))
+                           (symbol name)))
+           (user-packages-list (->> package-alist
+                                    ;; Just to be safe, we ignore built-ins.
+                                    (-select (-not #'package-built-in-p))))
+           (matching-versions (--select (eql (car it) package-name) user-packages-list)))
+      ;; Safety checks.
+      (cl-loop for (symbol first-desc . rest) in matching-versions
+               do (progn
+                    (unless force
+                      (when-let* ((dependent (package--used-elsewhere-p first-desc)))
+                        (error "Package `%s' depends on `%s'" (package-desc-name dependent) package-name)))
+                    (unless (string-prefix-p (file-name-as-directory (expand-file-name package-user-dir))
+                                             (expand-file-name (package-desc-dir first-desc)))
+                      (error "Package `%s' is a system package"))))
+      ;; Checks passed: delete packages.
+      (cl-loop for (symbol . descs) in matching-versions
+               do (--each descs
+                    (package-delete it force)))))
+#+END_SRC
+
+** Upgrade a ~quelpa-use-package~ form's package
+
+Eval the current ~use-package~ form with ~quelpa-upgrade-p~ true.  Deletes old versions of the package first to remove obsolete versions.
+
+This makes it easy to upgrade a package you install with [[https://framagit.org/steckerhalter/quelpa-use-package][quelpa-use-package]] without having to add ~:upgrade t~ to the form, which would cause Quelpa to /always/ upgrade the package every time Emacs loads.
+
+*Requires:*
+
++  [[#delete-all-installed-versions-of-a-package][unpackaged/package-delete-all-versions]]
+
+#+BEGIN_SRC elisp
+  (defun unpackaged/quelpa-use-package-upgrade ()
+    "Eval the current `use-package' form with `quelpa-upgrade-p' true.
+  Deletes the package first to remove obsolete versions."
+    (interactive)
+    (save-excursion
+      (unless (looking-at (rx "(use-package "))
+        (re-search-backward (rx "(use-package "))
+        (pcase-let* ((`(use-package ,package-name . ,rest) (read (current-buffer))))
+          (unless package-name
+            (user-error "Can't determine package-name"))
+          (unless (cl-loop for sexp in rest
+                           thereis (eql sexp :quelpa))
+            (user-error "`:quelpa' form not found"))
+          (unpackaged/package-delete-all-versions package-name 'force))))
+    (let ((quelpa-upgrade-p t))
+      (call-interactively #'eval-defun)))
+#+END_SRC
+
+** Upgrade one package in the package menu
 
 Mark current package for upgrading (i.e. also mark obsolete version for deletion.)
 
@@ -685,7 +747,6 @@ Mark current package for upgrading (i.e. also mark obsolete version for deletion
                       (t (package-menu-mark-delete)))))
             (forward-line 1))))))
 #+END_SRC
-
 * Programming                                                   :programming:
 
 ** ~iedit~                                                 :iedit:refactoring:

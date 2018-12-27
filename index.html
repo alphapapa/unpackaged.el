@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-27 Thu 13:23 -->
+<!-- 2018-12-27 Thu 13:32 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>unpackaged.el</title>
@@ -244,72 +244,74 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org0cdbb47">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></a>
+<li><a href="#orge52b4a1">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></a>
 <ul>
-<li><a href="#orgcd04363">font-compare</a></li>
+<li><a href="#org02f14bb">font-compare</a></li>
 </ul>
 </li>
-<li><a href="#orge6d3053">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></a></li>
-<li><a href="#org6b30968">Misc</a>
+<li><a href="#org8f88a53">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></a></li>
+<li><a href="#org0358de3">Misc</a>
 <ul>
-<li><a href="#org18f2222">Track metadata from MPRIS-supporting media player&#xa0;&#xa0;&#xa0;<span class="tag"><span class="DBus">DBus</span></span></a></li>
+<li><a href="#orgd68d3a1">Track metadata from MPRIS-supporting media player&#xa0;&#xa0;&#xa0;<span class="tag"><span class="DBus">DBus</span></span></a></li>
 </ul>
 </li>
-<li><a href="#org515a3c3">Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Org">Org</span></span></a>
+<li><a href="#orgf3a4ea9">Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Org">Org</span></span></a>
 <ul>
-<li><a href="#orgf633425">Agenda previews&#xa0;&#xa0;&#xa0;<span class="tag"><span class="agenda">agenda</span></span></a></li>
-<li><a href="#org72a0071">Convert Elisp to Org format&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></a></li>
-<li><a href="#org32c6a06">Download and attach remote files</a></li>
-<li><a href="#org79b1e54">Ensure blank lines between headings and before contents</a></li>
-<li><a href="#org6fba347">Surround region with emphasis or syntax characters</a></li>
-<li><a href="#orgf81eb96">Refile to datetree file using earliest/latest timestamp in entry</a></li>
-<li><a href="#orgd4aec17"><code>org-return-dwim</code></a></li>
-<li><a href="#orgeafb0d3">Read-only trees</a></li>
-<li><a href="#orgf970f36">Sort tree by multiple methods at once</a></li>
+<li><a href="#org388650b">Agenda previews&#xa0;&#xa0;&#xa0;<span class="tag"><span class="agenda">agenda</span></span></a></li>
+<li><a href="#org7cefc75">Convert Elisp to Org format&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></a></li>
+<li><a href="#org12f3798">Download and attach remote files</a></li>
+<li><a href="#org52ff5cb">Ensure blank lines between headings and before contents</a></li>
+<li><a href="#orgf8853fc">Surround region with emphasis or syntax characters</a></li>
+<li><a href="#org3097cd2">Refile to datetree file using earliest/latest timestamp in entry</a></li>
+<li><a href="#org3477bc1"><code>org-return-dwim</code></a></li>
+<li><a href="#orgeeb88e9">Read-only trees</a></li>
+<li><a href="#org161ab4f">Sort tree by multiple methods at once</a></li>
 </ul>
 </li>
-<li><a href="#org55b39f0">Packages&#xa0;&#xa0;&#xa0;<span class="tag"><span class="packages">packages</span></span></a>
+<li><a href="#org1c9c0c7">Packages&#xa0;&#xa0;&#xa0;<span class="tag"><span class="packages">packages</span></span></a>
 <ul>
-<li><a href="#org1e5235b"><code>package-menu-upgrade-package</code>: Upgrade one package</a></li>
+<li><a href="#org59d789e">Delete all installed versions of a package</a></li>
+<li><a href="#org204ed28">Upgrade a <code>quelpa-use-package</code> form's package</a></li>
+<li><a href="#orgb1983ea">Upgrade one package in the package menu</a></li>
 </ul>
 </li>
-<li><a href="#org7fe6000">Programming&#xa0;&#xa0;&#xa0;<span class="tag"><span class="programming">programming</span></span></a>
+<li><a href="#org070211e">Programming&#xa0;&#xa0;&#xa0;<span class="tag"><span class="programming">programming</span></span></a>
 <ul>
-<li><a href="#org9e96695"><code>iedit</code>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="iedit">iedit</span>&#xa0;<span class="refactoring">refactoring</span></span></a>
+<li><a href="#org0a4219a"><code>iedit</code>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="iedit">iedit</span>&#xa0;<span class="refactoring">refactoring</span></span></a>
 <ul>
-<li><a href="#orgcb79bff"><code>iedit-scoped</code></a></li>
-<li><a href="#orgb9722b2"><code>iedit-or-flyspell</code>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="flyspell">flyspell</span>&#xa0;<span class="spell_checking">spell_checking</span></span></a></li>
+<li><a href="#orgc7abfa6"><code>iedit-scoped</code></a></li>
+<li><a href="#orgf447dda"><code>iedit-or-flyspell</code>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="flyspell">flyspell</span>&#xa0;<span class="spell_checking">spell_checking</span></span></a></li>
 </ul>
 </li>
-<li><a href="#orged7bd13">Sort sexps</a></li>
+<li><a href="#org1bea565">Sort sexps</a></li>
 </ul>
 </li>
-<li><a href="#org5d22b85">Regular expressions&#xa0;&#xa0;&#xa0;<span class="tag"><span class="regular_expressions">regular_expressions</span></span></a>
+<li><a href="#org681fbcc">Regular expressions&#xa0;&#xa0;&#xa0;<span class="tag"><span class="regular_expressions">regular_expressions</span></span></a>
 <ul>
-<li><a href="#org81f9235">query-replace-rx</a></li>
+<li><a href="#org2d7c380">query-replace-rx</a></li>
 </ul>
 </li>
-<li><a href="#org6a31e21">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></a>
+<li><a href="#orge9397d8">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></a>
 <ul>
-<li><a href="#orge8ef9c9">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></a>
+<li><a href="#org4f9f1c8">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></a>
 <ul>
-<li><a href="#org678bb7d">Improved <code>magit-status</code> command</a></li>
-<li><a href="#org1defdb4">magit-log date headers</a></li>
+<li><a href="#orgc4e6f65">Improved <code>magit-status</code> command</a></li>
+<li><a href="#orgbc3813d">magit-log date headers</a></li>
 </ul>
 </li>
-<li><a href="#org16be9f0"><code>smerge-mode</code></a>
+<li><a href="#org01edcf7"><code>smerge-mode</code></a>
 <ul>
-<li><a href="#org685bc1a">Hydra</a></li>
+<li><a href="#orgb5d2ed8">Hydra</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org8b1512e">Web&#xa0;&#xa0;&#xa0;<span class="tag"><span class="web">web</span></span></a>
+<li><a href="#org6dc1eea">Web&#xa0;&#xa0;&#xa0;<span class="tag"><span class="web">web</span></span></a>
 <ul>
-<li><a href="#org246db5b">feed-for-url&#xa0;&#xa0;&#xa0;<span class="tag"><span class="RSS">RSS</span>&#xa0;<span class="Atom">Atom</span>&#xa0;<span class="XML">XML</span></span></a></li>
+<li><a href="#org7f69af1">feed-for-url&#xa0;&#xa0;&#xa0;<span class="tag"><span class="RSS">RSS</span>&#xa0;<span class="Atom">Atom</span>&#xa0;<span class="XML">XML</span></span></a></li>
 </ul>
 </li>
-<li><a href="#org9abbfb0">License</a></li>
+<li><a href="#org77d646c">License</a></li>
 </ul>
 </div>
 </div>
@@ -337,12 +339,12 @@ Functions in this file generally use these helper packages:
 <li><a href="https://github.com/jwiegley/use-package">use-package</a></li>
 </ul>
 
-<div id="outline-container-org0cdbb47" class="outline-2">
-<h2 id="org0cdbb47">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></h2>
-<div class="outline-text-2" id="text-org0cdbb47">
-</div><div id="outline-container-orgcd04363" class="outline-3">
-<h3 id="orgcd04363">font-compare</h3>
-<div class="outline-text-3" id="text-orgcd04363">
+<div id="outline-container-orge52b4a1" class="outline-2">
+<h2 id="orge52b4a1">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></h2>
+<div class="outline-text-2" id="text-orge52b4a1">
+</div><div id="outline-container-org02f14bb" class="outline-3">
+<h3 id="org02f14bb">font-compare</h3>
+<div class="outline-text-3" id="text-org02f14bb">
 <p>
 Compare <code>TEXT</code> displayed in <code>FONTS</code>.  <code>FONTS</code> is a list of font specs.
 </p>
@@ -401,9 +403,9 @@ Interactively, prompt for <code>TEXT</code>, using <code>lorem-ipsum</code> text
 </div>
 </div>
 
-<div id="outline-container-orge6d3053" class="outline-2">
-<h2 id="orge6d3053">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></h2>
-<div class="outline-text-2" id="text-orge6d3053">
+<div id="outline-container-org8f88a53" class="outline-2">
+<h2 id="org8f88a53">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></h2>
+<div class="outline-text-2" id="text-org8f88a53">
 <p>
 Code used to help maintain this document.  (Note: These links don't work in GitHub's renderer.)
 </p>
@@ -414,12 +416,12 @@ Code used to help maintain this document.  (Note: These links don't work in GitH
 </div>
 </div>
 
-<div id="outline-container-org6b30968" class="outline-2">
-<h2 id="org6b30968">Misc</h2>
-<div class="outline-text-2" id="text-org6b30968">
-</div><div id="outline-container-org18f2222" class="outline-3">
-<h3 id="org18f2222">Track metadata from MPRIS-supporting media player&#xa0;&#xa0;&#xa0;<span class="tag"><span class="DBus">DBus</span></span></h3>
-<div class="outline-text-3" id="text-org18f2222">
+<div id="outline-container-org0358de3" class="outline-2">
+<h2 id="org0358de3">Misc</h2>
+<div class="outline-text-2" id="text-org0358de3">
+</div><div id="outline-container-orgd68d3a1" class="outline-3">
+<h3 id="orgd68d3a1">Track metadata from MPRIS-supporting media player&#xa0;&#xa0;&#xa0;<span class="tag"><span class="DBus">DBus</span></span></h3>
+<div class="outline-text-3" id="text-orgd68d3a1">
 <p>
 Return the artist, album, and title of the track playing in MPRIS-supporting player.  Returns a string in format <code>ARTIST - ~ALBUM~: ~TITLE~ [PLAYER]</code>.  If no track is playing, returns nil.  If more than one player is playing, uses the first one found in DBus.  If <code>PLAYER</code> is non-nil, include the name of the player in the output string.
 </p>
@@ -469,17 +471,17 @@ DBus is not a straightforward system to work with, so this may serve as a useful
 </div>
 </div>
 
-<div id="outline-container-org515a3c3" class="outline-2">
-<h2 id="org515a3c3">Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Org">Org</span></span></h2>
-<div class="outline-text-2" id="text-org515a3c3">
+<div id="outline-container-orgf3a4ea9" class="outline-2">
+<h2 id="orgf3a4ea9">Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Org">Org</span></span></h2>
+<div class="outline-text-2" id="text-orgf3a4ea9">
 <p>
 Code for <a href="https://orgmode.org/">Org Mode</a>.
 </p>
 </div>
 
-<div id="outline-container-orgf633425" class="outline-3">
-<h3 id="orgf633425">Agenda previews&#xa0;&#xa0;&#xa0;<span class="tag"><span class="agenda">agenda</span></span></h3>
-<div class="outline-text-3" id="text-orgf633425">
+<div id="outline-container-org388650b" class="outline-3">
+<h3 id="org388650b">Agenda previews&#xa0;&#xa0;&#xa0;<span class="tag"><span class="agenda">agenda</span></span></h3>
+<div class="outline-text-3" id="text-org388650b">
 <p>
 <i>Before:</i>
 </p>
@@ -545,9 +547,9 @@ Code for <a href="https://orgmode.org/">Org Mode</a>.
 </div>
 </div>
 
-<div id="outline-container-org72a0071" class="outline-3">
-<h3 id="org72a0071"><a id="ID-b86d14ff-b87c-4e2a-a513-067c0a5d3490"></a>Convert Elisp to Org format&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></h3>
-<div class="outline-text-3" id="text-org72a0071">
+<div id="outline-container-org7cefc75" class="outline-3">
+<h3 id="org7cefc75"><a id="ID-b86d14ff-b87c-4e2a-a513-067c0a5d3490"></a>Convert Elisp to Org format&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></h3>
+<div class="outline-text-3" id="text-org7cefc75">
 <p>
 These functions convert Emacs Lisp code and docstrings to Org-formatted text, helpful for inserting into readme files (like this one).
 </p>
@@ -563,7 +565,7 @@ These functions convert Emacs Lisp code and docstrings to Org-formatted text, he
                    <span style="color: #b58900;">(</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">replace</span><span style="text-decoration: underline;">-</span><span style="color: #52997866758a; text-decoration: underline;">regexp</span><span style="text-decoration: underline;">-</span><span style="color: #a961952b94d0; text-decoration: underline;">in</span><span style="text-decoration: underline;">-</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">string</span> <span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">rx</span> <span style="color: #71ba8cd29fdd;">bol</span> <span style="color: #6c71c4;">(</span><span style="color: #71ba8cd29fdd; text-decoration: underline;">1</span><span style="text-decoration: underline;">+</span> <span style="color: #a961952b94d0;">blank</span><span style="color: #6c71c4;">)</span> <span style="color: #7a4685f22ca6;">eol</span><span style="color: #268bd2;">)</span> <span style="color: #2aa198;">""</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span>
          <span style="color: #6c71c4;">(</span><span style="color: #a19967658391;">sexp</span> <span style="color: #859900;">(</span><span style="color: #a961952b94d0; text-decoration: underline;">read</span> <span style="color: #52997866758a;">raw</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span>
          <span style="color: #6c71c4;">(</span><span style="color: #a8e97c777baf;">docstring</span> <span style="color: #859900;">(</span><span style="color: #859900; font-weight: bold;">--when-let</span> <span style="color: #b58900;">(</span><span style="text-decoration: underline;">-</span><span style="color: #90cc76662432; text-decoration: underline;">first</span> <span style="color: #859900; font-weight: bold;">#'</span><span style="color: #a19967658391;">stringp</span> <span style="color: #a19967658391;">sexp</span><span style="color: #b58900;">)</span>
-                      <span style="color: #b58900;">(</span><span style="color: #a961952b94d0;">unpackaged</span>/<span style="color: #a8e97c777baf;">docstring</span>-<span style="color: #a050824890d1;">to</span>-<span style="color: #57998258a066;">org</span> <span style="color: #268bd2;">it</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span>
+                      <span style="color: #b58900;">(</span><span style="color: #a961952b94d0; text-decoration: underline;">unpackaged</span><span style="text-decoration: underline;">/</span><span style="color: #a8e97c777baf; text-decoration: underline;">docstring</span><span style="text-decoration: underline;">-</span><span style="color: #a050824890d1; text-decoration: underline;">to</span><span style="text-decoration: underline;">-</span><span style="color: #57998258a066; text-decoration: underline;">org</span> <span style="color: #268bd2;">it</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span>
     <span style="color: #268bd2;">(</span><span style="color: #7a4685f22ca6; text-decoration: underline;">kill</span><span style="text-decoration: underline;">-</span><span style="color: #68717c277aa9; text-decoration: underline;">new</span> <span style="color: #6c71c4;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">concat</span> <span style="color: #a8e97c777baf;">docstring</span> <span style="color: #859900;">(</span><span style="color: #859900; font-weight: bold;">when</span> <span style="color: #a8e97c777baf;">docstring</span> <span style="color: #2aa198;">"\n\n"</span><span style="color: #859900;">)</span>
                       <span style="color: #2aa198;">"#+BEGIN_SRC elisp"</span> <span style="color: #2aa198;">"\n"</span>
                       <span style="color: #52997866758a;">raw</span> <span style="color: #2aa198;">"\n"</span>
@@ -583,8 +585,8 @@ These functions convert Emacs Lisp code and docstrings to Org-formatted text, he
                                                 <span style="color: #a4cca4cca4cc;">collect</span> <span style="color: #a8e97c777baf;">form</span><span style="color: #b58900;">)</span>
                                      <span style="color: #b58900;">(</span><span style="color: #959995df9a66; text-decoration: underline;">buffer</span><span style="text-decoration: underline;">-</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">string</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span>
     <span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">--&gt;</span> <span style="color: #6c71c4;">(</span><span style="color: #a4cca4cca4cc;">string</span>-<span style="color: #959995df9a66;">buffer</span>--&gt; <span style="color: #a8e97c777baf;">docstring</span>
-                           <span style="color: #859900;">(</span><span style="color: #a961952b94d0;">unpackaged</span>/<span style="color: #57998258a066;">caps</span>-<span style="color: #a050824890d1;">to</span>-<span style="color: #a050824890d1;">code</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #a19967658391; text-decoration: underline;">min</span><span style="color: #b58900;">)</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">max</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
-                           <span style="color: #859900;">(</span><span style="color: #a961952b94d0;">unpackaged</span>/<span style="color: #a4cca4cca4cc;">symbol</span>-<span style="color: #57998258a066;">quotes</span>-<span style="color: #a050824890d1;">to</span>-<span style="color: #57998258a066;">org</span>-<span style="color: #a050824890d1;">code</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #a19967658391; text-decoration: underline;">min</span><span style="color: #b58900;">)</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">max</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
+                           <span style="color: #859900;">(</span><span style="color: #a961952b94d0; text-decoration: underline;">unpackaged</span><span style="text-decoration: underline;">/</span><span style="color: #57998258a066; text-decoration: underline;">caps</span><span style="text-decoration: underline;">-</span><span style="color: #a050824890d1; text-decoration: underline;">to</span><span style="text-decoration: underline;">-</span><span style="color: #a050824890d1; text-decoration: underline;">code</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #a19967658391; text-decoration: underline;">min</span><span style="color: #b58900;">)</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">max</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
+                           <span style="color: #859900;">(</span><span style="color: #a961952b94d0; text-decoration: underline;">unpackaged</span><span style="text-decoration: underline;">/</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">symbol</span><span style="text-decoration: underline;">-</span><span style="color: #57998258a066; text-decoration: underline;">quotes</span><span style="text-decoration: underline;">-</span><span style="color: #a050824890d1; text-decoration: underline;">to</span><span style="text-decoration: underline;">-</span><span style="color: #57998258a066; text-decoration: underline;">org</span><span style="text-decoration: underline;">-</span><span style="color: #a050824890d1; text-decoration: underline;">code</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #a19967658391; text-decoration: underline;">min</span><span style="color: #b58900;">)</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">max</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
                            <span style="color: #859900;">(</span><span style="color: #959995df9a66; text-decoration: underline;">unfill</span><span style="text-decoration: underline;">-</span><span style="color: #6e667a661e98; text-decoration: underline;">region</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #a19967658391; text-decoration: underline;">min</span><span style="color: #b58900;">)</span> <span style="color: #b58900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">max</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
                            <span style="color: #859900;">(</span><span style="color: #859900; font-weight: bold;">while</span> <span style="color: #b58900;">(</span><span style="color: #9af381d633a6; text-decoration: underline;">re</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">search</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">forward</span> <span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">rx</span> <span style="color: #71ba8cd29fdd;">bol</span> <span style="color: #6c71c4;">(</span><span style="color: #a4cca4cca4cc;">group</span> <span style="color: #859900;">(</span><span style="color: #71ba8cd29fdd; text-decoration: underline;">1</span><span style="text-decoration: underline;">+</span> <span style="color: #a961952b94d0;">blank</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span> <span style="color: #a4cca4cca4cc;">nil</span> <span style="color: #959995df9a66;">t</span><span style="color: #b58900;">)</span>
                              <span style="color: #b58900;">(</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">replace</span><span style="text-decoration: underline;">-</span><span style="color: #7a4685f22ca6; text-decoration: underline;">match</span> <span style="color: #2aa198;">""</span> <span style="color: #959995df9a66;">t</span> <span style="color: #959995df9a66;">t</span> <span style="color: #a4cca4cca4cc;">nil</span> <span style="color: #71ba8cd29fdd;">1</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
@@ -630,9 +632,9 @@ These functions convert Emacs Lisp code and docstrings to Org-formatted text, he
 </div>
 </div>
 
-<div id="outline-container-org32c6a06" class="outline-3">
-<h3 id="org32c6a06">Download and attach remote files</h3>
-<div class="outline-text-3" id="text-org32c6a06">
+<div id="outline-container-org12f3798" class="outline-3">
+<h3 id="org12f3798">Download and attach remote files</h3>
+<div class="outline-text-3" id="text-org12f3798">
 <p>
 Download file at <code>URL</code> and attach with <code>org-attach</code>.  Interactively, look for <code>URL</code> at point, in X clipboard, and in kill-ring, prompting if not found.  With prefix, prompt for <code>URL</code>.
 </p>
@@ -673,15 +675,15 @@ Download file at <code>URL</code> and attach with <code>org-attach</code>.  Inte
 </div>
 </div>
 
-<div id="outline-container-org79b1e54" class="outline-3">
-<h3 id="org79b1e54">Ensure blank lines between headings and before contents</h3>
-<div class="outline-text-3" id="text-org79b1e54">
+<div id="outline-container-org52ff5cb" class="outline-3">
+<h3 id="org52ff5cb">Ensure blank lines between headings and before contents</h3>
+<div class="outline-text-3" id="text-org52ff5cb">
 <p>
 Ensure that blank lines exist between headings and between headings and their contents.  With prefix, operate on whole buffer.  Ensures that blank lines exist after each headings's drawers.
 </p>
 
 <p>
-For those who prefer to maintain blank lines between headings, this makes it easy to automatically add them where necessary, to a subtree or the whole buffer.  It also adds blank lines after drawers.  Works well with <a href="#orgd4aec17"><code>org-return-dwim</code></a>.
+For those who prefer to maintain blank lines between headings, this makes it easy to automatically add them where necessary, to a subtree or the whole buffer.  It also adds blank lines after drawers.  Works well with <a href="#org3477bc1"><code>org-return-dwim</code></a>.
 </p>
 
 <div class="org-src-container">
@@ -722,9 +724,9 @@ For those who prefer to maintain blank lines between headings, this makes it eas
 </div>
 </div>
 
-<div id="outline-container-org6fba347" class="outline-3">
-<h3 id="org6fba347">Surround region with emphasis or syntax characters</h3>
-<div class="outline-text-3" id="text-org6fba347">
+<div id="outline-container-orgf8853fc" class="outline-3">
+<h3 id="orgf8853fc">Surround region with emphasis or syntax characters</h3>
+<div class="outline-text-3" id="text-orgf8853fc">
 <p>
 Define and bind interactive commands for each of <code>KEYS</code> that surround the region or insert text.  Commands are bound in <code>org-mode-map</code> to each of <code>KEYS</code>.  If the region is active, commands surround it with the key character, otherwise call <code>org-self-insert-command</code>.
 </p>
@@ -766,9 +768,9 @@ Used like:
 </div>
 </div>
 
-<div id="outline-container-orgf81eb96" class="outline-3">
-<h3 id="orgf81eb96">Refile to datetree file using earliest/latest timestamp in entry</h3>
-<div class="outline-text-3" id="text-orgf81eb96">
+<div id="outline-container-org3097cd2" class="outline-3">
+<h3 id="org3097cd2">Refile to datetree file using earliest/latest timestamp in entry</h3>
+<div class="outline-text-3" id="text-org3097cd2">
 <p>
 Refile current entry to datetree using timestamp found in entry.  <code>WHICH</code> should be <code>earliest</code> or <code>latest</code>. If <code>SUBTREE</code>-P is non-nil, search whole subtree.
 </p>
@@ -849,9 +851,9 @@ This is sort of like archiving to a datetree, but it uses either the earliest or
 </div>
 </div>
 
-<div id="outline-container-orgd4aec17" class="outline-3">
-<h3 id="orgd4aec17"><code>org-return-dwim</code></h3>
-<div class="outline-text-3" id="text-orgd4aec17">
+<div id="outline-container-org3477bc1" class="outline-3">
+<h3 id="org3477bc1"><code>org-return-dwim</code></h3>
+<div class="outline-text-3" id="text-org3477bc1">
 <p>
 A helpful replacement for <code>org-return</code>.  With prefix, call <code>org-return</code>.
 </p>
@@ -955,9 +957,9 @@ Inspired by <a href="http://kitchingroup.cheme.cmu.edu/blog/2017/04/09/A-better-
 </div>
 </div>
 
-<div id="outline-container-orgeafb0d3" class="outline-3">
-<h3 id="orgeafb0d3">Read-only trees</h3>
-<div class="outline-text-3" id="text-orgeafb0d3">
+<div id="outline-container-orgeeb88e9" class="outline-3">
+<h3 id="orgeeb88e9">Read-only trees</h3>
+<div class="outline-text-3" id="text-orgeeb88e9">
 <p>
 This code applies the <code>read-only</code> text-property to trees tagged <code>read_only</code>, preventing them from being modified accidentally.  (Note: If read-only headings appear in an Agenda buffer, it can cause slightly unusual behavior.  Usually this is not an issue.)  This was originally inspired by John Kitchin's <a href="http://kitchingroup.cheme.cmu.edu/blog/2014/09/13/Make-some-org-sections-read-only/">blog article</a> and later <a href="https://www.reddit.com/r/emacs/comments/92k7n1/guide_to_profiling_and_optimizing_an_orgrelated/">rewritten</a> in a faster version.
 </p>
@@ -1010,9 +1012,9 @@ The functions may also be called interactively as needed.
 </div>
 </div>
 
-<div id="outline-container-orgf970f36" class="outline-3">
-<h3 id="orgf970f36">Sort tree by multiple methods at once</h3>
-<div class="outline-text-3" id="text-orgf970f36">
+<div id="outline-container-org161ab4f" class="outline-3">
+<h3 id="org161ab4f">Sort tree by multiple methods at once</h3>
+<div class="outline-text-3" id="text-org161ab4f">
 <p>
 Call <code>org-sort-entries</code> with multiple sorting methods specified in <code>KEYS</code>.
 </p>
@@ -1037,12 +1039,90 @@ This is much easier than doing <kbd>C-c ^ KEY</kbd> several times in a row.
 </div>
 </div>
 
-<div id="outline-container-org55b39f0" class="outline-2">
-<h2 id="org55b39f0">Packages&#xa0;&#xa0;&#xa0;<span class="tag"><span class="packages">packages</span></span></h2>
-<div class="outline-text-2" id="text-org55b39f0">
-</div><div id="outline-container-org1e5235b" class="outline-3">
-<h3 id="org1e5235b"><code>package-menu-upgrade-package</code>: Upgrade one package</h3>
-<div class="outline-text-3" id="text-org1e5235b">
+<div id="outline-container-org1c9c0c7" class="outline-2">
+<h2 id="org1c9c0c7">Packages&#xa0;&#xa0;&#xa0;<span class="tag"><span class="packages">packages</span></span></h2>
+<div class="outline-text-2" id="text-org1c9c0c7">
+</div><div id="outline-container-org59d789e" class="outline-3">
+<h3 id="org59d789e">Delete all installed versions of a package</h3>
+<div class="outline-text-3" id="text-org59d789e">
+<p>
+Delete all versions of package named <code>NAME</code>.  <code>NAME</code> may be a string or symbol.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #2aa198;">(</span><span style="color: #859900; font-weight: bold;">defun</span> <span style="color: #268bd2;">unpackaged/package-delete-all-versions</span> <span style="color: #b58900;">(</span><span style="color: #68717c277aa9;">name</span> <span style="color: #b58900;">&amp;optional</span> <span style="color: #a050824890d1;">force</span><span style="color: #b58900;">)</span>
+  <span style="color: #2aa198;">"Delete all versions of package named NAME.</span>
+<span style="color: #2aa198;">NAME may be a string or symbol."</span>
+  <span style="color: #586e75;">;; </span><span style="color: #586e75; font-weight: bold; font-style: italic;">Copied from `</span><span style="color: #268bd2; font-weight: bold; font-style: italic;">package-delete</span><span style="color: #586e75; font-weight: bold; font-style: italic;">'.</span>
+  <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">let*</span> <span style="color: #268bd2;">(</span><span style="color: #6c71c4;">(</span><span style="color: #7a4685f22ca6;">package</span>-<span style="color: #68717c277aa9;">name</span> <span style="color: #859900;">(</span><span style="color: #859900; font-weight: bold;">cl-typecase</span> <span style="color: #68717c277aa9;">name</span>
+                         <span style="color: #b58900;">(</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">string</span> <span style="color: #268bd2;">(</span><span style="color: #6e667a661e98; text-decoration: underline;">intern</span> <span style="color: #68717c277aa9;">name</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span>
+                         <span style="color: #b58900;">(</span><span style="color: #a4cca4cca4cc;">symbol</span> <span style="color: #68717c277aa9;">name</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span>
+         <span style="color: #6c71c4;">(</span><span style="color: #9af381d633a6;">user</span>-<span style="color: #959995df9a66;">packages</span>-<span style="color: #a8e97c777baf;">list</span> <span style="color: #859900;">(</span><span style="color: #859900; font-weight: bold;">-&gt;&gt;</span> <span style="color: #7a4685f22ca6;">package</span>-<span style="color: #9dff5da442ff;">alist</span>
+                                  <span style="color: #586e75;">;; </span><span style="color: #586e75; font-weight: bold; font-style: italic;">Just to be safe, we ignore built-ins.</span>
+                                  <span style="color: #b58900;">(</span><span style="text-decoration: underline;">-</span><span style="color: #a8e97c777baf; text-decoration: underline;">select</span> <span style="color: #268bd2;">(</span><span style="text-decoration: underline;">-</span><span style="color: #57998258a066; text-decoration: underline;">not</span> <span style="color: #859900; font-weight: bold;">#'</span><span style="color: #7a4685f22ca6;">package</span>-<span style="color: #6e667a661e98;">built</span>-<span style="color: #a961952b94d0;">in</span>-<span style="color: #9af381d633a6;">p</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span>
+         <span style="color: #6c71c4;">(</span><span style="color: #a050824890d1;">matching</span>-<span style="color: #a3726d7d5726;">versions</span> <span style="color: #859900;">(</span><span style="color: #859900; font-weight: bold;">--select</span> <span style="color: #b58900;">(</span><span style="color: #7a4685f22ca6; text-decoration: underline;">eql</span> <span style="color: #268bd2;">(</span><span style="color: #a19967658391; text-decoration: underline;">car</span> <span style="color: #268bd2;">it</span><span style="color: #268bd2;">)</span> <span style="color: #7a4685f22ca6;">package</span>-<span style="color: #68717c277aa9;">name</span><span style="color: #b58900;">)</span> <span style="color: #9af381d633a6;">user</span>-<span style="color: #959995df9a66;">packages</span>-<span style="color: #a8e97c777baf;">list</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span>
+    <span style="color: #586e75;">;; </span><span style="color: #586e75; font-weight: bold; font-style: italic;">Safety checks.</span>
+    <span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">cl-loop</span> <span style="color: #71ba8cd29fdd;">for</span> <span style="color: #6c71c4;">(</span><span style="color: #a4cca4cca4cc;">symbol</span> <span style="color: #90cc76662432;">first</span>-<span style="color: #959995df9a66;">desc</span> . <span style="color: #6e667a661e98;">rest</span><span style="color: #6c71c4;">)</span> <span style="color: #a961952b94d0;">in</span> <span style="color: #a050824890d1;">matching</span>-<span style="color: #a3726d7d5726;">versions</span>
+             <span style="color: #7a4685f22ca6;">do</span> <span style="color: #6c71c4;">(</span><span style="color: #859900; font-weight: bold;">progn</span>
+                  <span style="color: #859900;">(</span><span style="color: #859900; font-weight: bold;">unless</span> <span style="color: #a050824890d1;">force</span>
+                    <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">when-let*</span> <span style="color: #268bd2;">(</span><span style="color: #6c71c4;">(</span><span style="color: #a4cca4cca4cc;">dependent</span> <span style="color: #859900;">(</span><span style="color: #7a4685f22ca6; text-decoration: underline;">package</span><span style="text-decoration: underline;">--</span><span style="color: #9dff5da442ff; text-decoration: underline;">used</span><span style="text-decoration: underline;">-</span><span style="color: #7a4685f22ca6; text-decoration: underline;">elsewhere</span><span style="text-decoration: underline;">-</span><span style="color: #9af381d633a6; text-decoration: underline;">p</span> <span style="color: #90cc76662432;">first</span>-<span style="color: #959995df9a66;">desc</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span>
+                      <span style="color: #268bd2;">(</span><span style="color: #cb4b16; font-weight: bold;">error</span> <span style="color: #2aa198;">"Package `</span><span style="color: #268bd2; font-weight: bold;">%s</span><span style="color: #2aa198;">' depends on `</span><span style="color: #268bd2; font-weight: bold;">%s</span><span style="color: #2aa198;">'"</span> <span style="color: #6c71c4;">(</span><span style="color: #7a4685f22ca6; text-decoration: underline;">package</span><span style="text-decoration: underline;">-</span><span style="color: #959995df9a66; text-decoration: underline;">desc</span><span style="text-decoration: underline;">-</span><span style="color: #68717c277aa9; text-decoration: underline;">name</span> <span style="color: #a4cca4cca4cc;">dependent</span><span style="color: #6c71c4;">)</span> <span style="color: #7a4685f22ca6;">package</span>-<span style="color: #68717c277aa9;">name</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
+                  <span style="color: #859900;">(</span><span style="color: #859900; font-weight: bold;">unless</span> <span style="color: #b58900;">(</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">string</span><span style="text-decoration: underline;">-</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">prefix</span><span style="text-decoration: underline;">-</span><span style="color: #9af381d633a6; text-decoration: underline;">p</span> <span style="color: #268bd2;">(</span><span style="color: #6e667a661e98; text-decoration: underline;">file</span><span style="text-decoration: underline;">-</span><span style="color: #68717c277aa9; text-decoration: underline;">name</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">as</span><span style="text-decoration: underline;">-</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">directory</span> <span style="color: #6c71c4;">(</span><span style="color: #7a4685f22ca6; text-decoration: underline;">expand</span><span style="text-decoration: underline;">-</span><span style="color: #6e667a661e98; text-decoration: underline;">file</span><span style="text-decoration: underline;">-</span><span style="color: #68717c277aa9; text-decoration: underline;">name</span> <span style="color: #7a4685f22ca6;">package</span>-<span style="color: #9af381d633a6;">user</span>-<span style="color: #a3726d7d5726;">dir</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span>
+                                           <span style="color: #268bd2;">(</span><span style="color: #7a4685f22ca6; text-decoration: underline;">expand</span><span style="text-decoration: underline;">-</span><span style="color: #6e667a661e98; text-decoration: underline;">file</span><span style="text-decoration: underline;">-</span><span style="color: #68717c277aa9; text-decoration: underline;">name</span> <span style="color: #6c71c4;">(</span><span style="color: #7a4685f22ca6; text-decoration: underline;">package</span><span style="text-decoration: underline;">-</span><span style="color: #959995df9a66; text-decoration: underline;">desc</span><span style="text-decoration: underline;">-</span><span style="color: #a3726d7d5726; text-decoration: underline;">dir</span> <span style="color: #90cc76662432;">first</span>-<span style="color: #959995df9a66;">desc</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span>
+                    <span style="color: #b58900;">(</span><span style="color: #cb4b16; font-weight: bold;">error</span> <span style="color: #2aa198;">"Package `</span><span style="color: #268bd2; font-weight: bold;">%s</span><span style="color: #2aa198;">' is a system package"</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span>
+    <span style="color: #586e75;">;; </span><span style="color: #586e75; font-weight: bold; font-style: italic;">Checks passed: delete packages.</span>
+    <span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">cl-loop</span> <span style="color: #71ba8cd29fdd;">for</span> <span style="color: #6c71c4;">(</span><span style="color: #a4cca4cca4cc;">symbol</span> . <span style="color: #a19967658391;">descs</span><span style="color: #6c71c4;">)</span> <span style="color: #a961952b94d0;">in</span> <span style="color: #a050824890d1;">matching</span>-<span style="color: #a3726d7d5726;">versions</span>
+             <span style="color: #7a4685f22ca6;">do</span> <span style="color: #6c71c4;">(</span><span style="color: #859900; font-weight: bold;">--each</span> <span style="color: #a19967658391;">descs</span>
+                  <span style="color: #859900;">(</span><span style="color: #7a4685f22ca6; text-decoration: underline;">package</span><span style="text-decoration: underline;">-</span><span style="color: #a8e97c777baf; text-decoration: underline;">delete</span> <span style="color: #268bd2;">it</span> <span style="color: #a050824890d1;">force</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org204ed28" class="outline-3">
+<h3 id="org204ed28">Upgrade a <code>quelpa-use-package</code> form's package</h3>
+<div class="outline-text-3" id="text-org204ed28">
+<p>
+Eval the current <code>use-package</code> form with <code>quelpa-upgrade-p</code> true.  Deletes old versions of the package first to remove obsolete versions.
+</p>
+
+<p>
+This makes it easy to upgrade a package you install with <a href="https://framagit.org/steckerhalter/quelpa-use-package">quelpa-use-package</a> without having to add <code>:upgrade t</code> to the form, which would cause Quelpa to <i>always</i> upgrade the package every time Emacs loads.
+</p>
+
+<p>
+<b>Requires:</b>
+</p>
+
+<ul class="org-ul">
+<li></li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #2aa198;">(</span><span style="color: #859900; font-weight: bold;">defun</span> <span style="color: #268bd2;">unpackaged/quelpa-use-package-upgrade</span> <span style="color: #b58900;">()</span>
+  <span style="color: #2aa198;">"Eval the current `</span><span style="color: #268bd2; font-weight: bold;">use-package</span><span style="color: #2aa198;">' form with `</span><span style="color: #268bd2; font-weight: bold;">quelpa-upgrade-p</span><span style="color: #2aa198;">' true.</span>
+<span style="color: #2aa198;">Deletes the package first to remove obsolete versions."</span>
+  <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">interactive</span><span style="color: #b58900;">)</span>
+  <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">save-excursion</span>
+    <span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">unless</span> <span style="color: #6c71c4;">(</span><span style="color: #959995df9a66; text-decoration: underline;">looking</span><span style="text-decoration: underline;">-</span><span style="color: #959995df9a66; text-decoration: underline;">at</span> <span style="color: #859900;">(</span><span style="color: #859900; font-weight: bold;">rx</span> <span style="color: #2aa198;">"(use-package "</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span>
+      <span style="color: #6c71c4;">(</span><span style="color: #9af381d633a6; text-decoration: underline;">re</span><span style="text-decoration: underline;">-</span><span style="color: #9dff5da442ff; text-decoration: underline;">search</span><span style="text-decoration: underline;">-</span><span style="color: #a961952b94d0; text-decoration: underline;">backward</span> <span style="color: #859900;">(</span><span style="color: #859900; font-weight: bold;">rx</span> <span style="color: #2aa198;">"(use-package "</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span>
+      <span style="color: #6c71c4;">(</span><span style="color: #859900; font-weight: bold;">pcase-let*</span> <span style="color: #859900;">(</span><span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">`</span><span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">use-package</span> ,<span style="color: #7a4685f22ca6;">package</span>-<span style="color: #68717c277aa9;">name</span> . ,<span style="color: #6e667a661e98;">rest</span><span style="color: #268bd2;">)</span> <span style="color: #268bd2;">(</span><span style="color: #a961952b94d0; text-decoration: underline;">read</span> <span style="color: #6c71c4;">(</span><span style="color: #a961952b94d0; text-decoration: underline;">current</span><span style="text-decoration: underline;">-</span><span style="color: #959995df9a66; text-decoration: underline;">buffer</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
+        <span style="color: #859900;">(</span><span style="color: #859900; font-weight: bold;">unless</span> <span style="color: #7a4685f22ca6;">package</span>-<span style="color: #68717c277aa9;">name</span>
+          <span style="color: #b58900;">(</span><span style="color: #cb4b16; font-weight: bold;">user-error</span> <span style="color: #2aa198;">"Can't determine package-name"</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
+        <span style="color: #859900;">(</span><span style="color: #859900; font-weight: bold;">unless</span> <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">cl-loop</span> <span style="color: #71ba8cd29fdd;">for</span> <span style="color: #a19967658391;">sexp</span> <span style="color: #a961952b94d0;">in</span> <span style="color: #6e667a661e98;">rest</span>
+                         <span style="color: #57998258a066;">thereis</span> <span style="color: #268bd2;">(</span><span style="color: #7a4685f22ca6; text-decoration: underline;">eql</span> <span style="color: #a19967658391;">sexp</span> <span style="color: #839496; font-weight: bold;">:quelpa</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span>
+          <span style="color: #b58900;">(</span><span style="color: #cb4b16; font-weight: bold;">user-error</span> <span style="color: #2aa198;">"`</span><span style="color: #268bd2; font-weight: bold;">:quelpa</span><span style="color: #2aa198;">' form not found"</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span>
+        <span style="color: #859900;">(</span><span style="color: #a961952b94d0;">unpackaged</span>/<span style="color: #7a4685f22ca6;">package</span>-<span style="color: #a8e97c777baf;">delete</span>-<span style="color: #9dff5da442ff;">all</span>-<span style="color: #a3726d7d5726;">versions</span> <span style="color: #7a4685f22ca6;">package</span>-<span style="color: #68717c277aa9;">name</span> <span style="color: #859900; font-weight: bold;">'</span><span style="color: #a050824890d1;">force</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span>
+  <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">let</span> <span style="color: #268bd2;">(</span><span style="color: #6c71c4;">(</span><span style="color: #959995df9a66;">quelpa</span>-<span style="color: #a4cca4cca4cc;">upgrade</span>-<span style="color: #9af381d633a6;">p</span> <span style="color: #959995df9a66;">t</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span>
+    <span style="color: #268bd2;">(</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">call</span><span style="text-decoration: underline;">-</span><span style="color: #a3726d7d5726; text-decoration: underline;">interactively</span> <span style="color: #859900; font-weight: bold;">#'</span><span style="color: #90cc76662432;">eval</span>-<span style="color: #a3726d7d5726;">defun</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb1983ea" class="outline-3">
+<h3 id="orgb1983ea">Upgrade one package in the package menu</h3>
+<div class="outline-text-3" id="text-orgb1983ea">
 <p>
 Mark current package for upgrading (i.e. also mark obsolete version for deletion.)
 </p>
@@ -1076,21 +1156,20 @@ Mark current package for upgrading (i.e. also mark obsolete version for deletion
 </div>
 </div>
 </div>
-
-<div id="outline-container-org7fe6000" class="outline-2">
-<h2 id="org7fe6000">Programming&#xa0;&#xa0;&#xa0;<span class="tag"><span class="programming">programming</span></span></h2>
-<div class="outline-text-2" id="text-org7fe6000">
-</div><div id="outline-container-org9e96695" class="outline-3">
-<h3 id="org9e96695"><code>iedit</code>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="iedit">iedit</span>&#xa0;<span class="refactoring">refactoring</span></span></h3>
-<div class="outline-text-3" id="text-org9e96695">
+<div id="outline-container-org070211e" class="outline-2">
+<h2 id="org070211e">Programming&#xa0;&#xa0;&#xa0;<span class="tag"><span class="programming">programming</span></span></h2>
+<div class="outline-text-2" id="text-org070211e">
+</div><div id="outline-container-org0a4219a" class="outline-3">
+<h3 id="org0a4219a"><code>iedit</code>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="iedit">iedit</span>&#xa0;<span class="refactoring">refactoring</span></span></h3>
+<div class="outline-text-3" id="text-org0a4219a">
 <p>
 These commands make <code>iedit-mode</code> a bit easier to use.
 </p>
 </div>
 
-<div id="outline-container-orgcb79bff" class="outline-4">
-<h4 id="orgcb79bff"><code>iedit-scoped</code></h4>
-<div class="outline-text-4" id="text-orgcb79bff">
+<div id="outline-container-orgc7abfa6" class="outline-4">
+<h4 id="orgc7abfa6"><code>iedit-scoped</code></h4>
+<div class="outline-text-4" id="text-orgc7abfa6">
 <p>
 Call <code>iedit-mode</code> with function-local scope, or global scope if called with a universal prefix.
 </p>
@@ -1109,9 +1188,9 @@ Call <code>iedit-mode</code> with function-local scope, or global scope if calle
 </div>
 </div>
 
-<div id="outline-container-orgb9722b2" class="outline-4">
-<h4 id="orgb9722b2"><code>iedit-or-flyspell</code>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="flyspell">flyspell</span>&#xa0;<span class="spell_checking">spell_checking</span></span></h4>
-<div class="outline-text-4" id="text-orgb9722b2">
+<div id="outline-container-orgf447dda" class="outline-4">
+<h4 id="orgf447dda"><code>iedit-or-flyspell</code>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="flyspell">flyspell</span>&#xa0;<span class="spell_checking">spell_checking</span></span></h4>
+<div class="outline-text-4" id="text-orgf447dda">
 <p>
 Toggle <code>iedit-mode</code> or correct previous misspelling with <code>flyspell</code>, depending on context.
 </p>
@@ -1158,9 +1237,9 @@ With point in code or when <code>iedit-mode</code> is already active, toggle <co
 </div>
 </div>
 
-<div id="outline-container-orged7bd13" class="outline-3">
-<h3 id="orged7bd13">Sort sexps</h3>
-<div class="outline-text-3" id="text-orged7bd13">
+<div id="outline-container-org1bea565" class="outline-3">
+<h3 id="org1bea565">Sort sexps</h3>
+<div class="outline-text-3" id="text-org1bea565">
 <p>
 Sort sexps in region.  Comments stay with the code below.
 </p>
@@ -1216,12 +1295,12 @@ Sort sexps in region.  Comments stay with the code below.
 </div>
 </div>
 
-<div id="outline-container-org5d22b85" class="outline-2">
-<h2 id="org5d22b85">Regular expressions&#xa0;&#xa0;&#xa0;<span class="tag"><span class="regular_expressions">regular_expressions</span></span></h2>
-<div class="outline-text-2" id="text-org5d22b85">
-</div><div id="outline-container-org81f9235" class="outline-3">
-<h3 id="org81f9235">query-replace-rx</h3>
-<div class="outline-text-3" id="text-org81f9235">
+<div id="outline-container-org681fbcc" class="outline-2">
+<h2 id="org681fbcc">Regular expressions&#xa0;&#xa0;&#xa0;<span class="tag"><span class="regular_expressions">regular_expressions</span></span></h2>
+<div class="outline-text-2" id="text-org681fbcc">
+</div><div id="outline-container-org2d7c380" class="outline-3">
+<h3 id="org2d7c380">query-replace-rx</h3>
+<div class="outline-text-3" id="text-org2d7c380">
 <p>
 Call <code>query-replace-regexp</code>, reading regexp in <code>rx</code> syntax.  Automatically wraps in parens and adds <code>seq</code> to the beginning of the form.
 </p>
@@ -1245,15 +1324,15 @@ Call <code>query-replace-regexp</code>, reading regexp in <code>rx</code> syntax
 </div>
 </div>
 
-<div id="outline-container-org6a31e21" class="outline-2">
-<h2 id="org6a31e21">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></h2>
-<div class="outline-text-2" id="text-org6a31e21">
-</div><div id="outline-container-orge8ef9c9" class="outline-3">
-<h3 id="orge8ef9c9">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></h3>
-<div class="outline-text-3" id="text-orge8ef9c9">
-</div><div id="outline-container-org678bb7d" class="outline-4">
-<h4 id="org678bb7d">Improved <code>magit-status</code> command</h4>
-<div class="outline-text-4" id="text-org678bb7d">
+<div id="outline-container-orge9397d8" class="outline-2">
+<h2 id="orge9397d8">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></h2>
+<div class="outline-text-2" id="text-orge9397d8">
+</div><div id="outline-container-org4f9f1c8" class="outline-3">
+<h3 id="org4f9f1c8">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></h3>
+<div class="outline-text-3" id="text-org4f9f1c8">
+</div><div id="outline-container-orgc4e6f65" class="outline-4">
+<h4 id="orgc4e6f65">Improved <code>magit-status</code> command</h4>
+<div class="outline-text-4" id="text-orgc4e6f65">
 <p>
 Open a <code>magit-status</code> buffer and close the other window so only Magit is visible.  If a file was visited in the buffer that was active when this command was called, go to its unstaged changes section.
 </p>
@@ -1284,9 +1363,9 @@ Open a <code>magit-status</code> buffer and close the other window so only Magit
 </div>
 </div>
 
-<div id="outline-container-org1defdb4" class="outline-4">
-<h4 id="org1defdb4">magit-log date headers</h4>
-<div class="outline-text-4" id="text-org1defdb4">
+<div id="outline-container-orgbc3813d" class="outline-4">
+<h4 id="orgbc3813d">magit-log date headers</h4>
+<div class="outline-text-4" id="text-orgbc3813d">
 <p>
 Add date headers to Magit log buffers.
 </p>
@@ -1343,14 +1422,14 @@ This isn't always perfect, because dates in a git commit log are not always in o
 </div>
 </div>
 
-<div id="outline-container-org16be9f0" class="outline-3">
-<h3 id="org16be9f0"><a id="ID-9d6983a6-3765-45c2-a140-34c23f381361"></a><code>smerge-mode</code></h3>
-<div class="outline-text-3" id="text-org16be9f0">
+<div id="outline-container-org01edcf7" class="outline-3">
+<h3 id="org01edcf7"><a id="ID-9d6983a6-3765-45c2-a140-34c23f381361"></a><code>smerge-mode</code></h3>
+<div class="outline-text-3" id="text-org01edcf7">
 </div>
 
-<div id="outline-container-org685bc1a" class="outline-4">
-<h4 id="org685bc1a">Hydra</h4>
-<div class="outline-text-4" id="text-org685bc1a">
+<div id="outline-container-orgb5d2ed8" class="outline-4">
+<h4 id="orgb5d2ed8">Hydra</h4>
+<div class="outline-text-4" id="text-orgb5d2ed8">
 <p>
 This configuration automatically activates a helpful <code>smerge-mode</code> hydra when a file containing merge conflicts is visited from a Magit diff section.  You can manually activate the hydra with the command <code>unpackaged/smerge-hydra/body</code>.  (Inspired by <a href="https://github.com/kaushalmodi/.emacs.d/blob/master/setup-files/setup-diff.el">Kaushal Modi's Emacs config</a>.)
 </p>
@@ -1417,12 +1496,12 @@ See these screencasts comparing what it's like to resolve the conflict with and 
 </div>
 </div>
 
-<div id="outline-container-org8b1512e" class="outline-2">
-<h2 id="org8b1512e">Web&#xa0;&#xa0;&#xa0;<span class="tag"><span class="web">web</span></span></h2>
-<div class="outline-text-2" id="text-org8b1512e">
-</div><div id="outline-container-org246db5b" class="outline-3">
-<h3 id="org246db5b">feed-for-url&#xa0;&#xa0;&#xa0;<span class="tag"><span class="RSS">RSS</span>&#xa0;<span class="Atom">Atom</span>&#xa0;<span class="XML">XML</span></span></h3>
-<div class="outline-text-3" id="text-org246db5b">
+<div id="outline-container-org6dc1eea" class="outline-2">
+<h2 id="org6dc1eea">Web&#xa0;&#xa0;&#xa0;<span class="tag"><span class="web">web</span></span></h2>
+<div class="outline-text-2" id="text-org6dc1eea">
+</div><div id="outline-container-org7f69af1" class="outline-3">
+<h3 id="org7f69af1">feed-for-url&#xa0;&#xa0;&#xa0;<span class="tag"><span class="RSS">RSS</span>&#xa0;<span class="Atom">Atom</span>&#xa0;<span class="XML">XML</span></span></h3>
+<div class="outline-text-3" id="text-org7f69af1">
 <p>
 Return ATOM or RSS feed <code>URL</code> for web page at <code>URL</code>.  Interactively, insert the <code>URL</code> at point.  <code>PREFER</code> may be <code>atom</code> (the default) or <code>rss</code>.  When <code>ALL</code> is non-nil, return all feed URLs of all types; otherwise, return only one feed <code>URL</code>, preferring the preferred type.
 </p>
@@ -1480,9 +1559,9 @@ Return ATOM or RSS feed <code>URL</code> for web page at <code>URL</code>.  Inte
 </div>
 </div>
 
-<div id="outline-container-org9abbfb0" class="outline-2">
-<h2 id="org9abbfb0">License</h2>
-<div class="outline-text-2" id="text-org9abbfb0">
+<div id="outline-container-org77d646c" class="outline-2">
+<h2 id="org77d646c">License</h2>
+<div class="outline-text-2" id="text-org77d646c">
 <p>
 GPLv3
 </p>
@@ -1491,7 +1570,7 @@ GPLv3
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Adam Porter</p>
-<p class="date">Created: 2018-12-27 Thu 13:23</p>
+<p class="date">Created: 2018-12-27 Thu 13:32</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
