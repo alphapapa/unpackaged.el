@@ -24,7 +24,7 @@ There are two ways to use the code in this "unpackage":
 +  Buffet :: Choose the the parts you want and copy them into your init files.
 +  Whole-hog :: Load the file =unpackaged.el=, which is tangled from this Org file, e.g. ~(require 'unpackaged)~.
 
-In general, your editor will attempt to avoid code that modifies Emacs state by simply loading the tangled "unpackage," but this is not strictly guaranteed.  Please report any problems.
+In general, the author will attempt to avoid code that modifies Emacs state by simply loading the tangled "unpackage," but this is not strictly guaranteed.  Please report any problems.
 
 An easy way to "whole-hog it" is to use [[https://framagit.org/steckerhalter/quelpa-use-package][quelpa-use-package]] like this:
 
