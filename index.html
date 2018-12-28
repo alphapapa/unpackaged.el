@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-28 Fri 17:24 -->
+<!-- 2018-12-28 Fri 17:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>unpackaged.el</title>
@@ -244,75 +244,75 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org1c991a8">Usage</a></li>
-<li><a href="#org864c03c">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></a>
+<li><a href="#org11177f0">Usage</a></li>
+<li><a href="#orge2a172e">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></a>
 <ul>
-<li><a href="#org837418b">font-compare</a></li>
+<li><a href="#org38acae4">font-compare</a></li>
 </ul>
 </li>
-<li><a href="#orgf753063">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></a></li>
-<li><a href="#orgd03769d">Misc</a>
+<li><a href="#orge9e4187">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></a></li>
+<li><a href="#orgf27bb81">Misc</a>
 <ul>
-<li><a href="#org4f00ff8">Track metadata from MPRIS-supporting media player&#xa0;&#xa0;&#xa0;<span class="tag"><span class="DBus">DBus</span></span></a></li>
+<li><a href="#orga7c18d8">Track metadata from MPRIS-supporting media player&#xa0;&#xa0;&#xa0;<span class="tag"><span class="DBus">DBus</span></span></a></li>
 </ul>
 </li>
-<li><a href="#org67fb079">Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Org">Org</span></span></a>
+<li><a href="#orgc4a4fdc">Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Org">Org</span></span></a>
 <ul>
-<li><a href="#org65f9b83">Agenda previews&#xa0;&#xa0;&#xa0;<span class="tag"><span class="agenda">agenda</span></span></a></li>
-<li><a href="#org4d497d4">Convert Elisp to Org format&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></a></li>
-<li><a href="#orge8805e3">Download and attach remote files</a></li>
-<li><a href="#orgc82602c">Ensure blank lines between headings and before contents</a></li>
-<li><a href="#org68653f5">Surround region with emphasis or syntax characters</a></li>
-<li><a href="#org52db932">Refile to datetree file using earliest/latest timestamp in entry</a></li>
-<li><a href="#org77cac0d"><code>org-return-dwim</code></a></li>
-<li><a href="#org8324174">Read-only trees</a></li>
-<li><a href="#org29f9bf2">Sort tree by multiple methods at once</a></li>
+<li><a href="#orgedb608d">Agenda previews&#xa0;&#xa0;&#xa0;<span class="tag"><span class="agenda">agenda</span></span></a></li>
+<li><a href="#orgc6194dd">Convert Elisp to Org format&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></a></li>
+<li><a href="#orgecef7ea">Download and attach remote files</a></li>
+<li><a href="#org263fed4">Ensure blank lines between headings and before contents</a></li>
+<li><a href="#orgd4fbeba">Surround region with emphasis or syntax characters</a></li>
+<li><a href="#orgee8739b">Refile to datetree file using earliest/latest timestamp in entry</a></li>
+<li><a href="#orga7a62a6"><code>org-return-dwim</code></a></li>
+<li><a href="#org2a8b978">Read-only trees</a></li>
+<li><a href="#org61ba35b">Sort tree by multiple methods at once</a></li>
 </ul>
 </li>
-<li><a href="#org0cde991">Packages&#xa0;&#xa0;&#xa0;<span class="tag"><span class="packages">packages</span></span></a>
+<li><a href="#orga8019f0">Packages&#xa0;&#xa0;&#xa0;<span class="tag"><span class="packages">packages</span></span></a>
 <ul>
-<li><a href="#orgc682c73">Delete all installed versions of a package</a></li>
-<li><a href="#orgdef6114">Upgrade a <code>quelpa-use-package</code> form's package</a></li>
-<li><a href="#org93a5ed9">Upgrade one package in the package menu</a></li>
+<li><a href="#orgd1aa091">Delete all installed versions of a package</a></li>
+<li><a href="#org5ad5cab">Upgrade a <code>quelpa-use-package</code> form's package</a></li>
+<li><a href="#orgc094b75">Upgrade one package in the package menu</a></li>
 </ul>
 </li>
-<li><a href="#org843651e">Programming&#xa0;&#xa0;&#xa0;<span class="tag"><span class="programming">programming</span></span></a>
+<li><a href="#org7bb3eec">Programming&#xa0;&#xa0;&#xa0;<span class="tag"><span class="programming">programming</span></span></a>
 <ul>
-<li><a href="#orgc86ac86"><code>iedit</code>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="iedit">iedit</span>&#xa0;<span class="refactoring">refactoring</span></span></a>
+<li><a href="#org4db4a56"><code>iedit</code>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="iedit">iedit</span>&#xa0;<span class="refactoring">refactoring</span></span></a>
 <ul>
-<li><a href="#org18091e6"><code>iedit-scoped</code></a></li>
-<li><a href="#org0b110c5"><code>iedit-or-flyspell</code>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="flyspell">flyspell</span>&#xa0;<span class="spell_checking">spell_checking</span></span></a></li>
+<li><a href="#org445fe76"><code>iedit-scoped</code></a></li>
+<li><a href="#orgda939a6"><code>iedit-or-flyspell</code>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="flyspell">flyspell</span>&#xa0;<span class="spell_checking">spell_checking</span></span></a></li>
 </ul>
 </li>
-<li><a href="#orgf928562">Sort sexps</a></li>
+<li><a href="#orgbfe64f4">Sort sexps</a></li>
 </ul>
 </li>
-<li><a href="#org65edd93">Regular expressions&#xa0;&#xa0;&#xa0;<span class="tag"><span class="regular_expressions">regular_expressions</span></span></a>
+<li><a href="#orgd258a81">Regular expressions&#xa0;&#xa0;&#xa0;<span class="tag"><span class="regular_expressions">regular_expressions</span></span></a>
 <ul>
-<li><a href="#org17a3103">query-replace-rx</a></li>
+<li><a href="#org8c1941d">query-replace-rx</a></li>
 </ul>
 </li>
-<li><a href="#orgeb55fa4">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></a>
+<li><a href="#org936f15c">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></a>
 <ul>
-<li><a href="#org9e55770">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></a>
+<li><a href="#orge0ec7ae">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></a>
 <ul>
-<li><a href="#org9ee095f">Improved <code>magit-status</code> command</a></li>
-<li><a href="#orged84bd2">magit-log date headers</a></li>
+<li><a href="#org399b543">Improved <code>magit-status</code> command</a></li>
+<li><a href="#org2713365">magit-log date headers</a></li>
 </ul>
 </li>
-<li><a href="#org0494fbb"><code>smerge-mode</code></a>
+<li><a href="#org3771e62"><code>smerge-mode</code></a>
 <ul>
-<li><a href="#org34afb4b">Hydra</a></li>
+<li><a href="#org5a308b0">Hydra</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org0c65deb">Web&#xa0;&#xa0;&#xa0;<span class="tag"><span class="web">web</span></span></a>
+<li><a href="#org0de2cba">Web&#xa0;&#xa0;&#xa0;<span class="tag"><span class="web">web</span></span></a>
 <ul>
-<li><a href="#orge24a3ca">feed-for-url&#xa0;&#xa0;&#xa0;<span class="tag"><span class="RSS">RSS</span>&#xa0;<span class="Atom">Atom</span>&#xa0;<span class="XML">XML</span></span></a></li>
+<li><a href="#orgfe82c29">feed-for-url&#xa0;&#xa0;&#xa0;<span class="tag"><span class="RSS">RSS</span>&#xa0;<span class="Atom">Atom</span>&#xa0;<span class="XML">XML</span></span></a></li>
 </ul>
 </li>
-<li><a href="#org4bbec76">License</a></li>
+<li><a href="#org7a712f5">License</a></li>
 </ul>
 </div>
 </div>
@@ -340,9 +340,9 @@ Functions in this file generally use these helper packages:
 <li><a href="https://github.com/jwiegley/use-package">use-package</a></li>
 </ul>
 
-<div id="outline-container-org1c991a8" class="outline-2">
-<h2 id="org1c991a8">Usage</h2>
-<div class="outline-text-2" id="text-org1c991a8">
+<div id="outline-container-org11177f0" class="outline-2">
+<h2 id="org11177f0">Usage</h2>
+<div class="outline-text-2" id="text-org11177f0">
 <p>
 There are two ways to use the code in this "unpackage":
 </p>
@@ -368,12 +368,12 @@ An easy way to "whole-hog it" is to use <a href="https://framagit.org/steckerhal
 </div>
 </div>
 
-<div id="outline-container-org864c03c" class="outline-2">
-<h2 id="org864c03c">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></h2>
-<div class="outline-text-2" id="text-org864c03c">
-</div><div id="outline-container-org837418b" class="outline-3">
-<h3 id="org837418b">font-compare</h3>
-<div class="outline-text-3" id="text-org837418b">
+<div id="outline-container-orge2a172e" class="outline-2">
+<h2 id="orge2a172e">Faces, fonts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="faces">faces</span>&#xa0;<span class="fonts">fonts</span></span></h2>
+<div class="outline-text-2" id="text-orge2a172e">
+</div><div id="outline-container-org38acae4" class="outline-3">
+<h3 id="org38acae4">font-compare</h3>
+<div class="outline-text-3" id="text-org38acae4">
 <p>
 Compare <code>TEXT</code> displayed in <code>FONTS</code>.  <code>FONTS</code> is a list of font specs.
 </p>
@@ -434,9 +434,9 @@ Interactively, prompt for <code>TEXT</code>, using <code>lorem-ipsum</code> text
 </div>
 </div>
 
-<div id="outline-container-orgf753063" class="outline-2">
-<h2 id="orgf753063">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></h2>
-<div class="outline-text-2" id="text-orgf753063">
+<div id="outline-container-orge9e4187" class="outline-2">
+<h2 id="orge9e4187">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></h2>
+<div class="outline-text-2" id="text-orge9e4187">
 <p>
 Code used to help maintain this document.  (Note: These links don't work in GitHub's renderer.)
 </p>
@@ -447,12 +447,12 @@ Code used to help maintain this document.  (Note: These links don't work in GitH
 </div>
 </div>
 
-<div id="outline-container-orgd03769d" class="outline-2">
-<h2 id="orgd03769d">Misc</h2>
-<div class="outline-text-2" id="text-orgd03769d">
-</div><div id="outline-container-org4f00ff8" class="outline-3">
-<h3 id="org4f00ff8">Track metadata from MPRIS-supporting media player&#xa0;&#xa0;&#xa0;<span class="tag"><span class="DBus">DBus</span></span></h3>
-<div class="outline-text-3" id="text-org4f00ff8">
+<div id="outline-container-orgf27bb81" class="outline-2">
+<h2 id="orgf27bb81">Misc</h2>
+<div class="outline-text-2" id="text-orgf27bb81">
+</div><div id="outline-container-orga7c18d8" class="outline-3">
+<h3 id="orga7c18d8">Track metadata from MPRIS-supporting media player&#xa0;&#xa0;&#xa0;<span class="tag"><span class="DBus">DBus</span></span></h3>
+<div class="outline-text-3" id="text-orga7c18d8">
 <p>
 Return the artist, album, and title of the track playing in MPRIS-supporting player.  Returns a string in format <code>ARTIST - ~ALBUM~: ~TITLE~ [PLAYER]</code>.  If no track is playing, returns nil.  If more than one player is playing, uses the first one found in DBus.  If <code>PLAYER</code> is non-nil, include the name of the player in the output string.
 </p>
@@ -502,17 +502,17 @@ DBus is not a straightforward system to work with, so this may serve as a useful
 </div>
 </div>
 
-<div id="outline-container-org67fb079" class="outline-2">
-<h2 id="org67fb079">Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Org">Org</span></span></h2>
-<div class="outline-text-2" id="text-org67fb079">
+<div id="outline-container-orgc4a4fdc" class="outline-2">
+<h2 id="orgc4a4fdc">Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Org">Org</span></span></h2>
+<div class="outline-text-2" id="text-orgc4a4fdc">
 <p>
 Code for <a href="https://orgmode.org/">Org Mode</a>.
 </p>
 </div>
 
-<div id="outline-container-org65f9b83" class="outline-3">
-<h3 id="org65f9b83">Agenda previews&#xa0;&#xa0;&#xa0;<span class="tag"><span class="agenda">agenda</span></span></h3>
-<div class="outline-text-3" id="text-org65f9b83">
+<div id="outline-container-orgedb608d" class="outline-3">
+<h3 id="orgedb608d">Agenda previews&#xa0;&#xa0;&#xa0;<span class="tag"><span class="agenda">agenda</span></span></h3>
+<div class="outline-text-3" id="text-orgedb608d">
 <p>
 <i>Before:</i>
 </p>
@@ -579,9 +579,9 @@ Code for <a href="https://orgmode.org/">Org Mode</a>.
 </div>
 </div>
 
-<div id="outline-container-org4d497d4" class="outline-3">
-<h3 id="org4d497d4"><a id="ID-b86d14ff-b87c-4e2a-a513-067c0a5d3490"></a>Convert Elisp to Org format&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></h3>
-<div class="outline-text-3" id="text-org4d497d4">
+<div id="outline-container-orgc6194dd" class="outline-3">
+<h3 id="orgc6194dd"><a id="ID-b86d14ff-b87c-4e2a-a513-067c0a5d3490"></a>Convert Elisp to Org format&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></h3>
+<div class="outline-text-3" id="text-orgc6194dd">
 <p>
 These functions convert Emacs Lisp code and docstrings to Org-formatted text, helpful for inserting into readme files (like this one).
 </p>
@@ -664,9 +664,9 @@ These functions convert Emacs Lisp code and docstrings to Org-formatted text, he
 </div>
 </div>
 
-<div id="outline-container-orge8805e3" class="outline-3">
-<h3 id="orge8805e3">Download and attach remote files</h3>
-<div class="outline-text-3" id="text-orge8805e3">
+<div id="outline-container-orgecef7ea" class="outline-3">
+<h3 id="orgecef7ea">Download and attach remote files</h3>
+<div class="outline-text-3" id="text-orgecef7ea">
 <p>
 Download file at <code>URL</code> and attach with <code>org-attach</code>.  Interactively, look for <code>URL</code> at point, in X clipboard, and in kill-ring, prompting if not found.  With prefix, prompt for <code>URL</code>.
 </p>
@@ -707,15 +707,15 @@ Download file at <code>URL</code> and attach with <code>org-attach</code>.  Inte
 </div>
 </div>
 
-<div id="outline-container-orgc82602c" class="outline-3">
-<h3 id="orgc82602c">Ensure blank lines between headings and before contents</h3>
-<div class="outline-text-3" id="text-orgc82602c">
+<div id="outline-container-org263fed4" class="outline-3">
+<h3 id="org263fed4">Ensure blank lines between headings and before contents</h3>
+<div class="outline-text-3" id="text-org263fed4">
 <p>
 Ensure that blank lines exist between headings and between headings and their contents.  With prefix, operate on whole buffer.  Ensures that blank lines exist after each headings's drawers.
 </p>
 
 <p>
-For those who prefer to maintain blank lines between headings, this makes it easy to automatically add them where necessary, to a subtree or the whole buffer.  It also adds blank lines after drawers.  Works well with <a href="#org77cac0d"><code>org-return-dwim</code></a>.
+For those who prefer to maintain blank lines between headings, this makes it easy to automatically add them where necessary, to a subtree or the whole buffer.  It also adds blank lines after drawers.  Works well with <a href="#orga7a62a6"><code>org-return-dwim</code></a>.
 </p>
 
 <div class="org-src-container">
@@ -756,9 +756,9 @@ For those who prefer to maintain blank lines between headings, this makes it eas
 </div>
 </div>
 
-<div id="outline-container-org68653f5" class="outline-3">
-<h3 id="org68653f5">Surround region with emphasis or syntax characters</h3>
-<div class="outline-text-3" id="text-org68653f5">
+<div id="outline-container-orgd4fbeba" class="outline-3">
+<h3 id="orgd4fbeba">Surround region with emphasis or syntax characters</h3>
+<div class="outline-text-3" id="text-orgd4fbeba">
 <p>
 Define and bind interactive commands for each of <code>KEYS</code> that surround the region or insert text.  Commands are bound in <code>org-mode-map</code> to each of <code>KEYS</code>.  If the region is active, commands surround it with the key character, otherwise call <code>org-self-insert-command</code>.
 </p>
@@ -800,9 +800,9 @@ Used like:
 </div>
 </div>
 
-<div id="outline-container-org52db932" class="outline-3">
-<h3 id="org52db932">Refile to datetree file using earliest/latest timestamp in entry</h3>
-<div class="outline-text-3" id="text-org52db932">
+<div id="outline-container-orgee8739b" class="outline-3">
+<h3 id="orgee8739b">Refile to datetree file using earliest/latest timestamp in entry</h3>
+<div class="outline-text-3" id="text-orgee8739b">
 <p>
 Refile current entry to datetree using timestamp found in entry.  <code>WHICH</code> should be <code>earliest</code> or <code>latest</code>. If <code>SUBTREE</code>-P is non-nil, search whole subtree.
 </p>
@@ -882,9 +882,9 @@ This is sort of like archiving to a datetree, but it uses either the earliest or
 </div>
 </div>
 
-<div id="outline-container-org77cac0d" class="outline-3">
-<h3 id="org77cac0d"><code>org-return-dwim</code></h3>
-<div class="outline-text-3" id="text-org77cac0d">
+<div id="outline-container-orga7a62a6" class="outline-3">
+<h3 id="orga7a62a6"><code>org-return-dwim</code></h3>
+<div class="outline-text-3" id="text-orga7a62a6">
 <p>
 A helpful replacement for <code>org-return</code>.  With prefix, call <code>org-return</code>.
 </p>
@@ -988,9 +988,9 @@ Inspired by <a href="http://kitchingroup.cheme.cmu.edu/blog/2017/04/09/A-better-
 </div>
 </div>
 
-<div id="outline-container-org8324174" class="outline-3">
-<h3 id="org8324174">Read-only trees</h3>
-<div class="outline-text-3" id="text-org8324174">
+<div id="outline-container-org2a8b978" class="outline-3">
+<h3 id="org2a8b978">Read-only trees</h3>
+<div class="outline-text-3" id="text-org2a8b978">
 <p>
 This code applies the <code>read-only</code> text-property to trees tagged <code>read_only</code>, preventing them from being modified accidentally.  (Note: If read-only headings appear in an Agenda buffer, it can cause slightly unusual behavior.  Usually this is not an issue.)  This was originally inspired by John Kitchin's <a href="http://kitchingroup.cheme.cmu.edu/blog/2014/09/13/Make-some-org-sections-read-only/">blog article</a> and later <a href="https://www.reddit.com/r/emacs/comments/92k7n1/guide_to_profiling_and_optimizing_an_orgrelated/">rewritten</a> in a faster version.
 </p>
@@ -1043,9 +1043,9 @@ The functions may also be called interactively as needed.
 </div>
 </div>
 
-<div id="outline-container-org29f9bf2" class="outline-3">
-<h3 id="org29f9bf2">Sort tree by multiple methods at once</h3>
-<div class="outline-text-3" id="text-org29f9bf2">
+<div id="outline-container-org61ba35b" class="outline-3">
+<h3 id="org61ba35b">Sort tree by multiple methods at once</h3>
+<div class="outline-text-3" id="text-org61ba35b">
 <p>
 Call <code>org-sort-entries</code> with multiple sorting methods specified in <code>KEYS</code>.
 </p>
@@ -1070,12 +1070,12 @@ This is much easier than doing <kbd>C-c ^ KEY</kbd> several times in a row.
 </div>
 </div>
 
-<div id="outline-container-org0cde991" class="outline-2">
-<h2 id="org0cde991">Packages&#xa0;&#xa0;&#xa0;<span class="tag"><span class="packages">packages</span></span></h2>
-<div class="outline-text-2" id="text-org0cde991">
-</div><div id="outline-container-orgc682c73" class="outline-3">
-<h3 id="orgc682c73">Delete all installed versions of a package</h3>
-<div class="outline-text-3" id="text-orgc682c73">
+<div id="outline-container-orga8019f0" class="outline-2">
+<h2 id="orga8019f0">Packages&#xa0;&#xa0;&#xa0;<span class="tag"><span class="packages">packages</span></span></h2>
+<div class="outline-text-2" id="text-orga8019f0">
+</div><div id="outline-container-orgd1aa091" class="outline-3">
+<h3 id="orgd1aa091">Delete all installed versions of a package</h3>
+<div class="outline-text-3" id="text-orgd1aa091">
 <p>
 Delete all versions of package named <code>NAME</code>.  <code>NAME</code> may be a string or symbol.
 </p>
@@ -1110,9 +1110,9 @@ Delete all versions of package named <code>NAME</code>.  <code>NAME</code> may b
 </div>
 </div>
 
-<div id="outline-container-orgdef6114" class="outline-3">
-<h3 id="orgdef6114">Upgrade a <code>quelpa-use-package</code> form's package</h3>
-<div class="outline-text-3" id="text-orgdef6114">
+<div id="outline-container-org5ad5cab" class="outline-3">
+<h3 id="org5ad5cab">Upgrade a <code>quelpa-use-package</code> form's package</h3>
+<div class="outline-text-3" id="text-org5ad5cab">
 <p>
 Eval the current <code>use-package</code> form with <code>quelpa-upgrade-p</code> true.  Deletes old versions of the package first to remove obsolete versions.
 </p>
@@ -1151,9 +1151,9 @@ This makes it easy to upgrade a package you install with <a href="https://framag
 </div>
 </div>
 
-<div id="outline-container-org93a5ed9" class="outline-3">
-<h3 id="org93a5ed9">Upgrade one package in the package menu</h3>
-<div class="outline-text-3" id="text-org93a5ed9">
+<div id="outline-container-orgc094b75" class="outline-3">
+<h3 id="orgc094b75">Upgrade one package in the package menu</h3>
+<div class="outline-text-3" id="text-orgc094b75">
 <p>
 Mark current package for upgrading (i.e. also mark obsolete version for deletion.)
 </p>
@@ -1188,20 +1188,20 @@ Mark current package for upgrading (i.e. also mark obsolete version for deletion
 </div>
 </div>
 
-<div id="outline-container-org843651e" class="outline-2">
-<h2 id="org843651e">Programming&#xa0;&#xa0;&#xa0;<span class="tag"><span class="programming">programming</span></span></h2>
-<div class="outline-text-2" id="text-org843651e">
-</div><div id="outline-container-orgc86ac86" class="outline-3">
-<h3 id="orgc86ac86"><code>iedit</code>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="iedit">iedit</span>&#xa0;<span class="refactoring">refactoring</span></span></h3>
-<div class="outline-text-3" id="text-orgc86ac86">
+<div id="outline-container-org7bb3eec" class="outline-2">
+<h2 id="org7bb3eec">Programming&#xa0;&#xa0;&#xa0;<span class="tag"><span class="programming">programming</span></span></h2>
+<div class="outline-text-2" id="text-org7bb3eec">
+</div><div id="outline-container-org4db4a56" class="outline-3">
+<h3 id="org4db4a56"><code>iedit</code>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="iedit">iedit</span>&#xa0;<span class="refactoring">refactoring</span></span></h3>
+<div class="outline-text-3" id="text-org4db4a56">
 <p>
 These commands make <code>iedit-mode</code> a bit easier to use.
 </p>
 </div>
 
-<div id="outline-container-org18091e6" class="outline-4">
-<h4 id="org18091e6"><code>iedit-scoped</code></h4>
-<div class="outline-text-4" id="text-org18091e6">
+<div id="outline-container-org445fe76" class="outline-4">
+<h4 id="org445fe76"><code>iedit-scoped</code></h4>
+<div class="outline-text-4" id="text-org445fe76">
 <p>
 Call <code>iedit-mode</code> with function-local scope, or global scope if called with a universal prefix.
 </p>
@@ -1220,9 +1220,9 @@ Call <code>iedit-mode</code> with function-local scope, or global scope if calle
 </div>
 </div>
 
-<div id="outline-container-org0b110c5" class="outline-4">
-<h4 id="org0b110c5"><code>iedit-or-flyspell</code>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="flyspell">flyspell</span>&#xa0;<span class="spell_checking">spell_checking</span></span></h4>
-<div class="outline-text-4" id="text-org0b110c5">
+<div id="outline-container-orgda939a6" class="outline-4">
+<h4 id="orgda939a6"><code>iedit-or-flyspell</code>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="flyspell">flyspell</span>&#xa0;<span class="spell_checking">spell_checking</span></span></h4>
+<div class="outline-text-4" id="text-orgda939a6">
 <p>
 Toggle <code>iedit-mode</code> or correct previous misspelling with <code>flyspell</code>, depending on context.
 </p>
@@ -1269,9 +1269,9 @@ With point in code or when <code>iedit-mode</code> is already active, toggle <co
 </div>
 </div>
 
-<div id="outline-container-orgf928562" class="outline-3">
-<h3 id="orgf928562">Sort sexps</h3>
-<div class="outline-text-3" id="text-orgf928562">
+<div id="outline-container-orgbfe64f4" class="outline-3">
+<h3 id="orgbfe64f4">Sort sexps</h3>
+<div class="outline-text-3" id="text-orgbfe64f4">
 <p>
 Sort sexps in region.  Comments stay with the code below.
 </p>
@@ -1327,12 +1327,12 @@ Sort sexps in region.  Comments stay with the code below.
 </div>
 </div>
 
-<div id="outline-container-org65edd93" class="outline-2">
-<h2 id="org65edd93">Regular expressions&#xa0;&#xa0;&#xa0;<span class="tag"><span class="regular_expressions">regular_expressions</span></span></h2>
-<div class="outline-text-2" id="text-org65edd93">
-</div><div id="outline-container-org17a3103" class="outline-3">
-<h3 id="org17a3103">query-replace-rx</h3>
-<div class="outline-text-3" id="text-org17a3103">
+<div id="outline-container-orgd258a81" class="outline-2">
+<h2 id="orgd258a81">Regular expressions&#xa0;&#xa0;&#xa0;<span class="tag"><span class="regular_expressions">regular_expressions</span></span></h2>
+<div class="outline-text-2" id="text-orgd258a81">
+</div><div id="outline-container-org8c1941d" class="outline-3">
+<h3 id="org8c1941d">query-replace-rx</h3>
+<div class="outline-text-3" id="text-org8c1941d">
 <p>
 Call <code>query-replace-regexp</code>, reading regexp in <code>rx</code> syntax.  Automatically wraps in parens and adds <code>seq</code> to the beginning of the form.
 </p>
@@ -1356,15 +1356,15 @@ Call <code>query-replace-regexp</code>, reading regexp in <code>rx</code> syntax
 </div>
 </div>
 
-<div id="outline-container-orgeb55fa4" class="outline-2">
-<h2 id="orgeb55fa4">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></h2>
-<div class="outline-text-2" id="text-orgeb55fa4">
-</div><div id="outline-container-org9e55770" class="outline-3">
-<h3 id="org9e55770">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></h3>
-<div class="outline-text-3" id="text-org9e55770">
-</div><div id="outline-container-org9ee095f" class="outline-4">
-<h4 id="org9ee095f">Improved <code>magit-status</code> command</h4>
-<div class="outline-text-4" id="text-org9ee095f">
+<div id="outline-container-org936f15c" class="outline-2">
+<h2 id="org936f15c">Version control&#xa0;&#xa0;&#xa0;<span class="tag"><span class="version_control">version_control</span></span></h2>
+<div class="outline-text-2" id="text-org936f15c">
+</div><div id="outline-container-orge0ec7ae" class="outline-3">
+<h3 id="orge0ec7ae">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Magit">Magit</span></span></h3>
+<div class="outline-text-3" id="text-orge0ec7ae">
+</div><div id="outline-container-org399b543" class="outline-4">
+<h4 id="org399b543">Improved <code>magit-status</code> command</h4>
+<div class="outline-text-4" id="text-org399b543">
 <p>
 Open a <code>magit-status</code> buffer and close the other window so only Magit is visible.  If a file was visited in the buffer that was active when this command was called, go to its unstaged changes section.
 </p>
@@ -1395,9 +1395,9 @@ Open a <code>magit-status</code> buffer and close the other window so only Magit
 </div>
 </div>
 
-<div id="outline-container-orged84bd2" class="outline-4">
-<h4 id="orged84bd2">magit-log date headers</h4>
-<div class="outline-text-4" id="text-orged84bd2">
+<div id="outline-container-org2713365" class="outline-4">
+<h4 id="org2713365">magit-log date headers</h4>
+<div class="outline-text-4" id="text-org2713365">
 <p>
 Add date headers to Magit log buffers.
 </p>
@@ -1463,14 +1463,14 @@ This isn't always perfect, because dates in a git commit log are not always in o
 </div>
 </div>
 
-<div id="outline-container-org0494fbb" class="outline-3">
-<h3 id="org0494fbb"><a id="ID-9d6983a6-3765-45c2-a140-34c23f381361"></a><code>smerge-mode</code></h3>
-<div class="outline-text-3" id="text-org0494fbb">
+<div id="outline-container-org3771e62" class="outline-3">
+<h3 id="org3771e62"><a id="ID-9d6983a6-3765-45c2-a140-34c23f381361"></a><code>smerge-mode</code></h3>
+<div class="outline-text-3" id="text-org3771e62">
 </div>
 
-<div id="outline-container-org34afb4b" class="outline-4">
-<h4 id="org34afb4b">Hydra</h4>
-<div class="outline-text-4" id="text-org34afb4b">
+<div id="outline-container-org5a308b0" class="outline-4">
+<h4 id="org5a308b0">Hydra</h4>
+<div class="outline-text-4" id="text-org5a308b0">
 <p>
 This configuration automatically activates a helpful <code>smerge-mode</code> hydra when a file containing merge conflicts is visited from a Magit diff section.  You can manually activate the hydra with the command <code>unpackaged/smerge-hydra/body</code>.  (Inspired by <a href="https://github.com/kaushalmodi/.emacs.d/blob/master/setup-files/setup-diff.el">Kaushal Modi's Emacs config</a>.)
 </p>
@@ -1538,12 +1538,12 @@ See these screencasts comparing what it's like to resolve the conflict with and 
 </div>
 </div>
 
-<div id="outline-container-org0c65deb" class="outline-2">
-<h2 id="org0c65deb">Web&#xa0;&#xa0;&#xa0;<span class="tag"><span class="web">web</span></span></h2>
-<div class="outline-text-2" id="text-org0c65deb">
-</div><div id="outline-container-orge24a3ca" class="outline-3">
-<h3 id="orge24a3ca">feed-for-url&#xa0;&#xa0;&#xa0;<span class="tag"><span class="RSS">RSS</span>&#xa0;<span class="Atom">Atom</span>&#xa0;<span class="XML">XML</span></span></h3>
-<div class="outline-text-3" id="text-orge24a3ca">
+<div id="outline-container-org0de2cba" class="outline-2">
+<h2 id="org0de2cba">Web&#xa0;&#xa0;&#xa0;<span class="tag"><span class="web">web</span></span></h2>
+<div class="outline-text-2" id="text-org0de2cba">
+</div><div id="outline-container-orgfe82c29" class="outline-3">
+<h3 id="orgfe82c29">feed-for-url&#xa0;&#xa0;&#xa0;<span class="tag"><span class="RSS">RSS</span>&#xa0;<span class="Atom">Atom</span>&#xa0;<span class="XML">XML</span></span></h3>
+<div class="outline-text-3" id="text-orgfe82c29">
 <p>
 Return ATOM or RSS feed <code>URL</code> for web page at <code>URL</code>.  Interactively, insert the <code>URL</code> at point.  <code>PREFER</code> may be <code>atom</code> (the default) or <code>rss</code>.  When <code>ALL</code> is non-nil, return all feed URLs of all types; otherwise, return only one feed <code>URL</code>, preferring the preferred type.
 </p>
@@ -1601,9 +1601,9 @@ Return ATOM or RSS feed <code>URL</code> for web page at <code>URL</code>.  Inte
 </div>
 </div>
 
-<div id="outline-container-org4bbec76" class="outline-2">
-<h2 id="org4bbec76">License</h2>
-<div class="outline-text-2" id="text-org4bbec76">
+<div id="outline-container-org7a712f5" class="outline-2">
+<h2 id="org7a712f5">License</h2>
+<div class="outline-text-2" id="text-org7a712f5">
 <p>
 GPLv3
 </p>
@@ -1612,7 +1612,7 @@ GPLv3
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Adam Porter</p>
-<p class="date">Created: 2018-12-28 Fri 17:24</p>
+<p class="date">Created: 2018-12-28 Fri 17:29</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
