@@ -33,46 +33,6 @@ An easy way to "whole-hog it" is to use [[https://framagit.org/steckerhalter/que
     :quelpa (unpackaged :fetcher github :repo "alphapapa/unpackaged.el"))
 #+END_SRC
 
-* Emacs Lisp header for tangling                                   :noexport:
-:PROPERTIES:
-:TOC:      ignore
-:END:
-
-#+BEGIN_SRC elisp
-  ;;; unpackaged.el --- Useful yet unsubstantial Emacs Lisp code  -*- lexical-binding: t; -*-
-
-  ;; Copyright (C) 2018  Adam Porter
-
-  ;; Author: Adam Porter <adam@alphapapa.net>
-  ;; Keywords: convenience
-  ;; URL: https://github.com/alphapapa/unpackaged.el
-  ;; Package-Requires: ((emacs "25.1") (dash "2.13") (s "1.10.0") (org "9.0") (use-package "2.4"))
-
-  ;;; License:
-
-  ;; This program is free software; you can redistribute it and/or modify
-  ;; it under the terms of the GNU General Public License as published by
-  ;; the Free Software Foundation, either version 3 of the License, or
-  ;; (at your option) any later version.
-
-  ;; This program is distributed in the hope that it will be useful,
-  ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-  ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  ;; GNU General Public License for more details.
-
-  ;; You should have received a copy of the GNU General Public License
-  ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-  ;;; Commentary:
-
-  ;; A collection of useful Emacs Lisp code that isn't substantial
-  ;; enough to be packaged.  This code will be maintained here so that
-  ;; it can be updated and improved over time.
-
-  ;;; Code:
-
-#+END_SRC
-
 * Contents                                                         :noexport:
 :PROPERTIES:
 :TOC:    this
@@ -112,6 +72,48 @@ An easy way to "whole-hog it" is to use [[https://framagit.org/steckerhalter/que
       -  [[#hydra][Hydra]]
   -  [[#web][Web]]
     -  [[#feed-for-url][feed-for-url]]
+
+* Emacs Lisp header for tangling                                   :noexport:
+:PROPERTIES:
+:TOC:      ignore
+:END:
+
+*Note:* I can't seem to find a way to hide these elisp header sections from the GitHub Org renderer without also preventing them from being tangled.  The =COMMENT= to-do keyword causes Org to not tangle them.  Help would be appreciated!
+
+#+BEGIN_SRC elisp
+  ;;; unpackaged.el --- Useful yet unsubstantial Emacs Lisp code  -*- lexical-binding: t; -*-
+
+  ;; Copyright (C) 2018  Adam Porter
+
+  ;; Author: Adam Porter <adam@alphapapa.net>
+  ;; Keywords: convenience
+  ;; URL: https://github.com/alphapapa/unpackaged.el
+  ;; Package-Requires: ((emacs "25.1") (dash "2.13") (s "1.10.0") (org "9.0") (use-package "2.4"))
+
+  ;;; License:
+
+  ;; This program is free software; you can redistribute it and/or modify
+  ;; it under the terms of the GNU General Public License as published by
+  ;; the Free Software Foundation, either version 3 of the License, or
+  ;; (at your option) any later version.
+
+  ;; This program is distributed in the hope that it will be useful,
+  ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ;; GNU General Public License for more details.
+
+  ;; You should have received a copy of the GNU General Public License
+  ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+  ;;; Commentary:
+
+  ;; A collection of useful Emacs Lisp code that isn't substantial
+  ;; enough to be packaged.  This code will be maintained here so that
+  ;; it can be updated and improved over time.
+
+  ;;; Code:
+
+#+END_SRC
 
 * Faces, fonts                                                  :faces:fonts:
 
