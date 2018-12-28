@@ -32,6 +32,8 @@
 
 ;;; Faces, fonts
 
+(defvar lorem-ipsum-text)
+
 (defun unpackaged/font-compare (text fonts)
   "Compare TEXT displayed in FONTS.
 If TEXT is nil, use `lorem-ipsum' text.  FONTS is a list of font
@@ -106,7 +108,8 @@ output string."
 
 (defface unpackaged/org-agenda-preview
   '((t (:background "black")))
-  "Face for Org Agenda previews.")
+  "Face for Org Agenda previews."
+  :group 'org)
 
 (defun unpackaged/org-agenda-toggle-preview ()
   "Toggle overlay of current item in agenda."
@@ -180,9 +183,9 @@ to kill-ring."
                              (delete-char 1))
                            (when (progn
                                    (goto-char (point-max))
-                                   (looking-back "\""))
+                                   (looking-back "\"" nil))
                              (delete-char -1)))
-         (if (called-interactively-p)
+         (if (called-interactively-p 'interactive)
              (progn
                (message it)
                (kill-new it))
@@ -247,7 +250,7 @@ exist after each headings's drawers."
                        (org-with-wide-buffer
                         ;; `org-map-entries' narrows the buffer, which prevents us from seeing
                         ;; newlines before the current heading, so we do this part widened.
-                        (while (not (looking-back "\n\n"))
+                        (while (not (looking-back "\n\n" nil))
                           ;; Insert blank lines before heading.
                           (insert "\n")))
                        (let ((end (org-entry-end-position)))
@@ -296,8 +299,6 @@ otherwise call `org-self-insert-command'."
 
 (unpackaged/def-org-maybe-surround "~" "=" "*" "/" "+")
 
-(require 'ts)
-
 (defun unpackaged/org-refile-to-datetree-using-ts-in-entry (which-ts file &optional subtree-p)
   "Refile current entry to datetree in FILE using timestamp found in entry.
 WHICH should be `earliest' or `latest'. If SUBTREE-P is non-nil,
@@ -307,6 +308,7 @@ search whole subtree."
                                      (lambda (filename)
                                        (string-suffix-p ".org" filename)))
                      current-prefix-arg))
+  (require 'ts)
   (let* ((sorter (pcase which-ts
                    ('earliest #'ts<)
                    ('latest #'ts>)))
@@ -353,7 +355,7 @@ search whole subtree."
         (save-buffer))
     (error (unless entry
              (org-paste-subtree))
-           (message "Unable to refile!  %s" err))))
+           (message "Unable to refile! %s" err))))
 
 (defun unpackaged/org-return-dwim (&optional default)
   "A helpful replacement for `org-return'.  With prefix, call `org-return'.
