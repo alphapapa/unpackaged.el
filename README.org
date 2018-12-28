@@ -17,10 +17,67 @@ Functions in this file generally use these helper packages:
 +  [[https://github.com/magnars/s.el][s.el]]
 +  [[https://github.com/jwiegley/use-package][use-package]]
 
+* Usage
+
+There are two ways to use the code in this "unpackage":
+
++  Buffet :: Choose the the parts you want and copy them into your init files.
++  Whole-hog :: Load the file =unpackaged.el=, which is tangled from this Org file, e.g. ~(require 'unpackaged)~.
+
+In general, your editor will attempt to avoid code that modifies Emacs state by simply loading the tangled "unpackage," but this is not strictly guaranteed.  Please report any problems.
+
+An easy way to "whole-hog it" is to use [[https://framagit.org/steckerhalter/quelpa-use-package][quelpa-use-package]] like this:
+
+#+BEGIN_SRC elisp :tangle no
+  (use-package unpackaged
+    :quelpa (unpackaged :fetcher github :repo "alphapapa/unpackaged.el"))
+#+END_SRC
+
+* Emacs Lisp header for tangling                                   :noexport:
+:PROPERTIES:
+:TOC:      ignore
+:END:
+
+#+BEGIN_SRC elisp
+  ;;; unpackaged.el --- Useful yet unsubstantial Emacs Lisp code  -*- lexical-binding: t; -*-
+
+  ;; Copyright (C) 2018  Adam Porter
+
+  ;; Author: Adam Porter <adam@alphapapa.net>
+  ;; Keywords: convenience
+  ;; URL: https://github.com/alphapapa/unpackaged.el
+  ;; Package-Requires: ((emacs "25.1") (dash "2.13") (s "1.10.0") (org "9.0") (use-package "2.4"))
+
+  ;;; License:
+
+  ;; This program is free software; you can redistribute it and/or modify
+  ;; it under the terms of the GNU General Public License as published by
+  ;; the Free Software Foundation, either version 3 of the License, or
+  ;; (at your option) any later version.
+
+  ;; This program is distributed in the hope that it will be useful,
+  ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ;; GNU General Public License for more details.
+
+  ;; You should have received a copy of the GNU General Public License
+  ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+  ;;; Commentary:
+
+  ;; A collection of useful Emacs Lisp code that isn't substantial
+  ;; enough to be packaged.  This code will be maintained here so that
+  ;; it can be updated and improved over time.
+
+  ;;; Code:
+
+#+END_SRC
+
 * Contents                                                         :noexport:
 :PROPERTIES:
 :TOC:    this
 :END:
+  -  [[#usage][Usage]]
   -  [[#faces-fonts][Faces, fonts]]
     -  [[#font-compare][font-compare]]
   -  [[#meta][Meta]]
@@ -57,6 +114,17 @@ Functions in this file generally use these helper packages:
     -  [[#feed-for-url][feed-for-url]]
 
 * Faces, fonts                                                  :faces:fonts:
+
+** Emacs Lisp header                                              :noexport:
+:PROPERTIES:
+:TOC:      ignore
+:END:
+
+#+BEGIN_SRC elisp
+;;; Faces, fonts
+
+#+END_SRC
+
 
 ** font-compare
 :PROPERTIES:
@@ -128,6 +196,17 @@ Code used to help maintain this document.  (Note: These links don't work in GitH
 
 * Misc
 
+** Emacs Lisp header                                              :noexport:
+:PROPERTIES:
+:TOC:      ignore
+:END:
+
+#+BEGIN_SRC elisp
+;;; Misc
+
+#+END_SRC
+
+
 ** Track metadata from MPRIS-supporting media player                  :DBus:
 
 Return the artist, album, and title of the track playing in MPRIS-supporting player.  Returns a string in format =ARTIST - ~ALBUM~: ~TITLE~ [PLAYER]=.  If no track is playing, returns nil.  If more than one player is playing, uses the first one found in DBus.  If ~PLAYER~ is non-nil, include the name of the player in the output string.
@@ -174,6 +253,16 @@ DBus is not a straightforward system to work with, so this may serve as a useful
 * Org                                                                   :Org:
 
 Code for [[https://orgmode.org/][Org Mode]].
+
+** Emacs Lisp header                                              :noexport:
+:PROPERTIES:
+:TOC:      ignore
+:END:
+
+#+BEGIN_SRC elisp
+;;; Org
+
+#+END_SRC
 
 ** Agenda previews                                                  :agenda:
 
@@ -658,6 +747,17 @@ This is much easier than doing @@html:<kbd>@@C-c ^ KEY@@html:</kbd>@@ several ti
 
 * Packages                                                         :packages:
 
+** Emacs Lisp header                                              :noexport:
+:PROPERTIES:
+:TOC:      ignore
+:END:
+
+#+BEGIN_SRC elisp
+;;; Packages
+
+#+END_SRC
+
+
 ** Delete all installed versions of a package
 
 Delete all versions of package named ~NAME~.  ~NAME~ may be a string or symbol.
@@ -747,7 +847,19 @@ Mark current package for upgrading (i.e. also mark obsolete version for deletion
                       (t (package-menu-mark-delete)))))
             (forward-line 1))))))
 #+END_SRC
+
 * Programming                                                   :programming:
+
+** Emacs Lisp header                                              :noexport:
+:PROPERTIES:
+:TOC:      ignore
+:END:
+
+#+BEGIN_SRC elisp
+;;; Programming
+
+#+END_SRC
+
 
 ** ~iedit~                                                 :iedit:refactoring:
 
@@ -861,6 +973,17 @@ Sort sexps in region.  Comments stay with the code below.
 
 * Regular expressions                                   :regular_expressions:
 
+** Emacs Lisp header                                              :noexport:
+:PROPERTIES:
+:TOC:      ignore
+:END:
+
+#+BEGIN_SRC elisp
+;;; Regular expressions
+
+#+END_SRC
+
+
 ** query-replace-rx
 
 Call ~query-replace-regexp~, reading regexp in ~rx~ syntax.  Automatically wraps in parens and adds ~seq~ to the beginning of the form.
@@ -881,6 +1004,17 @@ Call ~query-replace-regexp~, reading regexp in ~rx~ syntax.  Automatically wraps
 #+END_SRC
 
 * Version control                                           :version_control:
+
+** Emacs Lisp header                                              :noexport:
+:PROPERTIES:
+:TOC:      ignore
+:END:
+
+#+BEGIN_SRC elisp
+;;; Version control
+
+#+END_SRC
+
 
 ** Magit                                                             :Magit:
 
@@ -949,8 +1083,17 @@ Add date headers to Magit log buffers.
                  do (forward-line 1)
                  until (eobp)))))
 
-  (add-hook 'magit-post-refresh-hook #'unpackaged/magit-log--add-date-headers)
-  (advice-add #'magit-mode-setup :after #'unpackaged/magit-log--add-date-headers)
+  (define-minor-mode unpackaged/magit-log-date-headers-mode
+    "Display date/time headers in `magit-log' buffers."
+    :global t
+    (if magit-log-date-headers-mode
+        (progn
+          ;; Enable mode
+          (add-hook 'magit-post-refresh-hook #'unpackaged/magit-log--add-date-headers)
+          (advice-add #'magit-mode-setup :after #'unpackaged/magit-log--add-date-headers))
+      ;; Disable mode
+      (remove-hook 'magit-post-refresh-hook #'unpackaged/magit-log--add-date-headers)
+      (advice-remove #'magit-mode-setup #'unpackaged/magit-log--add-date-headers)))
 #+END_SRC
 
 This isn't always perfect, because dates in a git commit log are not always in order (e.g. when commits are merged at a later date), but it's often very helpful to visually group commits by their age.
@@ -974,6 +1117,7 @@ See these screencasts comparing what it's like to resolve the conflict with [[im
 
 #+BEGIN_SRC elisp
   (use-package smerge-mode
+    :after hydra
     :config
     (defhydra unpackaged/smerge-hydra
       (:color pink :hint nil :post (smerge-auto-leave))
@@ -1014,6 +1158,17 @@ See these screencasts comparing what it's like to resolve the conflict with [[im
 #+END_SRC
 
 * Web                                                                   :web:
+
+** Emacs Lisp header                                              :noexport:
+:PROPERTIES:
+:TOC:      ignore
+:END:
+
+#+BEGIN_SRC elisp
+;;; Web
+
+#+END_SRC
+
 
 ** feed-for-url                                               :RSS:Atom:XML:
 
@@ -1062,6 +1217,17 @@ Return ATOM or RSS feed ~URL~ for web page at ~URL~.  Interactively, insert the 
                         (s-join " " return)
                       return))
           return))))
+#+END_SRC
+
+* Emacs Lisp footer for tangling                                   :noexport:
+:PROPERTIES:
+:TOC:      ignore
+:END:
+
+#+BEGIN_SRC elisp
+  (provide 'unpackaged)
+
+;;; unpackaged.el ends here
 #+END_SRC
 
 * License
@@ -1139,10 +1305,17 @@ e.g. it should allow selecting directories, and then presenting the images in th
 
 I love Emacs and Org mode.  This makes it so easy to make the document...alive!  And automated!  Beautiful.
 
+** File-local properties
+
+#+PROPERTY: header-args:elisp :tangle unpackaged.el
+
+** File-local variables
+
 # Local Variables:
 # eval: (require 'org-make-toc)
 # before-save-hook: org-make-toc
 # after-save-hook: (lambda nil (when (org-html-export-to-html) (rename-file "README.html" "index.html" t)))
+# after-save-hook: org-babel-tangle
 # org-export-with-properties: ()
 # org-export-with-title: t
 # org-id-link-to-org-use-id: nil
