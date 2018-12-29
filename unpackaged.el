@@ -295,10 +295,6 @@ made unique when necessary."
     (advice-remove #'org-export-new-title-reference #'unpackaged/org-export-new-title-reference)
     (advice-remove #'org-export-get-reference #'unpackaged/org-export-get-reference)))
 
-(defvar unpackaged/org-export-new-title-reference-chars
-  (cl-loop for c from ?a to ?z
-           collect (char-to-string c)))
-
 (defun unpackaged/org-export-get-reference (datum info)
   "Like `org-export-get-reference', except uses heading titles instead of random numbers."
   (let ((cache (plist-get info :internal-references)))
@@ -362,8 +358,7 @@ made unique when necessary."
                                                     (string-to-number suffix)
                                                   0)))
                                   (setf ,place (format "%s--%s" s1 (cl-incf suffix)))))))
-    (let* ((ref (url-hexify-string title))
-           (chars unpackaged/org-export-new-title-reference-chars))
+    (let* ((ref (url-hexify-string title)))
       (while (--any (equal ref (car it))
                     cache)
         (inc-suffixf ref))
