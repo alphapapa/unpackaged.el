@@ -30,6 +30,15 @@
 
 ;;; Code:
 
+;;;; Requirements
+
+(require 'cl-lib)
+(require 'org)
+
+(require 'dash)
+(require 's)
+(require 'use-package)
+
 ;;; Faces, fonts
 
 (defvar lorem-ipsum-text)
@@ -273,6 +282,92 @@ exist after each headings's drawers."
                      t (if prefix
                            nil
                          'tree)))
+
+(define-minor-mode unpackaged/org-export-html-with-useful-ids-mode
+  "Attempt to export Org as HTML with useful link IDs.
+Instead of random IDs like \"#orga1b2c3\", use heading titles,
+made unique when necessary."
+  :global t
+  (if unpackaged/org-export-html-with-useful-ids-mode
+      (progn
+        (advice-add #'org-export-new-title-reference :override #'unpackaged/org-export-new-title-reference)
+        (advice-add #'org-export-get-reference :override #'unpackaged/org-export-get-reference))
+    (advice-remove #'org-export-new-title-reference #'unpackaged/org-export-new-title-reference)
+    (advice-remove #'org-export-get-reference #'unpackaged/org-export-get-reference)))
+
+(defvar unpackaged/org-export-new-title-reference-chars
+  (cl-loop for c from ?a to ?z
+           collect (char-to-string c)))
+
+(defun unpackaged/org-export-get-reference (datum info)
+  "Like `org-export-get-reference', except uses heading titles instead of random numbers."
+  (let ((cache (plist-get info :internal-references)))
+    (or (car (rassq datum cache))
+        (let* ((crossrefs (plist-get info :crossrefs))
+               (cells (org-export-search-cells datum))
+               ;; Preserve any pre-existing association between
+               ;; a search cell and a reference, i.e., when some
+               ;; previously published document referenced a location
+               ;; within current file (see
+               ;; `org-publish-resolve-external-link').
+               ;;
+               ;; However, there is no guarantee that search cells are
+               ;; unique, e.g., there might be duplicate custom ID or
+               ;; two headings with the same title in the file.
+               ;;
+               ;; As a consequence, before re-using any reference to
+               ;; an element or object, we check that it doesn't refer
+               ;; to a previous element or object.
+               (new (or (cl-some
+                         (lambda (cell)
+                           (let ((stored (cdr (assoc cell crossrefs))))
+                             (when stored
+                               (let ((old (org-export-format-reference stored)))
+                                 (and (not (assoc old cache)) stored)))))
+                         cells)
+                        (when (org-element-property :raw-value datum)
+                          ;; Heading with a title
+                          (unpackaged/org-export-new-title-reference
+                           (substring-no-properties (org-element-property :raw-value datum))
+                           cache))
+                        ;; NOTE: This probably breaks some Org Export
+                        ;; feature, but if it does what I need, fine.
+                        (org-export-format-reference
+                         (org-export-new-reference cache))))
+               (reference-string new))
+          ;; Cache contains both data already associated to
+          ;; a reference and in-use internal references, so as to make
+          ;; unique references.
+          (dolist (cell cells) (push (cons cell new) cache))
+          ;; Retain a direct association between reference string and
+          ;; DATUM since (1) not every object or element can be given
+          ;; a search cell (2) it permits quick lookup.
+          (push (cons reference-string datum) cache)
+          (plist-put info :internal-references cache)
+          reference-string))))
+
+(defun unpackaged/org-export-new-title-reference (title cache)
+  "Return new reference for title that is unique in CACHE."
+  (cl-macrolet ((inc-suffixf (place)
+                             `(progn
+                                (string-match (rx bos
+                                                  (minimal-match (group (1+ anything)))
+                                                  (optional "--" (group (1+ digit)))
+                                                  eos)
+                                              ,place)
+                                ;; HACK: `s1' instead of a gensym.
+                                (-let* (((s1 suffix) (list (match-string 1 ,place)
+                                                           (match-string 2 ,place)))
+                                        (suffix (if suffix
+                                                    (string-to-number suffix)
+                                                  0)))
+                                  (setf ,place (format "%s--%s" s1 (cl-incf suffix)))))))
+    (let* ((ref (url-hexify-string title))
+           (chars unpackaged/org-export-new-title-reference-chars))
+      (while (--any (equal ref (car it))
+                    cache)
+        (inc-suffixf ref))
+      ref)))
 
 (defmacro unpackaged/def-org-maybe-surround (&rest keys)
   "Define and bind interactive commands for each of KEYS that surround the region or insert text.

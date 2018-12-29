@@ -48,6 +48,7 @@ An easy way to "whole-hog it" is to use [[https://framagit.org/steckerhalter/que
     -  [[#convert-elisp-to-org-format][Convert Elisp to Org format]]
     -  [[#download-and-attach-remote-files][Download and attach remote files]]
     -  [[#ensure-blank-lines-between-headings-and-before-contents][Ensure blank lines between headings and before contents]]
+    -  [[#export-to-html-with-useful-anchors][Export to HTML with useful anchors]]
     -  [[#surround-region-with-emphasis-or-syntax-characters][Surround region with emphasis or syntax characters]]
     -  [[#refile-to-datetree-file-using-earliestlatest-timestamp-in-entry][Refile to datetree file using earliest/latest timestamp in entry]]
     -  [[#org-return-dwim][org-return-dwim]]
@@ -112,6 +113,15 @@ An easy way to "whole-hog it" is to use [[https://framagit.org/steckerhalter/que
   ;; it can be updated and improved over time.
 
   ;;; Code:
+
+  ;;;; Requirements
+
+  (require 'cl-lib)
+  (require 'org)
+
+  (require 'dash)
+  (require 's)
+  (require 'use-package)
 
 #+END_SRC
 
@@ -484,6 +494,114 @@ For those who prefer to maintain blank lines between headings, this makes it eas
                        t (if prefix
                              nil
                            'tree)))
+#+END_SRC
+
+** Export to HTML with /useful/ anchors
+
+This minor mode causes Org HTML export to use heading titles for HTML IDs and anchors.  For example, instead of:
+
+#+BEGIN_SRC html
+  <li><a href="#org11177f0">Usage...
+  <li><a href="#orge2a172e">Faces, fonts...
+#+END_SRC
+
+You get:
+
+#+BEGIN_SRC html
+  <li><a href="#Usage">Usage...
+  <li><a href="#Faces%2C%20fonts">Faces, fonts...
+#+END_SRC
+
+So links to sections of the exported HTML will remain useful, rather than being different, random numbers every time the document is exported.
+
+Note that this is somewhat of a hack, and it probably breaks some feature deep inside Org Export.  But it seems to work, and it solves the problem!
+
+#+BEGIN_SRC elisp
+  (define-minor-mode unpackaged/org-export-html-with-useful-ids-mode
+    "Attempt to export Org as HTML with useful link IDs.
+  Instead of random IDs like \"#orga1b2c3\", use heading titles,
+  made unique when necessary."
+    :global t
+    (if unpackaged/org-export-html-with-useful-ids-mode
+        (progn
+          (advice-add #'org-export-new-title-reference :override #'unpackaged/org-export-new-title-reference)
+          (advice-add #'org-export-get-reference :override #'unpackaged/org-export-get-reference))
+      (advice-remove #'org-export-new-title-reference #'unpackaged/org-export-new-title-reference)
+      (advice-remove #'org-export-get-reference #'unpackaged/org-export-get-reference)))
+
+  (defvar unpackaged/org-export-new-title-reference-chars
+    (cl-loop for c from ?a to ?z
+             collect (char-to-string c)))
+
+  (defun unpackaged/org-export-get-reference (datum info)
+    "Like `org-export-get-reference', except uses heading titles instead of random numbers."
+    (let ((cache (plist-get info :internal-references)))
+      (or (car (rassq datum cache))
+          (let* ((crossrefs (plist-get info :crossrefs))
+                 (cells (org-export-search-cells datum))
+                 ;; Preserve any pre-existing association between
+                 ;; a search cell and a reference, i.e., when some
+                 ;; previously published document referenced a location
+                 ;; within current file (see
+                 ;; `org-publish-resolve-external-link').
+                 ;;
+                 ;; However, there is no guarantee that search cells are
+                 ;; unique, e.g., there might be duplicate custom ID or
+                 ;; two headings with the same title in the file.
+                 ;;
+                 ;; As a consequence, before re-using any reference to
+                 ;; an element or object, we check that it doesn't refer
+                 ;; to a previous element or object.
+                 (new (or (cl-some
+                           (lambda (cell)
+                             (let ((stored (cdr (assoc cell crossrefs))))
+                               (when stored
+                                 (let ((old (org-export-format-reference stored)))
+                                   (and (not (assoc old cache)) stored)))))
+                           cells)
+                          (when (org-element-property :raw-value datum)
+                            ;; Heading with a title
+                            (unpackaged/org-export-new-title-reference
+                             (substring-no-properties (org-element-property :raw-value datum))
+                             cache))
+                          ;; NOTE: This probably breaks some Org Export
+                          ;; feature, but if it does what I need, fine.
+                          (org-export-format-reference
+                           (org-export-new-reference cache))))
+                 (reference-string new))
+            ;; Cache contains both data already associated to
+            ;; a reference and in-use internal references, so as to make
+            ;; unique references.
+            (dolist (cell cells) (push (cons cell new) cache))
+            ;; Retain a direct association between reference string and
+            ;; DATUM since (1) not every object or element can be given
+            ;; a search cell (2) it permits quick lookup.
+            (push (cons reference-string datum) cache)
+            (plist-put info :internal-references cache)
+            reference-string))))
+
+  (defun unpackaged/org-export-new-title-reference (title cache)
+    "Return new reference for title that is unique in CACHE."
+    (cl-macrolet ((inc-suffixf (place)
+                               `(progn
+                                  (string-match (rx bos
+                                                    (minimal-match (group (1+ anything)))
+                                                    (optional "--" (group (1+ digit)))
+                                                    eos)
+                                                ,place)
+                                  ;; HACK: `s1' instead of a gensym.
+                                  (-let* (((s1 suffix) (list (match-string 1 ,place)
+                                                             (match-string 2 ,place)))
+                                          (suffix (if suffix
+                                                      (string-to-number suffix)
+                                                    0)))
+                                    (setf ,place (format "%s--%s" s1 (cl-incf suffix)))))))
+      (let* ((ref (url-hexify-string title))
+             (chars unpackaged/org-export-new-title-reference-chars))
+        (while (--any (equal ref (car it))
+                      cache)
+          (inc-suffixf ref))
+        ref)))
 #+END_SRC
 
 ** Surround region with emphasis or syntax characters
