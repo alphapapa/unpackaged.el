@@ -33,55 +33,9 @@ An easy way to "whole-hog it" is to use [[https://framagit.org/steckerhalter/que
     :quelpa (unpackaged :fetcher github :repo "alphapapa/unpackaged.el"))
 #+END_SRC
 
-* Contents                                                         :noexport:
-:PROPERTIES:
-:TOC:    this
-:END:
-  -  [[#usage][Usage]]
-  -  [[#faces-fonts][Faces, fonts]]
-    -  [[#font-compare][font-compare]]
-  -  [[#meta][Meta]]
-  -  [[#misc][Misc]]
-    -  [[#track-metadata-from-mpris-supporting-media-player][Track metadata from MPRIS-supporting media player]]
-  -  [[#org][Org]]
-    -  [[#agenda-previews][Agenda previews]]
-    -  [[#convert-elisp-to-org-format][Convert Elisp to Org format]]
-    -  [[#download-and-attach-remote-files][Download and attach remote files]]
-    -  [[#ensure-blank-lines-between-headings-and-before-contents][Ensure blank lines between headings and before contents]]
-    -  [[#export-to-html-with-useful-anchors][Export to HTML with useful anchors]]
-    -  [[#surround-region-with-emphasis-or-syntax-characters][Surround region with emphasis or syntax characters]]
-    -  [[#refile-to-datetree-file-using-earliestlatest-timestamp-in-entry][Refile to datetree file using earliest/latest timestamp in entry]]
-    -  [[#org-return-dwim][org-return-dwim]]
-    -  [[#read-only-trees][Read-only trees]]
-    -  [[#sort-tree-by-multiple-methods-at-once][Sort tree by multiple methods at once]]
-  -  [[#packages][Packages]]
-    -  [[#delete-all-installed-versions-of-a-package][Delete all installed versions of a package]]
-    -  [[#upgrade-a-quelpa-use-package-forms-package][Upgrade a quelpa-use-package form's package]]
-    -  [[#upgrade-one-package-in-the-package-menu][Upgrade one package in the package menu]]
-  -  [[#programming][Programming]]
-    -  [[#iedit][iedit]]
-      -  [[#iedit-scoped][iedit-scoped]]
-      -  [[#iedit-or-flyspell][iedit-or-flyspell]]
-    -  [[#sort-sexps][Sort sexps]]
-  -  [[#regular-expressions][Regular expressions]]
-    -  [[#query-replace-rx][query-replace-rx]]
-  -  [[#version-control][Version control]]
-    -  [[#magit][Magit]]
-      -  [[#improved-magit-status-command][Improved magit-status command]]
-      -  [[#magit-log-date-headers][magit-log date headers]]
-    -  [[#smerge-mode][smerge-mode]]
-      -  [[#hydra][Hydra]]
-  -  [[#web][Web]]
-    -  [[#feed-for-url][feed-for-url]]
+# Elisp header
 
-* Emacs Lisp header for tangling                                   :noexport:
-:PROPERTIES:
-:TOC:      ignore
-:END:
-
-*Note:* I can't seem to find a way to hide these elisp header sections from the GitHub Org renderer without also preventing them from being tangled.  The =COMMENT= to-do keyword causes Org to not tangle them.  Help would be appreciated!
-
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :exports none
   ;;; unpackaged.el --- Useful yet unsubstantial Emacs Lisp code  -*- lexical-binding: t; -*-
 
   ;; Copyright (C) 2018  Adam Porter
@@ -125,18 +79,53 @@ An easy way to "whole-hog it" is to use [[https://framagit.org/steckerhalter/que
 
 #+END_SRC
 
+* Contents                                                         :noexport:
+:PROPERTIES:
+:TOC:    this
+:END:
+  -  [[#usage][Usage]]
+  -  [[#faces-fonts][Faces, fonts]]
+    -  [[#font-compare][font-compare]]
+  -  [[#meta][Meta]]
+  -  [[#misc][Misc]]
+    -  [[#track-metadata-from-mpris-supporting-media-player][Track metadata from MPRIS-supporting media player]]
+  -  [[#org][Org]]
+    -  [[#agenda-previews][Agenda previews]]
+    -  [[#convert-elisp-to-org-format][Convert Elisp to Org format]]
+    -  [[#download-and-attach-remote-files][Download and attach remote files]]
+    -  [[#ensure-blank-lines-between-headings-and-before-contents][Ensure blank lines between headings and before contents]]
+    -  [[#export-to-html-with-useful-anchors][Export to HTML with useful anchors]]
+    -  [[#surround-region-with-emphasis-or-syntax-characters][Surround region with emphasis or syntax characters]]
+    -  [[#refile-to-datetree-file-using-earliestlatest-timestamp-in-entry][Refile to datetree file using earliest/latest timestamp in entry]]
+    -  [[#org-return-dwim][org-return-dwim]]
+    -  [[#read-only-trees][Read-only trees]]
+    -  [[#sort-tree-by-multiple-methods-at-once][Sort tree by multiple methods at once]]
+  -  [[#packages][Packages]]
+    -  [[#delete-all-installed-versions-of-a-package][Delete all installed versions of a package]]
+    -  [[#upgrade-a-quelpa-use-package-forms-package][Upgrade a quelpa-use-package form's package]]
+    -  [[#upgrade-one-package-in-the-package-menu][Upgrade one package in the package menu]]
+  -  [[#programming][Programming]]
+    -  [[#iedit][iedit]]
+      -  [[#iedit-scoped][iedit-scoped]]
+      -  [[#iedit-or-flyspell][iedit-or-flyspell]]
+    -  [[#sort-sexps][Sort sexps]]
+  -  [[#regular-expressions][Regular expressions]]
+    -  [[#query-replace-rx][query-replace-rx]]
+  -  [[#version-control][Version control]]
+    -  [[#magit][Magit]]
+      -  [[#improved-magit-status-command][Improved magit-status command]]
+      -  [[#magit-log-date-headers][magit-log date headers]]
+    -  [[#smerge-mode][smerge-mode]]
+      -  [[#hydra][Hydra]]
+  -  [[#web][Web]]
+    -  [[#feed-for-url][feed-for-url]]
+
 * Faces, fonts                                                  :faces:fonts:
 
-** Emacs Lisp header                                              :noexport:
-:PROPERTIES:
-:TOC:      ignore
-:END:
-
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :exports none
 ;;; Faces, fonts
 
 #+END_SRC
-
 
 ** font-compare
 :PROPERTIES:
@@ -210,16 +199,10 @@ Code used to help maintain this document.  (Note: These links don't work in GitH
 
 * Misc
 
-** Emacs Lisp header                                              :noexport:
-:PROPERTIES:
-:TOC:      ignore
-:END:
-
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :exports none
 ;;; Misc
 
 #+END_SRC
-
 
 ** Track metadata from MPRIS-supporting media player                  :DBus:
 
@@ -268,12 +251,8 @@ DBus is not a straightforward system to work with, so this may serve as a useful
 
 Code for [[https://orgmode.org/][Org Mode]].
 
-** Emacs Lisp header                                              :noexport:
-:PROPERTIES:
-:TOC:      ignore
-:END:
 
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :exports none
 ;;; Org
 
 #+END_SRC
@@ -864,16 +843,10 @@ This is much easier than doing @@html:<kbd>@@C-c ^ KEY@@html:</kbd>@@ several ti
 
 * Packages                                                         :packages:
 
-** Emacs Lisp header                                              :noexport:
-:PROPERTIES:
-:TOC:      ignore
-:END:
-
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :exports none
 ;;; Packages
 
 #+END_SRC
-
 
 ** Delete all installed versions of a package
 
@@ -967,16 +940,10 @@ Mark current package for upgrading (i.e. also mark obsolete version for deletion
 
 * Programming                                                   :programming:
 
-** Emacs Lisp header                                              :noexport:
-:PROPERTIES:
-:TOC:      ignore
-:END:
-
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :exports none
 ;;; Programming
 
 #+END_SRC
-
 
 ** ~iedit~                                                 :iedit:refactoring:
 
@@ -1090,16 +1057,10 @@ Sort sexps in region.  Comments stay with the code below.
 
 * Regular expressions                                   :regular_expressions:
 
-** Emacs Lisp header                                              :noexport:
-:PROPERTIES:
-:TOC:      ignore
-:END:
-
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :exports none
 ;;; Regular expressions
 
 #+END_SRC
-
 
 ** query-replace-rx
 
@@ -1122,16 +1083,10 @@ Call ~query-replace-regexp~, reading regexp in ~rx~ syntax.  Automatically wraps
 
 * Version control                                           :version_control:
 
-** Emacs Lisp header                                              :noexport:
-:PROPERTIES:
-:TOC:      ignore
-:END:
-
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :exports none
 ;;; Version control
 
 #+END_SRC
-
 
 ** Magit                                                             :Magit:
 
@@ -1219,7 +1174,6 @@ This isn't always perfect, because dates in a git commit log are not always in o
 :PROPERTIES:
 :ID:       9d6983a6-3765-45c2-a140-34c23f381361
 :END:
-
 *** Hydra
 
 This configuration automatically activates a helpful ~smerge-mode~ hydra when a file containing merge conflicts is visited from a Magit diff section.  You can manually activate the hydra with the command ~unpackaged/smerge-hydra/body~.  (Inspired by [[https://github.com/kaushalmodi/.emacs.d/blob/master/setup-files/setup-diff.el][Kaushal Modi's Emacs config]].)
@@ -1276,16 +1230,10 @@ See these screencasts comparing what it's like to resolve the conflict with [[im
 
 * Web                                                                   :web:
 
-** Emacs Lisp header                                              :noexport:
-:PROPERTIES:
-:TOC:      ignore
-:END:
-
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :exports none
 ;;; Web
 
 #+END_SRC
-
 
 ** feed-for-url                                               :RSS:Atom:XML:
 
@@ -1336,12 +1284,9 @@ Return ATOM or RSS feed ~URL~ for web page at ~URL~.  Interactively, insert the 
           return))))
 #+END_SRC
 
-* Emacs Lisp footer for tangling                                   :noexport:
-:PROPERTIES:
-:TOC:      ignore
-:END:
+# Elisp footer
 
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :exports none
   (provide 'unpackaged)
 
 ;;; unpackaged.el ends here
