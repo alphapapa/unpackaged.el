@@ -607,17 +607,22 @@ NAME may be a string or symbol."
 Deletes the package first to remove obsolete versions."
   (interactive)
   (save-excursion
-    (unless (looking-at (rx "(use-package "))
-      (re-search-backward (rx "(use-package "))
-      (pcase-let* ((`(use-package ,package-name . ,rest) (read (current-buffer))))
-        (unless package-name
-          (user-error "Can't determine package-name"))
-        (unless (cl-loop for sexp in rest
-                         thereis (eql sexp :quelpa))
-          (user-error "`:quelpa' form not found"))
-        (unpackaged/package-delete-all-versions package-name 'force))))
-  (let ((quelpa-upgrade-p t))
-    (call-interactively #'eval-defun)))
+    (if (or (looking-at (rx "(use-package "))
+            (let ((limit (save-excursion
+                           (or (re-search-backward (rx bol "("))
+                               (point-min)))))
+              ;; Don't go past previous top-level form
+              (re-search-backward (rx "(use-package ") limit t)))
+        (progn
+          (pcase-let* ((`(use-package ,package-name . ,rest) (read (current-buffer))))
+            (cl-assert package-name nil "Can't determine package name")
+            (cl-assert (cl-loop for sexp in rest
+                                thereis (eql sexp :quelpa))
+                       nil "`:quelpa' form not found")
+            (unpackaged/package-delete-all-versions package-name 'force))
+          (let ((quelpa-upgrade-p t))
+            (call-interactively #'eval-defun)))
+      (user-error "Not in a `use-package' form"))))
 
 (use-package package
   :bind (:map package-menu-mode-map
