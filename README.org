@@ -18,6 +18,9 @@ Functions in this file generally use these helper packages:
 +  [[https://github.com/jwiegley/use-package][use-package]]
 
 * Usage
+:PROPERTIES:
+:TOC:      ignore
+:END:
 
 There are two ways to use the code in this "unpackage":
 
@@ -83,7 +86,6 @@ An easy way to "whole-hog it" is to use [[https://framagit.org/steckerhalter/que
 :PROPERTIES:
 :TOC:    this
 :END:
-  -  [[#usage][Usage]]
   -  [[#faces-fonts][Faces, fonts]]
     -  [[#font-compare][font-compare]]
   -  [[#meta][Meta]]
