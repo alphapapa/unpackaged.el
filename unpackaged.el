@@ -650,6 +650,27 @@ Deletes the package first to remove obsolete versions."
 
 ;;; Programming
 
+(defvar unpackaged/flex-fill-paragraph-column nil
+  "Last fill column used in command `unpackaged/flex-fill-paragraph'.")
+
+(defun unpackaged/flex-fill-paragraph (&optional unfill)
+  "Fill paragraph, incrementing fill column each time this command is repeated.
+When the command is called for the first time in a sequence,
+unfill to the default `fill-column'.  With prefix, unfill
+completely.  This command does not modify the stored value of
+`fill-column'."
+  (interactive "P")
+  (let ((fill-column
+         (cond (unfill (setf unpackaged/flex-fill-paragraph-column nil)
+                       most-positive-fixnum)
+               (t (setf unpackaged/flex-fill-paragraph-column
+                        (if (equal last-command this-command)
+                            (1+ (or unpackaged/flex-fill-paragraph-column
+                                    fill-column))
+                          fill-column))))))
+    (fill-paragraph)
+    (message "Fill column: %s" fill-column)))
+
 (defun unpackaged/iedit-scoped (orig-fn)
   "Call `iedit-mode' with function-local scope, or global scope if called with a universal prefix."
   (interactive)

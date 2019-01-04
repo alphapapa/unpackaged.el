@@ -107,6 +107,7 @@ An easy way to "whole-hog it" is to use [[https://framagit.org/steckerhalter/que
     -  [[#upgrade-a-quelpa-use-package-forms-package][Upgrade a quelpa-use-package form's package]]
     -  [[#upgrade-one-package-in-the-package-menu][Upgrade one package in the package menu]]
   -  [[#programming][Programming]]
+    -  [[#flexibly-fillunfill-paragraphs][Flexibly fill/unfill paragraphs]]
     -  [[#iedit][iedit]]
       -  [[#iedit-scoped][iedit-scoped]]
       -  [[#iedit-or-flyspell][iedit-or-flyspell]]
@@ -950,6 +951,35 @@ Mark current package for upgrading (i.e. also mark obsolete version for deletion
 #+BEGIN_SRC elisp :exports none
 ;;; Programming
 
+#+END_SRC
+
+** Flexibly fill/unfill paragraphs
+
+Fill paragraph, incrementing fill column each time this command is repeated.  When the command is called for the first time in a sequence, unfill to the default ~fill-column~.  With prefix, unfill completely.  This command does not modify the stored value of ~fill-column~.
+
+[[images/flex-fill-paragraph.gif]]
+
+#+BEGIN_SRC elisp :exports code :results silent
+  (defvar unpackaged/flex-fill-paragraph-column nil
+    "Last fill column used in command `unpackaged/flex-fill-paragraph'.")
+
+  (defun unpackaged/flex-fill-paragraph (&optional unfill)
+    "Fill paragraph, incrementing fill column each time this command is repeated.
+  When the command is called for the first time in a sequence,
+  unfill to the default `fill-column'.  With prefix, unfill
+  completely.  This command does not modify the stored value of
+  `fill-column'."
+    (interactive "P")
+    (let ((fill-column
+           (cond (unfill (setf unpackaged/flex-fill-paragraph-column nil)
+                         most-positive-fixnum)
+                 (t (setf unpackaged/flex-fill-paragraph-column
+                          (if (equal last-command this-command)
+                              (1+ (or unpackaged/flex-fill-paragraph-column
+                                      fill-column))
+                            fill-column))))))
+      (fill-paragraph)
+      (message "Fill column: %s" fill-column)))
 #+END_SRC
 
 ** ~iedit~                                                 :iedit:refactoring:
