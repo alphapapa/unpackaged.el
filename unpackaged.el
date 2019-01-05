@@ -115,6 +115,43 @@ output string."
 
 ;;; Org
 
+(defun unpackaged/org-agenda-current-subtree-or-region (only-todos)
+  "Display an agenda view for the current subtree or region.
+  With prefix, display only TODO-keyword items."
+  (interactive "P")
+  (let ((starting-point (point))
+        header)
+    (with-current-buffer (or (buffer-base-buffer (current-buffer))
+                             (current-buffer))
+      (if (use-region-p)
+          (progn
+            (setq header "Region")
+            (put 'org-agenda-files 'org-restrict (list (buffer-file-name (current-buffer))))
+            (setq org-agenda-restrict (current-buffer))
+            (move-marker org-agenda-restrict-begin (region-beginning))
+            (move-marker org-agenda-restrict-end
+                         (save-excursion
+                           ;; If point is at beginning of line, include
+                           ;; heading on that line by moving forward 1.
+                           (goto-char (1+ (region-end)))
+                           (org-end-of-subtree))))
+        ;; No region; restrict to subtree.
+        (save-excursion
+          (save-restriction
+            ;; In case the command was called from an indirect buffer, set point
+            ;; in the base buffer to the same position while setting restriction.
+            (widen)
+            (goto-char starting-point)
+            (setq header "Subtree")
+            (org-agenda-set-restriction-lock))))
+      ;; NOTE: Unlike other agenda commands, binding `org-agenda-sorting-strategy'
+      ;; around `org-search-view' seems to have no effect.
+      (let ((org-agenda-sorting-strategy '(priority-down timestamp-up))
+            (org-agenda-overriding-header header))
+        (org-search-view (if only-todos t nil) "*"))
+      (org-agenda-remove-restriction-lock t)
+      (message nil))))
+
 (defface unpackaged/org-agenda-preview
   '((t (:background "black")))
   "Face for Org Agenda previews."

@@ -92,6 +92,7 @@ An easy way to "whole-hog it" is to use [[https://framagit.org/steckerhalter/que
   -  [[#misc][Misc]]
     -  [[#track-metadata-from-mpris-supporting-media-player][Track metadata from MPRIS-supporting media player]]
   -  [[#org][Org]]
+    -  [[#agenda-for-subtree-or-region][Agenda for subtree or region]]
     -  [[#agenda-previews][Agenda previews]]
     -  [[#convert-elisp-to-org-format][Convert Elisp to Org format]]
     -  [[#download-and-attach-remote-files][Download and attach remote files]]
@@ -260,6 +261,49 @@ Code for [[https://orgmode.org/][Org Mode]].
 
 #+END_SRC
 
+** Agenda for subtree or region                                     :agenda:
+
+Display an agenda view for the current subtree or region.  With prefix, display only ~TODO~-keyword items.
+
+#+BEGIN_SRC elisp
+  (defun unpackaged/org-agenda-current-subtree-or-region (only-todos)
+    "Display an agenda view for the current subtree or region.
+    With prefix, display only TODO-keyword items."
+    (interactive "P")
+    (let ((starting-point (point))
+          header)
+      (with-current-buffer (or (buffer-base-buffer (current-buffer))
+                               (current-buffer))
+        (if (use-region-p)
+            (progn
+              (setq header "Region")
+              (put 'org-agenda-files 'org-restrict (list (buffer-file-name (current-buffer))))
+              (setq org-agenda-restrict (current-buffer))
+              (move-marker org-agenda-restrict-begin (region-beginning))
+              (move-marker org-agenda-restrict-end
+                           (save-excursion
+                             ;; If point is at beginning of line, include
+                             ;; heading on that line by moving forward 1.
+                             (goto-char (1+ (region-end)))
+                             (org-end-of-subtree))))
+          ;; No region; restrict to subtree.
+          (save-excursion
+            (save-restriction
+              ;; In case the command was called from an indirect buffer, set point
+              ;; in the base buffer to the same position while setting restriction.
+              (widen)
+              (goto-char starting-point)
+              (setq header "Subtree")
+              (org-agenda-set-restriction-lock))))
+        ;; NOTE: Unlike other agenda commands, binding `org-agenda-sorting-strategy'
+        ;; around `org-search-view' seems to have no effect.
+        (let ((org-agenda-sorting-strategy '(priority-down timestamp-up))
+              (org-agenda-overriding-header header))
+          (org-search-view (if only-todos t nil) "*"))
+        (org-agenda-remove-restriction-lock t)
+        (message nil))))
+#+END_SRC
+
 ** Agenda previews                                                  :agenda:
 
 /Before:/
@@ -312,7 +356,6 @@ Code for [[https://orgmode.org/][Org Mode]].
              while pos
              do (goto-char pos)))
 #+END_SRC
-
 ** Convert Elisp to Org format                                        :meta:
 :PROPERTIES:
 :ID:       b86d14ff-b87c-4e2a-a513-067c0a5d3490
