@@ -548,7 +548,7 @@ appropriate.  In tables, insert a new row or end the table."
                               (org-element-property :contents-end context))))
                 (unpackaged/org-element-descendant-of 'item context))  ; Element in list item, e.g. a link
             ;; Non-empty item: Add new item.
-            (org-insert-heading)
+            (org-insert-item)
           ;; Empty item: Close the list.
           ;; TODO: Do this with org functions rather than operating on the text. Can't seem to find the right function.
           (delete-region (line-beginning-position) (line-end-position))
