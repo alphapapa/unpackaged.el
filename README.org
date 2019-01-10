@@ -88,6 +88,9 @@ An easy way to "whole-hog it" is to use [[https://framagit.org/steckerhalter/que
 :END:
   -  [[#faces-fonts][Faces, fonts]]
     -  [[#font-compare][font-compare]]
+  -  [[#buffers][Buffers]]
+    -  [[#ibuffer][ibuffer]]
+      -  [[#filter-groups][Filter groups]]
   -  [[#meta][Meta]]
   -  [[#misc][Misc]]
     -  [[#track-metadata-from-mpris-supporting-media-player][Track metadata from MPRIS-supporting media player]]
@@ -191,6 +194,51 @@ e.g. weight, slant, etc.
 **** TODO Default size setting
 
 It might be helpful to use a larger size by default.
+
+* Buffers                                                           :buffers:
+
+** ibuffer                                                         :ibuffer:
+
+#+BEGIN_SRC elisp
+;;; ibuffer
+
+#+END_SRC
+
+*** Filter groups
+
+These commands toggle and move filter groups.
+
+#+BEGIN_SRC elisp
+  (defun unpackaged/ibuffer-toggle-all-filter-groups ()
+    "Toggle all filter groups."
+    (interactive)
+    (save-excursion
+      (goto-char (point-min))
+      (ibuffer-forward-filter-group)
+      (let ((start (point)))
+        (forward-char)
+        (while (not (<= (point) start))
+          (ibuffer-toggle-filter-group)
+          (ibuffer-forward-filter-group)))))
+
+  (defun unpackaged/ibuffer-filter-group-move-down ()
+    "Move filter group at point down."
+    (interactive)
+    (unpackaged/ibuffer-filter-group-move 'down))
+
+  (defun unpackaged/ibuffer-filter-group-move-up ()
+    "Move filter group at point up."
+    (interactive)
+    (unpackaged/ibuffer-filter-group-move 'up))
+
+  (defun unpackaged/ibuffer-filter-group-move (direction)
+    "Move filter group at point in DIRECTION, either `up' or `down'."
+    (ibuffer-kill-line)
+    (pcase-exhaustive direction
+      ('down (ibuffer-forward-filter-group))
+      ('up (ibuffer-backward-filter-group)))
+    (ibuffer-yank))
+#+END_SRC
 
 * Meta                                                                 :meta:
 :PROPERTIES:

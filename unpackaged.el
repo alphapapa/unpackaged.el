@@ -76,6 +76,38 @@ already-selected font to end font selection)."
                 "\n\n")))
     (pop-to-buffer (current-buffer))))
 
+;;; ibuffer
+
+(defun unpackaged/ibuffer-toggle-all-filter-groups ()
+  "Toggle all filter groups."
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (ibuffer-forward-filter-group)
+    (let ((start (point)))
+      (forward-char)
+      (while (not (<= (point) start))
+        (ibuffer-toggle-filter-group)
+        (ibuffer-forward-filter-group)))))
+
+(defun unpackaged/ibuffer-filter-group-move-down ()
+  "Move filter group at point down."
+  (interactive)
+  (unpackaged/ibuffer-filter-group-move 'down))
+
+(defun unpackaged/ibuffer-filter-group-move-up ()
+  "Move filter group at point up."
+  (interactive)
+  (unpackaged/ibuffer-filter-group-move 'up))
+
+(defun unpackaged/ibuffer-filter-group-move (direction)
+  "Move filter group at point in DIRECTION, either `up' or `down'."
+  (ibuffer-kill-line)
+  (pcase-exhaustive direction
+    ('down (ibuffer-forward-filter-group))
+    ('up (ibuffer-backward-filter-group)))
+  (ibuffer-yank))
+
 ;;; Misc
 
 (cl-defun unpackaged/mpris-track (&optional player)
