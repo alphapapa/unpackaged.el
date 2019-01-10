@@ -392,9 +392,7 @@ made unique when necessary."
                          cells)
                         (when (org-element-property :raw-value datum)
                           ;; Heading with a title
-                          (unpackaged/org-export-new-title-reference
-                           (substring-no-properties (org-element-property :raw-value datum))
-                           cache))
+                          (unpackaged/org-export-new-title-reference datum cache))
                         ;; NOTE: This probably breaks some Org Export
                         ;; feature, but if it does what I need, fine.
                         (org-export-format-reference
@@ -411,8 +409,8 @@ made unique when necessary."
           (plist-put info :internal-references cache)
           reference-string))))
 
-(defun unpackaged/org-export-new-title-reference (title cache)
-  "Return new reference for title that is unique in CACHE."
+(defun unpackaged/org-export-new-title-reference (datum cache)
+  "Return new reference for DATUM that is unique in CACHE."
   (cl-macrolet ((inc-suffixf (place)
                              `(progn
                                 (string-match (rx bos
@@ -427,10 +425,20 @@ made unique when necessary."
                                                     (string-to-number suffix)
                                                   0)))
                                   (setf ,place (format "%s--%s" s1 (cl-incf suffix)))))))
-    (let* ((ref (url-hexify-string title)))
+    (let* ((title (org-element-property :raw-value datum))
+           (ref (url-hexify-string (substring-no-properties title)))
+           (parent (org-element-property :parent datum)))
       (while (--any (equal ref (car it))
                     cache)
-        (inc-suffixf ref))
+        ;; Title not unique: make it so.
+        (if parent
+            ;; Append ancestor title.
+            (setf title (concat (org-element-property :raw-value parent)
+                                "--" title)
+                  ref (url-hexify-string (substring-no-properties title))
+                  parent (org-element-property :parent parent))
+          ;; No more ancestors: add and increment a number.
+          (inc-suffixf ref)))
       ref)))
 
 (defmacro unpackaged/def-org-maybe-surround (&rest keys)
