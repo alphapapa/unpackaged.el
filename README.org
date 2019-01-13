@@ -151,6 +151,7 @@ Interactively, prompt for ~TEXT~, using ~lorem-ipsum~ text if nil or the empty s
 #+BEGIN_SRC elisp :results silent
   (defvar lorem-ipsum-text)
 
+  ;;;###autoload
   (defun unpackaged/font-compare (text fonts)
     "Compare TEXT displayed in FONTS.
   If TEXT is nil, use `lorem-ipsum' text.  FONTS is a list of font
@@ -209,6 +210,7 @@ It might be helpful to use a larger size by default.
 These commands toggle and move filter groups.
 
 #+BEGIN_SRC elisp
+  ;;;###autoload
   (defun unpackaged/ibuffer-toggle-all-filter-groups ()
     "Toggle all filter groups."
     (interactive)
@@ -221,11 +223,13 @@ These commands toggle and move filter groups.
           (ibuffer-toggle-filter-group)
           (ibuffer-forward-filter-group)))))
 
+  ;;;###autoload
   (defun unpackaged/ibuffer-filter-group-move-down ()
     "Move filter group at point down."
     (interactive)
     (unpackaged/ibuffer-filter-group-move 'down))
 
+  ;;;###autoload
   (defun unpackaged/ibuffer-filter-group-move-up ()
     "Move filter group at point up."
     (interactive)
@@ -314,6 +318,7 @@ Code for [[https://orgmode.org/][Org Mode]].
 Display an agenda view for the current subtree or region.  With prefix, display only ~TODO~-keyword items.
 
 #+BEGIN_SRC elisp
+  ;;;###autoload
   (defun unpackaged/org-agenda-current-subtree-or-region (only-todos)
     "Display an agenda view for the current subtree or region.
     With prefix, display only TODO-keyword items."
@@ -371,6 +376,7 @@ Display an agenda view for the current subtree or region.  With prefix, display 
     "Face for Org Agenda previews."
     :group 'org)
 
+  ;;;###autoload
   (defun unpackaged/org-agenda-toggle-preview ()
     "Toggle overlay of current item in agenda."
     (interactive)
@@ -412,6 +418,7 @@ Display an agenda view for the current subtree or region.  With prefix, display 
 These functions convert Emacs Lisp code and docstrings to Org-formatted text, helpful for inserting into readme files (like this one).
 
 #+BEGIN_SRC elisp :results silent
+  ;;;###autoload
   (defun unpackaged/elisp-to-org ()
     "Convert elisp code in region to Org syntax and put in kill-ring.
   Extracts and converts docstring to Org text, and places code in
@@ -428,6 +435,7 @@ These functions convert Emacs Lisp code and docstrings to Org-formatted text, he
                         raw "\n"
                         "#+END_SRC"))))
 
+  ;;;###autoload
   (defun unpackaged/docstring-to-org (docstring)
     "Return DOCSTRING as formatted Org text.
 
@@ -459,6 +467,7 @@ These functions convert Emacs Lisp code and docstrings to Org-formatted text, he
                  (kill-new it))
              it))))
 
+  ;;;###autoload
   (defun unpackaged/caps-to-code (beg end)
     "Convert all-caps words in region to Org code emphasis."
     (interactive "r")
@@ -475,6 +484,7 @@ These functions convert Emacs Lisp code and docstrings to Org-formatted text, he
                   (concat "~" (match-string 1) "~"))
             (goto-char (match-end 0)))))))
 
+  ;;;###autoload
   (defun unpackaged/symbol-quotes-to-org-code (beg end)
     "Change Emacs `symbol' quotes to Org =symbol= quotes in region."
     (interactive "r")
@@ -503,6 +513,7 @@ Download file at ~URL~ and attach with ~org-attach~.  Interactively, look for ~U
 +  [[https://github.com/alphapapa/org-web-tools][org-web-tools]]
 
 #+BEGIN_SRC elisp :results silent
+  ;;;###autoload
   (defun unpackaged/org-attach-download (url)
     "Download file at URL and attach with `org-attach'.
   Interactively, look for URL at point, in X clipboard, and in
@@ -535,6 +546,7 @@ Ensure that blank lines exist between headings and between headings and their co
 For those who prefer to maintain blank lines between headings, this makes it easy to automatically add them where necessary, to a subtree or the whole buffer.  It also adds blank lines after drawers.  Works well with [[*~org-return-dwim~]].
 
 #+BEGIN_SRC elisp
+  ;;;###autoload
   (defun unpackaged/org-fix-blank-lines (prefix)
       "Ensure that blank lines exist between headings and between headings and their contents.
   With prefix, operate on whole buffer.  Ensures that blank lines
@@ -685,6 +697,7 @@ Note that this is somewhat of a hack, and it probably breaks some feature deep i
 Define and bind interactive commands for each of ~KEYS~ that surround the region or insert text.  Commands are bound in ~org-mode-map~ to each of ~KEYS~.  If the region is active, commands surround it with the key character, otherwise call ~org-self-insert-command~.
 
 #+BEGIN_SRC elisp
+  ;;;###autoload
   (defmacro unpackaged/def-org-maybe-surround (&rest keys)
     "Define and bind interactive commands for each of KEYS that surround the region or insert text.
   Commands are bound in `org-mode-map' to each of KEYS.  If the
@@ -726,6 +739,7 @@ This is sort of like archiving to a datetree, but it uses either the earliest or
 *Requires:* [[https://github.com/alphapapa/ts.el][ts]]
 
 #+BEGIN_SRC elisp
+  ;;;###autoload
   (defun unpackaged/org-refile-to-datetree-using-ts-in-entry (which-ts file &optional subtree-p)
     "Refile current entry to datetree in FILE using timestamp found in entry.
   WHICH should be `earliest' or `latest'. If SUBTREE-P is non-nil,
@@ -744,6 +758,7 @@ This is sort of like archiving to a datetree, but it uses either the earliest or
            (date (list (ts-month ts) (ts-day ts) (ts-year ts))))
       (unpackaged/org-refile-to-datetree file :date date)))
 
+  ;;;###autoload
   (defun unpackaged/org-timestamps-in-entry (&optional subtree-p)
     "Return timestamp objects for all Org timestamps in entry.
    If SUBTREE-P is non-nil (interactively, with prefix), search
@@ -761,6 +776,7 @@ This is sort of like archiving to a datetree, but it uses either the earliest or
                             (org-element-timestamp-parser))
                  collect (ts-parse-org ts)))))
 
+  ;;;###autoload
   (cl-defun unpackaged/org-refile-to-datetree (file &key (date (calendar-current-date)) entry)
     "Refile ENTRY or current node to entry for DATE in datetree in FILE."
     (interactive (list (read-file-name "File: " (concat org-directory "/") nil 'mustmatch nil
@@ -802,6 +818,7 @@ Inspired by [[http://kitchingroup.cheme.cmu.edu/blog/2017/04/09/A-better-return-
       (or (eq type (car parent))
           (unpackaged/org-element-descendant-of type parent))))
 
+  ;;;###autoload
   (defun unpackaged/org-return-dwim (&optional default)
     "A helpful replacement for `org-return'.  With prefix, call `org-return'.
 
@@ -914,6 +931,7 @@ The functions may also be called interactively as needed.
                              nil 'noerror)
       (goto-char (match-beginning 0))))
 
+  ;;;###autoload
   (defun unpackaged/org-mark-read-only ()
     "Mark all entries in the buffer tagged \"read_only\" with read-only text properties."
     (interactive)
@@ -940,6 +958,7 @@ Call ~org-sort-entries~ with multiple sorting methods specified in ~KEYS~.
 This is much easier than doing @@html:<kbd>@@C-c ^ KEY@@html:</kbd>@@ several times in a row.
 
 #+BEGIN_SRC elisp
+  ;;;###autoload
   (defun unpackaged/org-sort-multi (keys)
       "Call `org-sort-entries' with multiple sorting methods specified in KEYS."
       ;; Message copied from `org-sort-entries'.
@@ -1000,6 +1019,7 @@ This makes it easy to upgrade a package you install with [[https://framagit.org/
 +  [[#delete-all-installed-versions-of-a-package][unpackaged/package-delete-all-versions]]
 
 #+BEGIN_SRC elisp
+  ;;;###autoload
   (defun unpackaged/quelpa-use-package-upgrade ()
     "Eval the current `use-package' form with `quelpa-upgrade-p' true.
   Deletes the package first to remove obsolete versions."
@@ -1032,6 +1052,7 @@ Mark current package for upgrading (i.e. also mark obsolete version for deletion
     :bind (:map package-menu-mode-map
                 ("t" . #'unpackaged/package-menu-upgrade-package))
     :config
+    ;; I think the `use-package' form takes care of autoloading here.
     (defun unpackaged/package-menu-upgrade-package ()
       "Mark current package for upgrading (i.e. also mark obsolete version for deletion.)"
       (interactive)
@@ -1070,6 +1091,7 @@ Fill paragraph, incrementing fill column each time this command is repeated.  Wh
   (defvar unpackaged/flex-fill-paragraph-column nil
     "Last fill column used in command `unpackaged/flex-fill-paragraph'.")
 
+  ;;;###autoload
   (defun unpackaged/flex-fill-paragraph (&optional unfill)
     "Fill paragraph, incrementing fill column each time this command is repeated.
   When the command is called for the first time in a sequence,
@@ -1093,11 +1115,17 @@ Fill paragraph, incrementing fill column each time this command is repeated.  Wh
 
 These commands make ~iedit-mode~ a bit easier to use.
 
+*** COMMENT Add ~use-package~ form?
+:PROPERTIES:
+:TOC:      ignore
+:END:
+
 *** ~iedit-scoped~
 
 Call ~iedit-mode~ with function-local scope, or global scope if called with a universal prefix.
 
 #+BEGIN_SRC elisp
+  ;;;###autoload
   (defun unpackaged/iedit-scoped (orig-fn)
     "Call `iedit-mode' with function-local scope, or global scope if called with a universal prefix."
     (interactive)
@@ -1115,6 +1143,7 @@ Toggle ~iedit-mode~ or correct previous misspelling with ~flyspell~, depending o
 With point in code or when ~iedit-mode~ is already active, toggle ~iedit-mode~.  With point in a comment or string, and when ~iedit-mode~ is not already active, auto-correct previous misspelled word with ~flyspell~.  Call this command a second time to choose a different correction.
 
 #+BEGIN_SRC elisp
+  ;;;###autoload
   (defun unpackaged/iedit-or-flyspell ()
     "Toggle `iedit-mode' or correct previous misspelling with `flyspell', depending on context.
 
@@ -1153,6 +1182,7 @@ With point in code or when ~iedit-mode~ is already active, toggle ~iedit-mode~. 
 Sort sexps in region.  Comments stay with the code below.
 
 #+BEGIN_SRC elisp
+  ;;;###autoload
   (defun unpackaged/sort-sexps (beg end)
     "Sort sexps in region.
   Comments stay with the code below."
@@ -1211,6 +1241,7 @@ Sort sexps in region.  Comments stay with the code below.
 Call ~query-replace-regexp~, reading regexp in ~rx~ syntax.  Automatically wraps in parens and adds ~seq~ to the beginning of the form.
 
 #+BEGIN_SRC elisp
+  ;;;###autoload
   (defun unpackaged/query-replace-rx (&rest _)
     "Call `query-replace-regexp', reading regexp in `rx' syntax.
   Automatically wraps in parens and adds `seq' to the beginning of
@@ -1239,6 +1270,7 @@ Call ~query-replace-regexp~, reading regexp in ~rx~ syntax.  Automatically wraps
 Open a ~magit-status~ buffer and close the other window so only Magit is visible.  If a file was visited in the buffer that was active when this command was called, go to its unstaged changes section.
 
 #+BEGIN_SRC elisp
+  ;;;###autoload
   (defun unpackaged/magit-status ()
     "Open a `magit-status' buffer and close the other window so only Magit is visible.
   If a file was visited in the buffer that was active when this
@@ -1388,6 +1420,7 @@ Return ATOM or RSS feed ~URL~ for web page at ~URL~.  Interactively, insert the 
 +  [[https://github.com/alphapapa/org-web-tools][org-web-tools]]
 
 #+BEGIN_SRC elisp :results silent
+  ;;;###autoload
   (cl-defun unpackaged/feed-for-url (url &key (prefer 'atom) (all nil))
     "Return feed URL for web page at URL.
   Interactively, insert the URL at point.  PREFER may be
