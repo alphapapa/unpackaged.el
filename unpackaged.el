@@ -154,7 +154,7 @@ output string."
 ;;;###autoload
 (defun unpackaged/org-agenda-current-subtree-or-region (only-todos)
   "Display an agenda view for the current subtree or region.
-  With prefix, display only TODO-keyword items."
+ With prefix, display only TODO-keyword items."
   (interactive "P")
   (let ((starting-point (point))
         header)
@@ -332,37 +332,37 @@ kill-ring, prompting if not found.  With prefix, prompt for URL."
 
 ;;;###autoload
 (defun unpackaged/org-fix-blank-lines (prefix)
-    "Ensure that blank lines exist between headings and between headings and their contents.
-With prefix, operate on whole buffer.  Ensures that blank lines
+  "Ensure that blank lines exist between headings and between headings and their contents.
+With prefix, operate on whole buffer. Ensures that blank lines
 exist after each headings's drawers."
-    (interactive "P")
-    (org-map-entries (lambda ()
-                       (org-with-wide-buffer
-                        ;; `org-map-entries' narrows the buffer, which prevents us from seeing
-                        ;; newlines before the current heading, so we do this part widened.
-                        (while (not (looking-back "\n\n" nil))
-                          ;; Insert blank lines before heading.
-                          (insert "\n")))
-                       (let ((end (org-entry-end-position)))
-                         ;; Insert blank lines before entry content
-                         (forward-line)
-                         (while (and (org-at-planning-p)
-                                     (< (point) (point-max)))
-                           ;; Skip planning lines
-                           (forward-line))
-                         (while (re-search-forward org-drawer-regexp end t)
-                           ;; Skip drawers.  You might think that `org-at-drawer-p' would suffice, but
-                           ;; for some reason it doesn't work correctly when operating on hidden text.
-                           ;; This works, taken from `org-agenda-get-some-entry-text'.
-                           (re-search-forward "^[ \t]*:END:.*\n?" end t)
-                           (goto-char (match-end 0)))
-                         (unless (or (= (point) (point-max))
-                                     (org-at-heading-p)
-                                     (looking-at-p "\n"))
-                           (insert "\n"))))
-                     t (if prefix
-                           nil
-                         'tree)))
+  (interactive "P")
+  (org-map-entries (lambda ()
+                     (org-with-wide-buffer
+                      ;; `org-map-entries' narrows the buffer, which prevents us from seeing
+                      ;; newlines before the current heading, so we do this part widened.
+                      (while (not (looking-back "\n\n" nil))
+                        ;; Insert blank lines before heading.
+                        (insert "\n")))
+                     (let ((end (org-entry-end-position)))
+                       ;; Insert blank lines before entry content
+                       (forward-line)
+                       (while (and (org-at-planning-p)
+                                   (< (point) (point-max)))
+                         ;; Skip planning lines
+                         (forward-line))
+                       (while (re-search-forward org-drawer-regexp end t)
+                         ;; Skip drawers. You might think that `org-at-drawer-p' would suffice, but
+                         ;; for some reason it doesn't work correctly when operating on hidden text.
+                         ;; This works, taken from `org-agenda-get-some-entry-text'.
+                         (re-search-forward "^[ \t]*:END:.*\n?" end t)
+                         (goto-char (match-end 0)))
+                       (unless (or (= (point) (point-max))
+                                   (org-at-heading-p)
+                                   (looking-at-p "\n"))
+                         (insert "\n"))))
+                   t (if prefix
+                         nil
+                       'tree)))
 
 (define-minor-mode unpackaged/org-export-html-with-useful-ids-mode
   "Attempt to export Org as HTML with useful link IDs.
@@ -670,14 +670,14 @@ appropriate.  In tables, insert a new row or end the table."
 
 ;;;###autoload
 (defun unpackaged/org-sort-multi (keys)
-    "Call `org-sort-entries' with multiple sorting methods specified in KEYS."
-    ;; Message copied from `org-sort-entries'.
-    (interactive (list (read-string "Sort by: [a]lpha  [n]umeric  [p]riority  p[r]operty  todo[o]rder  [f]unc
+  "Call `org-sort-entries' with multiple sorting methods specified in KEYS."
+  ;; Message copied from `org-sort-entries'.
+  (interactive (list (read-string "Sort by: [a]lpha  [n]umeric  [p]riority  p[r]operty  todo[o]rder  [f]unc
          [t]ime [s]cheduled  [d]eadline  [c]reated  cloc[k]ing
          A/N/P/R/O/F/T/S/D/C/K means reversed: ")))
-    (seq-do (lambda (key)
-              (org-sort-entries nil key))
-            (nreverse keys)))
+  (seq-do (lambda (key)
+            (org-sort-entries nil key))
+          (nreverse keys)))
 
 ;;; Packages
 
@@ -817,7 +817,7 @@ to choose a different correction."
       ;; First correction was not wanted; use popup to choose
       (progn
         (save-excursion
-          (undo))                       ; This doesn't move point, which I think may be the problem.
+          (undo))  ; This doesn't move point, which I think may be the problem.
         (flyspell-region (line-beginning-position) (line-end-position))
         (call-interactively 'flyspell-correct-previous-word-generic)))))
 
