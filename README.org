@@ -211,17 +211,22 @@ These commands toggle and move filter groups.
 
 #+BEGIN_SRC elisp
   ;;;###autoload
-  (defun unpackaged/ibuffer-toggle-all-filter-groups ()
-    "Toggle all filter groups."
-    (interactive)
-    (save-excursion
-      (goto-char (point-min))
-      (ibuffer-forward-filter-group)
-      (let ((start (point)))
-        (forward-char)
-        (while (not (<= (point) start))
-          (ibuffer-toggle-filter-group)
-          (ibuffer-forward-filter-group)))))
+  (defun unpackaged/ibuffer-toggle-all-filter-groups (toggle-empty)
+    "Toggle all filter groups.
+  With prefix, toggle `ibuffer-show-empty-filter-groups'."
+    (interactive "P")
+    (if toggle-empty
+        (progn
+          (setf ibuffer-show-empty-filter-groups (not ibuffer-show-empty-filter-groups))
+          (ibuffer-update nil))
+      (save-excursion
+        (goto-char (point-min))
+        (ibuffer-forward-filter-group)
+        (let ((start (point)))
+          (forward-char)
+          (while (not (<= (point) start))
+            (ibuffer-toggle-filter-group)
+            (ibuffer-forward-filter-group))))))
 
   ;;;###autoload
   (defun unpackaged/ibuffer-filter-group-move-down ()
