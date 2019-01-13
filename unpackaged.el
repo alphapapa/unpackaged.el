@@ -952,6 +952,13 @@ command was called, go to its unstaged changes section."
     (remove-hook 'magit-post-refresh-hook #'unpackaged/magit-log--add-date-headers)
     (advice-remove #'magit-mode-setup #'unpackaged/magit-log--add-date-headers)))
 
+;;;###autoload
+(defun unpackaged/magit-save-buffer-show-status ()
+  "Save buffer and show its changes in `magit-status'."
+  (interactive)
+  (save-buffer)
+  (unpackaged/magit-status))
+
 (use-package smerge-mode
   :after hydra
   :config

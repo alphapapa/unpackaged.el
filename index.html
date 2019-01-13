@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-01-12 Sat 21:47 -->
+<!-- 2019-01-13 Sun 02:36 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>unpackaged.el</title>
@@ -310,6 +310,7 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#Improved%20~magit-status~%20command">Improved <code>magit-status</code> command</a></li>
 <li><a href="#magit-log%20date%20headers">magit-log date headers</a></li>
+<li><a href="#Save%20buffer%20and%20show%20changes%20in%20Magit%20status">Save buffer and show changes in Magit status</a></li>
 </ul>
 </li>
 <li><a href="#~smerge-mode~"><code>smerge-mode</code></a>
@@ -1785,6 +1786,21 @@ This isn't always perfect, because dates in a git commit log are not always in o
 </p>
 </div>
 </div>
+
+<div id="outline-container-Save%20buffer%20and%20show%20changes%20in%20Magit%20status" class="outline-4">
+<h4 id="Save%20buffer%20and%20show%20changes%20in%20Magit%20status">Save buffer and show changes in Magit status</h4>
+<div class="outline-text-4" id="text-Save%20buffer%20and%20show%20changes%20in%20Magit%20status">
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #586e75;">;;;</span><span style="color: #586e75; font-weight: bold; font-style: italic;">###</span><span style="color: #cb4b16; font-weight: bold; font-style: italic;">autoload</span>
+<span style="color: #2aa198;">(</span><span style="color: #859900; font-weight: bold;">defun</span> <span style="color: #268bd2;">unpackaged/magit-save-buffer-show-status</span> <span style="color: #b58900;">()</span>
+  <span style="color: #2aa198;">"Save buffer and show its changes in `</span><span style="color: #268bd2; font-weight: bold;">magit-status</span><span style="color: #2aa198;">'."</span>
+  <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">interactive</span><span style="color: #b58900;">)</span>
+  <span style="color: #b58900;">(</span><span style="color: #9dff5da442ff; text-decoration: underline;">save</span><span style="text-decoration: underline;">-</span><span style="color: #959995df9a66; text-decoration: underline;">buffer</span><span style="color: #b58900;">)</span>
+  <span style="color: #b58900;">(</span><span style="color: #a961952b94d0; text-decoration: underline;">unpackaged</span><span style="text-decoration: underline;">/</span><span style="color: #90cc76662432; text-decoration: underline;">magit</span><span style="text-decoration: underline;">-</span><span style="color: #71ba8cd29fdd; text-decoration: underline;">status</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
+</pre>
+</div>
+</div>
+</div>
 </div>
 
 <div id="outline-container-~smerge-mode~" class="outline-3">
@@ -1936,7 +1952,7 @@ GPLv3
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Adam Porter</p>
-<p class="date">Created: 2019-01-12 Sat 21:47</p>
+<p class="date">Created: 2019-01-13 Sun 02:36</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
