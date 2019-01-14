@@ -654,7 +654,7 @@ appropriate.  In tables, insert a new row or end the table."
                            nil 'noerror)
     (goto-char (match-beginning 0))))
 
-;;;###autoload
+  ;;;###autoload
 (defun unpackaged/org-mark-read-only ()
   "Mark all entries in the buffer tagged \"read_only\" with read-only text properties."
   (interactive)
@@ -666,6 +666,7 @@ appropriate.  In tables, insert a new row or end the table."
 
 (defun unpackaged/org-remove-read-only ()
   "Remove read-only text properties from Org entries tagged \"read_only\" in current buffer."
+  (interactive)
   (let ((inhibit-read-only t))
     (org-with-wide-buffer
      (goto-char (point-min))

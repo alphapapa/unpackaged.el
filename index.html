@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-01-13 Sun 02:36 -->
+<!-- 2019-01-14 Mon 17:44 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>unpackaged.el</title>
@@ -1294,7 +1294,7 @@ The functions may also be called interactively as needed.
                            <span style="color: #a4cca4cca4cc;">nil</span> <span style="color: #859900; font-weight: bold;">'</span><span style="color: #52997866758a;">noerror</span><span style="color: #268bd2;">)</span>
     <span style="color: #268bd2;">(</span><span style="color: #959995df9a66; text-decoration: underline;">goto</span><span style="text-decoration: underline;">-</span><span style="color: #6e667a661e98; text-decoration: underline;">char</span> <span style="color: #6c71c4;">(</span><span style="color: #7a4685f22ca6; text-decoration: underline;">match</span><span style="text-decoration: underline;">-</span><span style="color: #6e667a661e98; text-decoration: underline;">beginning</span> <span style="color: #68717c277aa9;">0</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
 
-<span style="color: #586e75;">;;;</span><span style="color: #586e75; font-weight: bold; font-style: italic;">###</span><span style="color: #cb4b16; font-weight: bold; font-style: italic;">autoload</span>
+  <span style="color: #586e75;">;;;</span><span style="color: #586e75; font-weight: bold; font-style: italic;">###autoload</span>
 <span style="color: #2aa198;">(</span><span style="color: #859900; font-weight: bold;">defun</span> <span style="color: #268bd2;">unpackaged/org-mark-read-only</span> <span style="color: #b58900;">()</span>
   <span style="color: #2aa198;">"Mark all entries in the buffer tagged \"read_only\" with read-only text properties."</span>
   <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">interactive</span><span style="color: #b58900;">)</span>
@@ -1306,6 +1306,7 @@ The functions may also be called interactively as needed.
 
 <span style="color: #2aa198;">(</span><span style="color: #859900; font-weight: bold;">defun</span> <span style="color: #268bd2;">unpackaged/org-remove-read-only</span> <span style="color: #b58900;">()</span>
   <span style="color: #2aa198;">"Remove read-only text properties from Org entries tagged \"read_only\" in current buffer."</span>
+  <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">interactive</span><span style="color: #b58900;">)</span>
   <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">let</span> <span style="color: #268bd2;">(</span><span style="color: #6c71c4;">(</span><span style="color: #57998258a066;">inhibit</span>-<span style="color: #a961952b94d0;">read</span>-<span style="color: #71ba8cd29fdd;">only</span> <span style="color: #959995df9a66;">t</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span>
     <span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">org-with-wide-buffer</span>
      <span style="color: #6c71c4;">(</span><span style="color: #959995df9a66; text-decoration: underline;">goto</span><span style="text-decoration: underline;">-</span><span style="color: #6e667a661e98; text-decoration: underline;">char</span> <span style="color: #859900;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">point</span><span style="text-decoration: underline;">-</span><span style="color: #a19967658391; text-decoration: underline;">min</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span>
@@ -1952,7 +1953,7 @@ GPLv3
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Adam Porter</p>
-<p class="date">Created: 2019-01-13 Sun 02:36</p>
+<p class="date">Created: 2019-01-14 Mon 17:44</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
