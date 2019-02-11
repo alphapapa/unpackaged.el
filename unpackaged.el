@@ -804,7 +804,7 @@ With point in code or when `iedit-mode' is already active, toggle
 misspelled word with `flyspell'.  Call this command a second time
 to choose a different correction."
   (interactive)
-  (if (or iedit-mode
+  (if (or (bound-and-true-p iedit-mode)
           (and (derived-mode-p 'prog-mode)
                (not (or (nth 4 (syntax-ppss))
                         (nth 3 (syntax-ppss))))))
