@@ -944,7 +944,7 @@ command was called, go to its unstaged changes section."
 (define-minor-mode unpackaged/magit-log-date-headers-mode
   "Display date/time headers in `magit-log' buffers."
   :global t
-  (if magit-log-date-headers-mode
+  (if unpackaged/magit-log-date-headers-mode
       (progn
         ;; Enable mode
         (add-hook 'magit-post-refresh-hook #'unpackaged/magit-log--add-date-headers)
