@@ -363,6 +363,13 @@ Display an agenda view for the current subtree or region.  With prefix, display 
         (message nil))))
 #+END_SRC
 
+*** TODO Agenda for file/outline-path
+:PROPERTIES:
+:TOC:      ignore
+:END:
+
+A function that would combine the one above with ~org-find-olp~.  Maybe also make a new Org link type that would allow clickable links to show agendas for files or subtrees.
+
 ** Agenda previews                                                  :agenda:
 
 /Before:/

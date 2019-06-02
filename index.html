@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-01-31 Thu 21:41 -->
+<!-- 2019-06-03 Mon 18:16 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>unpackaged.el</title>
@@ -267,7 +267,11 @@ for the JavaScript code in this tag.
 </li>
 <li><a href="#Org">Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Org">Org</span></span></a>
 <ul>
-<li><a href="#Agenda%20for%20subtree%20or%20region">Agenda for subtree or region&#xa0;&#xa0;&#xa0;<span class="tag"><span class="agenda">agenda</span></span></a></li>
+<li><a href="#Agenda%20for%20subtree%20or%20region">Agenda for subtree or region&#xa0;&#xa0;&#xa0;<span class="tag"><span class="agenda">agenda</span></span></a>
+<ul>
+<li><a href="#Agenda%20for%20file%2Foutline-path"><span class="todo TODO">TODO</span> Agenda for file/outline-path</a></li>
+</ul>
+</li>
 <li><a href="#Agenda%20previews">Agenda previews&#xa0;&#xa0;&#xa0;<span class="tag"><span class="agenda">agenda</span></span></a></li>
 <li><a href="#Convert%20Elisp%20to%20Org%20format">Convert Elisp to Org format&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></a></li>
 <li><a href="#Download%20and%20attach%20remote%20files">Download and attach remote files</a></li>
@@ -635,6 +639,15 @@ Display an agenda view for the current subtree or region.  With prefix, display 
       <span style="color: #6c71c4;">(</span><span style="color: #57998258a066; text-decoration: underline;">org</span><span style="text-decoration: underline;">-</span><span style="color: #a19967658391; text-decoration: underline;">agenda</span><span style="text-decoration: underline;">-</span><span style="color: #a961952b94d0; text-decoration: underline;">remove</span><span style="text-decoration: underline;">-</span><span style="color: #90cc76662432; text-decoration: underline;">restriction</span><span style="text-decoration: underline;">-</span><span style="color: #a8e97c777baf; text-decoration: underline;">lock</span> <span style="color: #959995df9a66;">t</span><span style="color: #6c71c4;">)</span>
       <span style="color: #6c71c4;">(</span><span style="color: #a4cca4cca4cc; text-decoration: underline;">message</span> <span style="color: #a4cca4cca4cc;">nil</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
 </pre>
+</div>
+</div>
+
+<div id="outline-container-Agenda%20for%20file%2Foutline-path" class="outline-4">
+<h4 id="Agenda%20for%20file%2Foutline-path"><span class="todo TODO">TODO</span> Agenda for file/outline-path</h4>
+<div class="outline-text-4" id="text-Agenda%20for%20file%2Foutline-path">
+<p>
+A function that would combine the one above with <code>org-find-olp</code>.  Maybe also make a new Org link type that would allow clickable links to show agendas for files or subtrees.
+</p>
 </div>
 </div>
 </div>
@@ -1564,7 +1577,7 @@ With point in code or when <code>iedit-mode</code> is already active, toggle <co
 <span style="color: #2aa198;">misspelled word with `</span><span style="color: #268bd2; font-weight: bold;">flyspell</span><span style="color: #2aa198;">'.  Call this command a second time</span>
 <span style="color: #2aa198;">to choose a different correction."</span>
   <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">interactive</span><span style="color: #b58900;">)</span>
-  <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">if</span> <span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">or</span> <span style="color: #a19967658391;">iedit</span>-<span style="color: #68717c277aa9;">mode</span>
+  <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">if</span> <span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">or</span> <span style="color: #6c71c4;">(</span><span style="color: #859900; font-weight: bold;">bound-and-true-p</span> <span style="color: #a19967658391;">iedit</span>-<span style="color: #68717c277aa9;">mode</span><span style="color: #6c71c4;">)</span>
           <span style="color: #6c71c4;">(</span><span style="color: #859900; font-weight: bold;">and</span> <span style="color: #859900;">(</span><span style="color: #a19967658391; text-decoration: underline;">derived</span><span style="text-decoration: underline;">-</span><span style="color: #68717c277aa9; text-decoration: underline;">mode</span><span style="text-decoration: underline;">-</span><span style="color: #9af381d633a6; text-decoration: underline;">p</span> <span style="color: #859900; font-weight: bold;">'</span><span style="color: #959995df9a66;">prog</span>-<span style="color: #68717c277aa9;">mode</span><span style="color: #859900;">)</span>
                <span style="color: #859900;">(</span><span style="color: #cb4b16; font-weight: bold;">not</span> <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">or</span> <span style="color: #268bd2;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">nth</span> <span style="color: #7a4685f22ca6;">4</span> <span style="color: #6c71c4;">(</span><span style="color: #6e667a661e98; text-decoration: underline;">syntax</span><span style="text-decoration: underline;">-</span><span style="color: #57998258a066; text-decoration: underline;">ppss</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span>
                         <span style="color: #268bd2;">(</span><span style="color: #a3726d7d5726; text-decoration: underline;">nth</span> <span style="color: #71ba8cd29fdd;">3</span> <span style="color: #6c71c4;">(</span><span style="color: #6e667a661e98; text-decoration: underline;">syntax</span><span style="text-decoration: underline;">-</span><span style="color: #57998258a066; text-decoration: underline;">ppss</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span><span style="color: #b58900;">)</span><span style="color: #859900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #268bd2;">)</span>
@@ -1771,7 +1784,7 @@ Add date headers to Magit log buffers.
 <span style="color: #2aa198;">(</span><span style="color: #859900; font-weight: bold;">define-minor-mode</span> <span style="color: #268bd2;">unpackaged/magit-log-date-headers-mode</span>
   <span style="color: #2aa198;">"Display date/time headers in `</span><span style="color: #268bd2; font-weight: bold;">magit-log</span><span style="color: #2aa198;">' buffers."</span>
   <span style="color: #839496; font-weight: bold;">:global</span> <span style="color: #959995df9a66;">t</span>
-  <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">if</span> <span style="color: #90cc76662432;">magit</span>-<span style="color: #a050824890d1;">log</span>-<span style="color: #a19967658391;">date</span>-<span style="color: #a961952b94d0;">headers</span>-<span style="color: #68717c277aa9;">mode</span>
+  <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">if</span> <span style="color: #a961952b94d0;">unpackaged</span>/<span style="color: #90cc76662432;">magit</span>-<span style="color: #a050824890d1;">log</span>-<span style="color: #a19967658391;">date</span>-<span style="color: #a961952b94d0;">headers</span>-<span style="color: #68717c277aa9;">mode</span>
       <span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">progn</span>
         <span style="color: #586e75;">;; </span><span style="color: #586e75; font-weight: bold; font-style: italic;">Enable mode</span>
         <span style="color: #6c71c4;">(</span><span style="color: #71ba8cd29fdd; text-decoration: underline;">add</span><span style="text-decoration: underline;">-</span><span style="color: #a8e97c777baf; text-decoration: underline;">hook</span> <span style="color: #859900; font-weight: bold;">'</span><span style="color: #90cc76662432;">magit</span>-<span style="color: #959995df9a66;">post</span>-<span style="color: #57998258a066;">refresh</span>-<span style="color: #a8e97c777baf;">hook</span> <span style="color: #859900; font-weight: bold;">#'</span><span style="color: #a961952b94d0;">unpackaged</span>/<span style="color: #90cc76662432;">magit</span>-<span style="color: #a050824890d1;">log</span>--<span style="color: #71ba8cd29fdd;">add</span>-<span style="color: #a19967658391;">date</span>-<span style="color: #a961952b94d0;">headers</span><span style="color: #6c71c4;">)</span>
@@ -1953,7 +1966,7 @@ GPLv3
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Adam Porter</p>
-<p class="date">Created: 2019-01-14 Mon 17:44</p>
+<p class="date">Created: 2019-06-03 Mon 18:16</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
