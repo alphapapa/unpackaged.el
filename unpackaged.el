@@ -194,6 +194,20 @@ output string."
       (org-agenda-remove-restriction-lock t)
       (message nil))))
 
+(defun unpackaged/org-agenda-olp (outline-path &optional file only-todos)
+  "Show an agenda restricted to subtree at OUTLINE-PATH.
+FILE may be a filename to search in, or nil to look in the
+current buffer.  If ONLY-TODOS is non-nil, show only to-do
+items. OUTLINE-PATH is a list of strings which are outline
+headings.  See function `org-find-olp'."
+  (when file
+    (push file outline-path))
+  (let ((marker (org-find-olp outline-path (not file))))
+    (with-current-buffer (marker-buffer marker)
+      (org-with-wide-buffer
+       (goto-char marker)
+       (unpackaged/org-agenda-current-subtree-or-region only-todos)))))
+
 (defface unpackaged/org-agenda-preview
   '((t (:background "black")))
   "Face for Org Agenda previews."

@@ -95,8 +95,10 @@ An easy way to "whole-hog it" is to use [[https://framagit.org/steckerhalter/que
   -  [[#misc][Misc]]
     -  [[#track-metadata-from-mpris-supporting-media-player][Track metadata from MPRIS-supporting media player]]
   -  [[#org][Org]]
-    -  [[#agenda-for-subtree-or-region][Agenda for subtree or region]]
-    -  [[#agenda-previews][Agenda previews]]
+    -  [[#agenda][Agenda]]
+      -  [[#agenda-for-subtree-or-region][Agenda for subtree or region]]
+      -  [[#agenda-for-outline-path][Agenda for outline path]]
+      -  [[#agenda-previews][Agenda previews]]
     -  [[#convert-elisp-to-org-format][Convert Elisp to Org format]]
     -  [[#download-and-attach-remote-files][Download and attach remote files]]
     -  [[#ensure-blank-lines-between-headings-and-before-contents][Ensure blank lines between headings and before contents]]
@@ -319,7 +321,9 @@ Code for [[https://orgmode.org/][Org Mode]].
 
 #+END_SRC
 
-** Agenda for subtree or region                                     :agenda:
+** Agenda                                                           :agenda:
+
+*** Agenda for subtree or region
 
 Display an agenda view for the current subtree or region.  With prefix, display only ~TODO~-keyword items.
 
@@ -363,14 +367,27 @@ Display an agenda view for the current subtree or region.  With prefix, display 
         (message nil))))
 #+END_SRC
 
-*** TODO Agenda for file/outline-path
-:PROPERTIES:
-:TOC:      ignore
-:END:
+*** Agenda for outline path
 
-A function that would combine the one above with ~org-find-olp~.  Maybe also make a new Org link type that would allow clickable links to show agendas for files or subtrees.
+Show an agenda restricted to subtree at ~OUTLINE-PATH~.  ~FILE~ may be a filename to search in, or nil to look in the current buffer.  If ~ONLY-TODOS~ is non-nil, show only to-do items. ~OUTLINE-PATH~ is a list of strings which are outline headings.  See function ~org-find-olp~.
 
-** Agenda previews                                                  :agenda:
+#+BEGIN_SRC elisp
+  (defun unpackaged/org-agenda-olp (outline-path &optional file only-todos)
+    "Show an agenda restricted to subtree at OUTLINE-PATH.
+  FILE may be a filename to search in, or nil to look in the
+  current buffer.  If ONLY-TODOS is non-nil, show only to-do
+  items. OUTLINE-PATH is a list of strings which are outline
+  headings.  See function `org-find-olp'."
+    (when file
+      (push file outline-path))
+    (let ((marker (org-find-olp outline-path (not file))))
+      (with-current-buffer (marker-buffer marker)
+        (org-with-wide-buffer
+         (goto-char marker)
+         (unpackaged/org-agenda-current-subtree-or-region only-todos)))))
+#+END_SRC
+
+*** Agenda previews
 
 /Before:/
 
@@ -423,6 +440,7 @@ A function that would combine the one above with ~org-find-olp~.  Maybe also mak
              while pos
              do (goto-char pos)))
 #+END_SRC
+
 ** Convert Elisp to Org format                                        :meta:
 :PROPERTIES:
 :ID:       b86d14ff-b87c-4e2a-a513-067c0a5d3490
@@ -1375,6 +1393,7 @@ This isn't always perfect, because dates in a git commit log are not always in o
 :PROPERTIES:
 :ID:       9d6983a6-3765-45c2-a140-34c23f381361
 :END:
+
 *** Hydra
 
 This configuration automatically activates a helpful ~smerge-mode~ hydra when a file containing merge conflicts is visited from a Magit diff section.  You can manually activate the hydra with the command ~unpackaged/smerge-hydra/body~.  (Inspired by [[https://github.com/kaushalmodi/.emacs.d/blob/master/setup-files/setup-diff.el][Kaushal Modi's Emacs config]].)
