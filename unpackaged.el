@@ -306,7 +306,7 @@ to kill-ring."
         (narrow-to-region beg end)
         (goto-char (point-min))
         (while (re-search-forward (rx (or space bol)
-                                      (group (1+ upper))
+                                      (group (1+ (or upper "-")))
                                       (or space eol (char punct)))
                                   nil t)
           (setf (buffer-substring (match-beginning 1) (match-end 1))
