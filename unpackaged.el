@@ -321,7 +321,7 @@ to kill-ring."
     (save-restriction
       (goto-char beg)
       (narrow-to-region beg end)
-      (while (re-search-forward (rx (or "`" "‘") (group (1+ (or "-" word))) "'") nil t)
+      (while (re-search-forward (rx (or "`" "‘") (group (1+ (or word (syntax symbol)))) "'") nil t)
         (replace-match (concat "~" (match-string 1) "~") t)))))
 
 ;;;###autoload
