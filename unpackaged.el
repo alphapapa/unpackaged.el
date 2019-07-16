@@ -741,9 +741,7 @@ Deletes the package first to remove obsolete versions."
         (progn
           (pcase-let* ((`(use-package ,package-name . ,rest) (read (current-buffer))))
             (cl-assert package-name nil "Can't determine package name")
-            (cl-assert (cl-loop for sexp in rest
-                                thereis (eql sexp :quelpa))
-                       nil "`:quelpa' form not found")
+            (cl-assert (memq :quelpa rest) nil "`:quelpa' form not found")
             (unpackaged/package-delete-all-versions package-name 'force))
           (let ((quelpa-upgrade-p t))
             (call-interactively #'eval-defun)))
