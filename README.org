@@ -1113,7 +1113,7 @@ Mark current package for upgrading (i.e. also mark obsolete version for deletion
 
 ** Flexibly fill/unfill paragraphs
 
-Fill paragraph, incrementing fill column each time this command is repeated.  When the command is called for the first time in a sequence, unfill to the default ~fill-column~.  With prefix, unfill completely.  This command does not modify the stored value of ~fill-column~.
+Fill paragraph, incrementing fill column to cause a change when repeated.  When called for the first time in a sequence, unfill to the default ~fill-column~.  When called repeatedly, increase ~fill-column~ until filling changes.  With prefix, unfill completely.  The global value of ~fill-column~ is not modified; it is only bound around calls to ~fill-paragraph~.
 
 [[images/flex-fill-paragraph.gif]]
 
@@ -1123,22 +1123,43 @@ Fill paragraph, incrementing fill column each time this command is repeated.  Wh
 
   ;;;###autoload
   (defun unpackaged/flex-fill-paragraph (&optional unfill)
-    "Fill paragraph, incrementing fill column each time this command is repeated.
-  When the command is called for the first time in a sequence,
-  unfill to the default `fill-column'.  With prefix, unfill
-  completely.  This command does not modify the stored value of
-  `fill-column'."
+    "Fill paragraph, incrementing fill column to cause a change when repeated.
+  When called for the first time in a sequence, unfill to the
+  default `fill-column'.  When called repeatedly, increase
+  `fill-column' until filling changes.  With prefix, unfill
+  completely.  The global value of `fill-column' is not modified;
+  it is only bound around calls to `fill-paragraph'."
     (interactive "P")
     (let ((fill-column
            (cond (unfill (setf unpackaged/flex-fill-paragraph-column nil)
                          most-positive-fixnum)
                  (t (setf unpackaged/flex-fill-paragraph-column
                           (if (equal last-command this-command)
-                              (1+ (or unpackaged/flex-fill-paragraph-column
-                                      fill-column))
+                              (unpackaged/flex-fill-paragraph--next-fill-column)
                             fill-column))))))
       (fill-paragraph)
       (message "Fill column: %s" fill-column)))
+
+  (defun unpackaged/flex-fill-paragraph--next-fill-column ()
+    "Return next `fill-column' value that causes a change in current paragraph."
+    ;; This works well, but because of all the temp buffers, sometimes when called
+    ;; in rapid succession, it can cause GC, which can be noticeable.  It would be
+    ;; nice to avoid that.  Note that this has primarily been tested on
+    ;; `emacs-lisp-mode'; hopefully it works well in other modes.
+    (let* ((point (point))
+           (source-buffer (current-buffer))
+           (mode major-mode)
+           (fill-column (or unpackaged/flex-fill-paragraph-column fill-column)))
+      (with-temp-buffer
+        (delay-mode-hooks
+          (funcall mode))
+        (insert-buffer-substring source-buffer)
+        (goto-char point)
+        (cl-loop with hash = (buffer-hash)
+                 while (and (fill-paragraph)
+                            (string= hash (buffer-hash)))
+                 do (cl-incf fill-column)
+                 finally return fill-column))))
 #+END_SRC
 
 ** ~iedit~                                                 :iedit:refactoring:
