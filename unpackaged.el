@@ -864,7 +864,7 @@ it is only bound around calls to `fill-paragraph'."
                        most-positive-fixnum)
                (t (setf unpackaged/flex-fill-paragraph-column
                         (if (equal last-command this-command)
-                            (unpackaged/flex-fill-paragraph--next-fill-column)
+                            (or (unpackaged/flex-fill-paragraph--next-fill-column) fill-column)
                           fill-column))))))
     (fill-paragraph)
     (message "Fill column: %s" fill-column)))
@@ -884,10 +884,14 @@ it is only bound around calls to `fill-paragraph'."
         (funcall mode))
       (insert-buffer-substring source-buffer)
       (goto-char point)
-      (cl-loop with hash = (buffer-hash)
+      (cl-loop with old-fill-column = fill-column
+               with hash = (buffer-hash)
                while (and (fill-paragraph)
                           (string= hash (buffer-hash)))
-               do (cl-incf fill-column)
+               ;; If filling doesn't change after 100 iterations, abort by returning nil.
+               if (> (- fill-column old-fill-column) 100)
+               return nil
+               else do (cl-incf fill-column)
                finally return fill-column))))
 
 ;;;###autoload
