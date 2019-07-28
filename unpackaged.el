@@ -294,7 +294,9 @@ Interactively, place on kill ring."
     (mapatoms (lambda (symbol)
                 (when (string-prefix-p prefix (symbol-name symbol))
                   (push symbol symbols))))
-    (-select #'fboundp symbols)))
+    (->> symbols
+         (-select #'fboundp)
+         (--select (not (string-suffix-p "--cmacro" (symbol-name it)))))))
 
 (cl-defun unpackaged/buffer-provides (&optional (buffer (current-buffer)))
   "Return symbol that Emacs package in BUFFER provides."
