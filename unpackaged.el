@@ -264,17 +264,23 @@ Interactively, place on kill ring."
                                                   (unpackaged/package-functions package)))
                                     commands))
          (commands-string (when commands
-                            (format "* Commands\n\n%s"
-                                    (s-join "\n"
-                                            (--map (format "+  ~%s~ :: %s"
-                                                           (car it) (cdr it))
-                                                   commands)))))
+                            (->> commands
+                                 (--map (format "+  ~%s%s~ :: %s"
+                                                (car it)
+                                                (--when-let (documentation (car it))
+                                                  (concat " (" (unpackaged/docstring-function-args it) ")"))
+                                                (cdr it)))
+                                 (s-join "\n")
+                                 (format "* Commands\n\n%s"))))
          (functions-string (when functions
-                             (format "* Functions\n\n%s"
-                                     (s-join "\n"
-                                             (--map (format "+  ~%s~ :: %s"
-                                                            (car it) (cdr it))
-                                                    functions)))))
+                             (->> functions
+                                  (--map (format "+  ~%s%s~ :: %s"
+                                                 (car it)
+                                                 (--when-let (documentation (car it))
+                                                   (concat " (" (unpackaged/docstring-function-args it) ")"))
+                                                 (cdr it)))
+                                  (s-join "\n")
+                                  (format "* Functions\n\n%s"))))
          (string (s-join "\n\n" (list commands-string functions-string))))
     (if (called-interactively-p 'any)
         (progn
@@ -337,39 +343,42 @@ to kill-ring."
                                                 collect `(goto-char (point-min))
                                                 collect form)
                                      (buffer-string))))
-    (let (args)
-      (--> (string-buffer--> docstring
-                             (progn
-                               ;; End-of-string function argument list
-                               (goto-char (point-max))
-                               (when (re-search-backward (rx "\n\n" "(fn " (group (1+ not-newline)) ")" eos) nil t)
-                                 (setf args (match-string 1))
-                                 (replace-match "" t t)))
-                             (unpackaged/caps-to-code (point-min) (point-max))
-                             (unpackaged/symbol-quotes-to-org-code (point-min) (point-max))
-                             (unfill-region (point-min) (point-max))
-                             (while (re-search-forward (rx bol (group (1+ blank))) nil t)
-                               (replace-match "" t t nil 1))
-                             (while (re-search-forward "\n" nil t)
-                               (replace-match "\n   " t t))
-                             (when (looking-at "\"")
-                               (delete-char 1))
-                             (when (progn
-                                     (goto-char (point-max))
-                                     (looking-back "\"" nil))
-                               (delete-char -1))
-                             (while (re-search-forward (rx bol (group (>= 2 " ")) (group (1+ (not space)) (1+ not-newline))) nil t)
-                               ;; Indented code samples, by two or more spaces
-                               (replace-match (concat (match-string 1) "~" (match-string 2) "~")))
-                             (when args
-                               (goto-char (point-min))
-                               (insert "~(" args ")~ ")))
-           (s-trim it)
-           (if (called-interactively-p 'interactive)
-               (progn
-                 (message it)
-                 (kill-new it))
-             it)))))
+    (--> (string-buffer--> docstring
+                           (progn
+                             ;; Remove end-of-string function argument list
+                             (goto-char (point-max))
+                             (when (re-search-backward (rx "\n\n" "(fn " (group (1+ not-newline)) ")" eos) nil t)
+                               (replace-match "" t t)))
+                           (unpackaged/caps-to-code (point-min) (point-max))
+                           (unpackaged/symbol-quotes-to-org-code (point-min) (point-max))
+                           (unfill-region (point-min) (point-max))
+                           (while (re-search-forward (rx bol (group (1+ blank))) nil t)
+                             (replace-match "" t t nil 1))
+                           (while (re-search-forward "\n" nil t)
+                             (replace-match "\n   " t t))
+                           (when (looking-at "\"")
+                             (delete-char 1))
+                           (when (progn
+                                   (goto-char (point-max))
+                                   (looking-back "\"" nil))
+                             (delete-char -1))
+                           (while (re-search-forward (rx bol (group (>= 2 " ")) (group (1+ (not space)) (1+ not-newline))) nil t)
+                             ;; Indented code samples, by two or more spaces
+                             (replace-match (concat (match-string 1) "~" (match-string 2) "~"))))
+         (s-trim it)
+         (if (called-interactively-p 'interactive)
+             (progn
+               (message it)
+               (kill-new it))
+           it))))
+
+(defun unpackaged/docstring-function-args (docstring)
+  "Return function args parsed from DOCSTRING.
+DOCSTRING should be like one returned by function
+`documentation', which typically has function arguments on the
+last line."
+  (when (string-match (rx "\n\n" "(fn " (group (1+ not-newline)) ")" eos) docstring)
+    (match-string 1 docstring)))
 
 ;;;###autoload
 (defun unpackaged/caps-to-code (beg end)
