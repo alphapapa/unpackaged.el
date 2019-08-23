@@ -91,6 +91,8 @@ An easy way to "whole-hog it" is to use [[https://framagit.org/steckerhalter/que
   -  [[#buffers][Buffers]]
     -  [[#ibuffer][ibuffer]]
       -  [[#filter-groups][Filter groups]]
+  -  [[#customization][Customization]]
+    -  [[#set-value-of-customization-option-at-point][Set value of customization option at point]]
   -  [[#meta][Meta]]
   -  [[#misc][Misc]]
     -  [[#track-metadata-from-mpris-supporting-media-player][Track metadata from MPRIS-supporting media player]]
@@ -250,6 +252,33 @@ These commands toggle and move filter groups.
       ('down (ibuffer-forward-filter-group))
       ('up (ibuffer-backward-filter-group)))
     (ibuffer-yank))
+#+END_SRC
+
+* Customization
+
+#+BEGIN_SRC elisp
+  ;;; Customization
+
+#+END_SRC
+
+** Set value of customization option at point
+
+In =Customize= buffers, pressing =C-c C-c= offers to set all variables in the buffer, which isn't always what I want when point is on one option.  This binds that key to a new function in =custom-field-keymap=, which is only active when point is on an editable field.  The function sets only the current option.
+
+#+BEGIN_SRC elisp
+  (use-package cus-edit
+    :general
+    (:keymaps 'custom-field-keymap
+              "C-c C-c" (defun unpackaged/custom-set-at-point ()
+                          "Set current value of widget at point."
+                          (interactive)
+                          (cl-labels ((find-widget (widget property)
+                                                   (if (widget-get widget property)
+                                                       widget
+                                                     (find-widget (widget-get widget :parent) property))))
+                            (when-let* ((widget (find-widget (widget-at) :custom-set)))
+                              (when (eq (widget-get widget :custom-state) 'modified)
+                                (widget-apply widget :custom-set)))))))
 #+END_SRC
 
 * Meta                                                                 :meta:

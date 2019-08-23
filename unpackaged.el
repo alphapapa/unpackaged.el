@@ -117,6 +117,22 @@ With prefix, toggle `ibuffer-show-empty-filter-groups'."
     ('up (ibuffer-backward-filter-group)))
   (ibuffer-yank))
 
+;;; Customization
+
+(use-package cus-edit
+  :general
+  (:keymaps 'custom-field-keymap
+            "C-c C-c" (defun unpackaged/custom-set-at-point ()
+                        "Set current value of widget at point."
+                        (interactive)
+                        (cl-labels ((find-widget (widget property)
+                                                 (if (widget-get widget property)
+                                                     widget
+                                                   (find-widget (widget-get widget :parent) property))))
+                          (when-let* ((widget (find-widget (widget-at) :custom-set)))
+                            (when (eq (widget-get widget :custom-state) 'modified)
+                              (widget-apply widget :custom-set)))))))
+
 ;;; Misc
 
 (cl-defun unpackaged/mpris-track (&optional player)
