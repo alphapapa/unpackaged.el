@@ -105,6 +105,7 @@ An easy way to "whole-hog it" is to use [[https://framagit.org/steckerhalter/que
     -  [[#download-and-attach-remote-files][Download and attach remote files]]
     -  [[#ensure-blank-lines-between-headings-and-before-contents][Ensure blank lines between headings and before contents]]
     -  [[#export-to-html-with-useful-anchors][Export to HTML with useful anchors]]
+    -  [[#force-monospace-face-in-tables][Force monospace face in tables]]
     -  [[#surround-region-with-emphasis-or-syntax-characters][Surround region with emphasis or syntax characters]]
     -  [[#refile-to-datetree-file-using-earliestlatest-timestamp-in-entry][Refile to datetree file using earliest/latest timestamp in entry]]
     -  [[#org-return-dwim][org-return-dwim]]
@@ -834,6 +835,66 @@ Note that this is somewhat of a hack, and it probably breaks some feature deep i
             ;; No more ancestors: add and increment a number.
             (inc-suffixf ref)))
         ref)))
+#+END_SRC
+
+** Force monospace face in tables
+
+If you use variable-pitch (a.k.a. "proportional") fonts in Org buffers (e.g. using [[https://github.com/cadadr/elisp/blob/devel/org-variable-pitch.el][org-variable-pitch]]), you probably use monospace fonts for Org tables, so they align properly.  However, other elements in a table (such as links, or perhaps timestamps) may still use variable-pitch fonts, which breaks alignment.  This code fixes that by forcibly applying the =org-table= face family to entire Org tables (which are detected by finding existing text with the =org-table= face, which makes use of Org's built-in fontification).
+
+To use, activate =unpackaged/org-table-face-mode=.
+
+#+BEGIN_SRC elisp
+  ;;;###autoload
+  (define-minor-mode unpackaged/org-table-face-mode
+    "Apply `org-table' face family to all text in Org tables.
+  Useful for forcibly applying the face to portions of table data
+  that might have a different face, which could affect alignment."
+    :global nil
+    (let ((keywords '((unpackaged/org-table-face-matcher 0 'org-table))))
+      (if unpackaged/org-table-face-mode
+          (font-lock-add-keywords nil keywords 'append)
+        (font-lock-remove-keywords nil keywords))
+      (font-lock-flush)))
+
+  (cl-defun unpackaged/org-table-face-matcher
+      (limit &optional (face `(:family ,(face-attribute 'org-table :family))))
+    "Apply FACE to entire Org tables.
+  A `font-lock-keywords' function that searches up to LIMIT."
+    (cl-flet* ((find-face (face &optional limit not)
+                          ;; Return next position up to LIMIT that has FACE, or doesn't if NOT.
+                          (cl-loop with prev-pos
+                                   with pos = (point)
+                                   while (not (eobp))
+                                   do (setf pos (next-single-property-change pos 'face nil limit))
+                                   while (and pos (not (equal pos prev-pos)))
+                                   for face-at = (get-text-property pos 'face)
+                                   for face-matches-p = (or (eq face-at 'org-table)
+                                                            (when (listp face-at)
+                                                              (member 'org-table face-at)))
+                                   when (or (and not (not face-matches-p))
+                                            face-matches-p)
+                                   return pos
+                                   do (setf prev-pos pos)))
+               (apply-face-from (pos face)
+                                (unless (eobp)
+                                  (let* ((property-at-start (get-text-property pos 'face))
+                                         (table-face-start (if (or (eq property-at-start 'org-table)
+                                                                   (when (listp property-at-start)
+                                                                     (member 'org-table property-at-start)))
+                                                               (point)
+                                                             (find-face 'org-table limit)))
+                                         table-face-end)
+                                    (when table-face-start
+                                      (goto-char table-face-start)
+                                      (setf table-face-end (line-end-position))
+                                      (add-face-text-property table-face-start table-face-end face)
+                                      (goto-char table-face-end))))))
+      (cl-loop with applied-p
+               for applied = (apply-face-from (point) face)
+               when applied
+               do (setf applied-p t)
+               while applied
+               finally return applied-p)))
 #+END_SRC
 
 ** Surround region with emphasis or syntax characters

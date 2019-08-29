@@ -573,6 +573,58 @@ made unique when necessary."
       ref)))
 
 ;;;###autoload
+(define-minor-mode unpackaged/org-table-face-mode
+  "Apply `org-table' face family to all text in Org tables.
+Useful for forcibly applying the face to portions of table data
+that might have a different face, which could affect alignment."
+  :global nil
+  (let ((keywords '((unpackaged/org-table-face-matcher 0 'org-table))))
+    (if unpackaged/org-table-face-mode
+        (font-lock-add-keywords nil keywords 'append)
+      (font-lock-remove-keywords nil keywords))
+    (font-lock-flush)))
+
+(cl-defun unpackaged/org-table-face-matcher
+    (limit &optional (face `(:family ,(face-attribute 'org-table :family))))
+  "Apply FACE to entire Org tables.
+A `font-lock-keywords' function that searches up to LIMIT."
+  (cl-flet* ((find-face (face &optional limit not)
+                        ;; Return next position up to LIMIT that has FACE, or doesn't if NOT.
+                        (cl-loop with prev-pos
+                                 with pos = (point)
+                                 while (not (eobp))
+                                 do (setf pos (next-single-property-change pos 'face nil limit))
+                                 while (and pos (not (equal pos prev-pos)))
+                                 for face-at = (get-text-property pos 'face)
+                                 for face-matches-p = (or (eq face-at 'org-table)
+                                                          (when (listp face-at)
+                                                            (member 'org-table face-at)))
+                                 when (or (and not (not face-matches-p))
+                                          face-matches-p)
+                                 return pos
+                                 do (setf prev-pos pos)))
+             (apply-face-from (pos face)
+                              (unless (eobp)
+                                (let* ((property-at-start (get-text-property pos 'face))
+                                       (table-face-start (if (or (eq property-at-start 'org-table)
+                                                                 (when (listp property-at-start)
+                                                                   (member 'org-table property-at-start)))
+                                                             (point)
+                                                           (find-face 'org-table limit)))
+                                       table-face-end)
+                                  (when table-face-start
+                                    (goto-char table-face-start)
+                                    (setf table-face-end (line-end-position))
+                                    (add-face-text-property table-face-start table-face-end face)
+                                    (goto-char table-face-end))))))
+    (cl-loop with applied-p
+             for applied = (apply-face-from (point) face)
+             when applied
+             do (setf applied-p t)
+             while applied
+             finally return applied-p)))
+
+;;;###autoload
 (defmacro unpackaged/def-org-maybe-surround (&rest keys)
   "Define and bind interactive commands for each of KEYS that surround the region or insert text.
 Commands are bound in `org-mode-map' to each of KEYS.  If the
