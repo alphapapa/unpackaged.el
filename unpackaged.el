@@ -682,10 +682,7 @@ search whole subtree."
                   (org-entry-end-position))))
       (goto-char beg)
       (cl-loop while (re-search-forward org-tsr-regexp-both end t)
-               for ts = (save-excursion
-                          (goto-char (match-beginning 0))
-                          (org-element-timestamp-parser))
-               collect (ts-parse-org ts)))))
+               collect (ts-parse-org (match-string 0))))))
 
 ;;;###autoload
 (cl-defun unpackaged/org-refile-to-datetree (file &key (date (calendar-current-date)) entry)

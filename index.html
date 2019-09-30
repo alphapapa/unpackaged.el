@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-09-30 Mon 10:35 -->
+<!-- 2019-09-30 Mon 10:41 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>unpackaged.el</title>
@@ -1343,10 +1343,7 @@ This is sort of like archiving to a datetree, but it uses either the earliest or
                   <span style="color: #79890f;">(</span><span style="color: #3e8c86; text-decoration: underline;">org-entry-end-position</span><span style="color: #79890f;">)</span><span style="color: #3e86b8;">)</span><span style="color: #a27f12;">)</span><span style="color: #3e8c86;">)</span>
       <span style="color: #3e8c86;">(</span><span style="color: #a27f12; text-decoration: underline;">goto-char</span><span style="color: #a27f12;"> beg</span><span style="color: #3e8c86;">)</span>
       <span style="color: #3e8c86;">(</span><span style="color: #a27f12; font-weight: bold;">cl-loop</span><span style="color: #a27f12;"> while (</span><span style="color: #3e86b8; text-decoration: underline;">re-search-forward</span><span style="color: #3e86b8;"> org-tsr-regexp-both end t</span><span style="color: #a27f12;">)</span>
-               <span style="color: #a27f12;">for ts = (</span><span style="color: #3e86b8; font-weight: bold;">save-excursion</span>
-<span style="color: #3e86b8;">                          (</span><span style="color: #79890f; text-decoration: underline;">goto-char</span><span style="color: #79890f;"> (</span><span style="color: #3e8c86; text-decoration: underline;">match-beginning</span><span style="color: #3e8c86;"> 0</span><span style="color: #79890f;">)</span><span style="color: #3e86b8;">)</span>
-                          <span style="color: #3e86b8;">(</span><span style="color: #79890f; text-decoration: underline;">org-element-timestamp-parser</span><span style="color: #3e86b8;">)</span><span style="color: #a27f12;">)</span>
-               <span style="color: #a27f12;">collect (</span><span style="color: #3e86b8; text-decoration: underline;">ts-parse-org</span><span style="color: #3e86b8;"> ts</span><span style="color: #a27f12;">)</span><span style="color: #3e8c86;">)</span><span style="color: #79890f;">)</span><span style="color: #3e86b8;">)</span><span style="color: #a27f12;">)</span>
+               <span style="color: #a27f12;">collect (</span><span style="color: #3e86b8; text-decoration: underline;">ts-parse-org</span><span style="color: #3e86b8;"> (</span><span style="color: #79890f; text-decoration: underline;">match-string</span><span style="color: #79890f;"> 0</span><span style="color: #3e86b8;">)</span><span style="color: #a27f12;">)</span><span style="color: #3e8c86;">)</span><span style="color: #79890f;">)</span><span style="color: #3e86b8;">)</span><span style="color: #a27f12;">)</span>
 
 <span style="color: #586e75;">;;;</span><span style="color: #586e75; font-size: 110%; font-style: italic;">###</span><span style="color: #cb4b16; font-size: 110%; font-weight: bold; font-style: italic;">autoload</span>
 <span style="color: #a27f12;">(</span><span style="color: #3e86b8; font-weight: bold;">cl-defun</span><span style="color: #3e86b8;"> </span><span style="color: #3e86b8;">unpackaged/org-refile-to-datetree</span><span style="color: #3e86b8;"> (</span><span style="color: #79890f;">file </span><span style="color: #79890f;">&amp;key</span><span style="color: #79890f;"> (</span><span style="color: #3e8c86;">date (</span><span style="color: #a27f12; text-decoration: underline;">calendar-current-date</span><span style="color: #3e8c86;">)</span><span style="color: #79890f;">)</span> <span style="color: #79890f;">entry</span><span style="color: #3e86b8;">)</span>
@@ -2207,7 +2204,7 @@ GPLv3
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Adam Porter</p>
-<p class="date">Created: 2019-09-30 Mon 10:35</p>
+<p class="date">Created: 2019-09-30 Mon 10:41</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
