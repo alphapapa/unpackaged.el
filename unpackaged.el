@@ -50,18 +50,20 @@ If TEXT is nil, use `lorem-ipsum' text.  FONTS is a list of font
 family strings and/or font specs.
 
 Interactively, prompt for TEXT, using `lorem-ipsum' if left
-empty, and select FONTS with `x-select-font' (select an
-already-selected font to end font selection)."
+empty, and select FONTS with `x-select-font', pressing Cancel to
+stop selecting fonts."
   (interactive (list (pcase (read-string "Text: ")
                        ("" nil)
                        (else else))
-                     (cl-loop for font = (x-select-font)
-                              ;; HACK: `x-select-font' calls quit() when the Cancel button is
-                              ;; pressed, so to avoid quit()'ing, we signal in-band by selecting a
-                              ;; font that has already been selected.
-                              while (not (member font fonts))
-                              collect font into fonts
-                              finally return fonts)))
+                     ;; `x-select-font' calls quit() when Cancel is pressed, so we use
+                     ;; `inhibit-quit', `with-local-quit', and `quit-flag' to avoid that.
+                     (let ((inhibit-quit t))
+                       (cl-loop for font = (with-local-quit
+                                             (x-select-font))
+                                while font
+                                collect font into fonts
+                                finally do (setf quit-flag nil)
+                                finally return fonts))))
   (setq text (or text (s-word-wrap 80 (s-join " " (progn
                                                     (require 'lorem-ipsum)
                                                     (seq-random-elt lorem-ipsum-text))))))

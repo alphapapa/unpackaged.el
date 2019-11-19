@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-10-03 Thu 21:13 -->
+<!-- 2019-11-19 Tue 05:22 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>unpackaged.el</title>
@@ -403,7 +403,7 @@ Compare <code>TEXT</code> displayed in <code>FONTS</code>.  <code>FONTS</code> i
 </p>
 
 <p>
-Interactively, prompt for <code>TEXT</code>, using <code>lorem-ipsum</code> text if nil or the empty string, and select <code>FONTS</code> with <code>x-select-font</code> (select an already-selected font to end font selection).
+Interactively, prompt for <code>TEXT</code>, using <code>lorem-ipsum</code> text if nil or the empty string, and select <code>FONTS</code> with <code>x-select-font</code>, pressing Cancel to stop selecting fonts.
 </p>
 
 <p>
@@ -427,18 +427,20 @@ Interactively, prompt for <code>TEXT</code>, using <code>lorem-ipsum</code> text
 <span style="color: #74d09a54b461;">family strings and/or font specs.</span>
 
 <span style="color: #74d09a54b461;">Interactively, prompt for TEXT, using `</span><span style="color: #74d09a54b461; font-weight: bold;">lorem-ipsum</span><span style="color: #74d09a54b461;">' if left</span>
-<span style="color: #74d09a54b461;">empty, and select FONTS with `</span><span style="color: #74d09a54b461; font-weight: bold;">x-select-font</span><span style="color: #74d09a54b461;">' (select an</span>
-<span style="color: #74d09a54b461;">already-selected font to end font selection)."</span>
+<span style="color: #74d09a54b461;">empty, and select FONTS with `</span><span style="color: #74d09a54b461; font-weight: bold;">x-select-font</span><span style="color: #74d09a54b461;">', pressing Cancel to</span>
+<span style="color: #74d09a54b461;">stop selecting fonts."</span>
   <span style="color: #3e86b8;">(</span><span style="color: #79890f; font-weight: bold;">interactive</span><span style="color: #79890f;"> (</span><span style="color: #3e8c86; text-decoration: underline;">list</span><span style="color: #3e8c86;"> (</span><span style="color: #a27f12; font-weight: bold;">pcase</span><span style="color: #a27f12;"> (</span><span style="color: #3e86b8; text-decoration: underline;">read-string</span><span style="color: #3e86b8;"> </span><span style="color: #74d09a54b461;">"Text: "</span><span style="color: #a27f12;">)</span>
                        <span style="color: #a27f12;">(</span><span style="color: #74d09a54b461;">""</span> <span style="color: #3e86b8;">nil</span><span style="color: #a27f12;">)</span>
                        <span style="color: #a27f12;">(</span><span style="color: #3e86b8;">else else</span><span style="color: #a27f12;">)</span><span style="color: #3e8c86;">)</span>
-                     <span style="color: #3e8c86;">(</span><span style="color: #a27f12; font-weight: bold;">cl-loop</span><span style="color: #a27f12;"> for font = (</span><span style="color: #3e86b8; text-decoration: underline;">x-select-font</span><span style="color: #a27f12;">)</span>
-                              <span style="color: #609850f12033;">;; </span><span style="color: #990A1B;">HACK</span><span style="color: #609850f12033; font-size: 110%; font-style: italic;">: `</span><span style="color: #609850f12033; font-size: 110%; font-weight: bold; font-style: italic;">x-select-font</span><span style="color: #609850f12033; font-size: 110%; font-style: italic;">' calls quit() when the Cancel button is</span>
-<span style="color: #609850f12033;">                              </span><span style="color: #609850f12033;">;; </span><span style="color: #609850f12033; font-size: 110%; font-style: italic;">pressed, so to avoid quit()'ing, we signal in-band by selecting a</span>
-<span style="color: #609850f12033;">                              </span><span style="color: #609850f12033;">;; </span><span style="color: #609850f12033; font-size: 110%; font-style: italic;">font that has already been selected.</span>
-<span style="color: #609850f12033;">                              </span><span style="color: #a27f12;">while (</span><span style="color: #cb4b16; font-weight: bold;">not</span><span style="color: #3e86b8;"> (</span><span style="color: #79890f; text-decoration: underline;">member</span><span style="color: #79890f;"> font fonts</span><span style="color: #3e86b8;">)</span><span style="color: #a27f12;">)</span>
-                              <span style="color: #a27f12;">collect font into fonts</span>
-<span style="color: #a27f12;">                              finally return fonts</span><span style="color: #3e8c86;">)</span><span style="color: #79890f;">)</span><span style="color: #3e86b8;">)</span>
+                     <span style="color: #44e751e450e4;">;; </span><span style="color: #44e751e450e4; font-size: 110%; font-style: italic;">`</span><span style="color: #44e751e450e4; font-size: 110%; font-weight: bold; font-style: italic;">x-select-font</span><span style="color: #44e751e450e4; font-size: 110%; font-style: italic;">' calls quit() when Cancel is pressed, so we use</span>
+<span style="color: #44e751e450e4;">                     </span><span style="color: #44e751e450e4;">;; </span><span style="color: #44e751e450e4; font-size: 110%; font-style: italic;">`</span><span style="color: #44e751e450e4; font-size: 110%; font-weight: bold; font-style: italic;">inhibit-quit</span><span style="color: #44e751e450e4; font-size: 110%; font-style: italic;">', `</span><span style="color: #44e751e450e4; font-size: 110%; font-weight: bold; font-style: italic;">with-local-quit</span><span style="color: #44e751e450e4; font-size: 110%; font-style: italic;">', and `</span><span style="color: #44e751e450e4; font-size: 110%; font-weight: bold; font-style: italic;">quit-flag</span><span style="color: #44e751e450e4; font-size: 110%; font-style: italic;">' to avoid that.</span>
+<span style="color: #44e751e450e4;">                     </span><span style="color: #3e8c86;">(</span><span style="color: #a27f12; font-weight: bold;">let</span><span style="color: #a27f12;"> (</span><span style="color: #3e86b8;">(</span><span style="color: #79890f;">inhibit-quit t</span><span style="color: #3e86b8;">)</span><span style="color: #a27f12;">)</span>
+                       <span style="color: #a27f12;">(</span><span style="color: #3e86b8; font-weight: bold;">cl-loop</span><span style="color: #3e86b8;"> for font = (</span><span style="color: #79890f; font-weight: bold;">with-local-quit</span>
+<span style="color: #79890f;">                                             (</span><span style="color: #3e8c86; text-decoration: underline;">x-select-font</span><span style="color: #79890f;">)</span><span style="color: #3e86b8;">)</span>
+                                <span style="color: #3e86b8;">while font</span>
+<span style="color: #3e86b8;">                                collect font into fonts</span>
+<span style="color: #3e86b8;">                                finally do (</span><span style="color: #79890f; font-weight: bold;">setf</span><span style="color: #79890f;"> quit-flag nil</span><span style="color: #3e86b8;">)</span>
+                                <span style="color: #3e86b8;">finally return fonts</span><span style="color: #a27f12;">)</span><span style="color: #3e8c86;">)</span><span style="color: #79890f;">)</span><span style="color: #3e86b8;">)</span>
   <span style="color: #3e86b8;">(</span><span style="color: #79890f; font-weight: bold;">setq</span><span style="color: #79890f;"> text (</span><span style="color: #3e8c86; font-weight: bold;">or</span><span style="color: #3e8c86;"> text (</span><span style="color: #a27f12; text-decoration: underline;">s-word-wrap</span><span style="color: #a27f12;"> 80 (</span><span style="color: #3e86b8; text-decoration: underline;">s-join</span><span style="color: #3e86b8;"> </span><span style="color: #74d09a54b461;">" "</span> <span style="color: #3e86b8;">(</span><span style="color: #79890f; font-weight: bold;">progn</span>
 <span style="color: #79890f;">                                                    (</span><span style="color: #3e8c86; font-weight: bold;">require</span><span style="color: #3e8c86;"> '</span><span style="color: #3e8c86; font-weight: bold;">lorem-ipsum</span><span style="color: #79890f;">)</span>
                                                     <span style="color: #79890f;">(</span><span style="color: #3e8c86; text-decoration: underline;">seq-random-elt</span><span style="color: #3e8c86;"> lorem-ipsum-text</span><span style="color: #79890f;">)</span><span style="color: #3e86b8;">)</span><span style="color: #a27f12;">)</span><span style="color: #3e8c86;">)</span><span style="color: #79890f;">)</span><span style="color: #3e86b8;">)</span>
@@ -1326,7 +1328,7 @@ This is sort of like archiving to a datetree, but it uses either the earliest or
 <span style="color: #3e86b8;">                   (</span><span style="color: #79890f;">'earliest #'ts&lt;</span><span style="color: #3e86b8;">)</span>
                    <span style="color: #3e86b8;">(</span><span style="color: #79890f;">'latest #'ts&gt;</span><span style="color: #3e86b8;">)</span><span style="color: #a27f12;">)</span><span style="color: #3e8c86;">)</span>
          <span style="color: #3e8c86;">(</span><span style="color: #a27f12;">tss (</span><span style="color: #3e86b8; text-decoration: underline;">unpackaged/org-timestamps-in-entry</span><span style="color: #3e86b8;"> subtree-p</span><span style="color: #a27f12;">)</span><span style="color: #3e8c86;">)</span>
-         <span style="color: #3e8c86;">(</span><span style="color: #a27f12; text-decoration: underline;">ts</span><span style="color: #a27f12;"> (</span><span style="color: #3e86b8; text-decoration: underline;">car</span><span style="color: #3e86b8;"> (</span><span style="color: #79890f; text-decoration: underline;">sort</span><span style="color: #79890f;"> tss sorter</span><span style="color: #3e86b8;">)</span><span style="color: #a27f12;">)</span><span style="color: #3e8c86;">)</span>
+         <span style="color: #3e8c86;">(</span><span style="color: #a27f12;">ts (</span><span style="color: #3e86b8; text-decoration: underline;">car</span><span style="color: #3e86b8;"> (</span><span style="color: #79890f; text-decoration: underline;">sort</span><span style="color: #79890f;"> tss sorter</span><span style="color: #3e86b8;">)</span><span style="color: #a27f12;">)</span><span style="color: #3e8c86;">)</span>
          <span style="color: #3e8c86;">(</span><span style="color: #a27f12;">date (</span><span style="color: #3e86b8; text-decoration: underline;">list</span><span style="color: #3e86b8;"> (</span><span style="color: #79890f; text-decoration: underline;">ts-month</span><span style="color: #79890f;"> ts</span><span style="color: #3e86b8;">)</span> <span style="color: #3e86b8;">(</span><span style="color: #79890f; text-decoration: underline;">ts-day</span><span style="color: #79890f;"> ts</span><span style="color: #3e86b8;">)</span> <span style="color: #3e86b8;">(</span><span style="color: #79890f; text-decoration: underline;">ts-year</span><span style="color: #79890f;"> ts</span><span style="color: #3e86b8;">)</span><span style="color: #a27f12;">)</span><span style="color: #3e8c86;">)</span><span style="color: #79890f;">)</span>
     <span style="color: #79890f;">(</span><span style="color: #3e8c86; text-decoration: underline;">unpackaged/org-refile-to-datetree</span><span style="color: #3e8c86;"> file </span><span style="color: #3e8c86; font-weight: bold;">:date</span><span style="color: #3e8c86;"> date</span><span style="color: #79890f;">)</span><span style="color: #3e86b8;">)</span><span style="color: #a27f12;">)</span>
 
@@ -2220,7 +2222,7 @@ GPLv3
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Adam Porter</p>
-<p class="date">Created: 2019-10-03 Thu 21:13</p>
+<p class="date">Created: 2019-11-19 Tue 05:22</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
