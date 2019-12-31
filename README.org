@@ -106,6 +106,7 @@ An easy way to "whole-hog it" is to use [[https://framagit.org/steckerhalter/que
     -  [[#ensure-blank-lines-between-headings-and-before-contents][Ensure blank lines between headings and before contents]]
     -  [[#export-to-html-with-useful-anchors][Export to HTML with useful anchors]]
     -  [[#force-monospace-face-in-tables][Force monospace face in tables]]
+    -  [[#outline-number-overlays][Outline number overlays]]
     -  [[#surround-region-with-emphasis-or-syntax-characters][Surround region with emphasis or syntax characters]]
     -  [[#refile-to-datetree-file-using-earliestlatest-timestamp-in-entry][Refile to datetree file using earliest/latest timestamp in entry]]
     -  [[#org-return-dwim][org-return-dwim]]
@@ -897,6 +898,76 @@ To use, activate =unpackaged/org-table-face-mode=.  You may want to add it to =o
                do (setf applied-p t)
                while applied
                finally return applied-p)))
+#+END_SRC
+
+** Outline number overlays
+
+This command displays outline numbers (like the ones used when exporting) in a buffer as overlays at the beginning of each heading.  It doesn't update automatically, so it must be called when the outline structure changes.
+
+[[images/org-outline-numbers.png]]
+
+#+BEGIN_SRC elisp
+  (defun unpackaged/org-outline-numbers ()
+    "Display outline numbers as overlays on headings.
+  Does not update automatically as the outline changes."
+    (interactive)
+    (save-excursion
+      (let* ((positions-levels (progn
+                                 (goto-char (point-min))
+                                 (when (org-before-first-heading-p)
+                                   (outline-next-heading))
+                                 (cl-loop while (not (eobp))
+                                          collect (cons (point) (org-current-level))
+                                          do (outline-next-heading))))
+             ;; Yes, this is a monstrosity that should be rewritten.  But it works.
+             (tree (cl-loop with current-top-level = 0
+                            with current-subtree-numbers
+                            with results
+                            with previous-level
+                            for (position . level) in positions-levels
+                            if (= 1 level)
+                            do (progn
+                                 (setq current-subtree-numbers nil)
+                                 (setq previous-level level)
+                                 (push (list (cons 'heading (save-excursion
+                                                              (goto-char position)
+                                                              (substring-no-properties
+                                                               (org-get-heading t t))))
+                                             (cons 'position position)
+                                             (cons 'level level)
+                                             (cons 'number (concat (number-to-string
+                                                                    (setq current-top-level (1+ current-top-level)))
+                                                                   ".")))
+                                       results))
+                            else do (let* ((current-level-number (cond ((<= level previous-level)
+                                                                        (cl-incf (map-elt current-subtree-numbers level)))
+                                                                       ((> level previous-level)
+                                                                        1)))
+                                           text-number)
+                                      (setq previous-level level)
+                                      (map-put current-subtree-numbers level current-level-number)
+                                      (setq text-number
+                                            (cl-loop for lookup from level downto 1
+                                                     for lookedup = (map-elt current-subtree-numbers lookup)
+                                                     if lookedup
+                                                     collect lookedup into result
+                                                     else collect current-top-level into result
+                                                     finally return (s-join "." (mapcar #'number-to-string (nreverse result)))))
+                                      (push (list (cons 'heading (save-excursion
+                                                                   (goto-char position)
+                                                                   (substring-no-properties
+                                                                    (org-get-heading t t))))
+                                                  (cons 'position position)
+                                                  (cons 'level level)
+                                                  (cons 'number text-number))
+                                            results))
+                            finally return (nreverse results))))
+        (remove-overlays nil nil 'org-outline-numbers)
+        (--each tree
+          (let-alist it
+            (let ((ov (make-overlay (+ .position (1- .level)) (+ .position .level))))
+              (overlay-put ov 'display .number)
+              (overlay-put ov 'org-outline-numbers t)))))))
 #+END_SRC
 
 ** Surround region with emphasis or syntax characters

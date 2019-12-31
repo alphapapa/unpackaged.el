@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-11-19 Tue 05:22 -->
+<!-- 2019-12-30 Mon 21:07 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>unpackaged.el</title>
@@ -284,6 +284,7 @@ for the JavaScript code in this tag.
 <li><a href="#Ensure%20blank%20lines%20between%20headings%20and%20before%20contents">Ensure blank lines between headings and before contents</a></li>
 <li><a href="#Export%20to%20HTML%20with%20%2Fuseful%2F%20anchors">Export to HTML with <i>useful</i> anchors</a></li>
 <li><a href="#Force%20monospace%20face%20in%20tables">Force monospace face in tables</a></li>
+<li><a href="#Outline%20number%20overlays">Outline number overlays</a></li>
 <li><a href="#Surround%20region%20with%20emphasis%20or%20syntax%20characters">Surround region with emphasis or syntax characters</a></li>
 <li><a href="#Refile%20to%20datetree%20file%20using%20earliest%2Flatest%20timestamp%20in%20entry">Refile to datetree file using earliest/latest timestamp in entry</a></li>
 <li><a href="#~org-return-dwim~"><code>org-return-dwim</code></a></li>
@@ -997,7 +998,7 @@ Download file at <code>URL</code> and attach with <code>org-attach</code>.  Inte
             <span style="color: #3e86b8;">(</span><span style="color: #79890f; font-weight: bold;">setq</span><span style="color: #79890f;"> size (</span><span style="color: #3e8c86; text-decoration: underline;">file-size-human-readable</span>
 <span style="color: #3e8c86;">                        (</span><span style="color: #a48629; text-decoration: underline;">file-attribute-size</span>
 <span style="color: #a48629;">                         (</span><span style="color: #658eab; text-decoration: underline;">file-attributes</span><span style="color: #658eab;"> local-path</span><span style="color: #a48629;">)</span><span style="color: #3e8c86;">)</span><span style="color: #79890f;">)</span><span style="color: #3e86b8;">)</span>
-            <span style="color: #3e86b8;">(</span><span style="color: #79890f; text-decoration: underline;">org-attach-attach</span><span style="color: #79890f;"> local-path nil 'mv</span><span style="color: #3e86b8;">)</span>
+            <span style="color: #3e86b8;">(</span><span style="color: #79890f;">org-attach-attach local-path nil 'mv</span><span style="color: #3e86b8;">)</span>
             <span style="color: #3e86b8;">(</span><span style="color: #79890f; text-decoration: underline;">message</span><span style="color: #79890f;"> </span><span style="color: #92c4a2d2285f;">"Attached %s (%s)"</span> <span style="color: #79890f;">url size</span><span style="color: #3e86b8;">)</span><span style="color: #a27f12;">)</span>
         <span style="color: #a27f12;">(</span><span style="color: #3e86b8; text-decoration: underline;">delete-directory</span><span style="color: #3e86b8;"> temp-dir</span><span style="color: #a27f12;">)</span><span style="color: #3e8c86;">)</span><span style="color: #79890f;">)</span><span style="color: #3e86b8;">)</span><span style="color: #a27f12;">)</span>
 </pre>
@@ -1243,6 +1244,84 @@ To use, activate <code>unpackaged/org-table-face-mode</code>.  You may want to a
 <span style="color: #3e8c86;">             do (</span><span style="color: #a27f12; font-weight: bold;">setf</span><span style="color: #a27f12;"> applied-p t</span><span style="color: #3e8c86;">)</span>
              <span style="color: #3e8c86;">while applied</span>
 <span style="color: #3e8c86;">             finally return applied-p</span><span style="color: #79890f;">)</span><span style="color: #3e86b8;">)</span><span style="color: #a27f12;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-Outline%20number%20overlays" class="outline-3">
+<h3 id="Outline%20number%20overlays">Outline number overlays</h3>
+<div class="outline-text-3" id="text-Outline%20number%20overlays">
+<p>
+This command displays outline numbers (like the ones used when exporting) in a buffer as overlays at the beginning of each heading.  It doesn't update automatically, so it must be called when the outline structure changes.
+</p>
+
+<p>
+
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #a27f12;">(</span><span style="color: #3e86b8; font-weight: bold;">defun</span><span style="color: #3e86b8;"> </span><span style="color: #3e86b8;">unpackaged/org-outline-numbers</span><span style="color: #3e86b8;"> ()</span>
+  <span style="color: #74d09a54b461;">"Display outline numbers as overlays on headings.</span>
+<span style="color: #74d09a54b461;">Does not update automatically as the outline changes."</span>
+  <span style="color: #3e86b8;">(</span><span style="color: #79890f; font-weight: bold;">interactive</span><span style="color: #3e86b8;">)</span>
+  <span style="color: #3e86b8;">(</span><span style="color: #79890f; font-weight: bold;">save-excursion</span>
+<span style="color: #79890f;">    (</span><span style="color: #3e8c86; font-weight: bold;">let*</span><span style="color: #3e8c86;"> (</span><span style="color: #a27f12;">(</span><span style="color: #3e86b8;">positions-levels (</span><span style="color: #79890f; font-weight: bold;">progn</span>
+<span style="color: #79890f;">                               (</span><span style="color: #3e8c86; text-decoration: underline;">goto-char</span><span style="color: #3e8c86;"> (</span><span style="color: #a48629; text-decoration: underline;">point-min</span><span style="color: #3e8c86;">)</span><span style="color: #79890f;">)</span>
+                               <span style="color: #79890f;">(</span><span style="color: #3e8c86; font-weight: bold;">when</span><span style="color: #3e8c86;"> (</span><span style="color: #a48629; text-decoration: underline;">org-before-first-heading-p</span><span style="color: #3e8c86;">)</span>
+                                 <span style="color: #3e8c86;">(</span><span style="color: #a48629; text-decoration: underline;">outline-next-heading</span><span style="color: #3e8c86;">)</span><span style="color: #79890f;">)</span>
+                               <span style="color: #79890f;">(</span><span style="color: #3e8c86; font-weight: bold;">cl-loop</span><span style="color: #3e8c86;"> while (</span><span style="color: #cb4b16; font-weight: bold;">not</span><span style="color: #a48629;"> (</span><span style="color: #658eab; text-decoration: underline;">eobp</span><span style="color: #a48629;">)</span><span style="color: #3e8c86;">)</span>
+                                        <span style="color: #3e8c86;">collect (</span><span style="color: #a48629; text-decoration: underline;">cons</span><span style="color: #a48629;"> (</span><span style="color: #658eab; text-decoration: underline;">point</span><span style="color: #a48629;">)</span> <span style="color: #a48629;">(</span><span style="color: #658eab; text-decoration: underline;">org-current-level</span><span style="color: #a48629;">)</span><span style="color: #3e8c86;">)</span>
+                                        <span style="color: #3e8c86;">do (</span><span style="color: #a48629; text-decoration: underline;">outline-next-heading</span><span style="color: #3e8c86;">)</span><span style="color: #79890f;">)</span><span style="color: #3e86b8;">)</span><span style="color: #a27f12;">)</span>
+           <span style="color: #609850f12033;">;; </span><span style="color: #609850f12033; font-size: 110%; font-style: italic;">Yes, this is a monstrosity that should be rewritten.  But it works.</span>
+<span style="color: #609850f12033;">           </span><span style="color: #a27f12;">(</span><span style="color: #3e86b8;">tree (</span><span style="color: #79890f; font-weight: bold;">cl-loop</span><span style="color: #79890f;"> with current-top-level = 0</span>
+<span style="color: #79890f;">                          with current-subtree-numbers</span>
+<span style="color: #79890f;">                          with results</span>
+<span style="color: #79890f;">                          with previous-level</span>
+<span style="color: #79890f;">                          for (</span><span style="color: #3e8c86; text-decoration: underline;">position</span><span style="color: #3e8c86;"> . level</span><span style="color: #79890f;">)</span> <span style="color: #79890f;">in positions-levels</span>
+<span style="color: #79890f;">                          if (</span><span style="color: #3e8c86;">= 1 level</span><span style="color: #79890f;">)</span>
+                          <span style="color: #79890f;">do (</span><span style="color: #3e8c86; font-weight: bold;">progn</span>
+<span style="color: #3e8c86;">                               (</span><span style="color: #a48629; font-weight: bold;">setq</span><span style="color: #a48629;"> current-subtree-numbers nil</span><span style="color: #3e8c86;">)</span>
+                               <span style="color: #3e8c86;">(</span><span style="color: #a48629; font-weight: bold;">setq</span><span style="color: #a48629;"> previous-level level</span><span style="color: #3e8c86;">)</span>
+                               <span style="color: #3e8c86;">(</span><span style="color: #a48629; font-weight: bold;">push</span><span style="color: #a48629;"> (</span><span style="color: #658eab; text-decoration: underline;">list</span><span style="color: #658eab;"> (</span><span style="color: #808e23; text-decoration: underline;">cons</span><span style="color: #808e23;"> 'heading (</span><span style="color: #5c8783; font-weight: bold;">save-excursion</span>
+<span style="color: #5c8783;">                                                            (</span><span style="color: #a48629; text-decoration: underline;">goto-char</span><span style="color: #a48629;"> position</span><span style="color: #5c8783;">)</span>
+                                                            <span style="color: #5c8783;">(</span><span style="color: #a48629; text-decoration: underline;">substring-no-properties</span>
+<span style="color: #a48629;">                                                             (</span><span style="color: #658eab; text-decoration: underline;">org-get-heading</span><span style="color: #658eab;"> t t</span><span style="color: #a48629;">)</span><span style="color: #5c8783;">)</span><span style="color: #808e23;">)</span><span style="color: #658eab;">)</span>
+                                           <span style="color: #658eab;">(</span><span style="color: #808e23; text-decoration: underline;">cons</span><span style="color: #808e23;"> 'position position</span><span style="color: #658eab;">)</span>
+                                           <span style="color: #658eab;">(</span><span style="color: #808e23; text-decoration: underline;">cons</span><span style="color: #808e23;"> 'level level</span><span style="color: #658eab;">)</span>
+                                           <span style="color: #658eab;">(</span><span style="color: #808e23; text-decoration: underline;">cons</span><span style="color: #808e23;"> 'number (</span><span style="color: #5c8783; text-decoration: underline;">concat</span><span style="color: #5c8783;"> (</span><span style="color: #a48629; text-decoration: underline;">number-to-string</span>
+<span style="color: #a48629;">                                                                  (</span><span style="color: #658eab; font-weight: bold;">setq</span><span style="color: #658eab;"> current-top-level (</span><span style="color: #808e23; text-decoration: underline;">1+</span><span style="color: #808e23;"> current-top-level</span><span style="color: #658eab;">)</span><span style="color: #a48629;">)</span><span style="color: #5c8783;">)</span>
+                                                                 <span style="color: #8b198b198b19;">"."</span><span style="color: #808e23;">)</span><span style="color: #658eab;">)</span><span style="color: #a48629;">)</span>
+                                     <span style="color: #a48629;">results</span><span style="color: #3e8c86;">)</span><span style="color: #79890f;">)</span>
+                          <span style="color: #79890f;">else do (</span><span style="color: #3e8c86; font-weight: bold;">let*</span><span style="color: #3e8c86;"> (</span><span style="color: #a48629;">(</span><span style="color: #658eab;">current-level-number (</span><span style="color: #808e23; font-weight: bold;">cond</span><span style="color: #808e23;"> (</span><span style="color: #5c8783;">(</span><span style="color: #a48629;">&lt;= level previous-level</span><span style="color: #5c8783;">)</span>
+                                                                      <span style="color: #5c8783;">(</span><span style="color: #a48629; font-weight: bold;">cl-incf</span><span style="color: #a48629;"> (</span><span style="color: #658eab; text-decoration: underline;">map-elt</span><span style="color: #658eab;"> current-subtree-numbers level</span><span style="color: #a48629;">)</span><span style="color: #5c8783;">)</span><span style="color: #808e23;">)</span>
+                                                                     <span style="color: #808e23;">(</span><span style="color: #5c8783;">(</span><span style="color: #a48629;">&gt; level previous-level</span><span style="color: #5c8783;">)</span>
+                                                                      <span style="color: #5c8783;">1</span><span style="color: #808e23;">)</span><span style="color: #658eab;">)</span><span style="color: #a48629;">)</span>
+                                         <span style="color: #a48629;">text-number</span><span style="color: #3e8c86;">)</span>
+                                    <span style="color: #3e8c86;">(</span><span style="color: #a48629; font-weight: bold;">setq</span><span style="color: #a48629;"> previous-level level</span><span style="color: #3e8c86;">)</span>
+                                    <span style="color: #3e8c86;">(</span><span style="color: #a48629; font-weight: bold;">map-put</span><span style="color: #a48629;"> current-subtree-numbers level current-level-number</span><span style="color: #3e8c86;">)</span>
+                                    <span style="color: #3e8c86;">(</span><span style="color: #a48629; font-weight: bold;">setq</span><span style="color: #a48629;"> text-number</span>
+<span style="color: #a48629;">                                          (</span><span style="color: #658eab; font-weight: bold;">cl-loop</span><span style="color: #658eab;"> for lookup from level downto 1</span>
+<span style="color: #658eab;">                                                   for lookedup = (</span><span style="color: #808e23; text-decoration: underline;">map-elt</span><span style="color: #808e23;"> current-subtree-numbers lookup</span><span style="color: #658eab;">)</span>
+                                                   <span style="color: #658eab;">if lookedup</span>
+<span style="color: #658eab;">                                                   collect lookedup into result</span>
+<span style="color: #658eab;">                                                   else collect current-top-level into result</span>
+<span style="color: #658eab;">                                                   finally return (</span><span style="color: #808e23; text-decoration: underline;">s-join</span><span style="color: #808e23;"> </span><span style="color: #942ca04043f1;">"."</span> <span style="color: #808e23;">(</span><span style="color: #5c8783; text-decoration: underline;">mapcar</span><span style="color: #5c8783;"> #'number-to-string (</span><span style="color: #a48629; text-decoration: underline;">nreverse</span><span style="color: #a48629;"> result</span><span style="color: #5c8783;">)</span><span style="color: #808e23;">)</span><span style="color: #658eab;">)</span><span style="color: #a48629;">)</span><span style="color: #3e8c86;">)</span>
+                                    <span style="color: #3e8c86;">(</span><span style="color: #a48629; font-weight: bold;">push</span><span style="color: #a48629;"> (</span><span style="color: #658eab; text-decoration: underline;">list</span><span style="color: #658eab;"> (</span><span style="color: #808e23; text-decoration: underline;">cons</span><span style="color: #808e23;"> 'heading (</span><span style="color: #5c8783; font-weight: bold;">save-excursion</span>
+<span style="color: #5c8783;">                                                                 (</span><span style="color: #a48629; text-decoration: underline;">goto-char</span><span style="color: #a48629;"> position</span><span style="color: #5c8783;">)</span>
+                                                                 <span style="color: #5c8783;">(</span><span style="color: #a48629; text-decoration: underline;">substring-no-properties</span>
+<span style="color: #a48629;">                                                                  (</span><span style="color: #658eab; text-decoration: underline;">org-get-heading</span><span style="color: #658eab;"> t t</span><span style="color: #a48629;">)</span><span style="color: #5c8783;">)</span><span style="color: #808e23;">)</span><span style="color: #658eab;">)</span>
+                                                <span style="color: #658eab;">(</span><span style="color: #808e23; text-decoration: underline;">cons</span><span style="color: #808e23;"> 'position position</span><span style="color: #658eab;">)</span>
+                                                <span style="color: #658eab;">(</span><span style="color: #808e23; text-decoration: underline;">cons</span><span style="color: #808e23;"> 'level level</span><span style="color: #658eab;">)</span>
+                                                <span style="color: #658eab;">(</span><span style="color: #808e23; text-decoration: underline;">cons</span><span style="color: #808e23;"> 'number text-number</span><span style="color: #658eab;">)</span><span style="color: #a48629;">)</span>
+                                          <span style="color: #a48629;">results</span><span style="color: #3e8c86;">)</span><span style="color: #79890f;">)</span>
+                          <span style="color: #79890f;">finally return (</span><span style="color: #3e8c86; text-decoration: underline;">nreverse</span><span style="color: #3e8c86;"> results</span><span style="color: #79890f;">)</span><span style="color: #3e86b8;">)</span><span style="color: #a27f12;">)</span><span style="color: #3e8c86;">)</span>
+      <span style="color: #3e8c86;">(</span><span style="color: #a27f12; text-decoration: underline;">remove-overlays</span><span style="color: #a27f12;"> nil nil 'org-outline-numbers</span><span style="color: #3e8c86;">)</span>
+      <span style="color: #3e8c86;">(</span><span style="color: #a27f12; font-weight: bold;">--each</span><span style="color: #a27f12;"> tree</span>
+<span style="color: #a27f12;">        (</span><span style="color: #3e86b8; font-weight: bold;">let-alist</span><span style="color: #3e86b8;"> </span><span style="color: #3e86b8;">it</span>
+<span style="color: #3e86b8;">          (</span><span style="color: #79890f; font-weight: bold;">let</span><span style="color: #79890f;"> (</span><span style="color: #3e8c86;">(</span><span style="color: #a48629; text-decoration: underline;">ov</span><span style="color: #a48629;"> (</span><span style="color: #658eab; text-decoration: underline;">make-overlay</span><span style="color: #658eab;"> (</span><span style="color: #808e23;">+ .position (</span><span style="color: #5c8783; text-decoration: underline;">1-</span><span style="color: #5c8783;"> .level</span><span style="color: #808e23;">)</span><span style="color: #658eab;">)</span> <span style="color: #658eab;">(</span><span style="color: #808e23;">+ .position .level</span><span style="color: #658eab;">)</span><span style="color: #a48629;">)</span><span style="color: #3e8c86;">)</span><span style="color: #79890f;">)</span>
+            <span style="color: #79890f;">(</span><span style="color: #3e8c86; text-decoration: underline;">overlay-put</span><span style="color: #3e8c86;"> ov 'display .number</span><span style="color: #79890f;">)</span>
+            <span style="color: #79890f;">(</span><span style="color: #3e8c86; text-decoration: underline;">overlay-put</span><span style="color: #3e8c86;"> ov 'org-outline-numbers t</span><span style="color: #79890f;">)</span><span style="color: #3e86b8;">)</span><span style="color: #a27f12;">)</span><span style="color: #3e8c86;">)</span><span style="color: #79890f;">)</span><span style="color: #3e86b8;">)</span><span style="color: #a27f12;">)</span>
 </pre>
 </div>
 </div>
@@ -2222,7 +2301,7 @@ GPLv3
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Adam Porter</p>
-<p class="date">Created: 2019-11-19 Tue 05:22</p>
+<p class="date">Created: 2019-12-30 Mon 21:07</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
