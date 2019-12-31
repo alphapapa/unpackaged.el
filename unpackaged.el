@@ -626,67 +626,44 @@ A `font-lock-keywords' function that searches up to LIMIT."
              while applied
              finally return applied-p)))
 
-(defun unpackaged/org-outline-numbers ()
-  "Display outline numbers as overlays on headings.
-Does not update automatically as the outline changes."
-  (interactive)
-  (save-excursion
-    (let* ((positions-levels (progn
-                               (goto-char (point-min))
-                               (when (org-before-first-heading-p)
-                                 (outline-next-heading))
-                               (cl-loop while (not (eobp))
-                                        collect (cons (point) (org-current-level))
-                                        do (outline-next-heading))))
-           ;; Yes, this is a monstrosity that should be rewritten.  But it works.
-           (tree (cl-loop with current-top-level = 0
-                          with current-subtree-numbers
-                          with results
-                          with previous-level
-                          for (position . level) in positions-levels
-                          if (= 1 level)
-                          do (progn
-                               (setq current-subtree-numbers nil)
-                               (setq previous-level level)
-                               (push (list (cons 'heading (save-excursion
-                                                            (goto-char position)
-                                                            (substring-no-properties
-                                                             (org-get-heading t t))))
-                                           (cons 'position position)
-                                           (cons 'level level)
-                                           (cons 'number (concat (number-to-string
-                                                                  (setq current-top-level (1+ current-top-level)))
-                                                                 ".")))
-                                     results))
-                          else do (let* ((current-level-number (cond ((<= level previous-level)
-                                                                      (cl-incf (map-elt current-subtree-numbers level)))
-                                                                     ((> level previous-level)
-                                                                      1)))
-                                         text-number)
-                                    (setq previous-level level)
-                                    (map-put current-subtree-numbers level current-level-number)
-                                    (setq text-number
-                                          (cl-loop for lookup from level downto 1
-                                                   for lookedup = (map-elt current-subtree-numbers lookup)
-                                                   if lookedup
-                                                   collect lookedup into result
-                                                   else collect current-top-level into result
-                                                   finally return (s-join "." (mapcar #'number-to-string (nreverse result)))))
-                                    (push (list (cons 'heading (save-excursion
-                                                                 (goto-char position)
-                                                                 (substring-no-properties
-                                                                  (org-get-heading t t))))
-                                                (cons 'position position)
-                                                (cons 'level level)
-                                                (cons 'number text-number))
-                                          results))
-                          finally return (nreverse results))))
-      (remove-overlays nil nil 'org-outline-numbers)
-      (--each tree
-        (let-alist it
-          (let ((ov (make-overlay (+ .position (1- .level)) (+ .position .level))))
-            (overlay-put ov 'display .number)
-            (overlay-put ov 'org-outline-numbers t)))))))
+(defun unpackaged/org-outline-numbers (&optional remove-p)
+  "Add outline number overlays to the current buffer.
+When REMOVE-P is non-nil (interactively, with prefix), remove
+them.  Overlays are not automatically updated when the outline
+structure changes."
+  ;; NOTE: This does not necessarily play nicely with org-indent-mode
+  ;; or org-bullets, but it probably wouldn't be too hard to fix that.
+  (interactive (list current-prefix-arg))
+  (cl-labels ((heading-number ()
+               (or (when-let ((num (previous-sibling-number)))
+                     (1+ num))
+                   1))
+              (previous-sibling-number ()
+               (save-excursion
+                 (let ((pos (point)))
+                   (org-backward-heading-same-level 1)
+                   (when (/= pos (point))
+                     (heading-number)))))
+              (number-list ()
+               (let ((ancestor-numbers (save-excursion
+                                         (cl-loop while (org-up-heading-safe)
+                                                  collect (heading-number)))))
+                 (nreverse (cons (heading-number) ancestor-numbers))))
+              (add-overlay ()
+               (let* ((ov-length (org-current-level))
+                      (ov (make-overlay (point) (+ (point) ov-length)))
+                      (ov-string (concat (mapconcat #'number-to-string (number-list) ".")
+                                         ".")))
+                 (overlay-put ov 'org-outline-numbers t)
+                 (overlay-put ov 'display ov-string))))
+    (remove-overlays nil nil 'org-outline-numbers t)
+    (unless remove-p
+      (org-with-wide-buffer
+       (goto-char (point-min))
+       (when (org-before-first-heading-p)
+         (outline-next-heading))
+       (cl-loop do (add-overlay)
+                while (outline-next-heading))))))
 
 ;;;###autoload
 (defmacro unpackaged/def-org-maybe-surround (&rest keys)
