@@ -19,7 +19,7 @@ Functions in this file generally use these helper packages:
 
 * Usage
 :PROPERTIES:
-:TOC:      ignore
+:TOC:      :ignore this
 :END:
 
 There are two ways to use the code in this "unpackage":
@@ -84,56 +84,68 @@ An easy way to "whole-hog it" is to use [[https://framagit.org/steckerhalter/que
 
 * Contents                                                         :noexport:
 :PROPERTIES:
-:TOC:    this
+:TOC:    :include siblings :ignore this
 :END:
--  [[#faces-fonts][Faces, fonts]]
-  -  [[#font-compare][font-compare]]
--  [[#buffers][Buffers]]
-  -  [[#ibuffer][ibuffer]]
-    -  [[#filter-groups][Filter groups]]
--  [[#customization][Customization]]
-  -  [[#set-value-of-customization-option-at-point][Set value of customization option at point]]
--  [[#meta][Meta]]
--  [[#misc][Misc]]
-  -  [[#obscure-buffer-text-with-lorem-ipsum-words][Obscure buffer text with lorem ipsum words]]
-  -  [[#track-metadata-from-mpris-supporting-media-player][Track metadata from MPRIS-supporting media player]]
--  [[#org][Org]]
-  -  [[#agenda][Agenda]]
-    -  [[#agenda-for-subtree-or-region][Agenda for subtree or region]]
-    -  [[#agenda-for-outline-path][Agenda for outline path]]
-    -  [[#agenda-previews][Agenda previews]]
-  -  [[#convert-elisp-to-org-format][Convert Elisp to Org format]]
-  -  [[#download-and-attach-remote-files][Download and attach remote files]]
-  -  [[#ensure-blank-lines-between-headings-and-before-contents][Ensure blank lines between headings and before contents]]
-  -  [[#export-to-html-with-useful-anchors][Export to HTML with useful anchors]]
-  -  [[#force-monospace-face-in-tables][Force monospace face in tables]]
-  -  [[#outline-number-overlays][Outline number overlays]]
-  -  [[#surround-region-with-emphasis-or-syntax-characters][Surround region with emphasis or syntax characters]]
-  -  [[#refile-to-datetree-file-using-earliestlatest-timestamp-in-entry][Refile to datetree file using earliest/latest timestamp in entry]]
-  -  [[#org-return-dwim][org-return-dwim]]
-  -  [[#read-only-trees][Read-only trees]]
-  -  [[#sort-tree-by-multiple-methods-at-once][Sort tree by multiple methods at once]]
--  [[#packages][Packages]]
-  -  [[#delete-all-installed-versions-of-a-package][Delete all installed versions of a package]]
-  -  [[#upgrade-a-quelpa-use-package-forms-package][Upgrade a quelpa-use-package form's package]]
-  -  [[#upgrade-one-package-in-the-package-menu][Upgrade one package in the package menu]]
--  [[#programming][Programming]]
-  -  [[#flexibly-fillunfill-paragraphs][Flexibly fill/unfill paragraphs]]
-  -  [[#iedit][iedit]]
-    -  [[#iedit-scoped][iedit-scoped]]
-    -  [[#iedit-or-flyspell][iedit-or-flyspell]]
-  -  [[#sort-sexps][Sort sexps]]
--  [[#regular-expressions][Regular expressions]]
-  -  [[#query-replace-rx][query-replace-rx]]
--  [[#version-control][Version control]]
-  -  [[#magit][Magit]]
-    -  [[#improved-magit-status-command][Improved magit-status command]]
-    -  [[#magit-log-date-headers][magit-log date headers]]
-    -  [[#save-buffer-and-show-changes-in-magit-status][Save buffer and show changes in Magit status]]
-  -  [[#smerge-mode][smerge-mode]]
-    -  [[#hydra][Hydra]]
--  [[#web][Web]]
-  -  [[#feed-for-url][feed-for-url]]
+:CONTENTS:
+- [[#faces-fonts][Faces, fonts]]
+  - [[#font-compare][font-compare]]
+- [[#buffers][Buffers]]
+  - [[#ibuffer][ibuffer]]
+    - [[#filter-groups][Filter groups]]
+- [[#customization][Customization]]
+  - [[#set-value-of-customization-option-at-point][Set value of customization option at point]]
+- [[#misc][Misc]]
+  - [[#define-a-chooser-command][Define a "chooser" command]]
+  - [[#obfuscate-buffer-text-with-lorem-ipsum-words][Obfuscate buffer text with lorem ipsum words]]
+  - [[#track-metadata-from-mpris-supporting-media-player][Track metadata from MPRIS-supporting media player]]
+- [[#org][Org]]
+  - [[#agenda][Agenda]]
+    - [[#agenda-for-subtree-or-region][Agenda for subtree or region]]
+    - [[#agenda-for-outline-path][Agenda for outline path]]
+    - [[#agenda-previews][Agenda previews]]
+  - [[#convert-elisp-to-org-format][Convert Elisp to Org format]]
+      - [[#publish-these-on-emacs-package-dev-handbook-instead][Publish these on emacs-package-dev-handbook instead]]
+  - [[#download-and-attach-remote-files][Download and attach remote files]]
+  - [[#ensure-blank-lines-between-headings-and-before-contents][Ensure blank lines between headings and before contents]]
+  - [[#export-to-html-with-useful-anchors][Export to HTML with useful anchors]]
+  - [[#force-monospace-face-in-tables][Force monospace face in tables]]
+  - [[#outline-number-overlays][Outline number overlays]]
+  - [[#surround-region-with-emphasis-or-syntax-characters][Surround region with emphasis or syntax characters]]
+  - [[#refile-to-datetree-file-using-earliestlatest-timestamp-in-entry][Refile to datetree file using earliest/latest timestamp in entry]]
+  - [[#org-return-dwim][org-return-dwim]]
+  - [[#read-only-trees][Read-only trees]]
+  - [[#sort-tree-by-multiple-methods-at-once][Sort tree by multiple methods at once]]
+- [[#packages][Packages]]
+  - [[#delete-all-installed-versions-of-a-package][Delete all installed versions of a package]]
+  - [[#upgrade-a-quelpa-use-package-forms-package][Upgrade a quelpa-use-package form's package]]
+  - [[#upgrade-one-package-in-the-package-menu][Upgrade one package in the package menu]]
+- [[#programming][Programming]]
+  - [[#flexibly-fillunfill-paragraphs][Flexibly fill/unfill paragraphs]]
+  - [[#iedit][iedit]]
+    - [[#iedit-scoped][iedit-scoped]]
+    - [[#iedit-or-flyspell][iedit-or-flyspell]]
+  - [[#sort-sexps][Sort sexps]]
+- [[#regular-expressions][Regular expressions]]
+  - [[#query-replace-rx][query-replace-rx]]
+- [[#version-control][Version control]]
+  - [[#magit][Magit]]
+    - [[#improved-magit-status-command][Improved magit-status command]]
+    - [[#magit-log-date-headers][magit-log date headers]]
+    - [[#save-buffer-and-show-changes-in-magit-status][Save buffer and show changes in Magit status]]
+  - [[#smerge-mode][smerge-mode]]
+    - [[#hydra][Hydra]]
+- [[#web][Web]]
+  - [[#feed-for-url][feed-for-url]]
+  - [[#tangle-with-babel][Tangle with Babel]]
+  - [[#select-image-with-helm][Select image with Helm]]
+    - [[#tasks][Tasks]]
+      - [[#instructionsexample][Instructions/example]]
+      - [[#make-useful-interactively][Make useful interactively]]
+  - [[#file-local-properties][File-local properties]]
+  - [[#file-local-variables][File-local variables]]
+:END:
+
+
 
 * Faces, fonts                                                  :faces:fonts:
 
@@ -143,9 +155,6 @@ An easy way to "whole-hog it" is to use [[https://framagit.org/steckerhalter/que
 #+END_SRC
 
 ** font-compare
-:PROPERTIES:
-:TOC:      0
-:END:
 
 Compare ~TEXT~ displayed in ~FONTS~.  ~FONTS~ is a list of font specs.
 
@@ -288,7 +297,7 @@ In =Customize= buffers, pressing =C-c C-c= offers to set all variables in the bu
 
 * Meta                                                                 :meta:
 :PROPERTIES:
-:TOC:      0
+:TOC:      :ignore this
 :END:
 
 Code used to help maintain this document.  (Note: These links don't work in GitHub's renderer.)
@@ -776,9 +785,6 @@ These functions convert Emacs Lisp code and docstrings to Org-formatted text, he
 #+END_SRC
 
 *** COMMENT Tasks
-:PROPERTIES:
-:TOC:      ignore
-:END:
 
 **** MAYBE Publish these on emacs-package-dev-handbook instead
 
@@ -1539,9 +1545,6 @@ Fill paragraph, incrementing fill column to cause a change when repeated.  The g
 These commands make ~iedit-mode~ a bit easier to use.
 
 *** COMMENT Add ~use-package~ form?
-:PROPERTIES:
-:TOC:      ignore
-:END:
 
 *** ~iedit-scoped~
 
@@ -1906,24 +1909,18 @@ Return ATOM or RSS feed ~URL~ for web page at ~URL~.  Interactively, insert the 
 
 * License
 :PROPERTIES:
-:TOC:      ignore
+:TOC:      :ignore this
 :END:
 
 GPLv3
 
 * COMMENT Tasks / Ideas
-:PROPERTIES:
-:TOC:      ignore
-:END:
 
 ** MAYBE Tangle with Babel
 
 Might be nice to be able to tangle all of the ~unpackaged/~ functions into a single file.
 
 ** TODO Select image with Helm
-:PROPERTIES:
-:ID:       c3bb6423-e0e6-478c-bb72-c0fb525b6c0f
-:END:
 
 #+BEGIN_SRC elisp
   (defun unpackaged/helm-read-image (&rest directories)

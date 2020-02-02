@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-02-02 Sun 08:58 -->
+<!-- 2020-02-02 Sun 09:11 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>unpackaged.el</title>
@@ -584,7 +584,36 @@ Code used to help maintain this document.  (Note: These links don't work in GitH
 <h3 id="Define%20a%20%22chooser%22%20command">Define a "chooser" command</h3>
 <div class="outline-text-3" id="text-Define%20a%20%22chooser%22%20command">
 <p>
-This macro defines a "chooser" command, which allows the user to use completion to choose a lambda function to run.  It's helpful for grouping related functions together, or swapping between choices which can be set from Lisp code.  This example shows using it to set <a href="https://github.com/alphapapa/prism.el">prism.el</a> themes by calling <code>prism-set-colors</code> in each choice.
+This macro defines a "chooser" command, which allows the user to use completion to choose a lambda function to run.  It's helpful for grouping related functions together, or swapping between choices which can be set from Lisp code.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #c0608f;">(</span><span style="color: #8f92b8; font-weight: bold;">defmacro</span><span style="color: #8f92b8;"> </span><span style="color: #8f92b8;">unpackaged/define-chooser</span><span style="color: #8f92b8;"> (</span><span style="color: #459d97;">name </span><span style="color: #459d97;">&amp;rest</span><span style="color: #459d97;"> choices</span><span style="color: #8f92b8;">)</span>
+  <span style="color: #c77fc8ffdbff;">"Define a chooser command NAME offering CHOICES.</span>
+<span style="color: #c77fc8ffdbff;">Each of CHOICES should be a list, the first of which is the</span>
+<span style="color: #c77fc8ffdbff;">choice's name, and the rest of which is its body forms."</span>
+  <span style="color: #8f92b8;">(</span><span style="color: #459d97; font-weight: bold;">declare</span><span style="color: #459d97;"> (</span><span style="color: #4d92c2;">indent defun</span><span style="color: #459d97;">)</span><span style="color: #8f92b8;">)</span>
+  <span style="color: #a380a380a380;">;; </span><span style="color: #a380a380a380; font-size: 110%; font-style: italic;">Avoid redefining existing, non-chooser functions.</span>
+<span style="color: #a380a380a380;">  </span><span style="color: #8f92b8;">(</span><span style="color: #459d97; font-weight: bold;">cl-assert</span><span style="color: #459d97;"> (</span><span style="color: #4d92c2; font-weight: bold;">or</span><span style="color: #4d92c2;"> (</span><span style="color: #cb4b16; font-weight: bold;">not</span><span style="color: #8da011;"> (</span><span style="color: #b99114; text-decoration: underline;">fboundp</span><span style="color: #b99114;"> name</span><span style="color: #8da011;">)</span><span style="color: #4d92c2;">)</span>
+                 <span style="color: #4d92c2;">(</span><span style="color: #8da011; text-decoration: underline;">get</span><span style="color: #8da011;"> name </span><span style="color: #8da011; font-weight: bold;">:unpackaged/define-chooser</span><span style="color: #4d92c2;">)</span><span style="color: #459d97;">)</span><span style="color: #8f92b8;">)</span>
+  <span style="color: #8f92b8;">(</span><span style="color: #459d97; font-weight: bold;">let*</span><span style="color: #459d97;"> (</span><span style="color: #4d92c2;">(</span><span style="color: #8da011;">choice-names (</span><span style="color: #b99114; text-decoration: underline;">mapcar</span><span style="color: #b99114;"> #'car choices</span><span style="color: #8da011;">)</span><span style="color: #4d92c2;">)</span>
+         <span style="color: #4d92c2;">(</span><span style="color: #8da011;">choice-list (</span><span style="color: #b99114; font-weight: bold;">--map</span><span style="color: #b99114;"> (</span><span style="color: #c85d31; text-decoration: underline;">cons</span><span style="color: #c85d31;"> (</span><span style="color: #c95c5a; text-decoration: underline;">car</span><span style="color: #c95c5a;"> </span><span style="color: #c95c5a;">it</span><span style="color: #c85d31;">)</span> <span style="color: #c85d31;">`(</span><span style="color: #c95c5a; font-weight: bold;">lambda</span><span style="color: #c95c5a;"> (</span><span style="color: #be96a9;">&amp;rest</span><span style="color: #be96a9;"> args</span><span style="color: #c95c5a;">)</span>
+                                               <span style="color: #c95c5a;">,@(</span><span style="color: #be96a9;">cdr </span><span style="color: #be96a9;">it</span><span style="color: #c95c5a;">)</span><span style="color: #c85d31;">)</span><span style="color: #b99114;">)</span>
+                             <span style="color: #b99114;">choices</span><span style="color: #8da011;">)</span><span style="color: #4d92c2;">)</span>
+         <span style="color: #4d92c2;">(</span><span style="color: #8da011;">prompt (</span><span style="color: #b99114; text-decoration: underline;">format</span><span style="color: #b99114;"> </span><span style="color: #dc7fc87f89ff;">"Choose %s: "</span> <span style="color: #b99114;">name</span><span style="color: #8da011;">)</span><span style="color: #4d92c2;">)</span>
+         <span style="color: #4d92c2;">(</span><span style="color: #8da011;">docstring (</span><span style="color: #b99114; text-decoration: underline;">concat</span><span style="color: #b99114;"> </span><span style="color: #dc7fc87f89ff;">"Choose between: "</span> <span style="color: #b99114;">(</span><span style="color: #c85d31; text-decoration: underline;">s-join</span><span style="color: #c85d31;"> </span><span style="color: #e3ffae7f987f;">", "</span> <span style="color: #c85d31;">choice-names</span><span style="color: #b99114;">)</span><span style="color: #8da011;">)</span><span style="color: #4d92c2;">)</span><span style="color: #459d97;">)</span>
+    <span style="color: #459d97;">`(</span><span style="color: #4d92c2; font-weight: bold;">progn</span>
+<span style="color: #4d92c2;">       (</span><span style="color: #8da011; font-weight: bold;">defun</span><span style="color: #8da011;"> ,name ()</span>
+         <span style="color: #8da011;">,docstring</span>
+<span style="color: #8da011;">         (</span><span style="color: #b99114; font-weight: bold;">interactive</span><span style="color: #8da011;">)</span>
+         <span style="color: #8da011;">(</span><span style="color: #b99114; font-weight: bold;">let*</span><span style="color: #b99114;"> (</span><span style="color: #c85d31;">(</span><span style="color: #c95c5a;">choice-name (</span><span style="color: #be96a9; text-decoration: underline;">completing-read</span><span style="color: #be96a9;"> ,prompt ',choice-names</span><span style="color: #c95c5a;">)</span><span style="color: #c85d31;">)</span><span style="color: #b99114;">)</span>
+           <span style="color: #b99114;">(</span><span style="color: #c85d31; text-decoration: underline;">funcall</span><span style="color: #c85d31;"> (</span><span style="color: #c95c5a; text-decoration: underline;">alist-get</span><span style="color: #c95c5a;"> choice-name ',choice-list nil nil #'equal</span><span style="color: #c85d31;">)</span><span style="color: #b99114;">)</span><span style="color: #8da011;">)</span><span style="color: #4d92c2;">)</span>
+       <span style="color: #4d92c2;">(</span><span style="color: #8da011; text-decoration: underline;">put</span><span style="color: #8da011;"> ',name </span><span style="color: #8da011; font-weight: bold;">:unpackaged/define-chooser</span><span style="color: #8da011;"> t</span><span style="color: #4d92c2;">)</span><span style="color: #459d97;">)</span><span style="color: #8f92b8;">)</span><span style="color: #c0608f;">)</span>
+</pre>
+</div>
+
+<p>
+This example shows using it to set <a href="https://github.com/alphapapa/prism.el">prism.el</a> themes by calling <code>prism-set-colors</code> in each choice.
 </p>
 
 <div class="org-src-container">
@@ -630,35 +659,6 @@ This macro defines a "chooser" command, which allows the user to use completion 
 <span style="color: #b99114;">                         (</span><span style="color: #c85d31; text-decoration: underline;">color-desaturate-name</span><span style="color: #c85d31;"> </span><span style="color: #c85d31;">it</span><span style="color: #c85d31;"> 50</span><span style="color: #b99114;">)</span><span style="color: #8da011;">)</span><span style="color: #4d92c2;">)</span>
      <span style="color: #4d92c2; font-weight: bold;">:strings-fn</span><span style="color: #4d92c2;"> (</span><span style="color: #8da011; font-weight: bold;">lambda</span><span style="color: #8da011;"> (</span><span style="color: #b99114;">color</span><span style="color: #8da011;">)</span>
                    <span style="color: #8da011;">(</span><span style="color: #b99114; text-decoration: underline;">prism-blend</span><span style="color: #b99114;"> color </span><span style="color: #dc7fc87f89ff;">"white"</span> <span style="color: #b99114;">0.5</span><span style="color: #8da011;">)</span><span style="color: #4d92c2;">)</span><span style="color: #459d97;">)</span><span style="color: #8f92b8;">)</span><span style="color: #c0608f;">)</span>
-</pre>
-</div>
-
-<p>
-The macro:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #c0608f;">(</span><span style="color: #8f92b8; font-weight: bold;">defmacro</span><span style="color: #8f92b8;"> </span><span style="color: #8f92b8;">unpackaged/define-chooser</span><span style="color: #8f92b8;"> (</span><span style="color: #459d97;">name </span><span style="color: #459d97;">&amp;rest</span><span style="color: #459d97;"> choices</span><span style="color: #8f92b8;">)</span>
-  <span style="color: #c77fc8ffdbff;">"Define a chooser command NAME offering CHOICES.</span>
-<span style="color: #c77fc8ffdbff;">Each of CHOICES should be a list, the first of which is the</span>
-<span style="color: #c77fc8ffdbff;">choice's name, and the rest of which is its body forms."</span>
-  <span style="color: #8f92b8;">(</span><span style="color: #459d97; font-weight: bold;">declare</span><span style="color: #459d97;"> (</span><span style="color: #4d92c2;">indent defun</span><span style="color: #459d97;">)</span><span style="color: #8f92b8;">)</span>
-  <span style="color: #a380a380a380;">;; </span><span style="color: #a380a380a380; font-size: 110%; font-style: italic;">Avoid redefining existing, non-chooser functions.</span>
-<span style="color: #a380a380a380;">  </span><span style="color: #8f92b8;">(</span><span style="color: #459d97; font-weight: bold;">cl-assert</span><span style="color: #459d97;"> (</span><span style="color: #4d92c2; font-weight: bold;">or</span><span style="color: #4d92c2;"> (</span><span style="color: #cb4b16; font-weight: bold;">not</span><span style="color: #8da011;"> (</span><span style="color: #b99114; text-decoration: underline;">fboundp</span><span style="color: #b99114;"> name</span><span style="color: #8da011;">)</span><span style="color: #4d92c2;">)</span>
-                 <span style="color: #4d92c2;">(</span><span style="color: #8da011; text-decoration: underline;">get</span><span style="color: #8da011;"> name </span><span style="color: #8da011; font-weight: bold;">:unpackaged/define-chooser</span><span style="color: #4d92c2;">)</span><span style="color: #459d97;">)</span><span style="color: #8f92b8;">)</span>
-  <span style="color: #8f92b8;">(</span><span style="color: #459d97; font-weight: bold;">let*</span><span style="color: #459d97;"> (</span><span style="color: #4d92c2;">(</span><span style="color: #8da011;">choice-names (</span><span style="color: #b99114; text-decoration: underline;">mapcar</span><span style="color: #b99114;"> #'car choices</span><span style="color: #8da011;">)</span><span style="color: #4d92c2;">)</span>
-         <span style="color: #4d92c2;">(</span><span style="color: #8da011;">choice-list (</span><span style="color: #b99114; font-weight: bold;">--map</span><span style="color: #b99114;"> (</span><span style="color: #c85d31; text-decoration: underline;">cons</span><span style="color: #c85d31;"> (</span><span style="color: #c95c5a; text-decoration: underline;">car</span><span style="color: #c95c5a;"> </span><span style="color: #c95c5a;">it</span><span style="color: #c85d31;">)</span> <span style="color: #c85d31;">`(</span><span style="color: #c95c5a; font-weight: bold;">lambda</span><span style="color: #c95c5a;"> (</span><span style="color: #be96a9;">&amp;rest</span><span style="color: #be96a9;"> args</span><span style="color: #c95c5a;">)</span>
-                                               <span style="color: #c95c5a;">,@(</span><span style="color: #be96a9;">cdr </span><span style="color: #be96a9;">it</span><span style="color: #c95c5a;">)</span><span style="color: #c85d31;">)</span><span style="color: #b99114;">)</span>
-                             <span style="color: #b99114;">choices</span><span style="color: #8da011;">)</span><span style="color: #4d92c2;">)</span>
-         <span style="color: #4d92c2;">(</span><span style="color: #8da011;">prompt (</span><span style="color: #b99114; text-decoration: underline;">format</span><span style="color: #b99114;"> </span><span style="color: #dc7fc87f89ff;">"Choose %s: "</span> <span style="color: #b99114;">name</span><span style="color: #8da011;">)</span><span style="color: #4d92c2;">)</span>
-         <span style="color: #4d92c2;">(</span><span style="color: #8da011;">docstring (</span><span style="color: #b99114; text-decoration: underline;">concat</span><span style="color: #b99114;"> </span><span style="color: #dc7fc87f89ff;">"Choose between: "</span> <span style="color: #b99114;">(</span><span style="color: #c85d31; text-decoration: underline;">s-join</span><span style="color: #c85d31;"> </span><span style="color: #e3ffae7f987f;">", "</span> <span style="color: #c85d31;">choice-names</span><span style="color: #b99114;">)</span><span style="color: #8da011;">)</span><span style="color: #4d92c2;">)</span><span style="color: #459d97;">)</span>
-    <span style="color: #459d97;">`(</span><span style="color: #4d92c2; font-weight: bold;">progn</span>
-<span style="color: #4d92c2;">       (</span><span style="color: #8da011; font-weight: bold;">defun</span><span style="color: #8da011;"> ,name ()</span>
-         <span style="color: #8da011;">,docstring</span>
-<span style="color: #8da011;">         (</span><span style="color: #b99114; font-weight: bold;">interactive</span><span style="color: #8da011;">)</span>
-         <span style="color: #8da011;">(</span><span style="color: #b99114; font-weight: bold;">let*</span><span style="color: #b99114;"> (</span><span style="color: #c85d31;">(</span><span style="color: #c95c5a;">choice-name (</span><span style="color: #be96a9; text-decoration: underline;">completing-read</span><span style="color: #be96a9;"> ,prompt ',choice-names</span><span style="color: #c95c5a;">)</span><span style="color: #c85d31;">)</span><span style="color: #b99114;">)</span>
-           <span style="color: #b99114;">(</span><span style="color: #c85d31; text-decoration: underline;">funcall</span><span style="color: #c85d31;"> (</span><span style="color: #c95c5a; text-decoration: underline;">alist-get</span><span style="color: #c95c5a;"> choice-name ',choice-list nil nil #'equal</span><span style="color: #c85d31;">)</span><span style="color: #b99114;">)</span><span style="color: #8da011;">)</span><span style="color: #4d92c2;">)</span>
-       <span style="color: #4d92c2;">(</span><span style="color: #8da011; text-decoration: underline;">put</span><span style="color: #8da011;"> ',name </span><span style="color: #8da011; font-weight: bold;">:unpackaged/define-chooser</span><span style="color: #8da011;"> t</span><span style="color: #4d92c2;">)</span><span style="color: #459d97;">)</span><span style="color: #8f92b8;">)</span><span style="color: #c0608f;">)</span>
 </pre>
 </div>
 </div>
@@ -731,6 +731,7 @@ When taking a screenshot, one may not want to reveal the text that is in it.  Ra
 </div>
 </div>
 </div>
+
 <div id="outline-container-Track%20metadata%20from%20MPRIS-supporting%20media%20player" class="outline-3">
 <h3 id="Track%20metadata%20from%20MPRIS-supporting%20media%20player">Track metadata from MPRIS-supporting media player&#xa0;&#xa0;&#xa0;<span class="tag"><span class="DBus">DBus</span></span></h3>
 <div class="outline-text-3" id="text-Track%20metadata%20from%20MPRIS-supporting%20media%20player">
@@ -2430,7 +2431,7 @@ GPLv3
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Adam Porter</p>
-<p class="date">Created: 2020-02-02 Sun 08:58</p>
+<p class="date">Created: 2020-02-02 Sun 09:11</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
