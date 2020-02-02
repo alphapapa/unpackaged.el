@@ -302,6 +302,81 @@ Code used to help maintain this document.  (Note: These links don't work in GitH
 
 #+END_SRC
 
+** Define a "chooser" command
+
+This macro defines a "chooser" command, which allows the user to use completion to choose a lambda function to run.  It's helpful for grouping related functions together, or swapping between choices which can be set from Lisp code.
+
+#+BEGIN_SRC elisp
+  (defmacro unpackaged/define-chooser (name &rest choices)
+    "Define a chooser command NAME offering CHOICES.
+  Each of CHOICES should be a list, the first of which is the
+  choice's name, and the rest of which is its body forms."
+    (declare (indent defun))
+    ;; Avoid redefining existing, non-chooser functions.
+    (cl-assert (or (not (fboundp name))
+                   (get name :unpackaged/define-chooser)))
+    (let* ((choice-names (mapcar #'car choices))
+           (choice-list (--map (cons (car it) `(lambda (&rest args)
+                                                 ,@(cdr it)))
+                               choices))
+           (prompt (format "Choose %s: " name))
+           (docstring (concat "Choose between: " (s-join ", " choice-names))))
+      `(progn
+         (defun ,name ()
+           ,docstring
+           (interactive)
+           (let* ((choice-name (completing-read ,prompt ',choice-names)))
+             (funcall (alist-get choice-name ',choice-list nil nil #'equal))))
+         (put ',name :unpackaged/define-chooser t))))
+#+END_SRC
+
+This example shows using it to set [[https://github.com/alphapapa/prism.el][prism.el]] themes by calling =prism-set-colors= in each choice.
+
+#+BEGIN_SRC elisp :exports code :tangle no
+  (unpackaged/define-chooser ap/prism-theme
+    ("Keen"
+     (prism-set-colors :num 16
+       :local (pcase current-prefix-arg
+                ('(16) 'reset)
+                (_ current-prefix-arg))
+       :desaturations (cl-loop for i from 0 below 16
+                               collect (* i 2.5))
+       :lightens (cl-loop for i from 0 below 16
+                          collect (* i 2.5))
+       :colors (list "sandy brown" "dodgerblue" "medium sea green")
+       :comments-fn (lambda (color)
+                      (prism-blend color (face-attribute 'font-lock-comment-face :foreground)
+                                   0.25))
+       :strings-fn (lambda (color)
+                     (prism-blend color "white" 0.5))))
+    ("Solarized: rainbow"
+     (prism-set-colors :num 24
+       :local (pcase current-prefix-arg
+                ('(16) 'reset)
+                (_ current-prefix-arg))
+       :lightens '(5 15 25)
+       :colors (solarized-with-color-variables 'dark
+                 (list red orange yellow green blue cyan violet magenta))
+       :comments-fn (lambda (color)
+                      (--> color
+                           (color-desaturate-name it 50)))
+       :strings-fn (lambda (color)
+                     (prism-blend color "white" 0.5))))
+    ("Solarized: rainbow inverted"
+     (prism-set-colors :num 24
+       :local (pcase current-prefix-arg
+                ('(16) 'reset)
+                (_ current-prefix-arg))
+       :lightens '(5 15 25)
+       :colors (solarized-with-color-variables 'dark
+                 (nreverse (list red orange yellow green blue cyan violet magenta)))
+       :comments-fn (lambda (color)
+                      (--> color
+                           (color-desaturate-name it 50)))
+       :strings-fn (lambda (color)
+                     (prism-blend color "white" 0.5)))))
+#+END_SRC
+
 ** Obfuscate buffer text with /lorem ipsum/ words
 
 When taking a screenshot, one may not want to reveal the text that is in it.  Rather than editing the screenshot to hide the text, one can use this command to temporarily overlay text in a buffer with /lorem ipsum/ words, which present a similar appearance without any meaning.

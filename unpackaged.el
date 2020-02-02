@@ -137,6 +137,28 @@ With prefix, toggle `ibuffer-show-empty-filter-groups'."
 
 ;;; Misc
 
+(defmacro unpackaged/define-chooser (name &rest choices)
+  "Define a chooser command NAME offering CHOICES.
+Each of CHOICES should be a list, the first of which is the
+choice's name, and the rest of which is its body forms."
+  (declare (indent defun))
+  ;; Avoid redefining existing, non-chooser functions.
+  (cl-assert (or (not (fboundp name))
+                 (get name :unpackaged/define-chooser)))
+  (let* ((choice-names (mapcar #'car choices))
+         (choice-list (--map (cons (car it) `(lambda (&rest args)
+                                               ,@(cdr it)))
+                             choices))
+         (prompt (format "Choose %s: " name))
+         (docstring (concat "Choose between: " (s-join ", " choice-names))))
+    `(progn
+       (defun ,name ()
+         ,docstring
+         (interactive)
+         (let* ((choice-name (completing-read ,prompt ',choice-names)))
+           (funcall (alist-get choice-name ',choice-list nil nil #'equal))))
+       (put ',name :unpackaged/define-chooser t))))
+
 (defun unpackaged/lorem-ipsum-overlay (&optional remove-p)
   "Overlay all text in current buffer with \"lorem ipsum\" text.
 When REMOVE-P (interactively, with prefix), remove
