@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-12-30 Mon 22:24 -->
+<!-- 2020-02-02 Sun 08:10 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>unpackaged.el</title>
@@ -267,6 +267,7 @@ for the JavaScript code in this tag.
 <li><a href="#Meta">Meta&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></a></li>
 <li><a href="#Misc">Misc</a>
 <ul>
+<li><a href="#Obfuscate%20buffer%20text%20with%20%2Florem%20ipsum%2F%20words">Obfuscate buffer text with <i>lorem ipsum</i> words</a></li>
 <li><a href="#Track%20metadata%20from%20MPRIS-supporting%20media%20player">Track metadata from MPRIS-supporting media player&#xa0;&#xa0;&#xa0;<span class="tag"><span class="DBus">DBus</span></span></a></li>
 </ul>
 </li>
@@ -578,7 +579,74 @@ Code used to help maintain this document.  (Note: These links don't work in GitH
 <div id="outline-container-Misc" class="outline-2">
 <h2 id="Misc">Misc</h2>
 <div class="outline-text-2" id="text-Misc">
-</div><div id="outline-container-Track%20metadata%20from%20MPRIS-supporting%20media%20player" class="outline-3">
+</div><div id="outline-container-Obfuscate%20buffer%20text%20with%20%2Florem%20ipsum%2F%20words" class="outline-3">
+<h3 id="Obfuscate%20buffer%20text%20with%20%2Florem%20ipsum%2F%20words">Obfuscate buffer text with <i>lorem ipsum</i> words</h3>
+<div class="outline-text-3" id="text-Obfuscate%20buffer%20text%20with%20%2Florem%20ipsum%2F%20words">
+<p>
+When taking a screenshot, one may not want to reveal the text that is in it.  Rather than editing the screenshot to hide the text, one can use this command to temporarily overlay text in a buffer with <i>lorem ipsum</i> words, which present a similar appearance without any meaning.
+</p>
+
+<p>
+<b>Requires:</b>
+</p>
+<ul class="org-ul">
+<li><a href="https://github.com/jschaf/emacs-lorem-ipsum">emacs-lorem-ipsum</a></li>
+</ul>
+
+<p>
+
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #a27f12;">(</span><span style="color: #3e86b8; font-weight: bold;">defun</span><span style="color: #3e86b8;"> </span><span style="color: #3e86b8;">unpackaged/lorem-ipsum-overlay</span><span style="color: #3e86b8;"> (</span><span style="color: #79890f;">&amp;optional</span><span style="color: #79890f;"> remove-p</span><span style="color: #3e86b8;">)</span>
+  <span style="color: #74d09a54b461;">"Overlay all text in current buffer with \"lorem ipsum\" text.</span>
+<span style="color: #74d09a54b461;">When REMOVE-P (interactively, with prefix), remove</span>
+<span style="color: #74d09a54b461;">overlays. Useful for taking screenshots without revealing buffer</span>
+<span style="color: #74d09a54b461;">contents."</span>
+  <span style="color: #3e86b8;">(</span><span style="color: #79890f; font-weight: bold;">interactive</span><span style="color: #79890f;"> </span><span style="color: #92c4a2d2285f;">"P"</span><span style="color: #3e86b8;">)</span>
+  <span style="color: #3e86b8;">(</span><span style="color: #79890f; font-weight: bold;">dolist</span><span style="color: #79890f;"> (</span><span style="color: #3e8c86; text-decoration: underline;">ov</span><span style="color: #3e8c86;"> (</span><span style="color: #a27f12; text-decoration: underline;">overlays-in</span><span style="color: #a27f12;"> (</span><span style="color: #3e86b8; text-decoration: underline;">point-min</span><span style="color: #a27f12;">)</span> <span style="color: #a27f12;">(</span><span style="color: #3e86b8; text-decoration: underline;">point-max</span><span style="color: #a27f12;">)</span><span style="color: #3e8c86;">)</span><span style="color: #79890f;">)</span>
+    <span style="color: #45164bbb1910;">;; </span><span style="color: #45164bbb1910; font-size: 110%; font-style: italic;">Clear existing overlays created by this function.</span>
+<span style="color: #45164bbb1910;">    </span><span style="color: #79890f;">(</span><span style="color: #3e8c86; font-weight: bold;">when</span><span style="color: #3e8c86;"> (</span><span style="color: #a27f12; text-decoration: underline;">overlay-get</span><span style="color: #a27f12;"> ov </span><span style="color: #a27f12; font-weight: bold;">:lorem-ipsum-overlay</span><span style="color: #3e8c86;">)</span>
+      <span style="color: #3e8c86;">(</span><span style="color: #a27f12; text-decoration: underline;">delete-overlay</span><span style="color: #a27f12;"> ov</span><span style="color: #3e8c86;">)</span><span style="color: #79890f;">)</span><span style="color: #3e86b8;">)</span>
+  <span style="color: #3e86b8;">(</span><span style="color: #79890f; font-weight: bold;">unless</span><span style="color: #79890f;"> remove-p</span>
+<span style="color: #79890f;">    (</span><span style="color: #3e8c86; font-weight: bold;">require</span><span style="color: #3e8c86;"> '</span><span style="color: #3e8c86; font-weight: bold;">lorem-ipsum</span><span style="color: #79890f;">)</span>
+    <span style="color: #79890f;">(</span><span style="color: #3e8c86; font-weight: bold;">let</span><span style="color: #3e8c86;"> (</span><span style="color: #a27f12;">(</span><span style="color: #3e86b8;">lorem-ipsum-words</span>
+<span style="color: #3e86b8;">           (</span><span style="color: #79890f; font-weight: bold;">cl-loop</span><span style="color: #79890f;"> for paragraph in lorem-ipsum-text</span>
+<span style="color: #79890f;">                    append (</span><span style="color: #3e8c86; font-weight: bold;">cl-loop</span><span style="color: #3e8c86;"> for sentence in paragraph</span>
+<span style="color: #3e8c86;">                                    append (</span><span style="color: #a48629; text-decoration: underline;">split-string</span><span style="color: #a48629;"> sentence (</span><span style="color: #658eab; font-weight: bold;">rx</span><span style="color: #658eab;"> (</span><span style="color: #808e23; font-weight: bold;">or</span><span style="color: #808e23;"> space punct</span><span style="color: #658eab;">)</span><span style="color: #a48629;">)</span>
+                                                         <span style="color: #a48629;">'omit-nulls</span><span style="color: #3e8c86;">)</span><span style="color: #79890f;">)</span><span style="color: #3e86b8;">)</span><span style="color: #a27f12;">)</span>
+          <span style="color: #a27f12;">(</span><span style="color: #3e86b8;">case-fold-search nil</span><span style="color: #a27f12;">)</span><span style="color: #3e8c86;">)</span>
+      <span style="color: #3e8c86;">(</span><span style="color: #a27f12; font-weight: bold;">cl-labels</span><span style="color: #a27f12;"> (</span><span style="color: #3e86b8;">(</span><span style="color: #79890f;">overlay-match ()</span>
+                                 <span style="color: #79890f;">(</span><span style="color: #3e8c86; font-weight: bold;">let*</span><span style="color: #3e8c86;"> (</span><span style="color: #a48629;">(</span><span style="color: #658eab;">beg (</span><span style="color: #808e23; text-decoration: underline;">match-beginning</span><span style="color: #808e23;"> 0</span><span style="color: #658eab;">)</span><span style="color: #a48629;">)</span>
+                                        <span style="color: #a48629;">(</span><span style="color: #658eab;">end (</span><span style="color: #808e23; text-decoration: underline;">match-end</span><span style="color: #808e23;"> 0</span><span style="color: #658eab;">)</span><span style="color: #a48629;">)</span>
+                                        <span style="color: #a48629;">(</span><span style="color: #658eab;">replacement-word (</span><span style="color: #808e23;">lorem-word (</span><span style="color: #5c8783; text-decoration: underline;">match-string</span><span style="color: #5c8783;"> 0</span><span style="color: #808e23;">)</span><span style="color: #658eab;">)</span><span style="color: #a48629;">)</span>
+                                        <span style="color: #a48629;">(</span><span style="color: #658eab; text-decoration: underline;">ov</span><span style="color: #658eab;"> (</span><span style="color: #808e23; text-decoration: underline;">make-overlay</span><span style="color: #808e23;"> beg end</span><span style="color: #658eab;">)</span><span style="color: #a48629;">)</span><span style="color: #3e8c86;">)</span>
+                                   <span style="color: #3e8c86;">(</span><span style="color: #a48629; font-weight: bold;">when</span><span style="color: #a48629;"> replacement-word</span>
+<span style="color: #a48629;">                                     (</span><span style="color: #658eab; text-decoration: underline;">overlay-put</span><span style="color: #658eab;"> ov </span><span style="color: #658eab; font-weight: bold;">:lorem-ipsum-overlay</span><span style="color: #658eab;"> t</span><span style="color: #a48629;">)</span>
+                                     <span style="color: #a48629;">(</span><span style="color: #658eab; text-decoration: underline;">overlay-put</span><span style="color: #658eab;"> ov 'display replacement-word</span><span style="color: #a48629;">)</span><span style="color: #3e8c86;">)</span><span style="color: #79890f;">)</span><span style="color: #3e86b8;">)</span>
+                  <span style="color: #3e86b8;">(</span><span style="color: #79890f;">lorem-word (</span><span style="color: #3e8c86;">word</span><span style="color: #79890f;">)</span>
+                              <span style="color: #79890f;">(</span><span style="color: #3e8c86; font-weight: bold;">let*</span><span style="color: #3e8c86;"> (</span><span style="color: #a48629;">(</span><span style="color: #658eab; text-decoration: underline;">length</span><span style="color: #658eab;"> (</span><span style="color: #808e23; text-decoration: underline;">length</span><span style="color: #808e23;"> word</span><span style="color: #658eab;">)</span><span style="color: #a48629;">)</span><span style="color: #3e8c86;">)</span>
+                                <span style="color: #3e8c86;">(</span><span style="color: #a48629; font-weight: bold;">cl-loop</span><span style="color: #a48629;"> for liw in lorem-ipsum-words</span>
+<span style="color: #a48629;">                                         when (</span><span style="color: #658eab;">= length (</span><span style="color: #808e23; text-decoration: underline;">length</span><span style="color: #808e23;"> liw</span><span style="color: #658eab;">)</span><span style="color: #a48629;">)</span>
+                                         <span style="color: #a48629;">collect liw into matches</span>
+<span style="color: #a48629;">                                         finally return</span>
+<span style="color: #a48629;">                                         (</span><span style="color: #658eab; font-weight: bold;">when</span><span style="color: #658eab;"> matches</span>
+<span style="color: #658eab;">                                           (</span><span style="color: #808e23;">apply-case word (</span><span style="color: #5c8783; text-decoration: underline;">downcase</span><span style="color: #5c8783;"> (</span><span style="color: #a48629; text-decoration: underline;">seq-random-elt</span><span style="color: #a48629;"> matches</span><span style="color: #5c8783;">)</span><span style="color: #808e23;">)</span><span style="color: #658eab;">)</span><span style="color: #a48629;">)</span><span style="color: #3e8c86;">)</span><span style="color: #79890f;">)</span><span style="color: #3e86b8;">)</span>
+                  <span style="color: #3e86b8;">(</span><span style="color: #79890f;">apply-case (</span><span style="color: #3e8c86;">source target</span><span style="color: #79890f;">)</span>
+                              <span style="color: #79890f;">(</span><span style="color: #3e8c86; font-weight: bold;">cl-loop</span><span style="color: #3e8c86;"> for sc across-ref source</span>
+<span style="color: #3e8c86;">                                       for tc across-ref target</span>
+<span style="color: #3e8c86;">                                       when (</span><span style="color: #cb4b16; font-weight: bold;">not</span><span style="color: #a48629;"> (</span><span style="color: #658eab; text-decoration: underline;">string-match-p</span><span style="color: #658eab;"> (</span><span style="color: #808e23; font-weight: bold;">rx</span><span style="color: #808e23;"> lower</span><span style="color: #658eab;">)</span> <span style="color: #658eab;">(</span><span style="color: #808e23; text-decoration: underline;">char-to-string</span><span style="color: #808e23;"> sc</span><span style="color: #658eab;">)</span><span style="color: #a48629;">)</span><span style="color: #3e8c86;">)</span>
+                                       <span style="color: #3e8c86;">do (</span><span style="color: #a48629; font-weight: bold;">setf</span><span style="color: #a48629;"> tc (</span><span style="color: #658eab; text-decoration: underline;">string-to-char</span><span style="color: #658eab;"> (</span><span style="color: #808e23; text-decoration: underline;">upcase</span><span style="color: #808e23;"> (</span><span style="color: #5c8783; text-decoration: underline;">char-to-string</span><span style="color: #5c8783;"> tc</span><span style="color: #808e23;">)</span><span style="color: #658eab;">)</span><span style="color: #a48629;">)</span><span style="color: #3e8c86;">)</span><span style="color: #79890f;">)</span>
+                              <span style="color: #79890f;">target</span><span style="color: #3e86b8;">)</span><span style="color: #a27f12;">)</span>
+        <span style="color: #a27f12;">(</span><span style="color: #3e86b8; font-weight: bold;">save-excursion</span>
+<span style="color: #3e86b8;">          (</span><span style="color: #79890f; text-decoration: underline;">goto-char</span><span style="color: #79890f;"> (</span><span style="color: #3e8c86; text-decoration: underline;">point-min</span><span style="color: #79890f;">)</span><span style="color: #3e86b8;">)</span>
+          <span style="color: #3e86b8;">(</span><span style="color: #79890f; font-weight: bold;">while</span><span style="color: #79890f;"> (</span><span style="color: #3e8c86; text-decoration: underline;">re-search-forward</span><span style="color: #3e8c86;"> (</span><span style="color: #a48629; font-weight: bold;">rx</span><span style="color: #a48629;"> (</span><span style="color: #658eab; text-decoration: underline;">1+</span><span style="color: #658eab;"> alpha</span><span style="color: #a48629;">)</span><span style="color: #3e8c86;">)</span> <span style="color: #3e8c86;">nil t</span><span style="color: #79890f;">)</span>
+            <span style="color: #79890f;">(</span><span style="color: #3e8c86;">overlay-match</span><span style="color: #79890f;">)</span><span style="color: #3e86b8;">)</span><span style="color: #a27f12;">)</span><span style="color: #3e8c86;">)</span><span style="color: #79890f;">)</span><span style="color: #3e86b8;">)</span><span style="color: #a27f12;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-Track%20metadata%20from%20MPRIS-supporting%20media%20player" class="outline-3">
 <h3 id="Track%20metadata%20from%20MPRIS-supporting%20media%20player">Track metadata from MPRIS-supporting media player&#xa0;&#xa0;&#xa0;<span class="tag"><span class="DBus">DBus</span></span></h3>
 <div class="outline-text-3" id="text-Track%20metadata%20from%20MPRIS-supporting%20media%20player">
 <p>
@@ -629,7 +697,6 @@ DBus is not a straightforward system to work with, so this may serve as a useful
 </div>
 </div>
 </div>
-
 <div id="outline-container-Org" class="outline-2">
 <h2 id="Org">Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Org">Org</span></span></h2>
 <div class="outline-text-2" id="text-Org">
@@ -998,7 +1065,7 @@ Download file at <code>URL</code> and attach with <code>org-attach</code>.  Inte
             <span style="color: #3e86b8;">(</span><span style="color: #79890f; font-weight: bold;">setq</span><span style="color: #79890f;"> size (</span><span style="color: #3e8c86; text-decoration: underline;">file-size-human-readable</span>
 <span style="color: #3e8c86;">                        (</span><span style="color: #a48629; text-decoration: underline;">file-attribute-size</span>
 <span style="color: #a48629;">                         (</span><span style="color: #658eab; text-decoration: underline;">file-attributes</span><span style="color: #658eab;"> local-path</span><span style="color: #a48629;">)</span><span style="color: #3e8c86;">)</span><span style="color: #79890f;">)</span><span style="color: #3e86b8;">)</span>
-            <span style="color: #3e86b8;">(</span><span style="color: #79890f;">org-attach-attach local-path nil 'mv</span><span style="color: #3e86b8;">)</span>
+            <span style="color: #3e86b8;">(</span><span style="color: #79890f; text-decoration: underline;">org-attach-attach</span><span style="color: #79890f;"> local-path nil 'mv</span><span style="color: #3e86b8;">)</span>
             <span style="color: #3e86b8;">(</span><span style="color: #79890f; text-decoration: underline;">message</span><span style="color: #79890f;"> </span><span style="color: #92c4a2d2285f;">"Attached %s (%s)"</span> <span style="color: #79890f;">url size</span><span style="color: #3e86b8;">)</span><span style="color: #a27f12;">)</span>
         <span style="color: #a27f12;">(</span><span style="color: #3e86b8; text-decoration: underline;">delete-directory</span><span style="color: #3e86b8;"> temp-dir</span><span style="color: #a27f12;">)</span><span style="color: #3e8c86;">)</span><span style="color: #79890f;">)</span><span style="color: #3e86b8;">)</span><span style="color: #a27f12;">)</span>
 </pre>
@@ -2278,7 +2345,7 @@ GPLv3
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Adam Porter</p>
-<p class="date">Created: 2019-12-30 Mon 22:24</p>
+<p class="date">Created: 2020-02-02 Sun 08:10</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
