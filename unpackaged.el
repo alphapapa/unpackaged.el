@@ -192,8 +192,26 @@ screenshots without revealing buffer contents."
                                            when (= length (length liw))
                                            collect liw into matches
                                            finally return
-                                           (when matches
-                                             (apply-case word (downcase (seq-random-elt matches)))))))
+                                           (if matches
+                                               (apply-case word (downcase (seq-random-elt matches)))
+                                             (let* ((start-word (seq-random-elt lorem-ipsum-words))
+                                                    (composite-word
+                                                     (while (< length (length start-word))
+                                                       (setq start-word (seq-random-elt lorem-ipsum-words))))
+                                                    (composite-length (length composite-word))
+                                                    (length-deficit (- length composite-length))
+                                                    (liw-tmp (append (shuffle-vector (vconcat lorem-ipsum-words)) 'nil))
+                                                    (next-liw-word (car liw-tmp)))
+                                               (while (and liw-tmp (not (= composite-length length)))
+                                                   (when (>= length-deficit (length next-liw-word))
+                                                     (setq composite-word (concat composite-word next-liw-word))
+                                                     (setq composite-length (length composite-word))
+                                                     (setq length-deficit (- length composite-length))
+                                                     (setq liw-tmp (append (shuffle-vector (vconcat lorem-ipsum-words)) 'nil)))
+                                                   (setq liw-tmp (cdr liw-tmp))
+                                                   (setq next-liw-word (car liw-tmp)))
+                                               (when (= length composite-length)
+                                                 (setq matches (apply-case word (downcase composite-word)))))))))
                     (apply-case (source target)
                                 (cl-loop for sc across-ref source
                                          for tc across-ref target
