@@ -1081,15 +1081,13 @@ appropriate.  In tables, insert a new row or end the table."
                                '(read-only t))))))
 
 ;;;###autoload
-(defun unpackaged/org-sort-multi (keys)
-  "Call `org-sort-entries' with multiple sorting methods specified in KEYS."
-  ;; Message copied from `org-sort-entries'.
-  (interactive (list (read-string "Sort by: [a]lpha  [n]umeric  [p]riority  p[r]operty  todo[o]rder  [f]unc
-         [t]ime [s]cheduled  [d]eadline  [c]reated  cloc[k]ing
-         A/N/P/R/O/F/T/S/D/C/K means reversed: ")))
-  (seq-do (lambda (key)
-            (org-sort-entries nil key))
-          (nreverse keys)))
+(defun unpackaged/org-sort-multi ()
+  "Call `org-sort' until \\[keyboard-quit] is pressed."
+  (interactive)
+  ;; Not sure if `with-local-quit' is necessary, but probably a good
+  ;; idea in case of recursive edit.
+  (with-local-quit
+    (cl-loop while (call-interactively #'org-sort))))
 
 ;;; Packages
 
