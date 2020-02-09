@@ -216,7 +216,7 @@ A complete example:
                                             collect
                                             `(,key
                                               ,(cl-typecase component
-                                                 ((and (or lambda function) (not null))
+                                                 ((and function (not null))
                                                   ;; I don't understand why nil matches
                                                   ;; (or lambda function), but it does,
                                                   ;; so we have to account for it.  See
