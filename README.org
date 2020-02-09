@@ -858,10 +858,11 @@ These functions convert Emacs Lisp code and docstrings to Org-formatted text, he
   (cl-defun unpackaged/buffer-provides (&optional (buffer (current-buffer)))
     "Return symbol that Emacs package in BUFFER provides."
     ;; I couldn't find an existing function that does this, but this is simple enough.
-    (save-excursion
-      (goto-char (point-max))
-      (re-search-backward (rx bol "(provide '" (group (1+ (not (any ")")))) ")"))
-      (intern (match-string 1))))
+    (with-current-buffer buffer
+      (save-excursion
+        (goto-char (point-max))
+        (re-search-backward (rx bol "(provide '" (group (1+ (not (any ")")))) ")"))
+        (intern (match-string 1)))))
 
   ;;;###autoload
   (defun unpackaged/elisp-to-org ()
@@ -1069,10 +1070,7 @@ Note that this is somewhat of a hack, and it probably breaks some feature deep i
   made unique when necessary."
     :global t
     (if unpackaged/org-export-html-with-useful-ids-mode
-        (progn
-          (advice-add #'org-export-new-title-reference :override #'unpackaged/org-export-new-title-reference)
-          (advice-add #'org-export-get-reference :override #'unpackaged/org-export-get-reference))
-      (advice-remove #'org-export-new-title-reference #'unpackaged/org-export-new-title-reference)
+        (advice-add #'org-export-get-reference :override #'unpackaged/org-export-get-reference)
       (advice-remove #'org-export-get-reference #'unpackaged/org-export-get-reference)))
 
   (defun unpackaged/org-export-get-reference (datum info)
@@ -1184,9 +1182,9 @@ To use, activate =unpackaged/org-table-face-mode=.  You may want to add it to =o
                                    do (setf pos (next-single-property-change pos 'face nil limit))
                                    while (and pos (not (equal pos prev-pos)))
                                    for face-at = (get-text-property pos 'face)
-                                   for face-matches-p = (or (eq face-at 'org-table)
+                                   for face-matches-p = (or (eq face-at face)
                                                             (when (listp face-at)
-                                                              (member 'org-table face-at)))
+                                                              (member face face-at)))
                                    when (or (and not (not face-matches-p))
                                             face-matches-p)
                                    return pos
@@ -1379,6 +1377,7 @@ Inspired by [[http://kitchingroup.cheme.cmu.edu/blog/2017/04/09/A-better-return-
     "Return non-nil if ELEMENT is a descendant of TYPE.
   TYPE should be an element type, like `item' or `paragraph'.
   ELEMENT should be a list like that returned by `org-element-context'."
+    ;; MAYBE: Use `org-element-lineage'.
     (when-let* ((parent (org-element-property :parent element)))
       (or (eq type (car parent))
           (unpackaged/org-element-descendant-of type parent))))
@@ -1423,6 +1422,7 @@ Inspired by [[http://kitchingroup.cheme.cmu.edu/blog/2017/04/09/A-better-return-
                    (forward-line)
                    (insert "\n")
                    (forward-line -1))
+                 ;; FIXME: looking-back is supposed to be called with more arguments.
                  (while (not (looking-back (rx (repeat 3 (seq (optional blank) "\n")))))
                    (insert "\n"))
                  (forward-line -1)))))
@@ -1537,8 +1537,9 @@ This is much easier than doing @@html:<kbd>@@C-c ^ KEY@@html:</kbd>@@ several ti
 * Packages                                                         :packages:
 
 #+BEGIN_SRC elisp :exports none
-;;; Packages
+  ;;; Packages
 
+  (require 'package)
 #+END_SRC
 
 ** Delete all installed versions of a package
@@ -1565,9 +1566,9 @@ Delete all versions of package named ~NAME~.  ~NAME~ may be a string or symbol.
                         (error "Package `%s' depends on `%s'" (package-desc-name dependent) package-name)))
                     (unless (string-prefix-p (file-name-as-directory (expand-file-name package-user-dir))
                                              (expand-file-name (package-desc-dir first-desc)))
-                      (error "Package `%s' is a system package"))))
+                      (error "Package `%s' is a system package" symbol))))
       ;; Checks passed: delete packages.
-      (cl-loop for (symbol . descs) in matching-versions
+      (cl-loop for (_symbol . descs) in matching-versions
                do (--each descs
                     (package-delete it force)))))
 #+END_SRC
@@ -1880,7 +1881,7 @@ Open a ~magit-status~ buffer and close the other window so only Magit is visible
                                (file-relative-name buffer-file-name
                                                    (locate-dominating-file buffer-file-name ".git"))))
            (section-ident `((file . ,buffer-file-path) (unstaged) (status))))
-      (magit-status)
+      (call-interactively #'magit-status)
       (delete-other-windows)
       (when buffer-file-path
         (goto-char (point-min))
@@ -2054,19 +2055,19 @@ Return ATOM or RSS feed ~URL~ for web page at ~URL~.  Interactively, insert the 
              (potential-feeds (esxml-query-all "link[rel=alternate]" dom))
              (return (if all
                          ;; Return all URLs
-                         (cl-loop for (tag attrs) in potential-feeds
+                         (cl-loop for (_tag attrs) in potential-feeds
                                   when (feed-p (alist-get 'type attrs))
                                   collect (url-expand-file-name (alist-get 'href attrs) url))
                        (or
                         ;; Return the first URL of preferred type
-                        (cl-loop for (tag attrs) in potential-feeds
+                        (cl-loop for (_tag attrs) in potential-feeds
                                  when (equal preferred-type (alist-get 'type attrs))
                                  return (url-expand-file-name (alist-get 'href attrs) url))
                         ;; Return the first URL of non-preferred type
-                        (cl-loop for (tag attrs) in potential-feeds
+                        (cl-loop for (_tag attrs) in potential-feeds
                                  when (feed-p (alist-get 'type attrs))
                                  return (url-expand-file-name (alist-get 'href attrs) url))))))
-        (if (called-interactively-p)
+        (if (called-interactively-p 'interactive)
             (insert (if (listp return)
                         (s-join " " return)
                       return))

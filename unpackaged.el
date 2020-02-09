@@ -527,10 +527,11 @@ Interactively, place on kill ring."
 (cl-defun unpackaged/buffer-provides (&optional (buffer (current-buffer)))
   "Return symbol that Emacs package in BUFFER provides."
   ;; I couldn't find an existing function that does this, but this is simple enough.
-  (save-excursion
-    (goto-char (point-max))
-    (re-search-backward (rx bol "(provide '" (group (1+ (not (any ")")))) ")"))
-    (intern (match-string 1))))
+  (with-current-buffer buffer
+    (save-excursion
+      (goto-char (point-max))
+      (re-search-backward (rx bol "(provide '" (group (1+ (not (any ")")))) ")"))
+      (intern (match-string 1)))))
 
 ;;;###autoload
 (defun unpackaged/elisp-to-org ()
@@ -693,10 +694,7 @@ Instead of random IDs like \"#orga1b2c3\", use heading titles,
 made unique when necessary."
   :global t
   (if unpackaged/org-export-html-with-useful-ids-mode
-      (progn
-        (advice-add #'org-export-new-title-reference :override #'unpackaged/org-export-new-title-reference)
-        (advice-add #'org-export-get-reference :override #'unpackaged/org-export-get-reference))
-    (advice-remove #'org-export-new-title-reference #'unpackaged/org-export-new-title-reference)
+      (advice-add #'org-export-get-reference :override #'unpackaged/org-export-get-reference)
     (advice-remove #'org-export-get-reference #'unpackaged/org-export-get-reference)))
 
 (defun unpackaged/org-export-get-reference (datum info)
@@ -800,9 +798,9 @@ A `font-lock-keywords' function that searches up to LIMIT."
                                  do (setf pos (next-single-property-change pos 'face nil limit))
                                  while (and pos (not (equal pos prev-pos)))
                                  for face-at = (get-text-property pos 'face)
-                                 for face-matches-p = (or (eq face-at 'org-table)
+                                 for face-matches-p = (or (eq face-at face)
                                                           (when (listp face-at)
-                                                            (member 'org-table face-at)))
+                                                            (member face face-at)))
                                  when (or (and not (not face-matches-p))
                                           face-matches-p)
                                  return pos
@@ -955,6 +953,7 @@ search whole subtree."
   "Return non-nil if ELEMENT is a descendant of TYPE.
 TYPE should be an element type, like `item' or `paragraph'.
 ELEMENT should be a list like that returned by `org-element-context'."
+  ;; MAYBE: Use `org-element-lineage'.
   (when-let* ((parent (org-element-property :parent element)))
     (or (eq type (car parent))
         (unpackaged/org-element-descendant-of type parent))))
@@ -999,6 +998,7 @@ appropriate.  In tables, insert a new row or end the table."
                  (forward-line)
                  (insert "\n")
                  (forward-line -1))
+               ;; FIXME: looking-back is supposed to be called with more arguments.
                (while (not (looking-back (rx (repeat 3 (seq (optional blank) "\n")))))
                  (insert "\n"))
                (forward-line -1)))))
@@ -1091,6 +1091,8 @@ appropriate.  In tables, insert a new row or end the table."
 
 ;;; Packages
 
+(require 'package)
+
 (defun unpackaged/package-delete-all-versions (name &optional force)
   "Delete all versions of package named NAME.
 NAME may be a string or symbol."
@@ -1110,9 +1112,9 @@ NAME may be a string or symbol."
                       (error "Package `%s' depends on `%s'" (package-desc-name dependent) package-name)))
                   (unless (string-prefix-p (file-name-as-directory (expand-file-name package-user-dir))
                                            (expand-file-name (package-desc-dir first-desc)))
-                    (error "Package `%s' is a system package"))))
+                    (error "Package `%s' is a system package" symbol))))
     ;; Checks passed: delete packages.
-    (cl-loop for (symbol . descs) in matching-versions
+    (cl-loop for (_symbol . descs) in matching-versions
              do (--each descs
                   (package-delete it force)))))
 
@@ -1344,7 +1346,7 @@ command was called, go to its unstaged changes section."
                              (file-relative-name buffer-file-name
                                                  (locate-dominating-file buffer-file-name ".git"))))
          (section-ident `((file . ,buffer-file-path) (unstaged) (status))))
-    (magit-status)
+    (call-interactively #'magit-status)
     (delete-other-windows)
     (when buffer-file-path
       (goto-char (point-min))
@@ -1467,19 +1469,19 @@ preferring the preferred type."
            (potential-feeds (esxml-query-all "link[rel=alternate]" dom))
            (return (if all
                        ;; Return all URLs
-                       (cl-loop for (tag attrs) in potential-feeds
+                       (cl-loop for (_tag attrs) in potential-feeds
                                 when (feed-p (alist-get 'type attrs))
                                 collect (url-expand-file-name (alist-get 'href attrs) url))
                      (or
                       ;; Return the first URL of preferred type
-                      (cl-loop for (tag attrs) in potential-feeds
+                      (cl-loop for (_tag attrs) in potential-feeds
                                when (equal preferred-type (alist-get 'type attrs))
                                return (url-expand-file-name (alist-get 'href attrs) url))
                       ;; Return the first URL of non-preferred type
-                      (cl-loop for (tag attrs) in potential-feeds
+                      (cl-loop for (_tag attrs) in potential-feeds
                                when (feed-p (alist-get 'type attrs))
                                return (url-expand-file-name (alist-get 'href attrs) url))))))
-      (if (called-interactively-p)
+      (if (called-interactively-p 'interactive)
           (insert (if (listp return)
                       (s-join " " return)
                     return))
