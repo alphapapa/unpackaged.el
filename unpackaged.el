@@ -287,11 +287,33 @@ choice's name, and the rest of which is its body forms."
            (funcall (alist-get choice-name ',choice-list nil nil #'equal))))
        (put ',name :unpackaged/define-chooser t))))
 
+(defcustom unpackaged/lorem-ipsum-overlay-exclude nil
+  "List of regexps to exclude from `unpackaged/lorem-ipsum-overlay'."
+  :type '(repeat regexp))
+
 ;;;###autoload
 (defun unpackaged/lorem-ipsum-overlay ()
   "Overlay all text in current buffer with \"lorem ipsum\" text.
 When called again, remove overlays.  Useful for taking
-screenshots without revealing buffer contents."
+screenshots without revealing buffer contents.
+
+Each piece of non-whitespace text in the buffer is compared with
+regexps in `unpackaged/lorem-ipsum-overlay-exclude', and ones
+that match are not overlaid.  Note that the regexps are compared
+against the entire non-whitespace token, up-to and including the
+preceding whitespace, but only the alphabetic part of the token
+is overlaid.  For example, in an Org buffer, a line that starts
+with:
+
+  #+TITLE: unpackaged.el
+
+could be matched against the exclude regexp (in `rx' syntax):
+
+  (rx (or bol bos blank) \"#+\" (1+ alnum) \":\" (or eol eos blank))
+
+And the line would be overlaid like:
+
+  #+TITLE: parturient.et"
   (interactive)
   (require 'lorem-ipsum)
   (let ((ovs (overlays-in (point-min) (point-max))))
@@ -306,10 +328,10 @@ screenshots without revealing buffer contents."
                                     (-flatten it) (apply #'concat it)
                                     (split-string it (rx (or space punct)) 'omit-nulls)))
             (case-fold-search nil))
-        (cl-labels ((overlay-match ()
-                                   (let* ((beg (match-beginning 0))
-                                          (end (match-end 0))
-                                          (replacement-word (lorem-word (match-string 0)))
+        (cl-labels ((overlay-match (group)
+                                   (let* ((beg (match-beginning group))
+                                          (end (match-end group))
+                                          (replacement-word (lorem-word (match-string group)))
                                           (ov (make-overlay beg end)))
                                      (when replacement-word
                                        (overlay-put ov :lorem-ipsum-overlay t)
@@ -336,8 +358,16 @@ screenshots without revealing buffer contents."
                                            do (cl-decf length (length word)))))
           (save-excursion
             (goto-char (point-min))
-            (while (re-search-forward (rx (1+ alpha)) nil t)
-              (overlay-match))))))))
+            (while (re-search-forward (rx (group (1+ (or bol bos blank (not alpha)))
+                                                 (0+ (not (any alpha blank)))
+                                                 (group (1+ alpha))
+                                                 (0+ (not (any alpha blank)))))
+                                      nil t)
+              (unless (cl-member (match-string 0) unpackaged/lorem-ipsum-overlay-exclude
+                                 :test (lambda (string regexp)
+                                         (string-match-p regexp string)))
+                (overlay-match 2))
+              (goto-char (match-end 2)))))))))
 
 (cl-defun unpackaged/mpris-track (&optional player)
   "Return the artist, album, and title of the track playing in MPRIS-supporting player.
