@@ -208,6 +208,9 @@ Interactively, prompt for ~TEXT~, using ~lorem-ipsum~ text if nil or the empty s
 #+END_SRC
 
 *** COMMENT Potential improvements                               :noexport:
+:PROPERTIES:
+:TOC:      :ignore (this descendants)
+:END:
 
 **** TODO Apply more face properties
 
