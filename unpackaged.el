@@ -685,7 +685,7 @@ kill-ring, prompting if not found.  With prefix, prompt for URL."
         (delete-directory temp-dir)))))
 
 ;;;###autoload
-(defun unpackaged/org-fix-blank-lines (prefix)
+(defun unpackaged/org-fix-blank-lines (&optional prefix)
   "Ensure that blank lines exist between headings and between headings and their contents.
 With prefix, operate on whole buffer. Ensures that blank lines
 exist after each headings's drawers."
