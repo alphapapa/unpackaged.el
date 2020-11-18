@@ -957,7 +957,9 @@ search whole subtree."
 
 ;;;###autoload
 (cl-defun unpackaged/org-refile-to-datetree (file &key (date (calendar-current-date)) entry)
-  "Refile ENTRY or current node to entry for DATE in datetree in FILE."
+  "Refile ENTRY or current node to entry for DATE in datetree in FILE.
+DATE should be a list of (MONTH DAY YEAR) integers, e.g. as
+returned by `calendar-current-date'."
   (interactive (list (read-file-name "File: " (concat org-directory "/") nil 'mustmatch nil
                                      (lambda (filename)
                                        (string-suffix-p ".org" filename)))))
