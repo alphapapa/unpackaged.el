@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-11-17 Tue 21:51 -->
+<!-- 2020-11-17 Tue 21:57 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>unpackaged.el</title>
@@ -880,10 +880,17 @@ When taking a screenshot, one may not want to reveal the text that is in it.  Ra
   <span style="color: #3d85b7; font-weight: bold;">:type</span><span style="color: #3d85b7;"> '(</span><span style="color: #78880e;">repeat regexp</span><span style="color: #3d85b7;">)</span><span style="color: #a17e11;">)</span>
 
 <span style="color: #586e75;">;;;</span><span style="color: #586e75; font-weight: bold; font-style: italic;">###</span><span style="color: #cb4b16; font-weight: bold; font-style: italic;">autoload</span>
-<span style="color: #a17e11;">(</span><span style="color: #3d85b7; font-weight: bold;">defun</span><span style="color: #3d85b7;"> </span><span style="color: #3d85b7;">unpackaged/lorem-ipsum-overlay</span><span style="color: #3d85b7;"> ()</span>
+<span style="color: #a17e11;">(</span><span style="color: #3d85b7; font-weight: bold;">defun</span><span style="color: #3d85b7;"> </span><span style="color: #3d85b7;">unpackaged/lorem-ipsum-overlay</span><span style="color: #3d85b7;"> (</span><span style="color: #78880e;">&amp;optional</span><span style="color: #78880e;"> replace-p</span><span style="color: #3d85b7;">)</span>
   <span style="color: #73139976b41e;">"Overlay all text in current buffer with \"lorem ipsum\" text.</span>
 <span style="color: #73139976b41e;">When called again, remove overlays.  Useful for taking</span>
 <span style="color: #73139976b41e;">screenshots without revealing buffer contents.</span>
+
+<span style="color: #73139976b41e;">If REPLACE-P is non-nil (interactively, with prefix), replace</span>
+<span style="color: #73139976b41e;">buffer contents rather than overlaying them.  When a buffer is</span>
+<span style="color: #73139976b41e;">very large and would have so many overlays that performance would</span>
+<span style="color: #73139976b41e;">be prohibitively slow, you may replace the buffer contents</span>
+<span style="color: #73139976b41e;">instead.  (Of course, be careful about saving the buffer after</span>
+<span style="color: #73139976b41e;">replacing its contents.)</span>
 
 <span style="color: #73139976b41e;">Each piece of non-whitespace text in the buffer is compared with</span>
 <span style="color: #73139976b41e;">regexps in `</span><span style="color: #73139976b41e; font-weight: bold;">unpackaged/lorem-ipsum-overlay-exclude</span><span style="color: #73139976b41e;">', and ones</span>
@@ -902,7 +909,7 @@ When taking a screenshot, one may not want to reveal the text that is in it.  Ra
 <span style="color: #73139976b41e;">And the line would be overlaid like:</span>
 
 <span style="color: #73139976b41e;">  #+TITLE: parturient.et"</span>
-  <span style="color: #3d85b7;">(</span><span style="color: #78880e; font-weight: bold;">interactive</span><span style="color: #3d85b7;">)</span>
+  <span style="color: #3d85b7;">(</span><span style="color: #78880e; font-weight: bold;">interactive</span><span style="color: #78880e;"> </span><span style="color: #921da24c26e6;">"P"</span><span style="color: #3d85b7;">)</span>
   <span style="color: #3d85b7;">(</span><span style="color: #78880e; font-weight: bold;">require</span><span style="color: #78880e;"> '</span><span style="color: #78880e; font-weight: bold;">lorem-ipsum</span><span style="color: #3d85b7;">)</span>
   <span style="color: #3d85b7;">(</span><span style="color: #78880e; font-weight: bold;">let</span><span style="color: #78880e;"> (</span><span style="color: #3d8b85;">(</span><span style="color: #a17e11;">ovs (</span><span style="color: #3d85b7; text-decoration: underline;">overlays-in</span><span style="color: #3d85b7;"> (</span><span style="color: #78880e; text-decoration: underline;">point-min</span><span style="color: #3d85b7;">)</span> <span style="color: #3d85b7;">(</span><span style="color: #78880e; text-decoration: underline;">point-max</span><span style="color: #3d85b7;">)</span><span style="color: #a17e11;">)</span><span style="color: #3d8b85;">)</span><span style="color: #78880e;">)</span>
     <span style="color: #78880e;">(</span><span style="color: #3d8b85; font-weight: bold;">if</span><span style="color: #3d8b85;"> (</span><span style="color: #a17e11; font-weight: bold;">cl-loop</span><span style="color: #a17e11;"> for ov in ovs</span>
@@ -916,7 +923,7 @@ When taking a screenshot, one may not want to reveal the text that is in it.  Ra
 <span style="color: #3d8b85;">                                    (</span><span style="color: #a38528; text-decoration: underline;">-flatten</span><span style="color: #a38528;"> </span><span style="color: #a38528;">it</span><span style="color: #3d8b85;">)</span> <span style="color: #3d8b85;">(</span><span style="color: #a38528; text-decoration: underline;">apply</span><span style="color: #a38528;"> #'concat </span><span style="color: #a38528;">it</span><span style="color: #3d8b85;">)</span>
                                     <span style="color: #3d8b85;">(</span><span style="color: #a38528; text-decoration: underline;">split-string</span><span style="color: #a38528;"> </span><span style="color: #a38528;">it</span><span style="color: #a38528;"> (</span><span style="color: #648daa; font-weight: bold;">rx</span><span style="color: #648daa;"> (</span><span style="color: #7f8d22; font-weight: bold;">or</span><span style="color: #7f8d22;"> space punct</span><span style="color: #648daa;">)</span><span style="color: #a38528;">)</span> <span style="color: #a38528;">'omit-nulls</span><span style="color: #3d8b85;">)</span><span style="color: #78880e;">)</span><span style="color: #3d85b7;">)</span>
             <span style="color: #3d85b7;">(</span><span style="color: #78880e;">case-fold-search nil</span><span style="color: #3d85b7;">)</span><span style="color: #a17e11;">)</span>
-        <span style="color: #a17e11;">(</span><span style="color: #3d85b7; font-weight: bold;">cl-labels</span><span style="color: #3d85b7;"> (</span><span style="color: #78880e;">(</span><span style="color: #3d8b85;">overlay-match (</span><span style="color: #a38528;">group</span><span style="color: #3d8b85;">)</span>
+        <span style="color: #a17e11;">(</span><span style="color: #3d85b7; font-weight: bold;">cl-labels</span><span style="color: #3d85b7;"> (</span><span style="color: #78880e;">(</span><span style="color: #3d8b85;">overlay-group (</span><span style="color: #a38528;">group</span><span style="color: #3d8b85;">)</span>
                                    <span style="color: #3d8b85;">(</span><span style="color: #a38528; font-weight: bold;">let*</span><span style="color: #a38528;"> (</span><span style="color: #648daa;">(</span><span style="color: #7f8d22;">beg (</span><span style="color: #5b8682; text-decoration: underline;">match-beginning</span><span style="color: #5b8682;"> group</span><span style="color: #7f8d22;">)</span><span style="color: #648daa;">)</span>
                                           <span style="color: #648daa;">(</span><span style="color: #7f8d22;">end (</span><span style="color: #5b8682; text-decoration: underline;">match-end</span><span style="color: #5b8682;"> group</span><span style="color: #7f8d22;">)</span><span style="color: #648daa;">)</span>
                                           <span style="color: #648daa;">(</span><span style="color: #7f8d22;">replacement-word (</span><span style="color: #5b8682;">lorem-word (</span><span style="color: #a38528; text-decoration: underline;">match-string</span><span style="color: #a38528;"> group</span><span style="color: #5b8682;">)</span><span style="color: #7f8d22;">)</span><span style="color: #648daa;">)</span>
@@ -924,6 +931,12 @@ When taking a screenshot, one may not want to reveal the text that is in it.  Ra
                                      <span style="color: #a38528;">(</span><span style="color: #648daa; font-weight: bold;">when</span><span style="color: #648daa;"> replacement-word</span>
 <span style="color: #648daa;">                                       (</span><span style="color: #7f8d22; text-decoration: underline;">overlay-put</span><span style="color: #7f8d22;"> ov </span><span style="color: #7f8d22; font-weight: bold;">:lorem-ipsum-overlay</span><span style="color: #7f8d22;"> t</span><span style="color: #648daa;">)</span>
                                        <span style="color: #648daa;">(</span><span style="color: #7f8d22; text-decoration: underline;">overlay-put</span><span style="color: #7f8d22;"> ov 'display replacement-word</span><span style="color: #648daa;">)</span><span style="color: #a38528;">)</span><span style="color: #3d8b85;">)</span><span style="color: #78880e;">)</span>
+                    <span style="color: #78880e;">(</span><span style="color: #3d8b85;">replace-group (</span><span style="color: #a38528;">group</span><span style="color: #3d8b85;">)</span>
+                                   <span style="color: #3d8b85;">(</span><span style="color: #a38528; font-weight: bold;">let*</span><span style="color: #a38528;"> (</span><span style="color: #648daa;">(</span><span style="color: #7f8d22;">beg (</span><span style="color: #5b8682; text-decoration: underline;">match-beginning</span><span style="color: #5b8682;"> group</span><span style="color: #7f8d22;">)</span><span style="color: #648daa;">)</span>
+                                          <span style="color: #648daa;">(</span><span style="color: #7f8d22;">end (</span><span style="color: #5b8682; text-decoration: underline;">match-end</span><span style="color: #5b8682;"> group</span><span style="color: #7f8d22;">)</span><span style="color: #648daa;">)</span>
+                                          <span style="color: #648daa;">(</span><span style="color: #7f8d22;">replacement-word (</span><span style="color: #5b8682;">lorem-word (</span><span style="color: #a38528; text-decoration: underline;">match-string</span><span style="color: #a38528;"> group</span><span style="color: #5b8682;">)</span><span style="color: #7f8d22;">)</span><span style="color: #648daa;">)</span><span style="color: #a38528;">)</span>
+                                     <span style="color: #a38528;">(</span><span style="color: #648daa; font-weight: bold;">when</span><span style="color: #648daa;"> replacement-word</span>
+<span style="color: #648daa;">                                       (</span><span style="color: #7f8d22; font-weight: bold;">setf</span><span style="color: #7f8d22;"> (</span><span style="color: #5b8682; text-decoration: underline;">buffer-substring</span><span style="color: #5b8682;"> beg end</span><span style="color: #7f8d22;">)</span> <span style="color: #7f8d22;">replacement-word</span><span style="color: #648daa;">)</span><span style="color: #a38528;">)</span><span style="color: #3d8b85;">)</span><span style="color: #78880e;">)</span>
                     <span style="color: #78880e;">(</span><span style="color: #3d8b85;">lorem-word (</span><span style="color: #a38528;">word</span><span style="color: #3d8b85;">)</span>
                                 <span style="color: #3d8b85;">(</span><span style="color: #a38528; font-weight: bold;">if-let*</span><span style="color: #a38528;"> (</span><span style="color: #648daa;">(</span><span style="color: #7f8d22;">matches (</span><span style="color: #5b8682;">lorem-matches (</span><span style="color: #a38528; text-decoration: underline;">length</span><span style="color: #a38528;"> word</span><span style="color: #5b8682;">)</span><span style="color: #7f8d22;">)</span><span style="color: #648daa;">)</span><span style="color: #a38528;">)</span>
                                     <span style="color: #a38528;">(</span><span style="color: #648daa;">apply-case word (</span><span style="color: #7f8d22; text-decoration: underline;">downcase</span><span style="color: #7f8d22;"> (</span><span style="color: #5b8682; text-decoration: underline;">seq-random-elt</span><span style="color: #5b8682;"> matches</span><span style="color: #7f8d22;">)</span><span style="color: #648daa;">)</span><span style="color: #a38528;">)</span>
@@ -954,7 +967,9 @@ When taking a screenshot, one may not want to reveal the text that is in it.  Ra
               <span style="color: #3d8b85;">(</span><span style="color: #a38528; font-weight: bold;">unless</span><span style="color: #a38528;"> (</span><span style="color: #648daa; text-decoration: underline;">cl-member</span><span style="color: #648daa;"> (</span><span style="color: #7f8d22; text-decoration: underline;">match-string</span><span style="color: #7f8d22;"> 0</span><span style="color: #648daa;">)</span> <span style="color: #648daa;">unpackaged/lorem-ipsum-overlay-exclude</span>
 <span style="color: #648daa;">                                 </span><span style="color: #648daa; font-weight: bold;">:test</span><span style="color: #648daa;"> (</span><span style="color: #7f8d22; font-weight: bold;">lambda</span><span style="color: #7f8d22;"> (</span><span style="color: #5b8682; text-decoration: underline;">string</span><span style="color: #5b8682;"> regexp</span><span style="color: #7f8d22;">)</span>
                                          <span style="color: #7f8d22;">(</span><span style="color: #5b8682; text-decoration: underline;">string-match-p</span><span style="color: #5b8682;"> regexp string</span><span style="color: #7f8d22;">)</span><span style="color: #648daa;">)</span><span style="color: #a38528;">)</span>
-                <span style="color: #a38528;">(</span><span style="color: #648daa;">overlay-match 2</span><span style="color: #a38528;">)</span><span style="color: #3d8b85;">)</span>
+                <span style="color: #a38528;">(</span><span style="color: #648daa; font-weight: bold;">if</span><span style="color: #648daa;"> replace-p</span>
+<span style="color: #648daa;">                    (</span><span style="color: #7f8d22;">replace-group 2</span><span style="color: #648daa;">)</span>
+                  <span style="color: #648daa;">(</span><span style="color: #7f8d22;">overlay-group 2</span><span style="color: #648daa;">)</span><span style="color: #a38528;">)</span><span style="color: #3d8b85;">)</span>
               <span style="color: #3d8b85;">(</span><span style="color: #a38528; text-decoration: underline;">goto-char</span><span style="color: #a38528;"> (</span><span style="color: #648daa; text-decoration: underline;">match-end</span><span style="color: #648daa;"> 2</span><span style="color: #a38528;">)</span><span style="color: #3d8b85;">)</span><span style="color: #78880e;">)</span><span style="color: #3d85b7;">)</span><span style="color: #a17e11;">)</span><span style="color: #3d8b85;">)</span><span style="color: #78880e;">)</span><span style="color: #3d85b7;">)</span><span style="color: #a17e11;">)</span>
 </pre>
 </div>
@@ -2660,7 +2675,7 @@ GPLv3
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Adam Porter</p>
-<p class="date">Created: 2020-11-17 Tue 21:51</p>
+<p class="date">Created: 2020-11-17 Tue 21:57</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

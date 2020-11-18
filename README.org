@@ -573,10 +573,17 @@ When taking a screenshot, one may not want to reveal the text that is in it.  Ra
     :type '(repeat regexp))
 
   ;;;###autoload
-  (defun unpackaged/lorem-ipsum-overlay ()
+  (defun unpackaged/lorem-ipsum-overlay (&optional replace-p)
     "Overlay all text in current buffer with \"lorem ipsum\" text.
   When called again, remove overlays.  Useful for taking
   screenshots without revealing buffer contents.
+
+  If REPLACE-P is non-nil (interactively, with prefix), replace
+  buffer contents rather than overlaying them.  When a buffer is
+  very large and would have so many overlays that performance would
+  be prohibitively slow, you may replace the buffer contents
+  instead.  (Of course, be careful about saving the buffer after
+  replacing its contents.)
 
   Each piece of non-whitespace text in the buffer is compared with
   regexps in `unpackaged/lorem-ipsum-overlay-exclude', and ones
@@ -595,7 +602,7 @@ When taking a screenshot, one may not want to reveal the text that is in it.  Ra
   And the line would be overlaid like:
 
     ,#+TITLE: parturient.et"
-    (interactive)
+    (interactive "P")
     (require 'lorem-ipsum)
     (let ((ovs (overlays-in (point-min) (point-max))))
       (if (cl-loop for ov in ovs
@@ -609,7 +616,7 @@ When taking a screenshot, one may not want to reveal the text that is in it.  Ra
                                       (-flatten it) (apply #'concat it)
                                       (split-string it (rx (or space punct)) 'omit-nulls)))
               (case-fold-search nil))
-          (cl-labels ((overlay-match (group)
+          (cl-labels ((overlay-group (group)
                                      (let* ((beg (match-beginning group))
                                             (end (match-end group))
                                             (replacement-word (lorem-word (match-string group)))
@@ -617,6 +624,12 @@ When taking a screenshot, one may not want to reveal the text that is in it.  Ra
                                        (when replacement-word
                                          (overlay-put ov :lorem-ipsum-overlay t)
                                          (overlay-put ov 'display replacement-word))))
+                      (replace-group (group)
+                                     (let* ((beg (match-beginning group))
+                                            (end (match-end group))
+                                            (replacement-word (lorem-word (match-string group))))
+                                       (when replacement-word
+                                         (setf (buffer-substring beg end) replacement-word))))
                       (lorem-word (word)
                                   (if-let* ((matches (lorem-matches (length word))))
                                       (apply-case word (downcase (seq-random-elt matches)))
@@ -647,7 +660,9 @@ When taking a screenshot, one may not want to reveal the text that is in it.  Ra
                 (unless (cl-member (match-string 0) unpackaged/lorem-ipsum-overlay-exclude
                                    :test (lambda (string regexp)
                                            (string-match-p regexp string)))
-                  (overlay-match 2))
+                  (if replace-p
+                      (replace-group 2)
+                    (overlay-group 2)))
                 (goto-char (match-end 2)))))))))
 #+END_SRC
 
