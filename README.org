@@ -144,8 +144,6 @@ An easy way to "whole-hog it" is to use [[https://framagit.org/steckerhalter/que
     - [[#tasks][Tasks]]
       - [[#instructionsexample][Instructions/example]]
       - [[#make-useful-interactively][Make useful interactively]]
-  - [[#file-local-properties][File-local properties]]
-  - [[#file-local-variables][File-local variables]]
 :END:
 
 
@@ -2253,10 +2251,9 @@ Might be nice to be able to tangle all of the ~unpackaged/~ functions into a sin
 **** TODO Make useful interactively
 
 e.g. it should allow selecting directories, and then presenting the images in them.  Maybe filenames should also be displayed next to each image.  So maybe it should somehow be a wrapper or advice to ~helm-find-files~ or ~helm-comp-read~ that simply adds images to the filename strings.
-
 * COMMENT Config
 :PROPERTIES:
-:TOC:      ignore
+:TOC:      :ignore (this descendants)
 :END:
 
 I love Emacs and Org mode.  This makes it so easy to make the document...alive!  And automated!  Beautiful.
@@ -2265,18 +2262,27 @@ I love Emacs and Org mode.  This makes it so easy to make the document...alive! 
 
 #+PROPERTY: header-args:elisp :tangle unpackaged.el
 
+** Info export options
+
+#+TEXINFO_DIR_CATEGORY: Emacs
+#+TEXINFO_DIR_TITLE: Unpackaged: (unpackaged)
+#+TEXINFO_DIR_DESC: Useful yet unsubstantial Emacs Lisp code
+
+# NOTE: We could use these, but that causes a pointless error, "org-compile-file: File "..README.info" wasn't produced...", so we just rename the files in the after-save-hook instead.
+# #+TEXINFO_FILENAME: unpackaged.info
+# #+EXPORT_FILE_NAME: unpackaged.texi
+
 ** File-local variables
 
 # Local Variables:
 # eval: (require 'org-make-toc)
 # eval: (unpackaged/org-export-html-with-useful-ids-mode 1)
 # before-save-hook: org-make-toc
-# after-save-hook: (lambda nil (org-babel-tangle) (when (org-html-export-to-html) (rename-file "README.html" "index.html" t)))
+# after-save-hook: ((lambda nil (org-babel-tangle) (when (org-html-export-to-html) (rename-file "README.html" "index.html" t))) (lambda nil (when (and (require 'ox-texinfo nil t) (org-texinfo-export-to-info)) (delete-file "README.texi") (rename-file "README.info" "unpackaged.info" t))))
 # org-export-with-properties: ()
 # org-export-with-title: t
 # org-export-with-broken-links: t
 # org-id-link-to-org-use-id: nil
 # org-export-initial-scope: buffer
 # End:
-
 
