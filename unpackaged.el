@@ -1165,11 +1165,58 @@ NAME may be a string or symbol."
              do (--each descs
                   (package-delete it force)))))
 
+(defun unpackaged/reload-package (package &optional allp)
+  "Reload PACKAGE's features.
+If ALLP is non-nil (interactively, with prefix), load all of its
+features; otherwise only load ones that were already loaded.
+
+This is useful to reload a package after upgrading it.  Since a
+package may provide multiple features, to reload it properly
+would require either restarting Emacs or manually unloading and
+reloading each loaded feature.  This automates that process.
+
+Note that this unloads all of the package's symbols before
+reloading.  Any data stored in those symbols will be lost, so if
+the package would normally save that data, e.g. when a mode is
+deactivated or when Emacs exits, the user should do so before
+using this command."
+  (interactive
+   (list (intern (completing-read "Package: "
+                                  (mapcar #'car package-alist) nil t))
+         current-prefix-arg))
+  ;; This finds features in the currently installed version of PACKAGE, so if
+  ;; it provided other features in an older version, those are not unloaded.
+  (when (yes-or-no-p (format "Unload all of %s's symbols and reload its features? " package))
+    (let* ((package-name (symbol-name package))
+           (package-dir (file-name-directory
+                         (locate-file package-name load-path (get-load-suffixes))))
+           (package-files (directory-files package-dir 'full (rx ".el" eos)))
+           (package-features
+            (cl-loop for file in package-files
+                     when (with-temp-buffer
+                            (insert-file-contents file)
+                            (when (re-search-forward (rx bol "(provide" (1+ space)) nil t)
+                              (goto-char (match-beginning 0))
+                              (cadadr (read (current-buffer)))))
+                     collect it)))
+      (unless allp
+        (setf package-features (seq-intersection package-features features)))
+      (dolist (feature package-features)
+        (ignore-errors
+          ;; Ignore error in case it's not loaded.
+          (unload-feature feature 'force)))
+      (dolist (feature package-features)
+        (require feature))
+      (message "Reloaded: %s" (mapconcat #'symbol-name package-features " ")))))
+
 ;;;###autoload
-(defun unpackaged/quelpa-use-package-upgrade ()
+(cl-defun unpackaged/quelpa-use-package-upgrade (&key (reloadp t))
   "Eval the current `use-package' form with `quelpa-upgrade-p' true.
-Deletes the package first to remove obsolete versions."
-  (interactive)
+Delete the package first to remove obsolete versions.  When
+RELOADP is non-nil, reload the package's features after upgrade
+using `unpackaged/reload-package'; otherwise (interactively, with
+prefix), leave old features loaded."
+  (interactive (list :reloadp (not current-prefix-arg)))
   (save-excursion
     (if (or (looking-at (rx "(use-package "))
             (let ((limit (save-excursion
@@ -1181,9 +1228,11 @@ Deletes the package first to remove obsolete versions."
           (pcase-let* ((`(use-package ,package-name . ,rest) (read (current-buffer))))
             (cl-assert package-name nil "Can't determine package name")
             (cl-assert (memq :quelpa rest) nil "`:quelpa' form not found")
-            (unpackaged/package-delete-all-versions package-name 'force))
-          (let ((quelpa-upgrade-p t))
-            (call-interactively #'eval-defun)))
+            (unpackaged/package-delete-all-versions package-name 'force)
+            (let ((quelpa-upgrade-p t))
+              (call-interactively #'eval-defun))
+            (when reloadp
+              (unpackaged/reload-package package-name))))
       (user-error "Not in a `use-package' form"))))
 
 (use-package package
