@@ -110,6 +110,7 @@ An easy way to "whole-hog it" is to use [[https://framagit.org/steckerhalter/que
   - [[#download-and-attach-remote-files][Download and attach remote files]]
   - [[#ensure-blank-lines-between-headings-and-before-contents][Ensure blank lines between headings and before contents]]
   - [[#export-to-html-with-useful-anchors][Export to HTML with useful anchors]]
+  - [[#export-links-compatible-with-github-and-html][Export links compatible with GitHub and HTML]]
   - [[#force-monospace-face-in-tables][Force monospace face in tables]]
   - [[#outline-number-overlays][Outline number overlays]]
   - [[#surround-region-with-emphasis-or-syntax-characters][Surround region with emphasis or syntax characters]]
@@ -1196,6 +1197,73 @@ Note that this is somewhat of a hack, and it probably breaks some feature deep i
             ;; No more ancestors: add and increment a number.
             (inc-suffixf ref)))
         ref)))
+#+END_SRC
+
+** Export links compatible with GitHub and HTML
+
+#+BEGIN_SRC elisp
+  (org-export-define-derived-backend 'github-org-to-html 'html
+    ;; :filters-alist '((:filter-link (lambda (data backend channel)
+    ;; (error "DATA:%S" data))))
+    :translate-alist '((link . ;; (lambda (element contents channel)
+                             ;; (warn "ELEMENT:%S" element)
+                             ;; (error "STOPPED"))
+                             (lambda (element contents channel)
+                               (-let* (((&plist :type :path :raw-link :format :application) (cadr element))
+                                       (a-type (pcase type
+                                                 ("fuzzy" "")
+                                                 ;; ("https" "https")
+                                                 (`nil "")
+                                                 ("custom-id" "#")
+                                                 ("file" "")
+                                                 (_ (concat type ":"))))
+                                       (_ (message "TYPE:%S  PATH:%S  RAW:%S  CONTENTS:%S  FORMAT:%S  APPLICATION:%S  KEYS:%S"
+                                                   type path raw-link (when (stringp contents)
+                                                                        (substring-no-properties contents))
+                                                   format application (map-keys (cadr element))))
+                                       (a-path (pcase type
+                                                 ("fuzzy" path)
+                                                 ("file" (replace-regexp-in-string (rx ".org" eos) ".html" path))
+                                                 ("https" path)
+                                                 ("custom-id" path)
+                                                 (`nil "")
+                                                 (_ path)))
+                                       (a-desc (pcase type
+                                                 ("fuzzy" (if contents
+                                                              raw-link
+                                                            (format "<img src=\"%s\">" a-path)))
+                                                 ("https" raw-link)
+                                                 ("custom-id" (substring-no-properties contents))
+                                                 ;; FIXME: probably not supposed to be an image here.
+                                                 ("file" (if contents
+                                                             (replace-regexp-in-string (rx ".org" eos) "" path)
+                                                           (format "<img src=\"%s\">" a-path)))
+                                                 (`nil raw-link)
+                                                 (_ raw-link))))
+                                 (message "OUTPUT:%S" (format "<a href=\"%s%s\">%s</a>"
+                                                              a-type a-path a-desc))
+                                 (format "<a href=\"%s%s\">%s</a>"
+                                         a-type a-path a-desc)))
+                             ))
+    :menu-entry '(?G "Export to HTML from GitHub-compatible Org file"
+                     ((?o "To file and open"
+                          (lambda (a s v b)
+                            (if a (org-export-github-compatible-to-html t s v)
+                              (org-open-file (org-export-github-compatible-to-html nil s v))))))) )
+
+      (defun org-export-github-compatible-to-html (&optional async subtreep visible-only)
+        ""
+        (interactive)
+        (let ((outfile (org-export-output-file-name ".html" subtreep)))
+          (org-export-to-file 'github-org-to-html outfile async subtreep visible-only)))
+      (org-export-to-buffer 'github-org-to-html "ARGH")
+
+        ;; List of functions applied to a transcoded link.
+        ;; Each filter is called with three arguments: the transcoded data,
+        ;; as a string, the back-end, as a symbol, and the communication
+        ;; channel, as a plist. It must return a string or nil.
+
+        ;; (link (:type "http" :path "//github.com/alphapapa/unpackaged.el" :format bracket :raw-link "http://github.com/alphapapa/unpackaged.el" :application nil :search-option
 #+END_SRC
 
 ** Force monospace face in tables
