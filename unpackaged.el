@@ -39,7 +39,15 @@
 (require 's)
 (require 'use-package)
 
+;;;; Customization
+
+(defgroup unpackaged nil
+  "Options for `unpackaged'."
+  :group 'convenience)
+
 ;;; Faces, fonts
+
+(require 'seq)
 
 (defvar lorem-ipsum-text)
 
@@ -80,6 +88,9 @@ stop selecting fonts."
     (pop-to-buffer (current-buffer))))
 
 ;;; ibuffer
+
+(require 'ibuffer)
+(require 'ibuf-ext)
 
 ;;;###autoload
 (defun unpackaged/ibuffer-toggle-all-filter-groups (toggle-empty)
@@ -136,6 +147,8 @@ With prefix, toggle `ibuffer-show-empty-filter-groups'."
                               (widget-apply widget :custom-set)))))))
 
 ;;; Elfeed
+
+(defvar elfeed-search-filter)
 
 (cl-defmacro unpackaged/elfeed-search-view-hydra-define (name body views)
   "Define a pretty hydra named NAME with BODY and VIEWS.
@@ -384,6 +397,9 @@ And the line would be overlaid like:
                   (overlay-group 2)))
               (goto-char (match-end 2)))))))))
 
+(eval-when-compile
+  (require 'dbus))
+
 (cl-defun unpackaged/mpris-track (&optional player)
   "Return the artist, album, and title of the track playing in MPRIS-supporting player.
 Returns a string in format \"ARTIST - ALBUM: TITLE [PLAYER]\".  If no track is
@@ -420,6 +436,12 @@ output string."
                 "")))))
 
 ;;; Org
+
+(defvar org-agenda-overriding-header)
+(defvar org-agenda-sorting-strategy)
+(defvar org-agenda-restrict)
+(defvar org-agenda-restrict-begin)
+(defvar org-agenda-restrict-end)
 
 ;;;###autoload
 (defun unpackaged/org-agenda-current-subtree-or-region (only-todos)
@@ -733,91 +755,97 @@ exist after each headings's drawers."
                          nil
                        'tree)))
 
-(define-minor-mode unpackaged/org-export-html-with-useful-ids-mode
-  "Attempt to export Org as HTML with useful link IDs.
+(eval-when-compile
+  (require 'easy-mmode)
+  (require 'ox))
+
+(use-package ox
+  :config
+  (define-minor-mode unpackaged/org-export-html-with-useful-ids-mode
+    "Attempt to export Org as HTML with useful link IDs.
 Instead of random IDs like \"#orga1b2c3\", use heading titles,
 made unique when necessary."
-  :global t
-  (if unpackaged/org-export-html-with-useful-ids-mode
-      (advice-add #'org-export-get-reference :override #'unpackaged/org-export-get-reference)
-    (advice-remove #'org-export-get-reference #'unpackaged/org-export-get-reference)))
+    :global t
+    (if unpackaged/org-export-html-with-useful-ids-mode
+        (advice-add #'org-export-get-reference :override #'unpackaged/org-export-get-reference)
+      (advice-remove #'org-export-get-reference #'unpackaged/org-export-get-reference)))
 
-(defun unpackaged/org-export-get-reference (datum info)
-  "Like `org-export-get-reference', except uses heading titles instead of random numbers."
-  (let ((cache (plist-get info :internal-references)))
-    (or (car (rassq datum cache))
-        (let* ((crossrefs (plist-get info :crossrefs))
-               (cells (org-export-search-cells datum))
-               ;; Preserve any pre-existing association between
-               ;; a search cell and a reference, i.e., when some
-               ;; previously published document referenced a location
-               ;; within current file (see
-               ;; `org-publish-resolve-external-link').
-               ;;
-               ;; However, there is no guarantee that search cells are
-               ;; unique, e.g., there might be duplicate custom ID or
-               ;; two headings with the same title in the file.
-               ;;
-               ;; As a consequence, before re-using any reference to
-               ;; an element or object, we check that it doesn't refer
-               ;; to a previous element or object.
-               (new (or (cl-some
-                         (lambda (cell)
-                           (let ((stored (cdr (assoc cell crossrefs))))
-                             (when stored
-                               (let ((old (org-export-format-reference stored)))
-                                 (and (not (assoc old cache)) stored)))))
-                         cells)
-                        (when (org-element-property :raw-value datum)
-                          ;; Heading with a title
-                          (unpackaged/org-export-new-title-reference datum cache))
-                        ;; NOTE: This probably breaks some Org Export
-                        ;; feature, but if it does what I need, fine.
-                        (org-export-format-reference
-                         (org-export-new-reference cache))))
-               (reference-string new))
-          ;; Cache contains both data already associated to
-          ;; a reference and in-use internal references, so as to make
-          ;; unique references.
-          (dolist (cell cells) (push (cons cell new) cache))
-          ;; Retain a direct association between reference string and
-          ;; DATUM since (1) not every object or element can be given
-          ;; a search cell (2) it permits quick lookup.
-          (push (cons reference-string datum) cache)
-          (plist-put info :internal-references cache)
-          reference-string))))
+  (defun unpackaged/org-export-get-reference (datum info)
+    "Like `org-export-get-reference', except uses heading titles instead of random numbers."
+    (let ((cache (plist-get info :internal-references)))
+      (or (car (rassq datum cache))
+          (let* ((crossrefs (plist-get info :crossrefs))
+                 (cells (org-export-search-cells datum))
+                 ;; Preserve any pre-existing association between
+                 ;; a search cell and a reference, i.e., when some
+                 ;; previously published document referenced a location
+                 ;; within current file (see
+                 ;; `org-publish-resolve-external-link').
+                 ;;
+                 ;; However, there is no guarantee that search cells are
+                 ;; unique, e.g., there might be duplicate custom ID or
+                 ;; two headings with the same title in the file.
+                 ;;
+                 ;; As a consequence, before re-using any reference to
+                 ;; an element or object, we check that it doesn't refer
+                 ;; to a previous element or object.
+                 (new (or (cl-some
+                           (lambda (cell)
+                             (let ((stored (cdr (assoc cell crossrefs))))
+                               (when stored
+                                 (let ((old (org-export-format-reference stored)))
+                                   (and (not (assoc old cache)) stored)))))
+                           cells)
+                          (when (org-element-property :raw-value datum)
+                            ;; Heading with a title
+                            (unpackaged/org-export-new-title-reference datum cache))
+                          ;; NOTE: This probably breaks some Org Export
+                          ;; feature, but if it does what I need, fine.
+                          (org-export-format-reference
+                           (org-export-new-reference cache))))
+                 (reference-string new))
+            ;; Cache contains both data already associated to
+            ;; a reference and in-use internal references, so as to make
+            ;; unique references.
+            (dolist (cell cells) (push (cons cell new) cache))
+            ;; Retain a direct association between reference string and
+            ;; DATUM since (1) not every object or element can be given
+            ;; a search cell (2) it permits quick lookup.
+            (push (cons reference-string datum) cache)
+            (plist-put info :internal-references cache)
+            reference-string))))
 
-(defun unpackaged/org-export-new-title-reference (datum cache)
-  "Return new reference for DATUM that is unique in CACHE."
-  (cl-macrolet ((inc-suffixf (place)
-                             `(progn
-                                (string-match (rx bos
-                                                  (minimal-match (group (1+ anything)))
-                                                  (optional "--" (group (1+ digit)))
-                                                  eos)
-                                              ,place)
-                                ;; HACK: `s1' instead of a gensym.
-                                (-let* (((s1 suffix) (list (match-string 1 ,place)
-                                                           (match-string 2 ,place)))
-                                        (suffix (if suffix
-                                                    (string-to-number suffix)
-                                                  0)))
-                                  (setf ,place (format "%s--%s" s1 (cl-incf suffix)))))))
-    (let* ((title (org-element-property :raw-value datum))
-           (ref (url-hexify-string (substring-no-properties title)))
-           (parent (org-element-property :parent datum)))
-      (while (--any (equal ref (car it))
-                    cache)
-        ;; Title not unique: make it so.
-        (if parent
-            ;; Append ancestor title.
-            (setf title (concat (org-element-property :raw-value parent)
-                                "--" title)
-                  ref (url-hexify-string (substring-no-properties title))
-                  parent (org-element-property :parent parent))
-          ;; No more ancestors: add and increment a number.
-          (inc-suffixf ref)))
-      ref)))
+  (defun unpackaged/org-export-new-title-reference (datum cache)
+    "Return new reference for DATUM that is unique in CACHE."
+    (cl-macrolet ((inc-suffixf (place)
+                               `(progn
+                                  (string-match (rx bos
+                                                    (minimal-match (group (1+ anything)))
+                                                    (optional "--" (group (1+ digit)))
+                                                    eos)
+                                                ,place)
+                                  ;; HACK: `s1' instead of a gensym.
+                                  (-let* (((s1 suffix) (list (match-string 1 ,place)
+                                                             (match-string 2 ,place)))
+                                          (suffix (if suffix
+                                                      (string-to-number suffix)
+                                                    0)))
+                                    (setf ,place (format "%s--%s" s1 (cl-incf suffix)))))))
+      (let* ((title (org-element-property :raw-value datum))
+             (ref (url-hexify-string (substring-no-properties title)))
+             (parent (org-element-property :parent datum)))
+        (while (--any (equal ref (car it))
+                      cache)
+          ;; Title not unique: make it so.
+          (if parent
+              ;; Append ancestor title.
+              (setf title (concat (org-element-property :raw-value parent)
+                                  "--" title)
+                    ref (url-hexify-string (substring-no-properties title))
+                    parent (org-element-property :parent parent))
+            ;; No more ancestors: add and increment a number.
+            (inc-suffixf ref)))
+        ref))))
 
 ;;;###autoload
 (define-minor-mode unpackaged/org-table-face-mode
@@ -935,6 +963,10 @@ otherwise call `org-self-insert-command'."
                 collect `(define-key org-mode-map (kbd ,key) #',name))))
 
 (unpackaged/def-org-maybe-surround "~" "=" "*" "/" "+")
+
+(require 'org)
+
+(require 'ts)
 
 ;;;###autoload
 (defun unpackaged/org-refile-to-datetree-using-ts-in-entry (which-ts file &optional subtree-p)
@@ -1209,6 +1241,8 @@ using this command."
         (require feature))
       (message "Reloaded: %s" (mapconcat #'symbol-name package-features " ")))))
 
+(defvar quelpa-upgrade-p)
+
 ;;;###autoload
 (cl-defun unpackaged/quelpa-use-package-upgrade (&key (reloadp t))
   "Eval the current `use-package' form with `quelpa-upgrade-p' true.
@@ -1335,6 +1369,8 @@ buffer, otherwise just change the current paragraph."
 
 (advice-add #'iedit-mode :around #'unpackaged/iedit-scoped)
 
+(defvar flyspell-previous-command)
+
 ;;;###autoload
 (defun unpackaged/iedit-or-flyspell ()
   "Toggle `iedit-mode' or correct previous misspelling with `flyspell', depending on context.
@@ -1364,7 +1400,7 @@ to choose a different correction."
       ;; First correction was not wanted; use popup to choose
       (progn
         (save-excursion
-          (undo))  ; This doesn't move point, which I think may be the problem.
+          (undo)) ; This doesn't move point, which I think may be the problem.
         (flyspell-region (line-beginning-position) (line-end-position))
         (call-interactively 'flyspell-correct-previous-word-generic)))))
 
@@ -1501,7 +1537,7 @@ command was called, go to its unstaged changes section."
   (save-buffer)
   (unpackaged/magit-status))
 
-(use-package hydra)
+(require 'hydra)
 
 (use-package smerge-mode
   :config
@@ -1543,6 +1579,9 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
                                      (unpackaged/smerge-hydra/body)))))
 
 ;;; Web
+
+(eval-when-compile
+  (require 'esxml-query))
 
 ;;;###autoload
 (cl-defun unpackaged/feed-for-url (url &key (prefer 'atom) (all nil))
