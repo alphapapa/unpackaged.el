@@ -1501,8 +1501,9 @@ command was called, go to its unstaged changes section."
   (save-buffer)
   (unpackaged/magit-status))
 
+(use-package hydra)
+
 (use-package smerge-mode
-  :after hydra
   :config
   (defhydra unpackaged/smerge-hydra
     (:color pink :hint nil :post (smerge-auto-leave))

@@ -2084,8 +2084,9 @@ This configuration automatically activates a helpful ~smerge-mode~ hydra when a 
 See these screencasts comparing what it's like to resolve the conflict with [[images/smerge-hydra-vs-ediff.gif][ediff]] and with this [[images/smerge-hydra.gif][smerge-hydra]].
 
 #+BEGIN_SRC elisp
+  (use-package hydra)
+
   (use-package smerge-mode
-    :after hydra
     :config
     (defhydra unpackaged/smerge-hydra
       (:color pink :hint nil :post (smerge-auto-leave))

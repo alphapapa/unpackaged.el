@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-11-21 Sat 06:20 -->
+<!-- 2020-12-15 Tue 18:21 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>unpackaged.el</title>
@@ -1397,7 +1397,7 @@ Download file at <code>URL</code> and attach with <code>org-attach</code>.  Inte
             <span style="color: #3d85b7;">(</span><span style="color: #78880e; font-weight: bold;">setq</span><span style="color: #78880e;"> size (</span><span style="color: #3d8b85; text-decoration: underline;">file-size-human-readable</span>
 <span style="color: #3d8b85;">                        (</span><span style="color: #a38528; text-decoration: underline;">file-attribute-size</span>
 <span style="color: #a38528;">                         (</span><span style="color: #648daa; text-decoration: underline;">file-attributes</span><span style="color: #648daa;"> local-path</span><span style="color: #a38528;">)</span><span style="color: #3d8b85;">)</span><span style="color: #78880e;">)</span><span style="color: #3d85b7;">)</span>
-            <span style="color: #3d85b7;">(</span><span style="color: #78880e; text-decoration: underline;">org-attach-attach</span><span style="color: #78880e;"> local-path nil 'mv</span><span style="color: #3d85b7;">)</span>
+            <span style="color: #3d85b7;">(</span><span style="color: #78880e;">org-attach-attach local-path nil 'mv</span><span style="color: #3d85b7;">)</span>
             <span style="color: #3d85b7;">(</span><span style="color: #78880e; text-decoration: underline;">message</span><span style="color: #78880e;"> </span><span style="color: #921da24c26e6;">"Attached %s (%s)"</span> <span style="color: #78880e;">url size</span><span style="color: #3d85b7;">)</span><span style="color: #a17e11;">)</span>
         <span style="color: #a17e11;">(</span><span style="color: #3d85b7; text-decoration: underline;">delete-directory</span><span style="color: #3d85b7;"> temp-dir</span><span style="color: #a17e11;">)</span><span style="color: #3d8b85;">)</span><span style="color: #78880e;">)</span><span style="color: #3d85b7;">)</span><span style="color: #a17e11;">)</span>
 </pre>
@@ -1819,7 +1819,7 @@ This is sort of like archiving to a datetree, but it uses either the earliest or
 <span style="color: #4d1e63e073ad;">  </span><span style="color: #3d85b7;">(</span><span style="color: #78880e; font-weight: bold;">condition-case</span><span style="color: #78880e;"> err</span>
 <span style="color: #78880e;">      (</span><span style="color: #3d8b85; font-weight: bold;">with-current-buffer</span><span style="color: #3d8b85;"> (</span><span style="color: #a17e11; font-weight: bold;">or</span><span style="color: #a17e11;"> (</span><span style="color: #3d85b7; text-decoration: underline;">org-find-base-buffer-visiting</span><span style="color: #3d85b7;"> file</span><span style="color: #a17e11;">)</span>
                                <span style="color: #a17e11;">(</span><span style="color: #3d85b7; text-decoration: underline;">find-file-noselect</span><span style="color: #3d85b7;"> file</span><span style="color: #a17e11;">)</span><span style="color: #3d8b85;">)</span>
-        <span style="color: #3d8b85;">(</span><span style="color: #a17e11; text-decoration: underline;">org-datetree-file-entry-under</span><span style="color: #a17e11;"> (</span><span style="color: #3d85b7; font-weight: bold;">or</span><span style="color: #3d85b7;"> entry (</span><span style="color: #78880e; text-decoration: underline;">car</span><span style="color: #78880e;"> kill-ring</span><span style="color: #3d85b7;">)</span><span style="color: #a17e11;">)</span> <span style="color: #a17e11;">date</span><span style="color: #3d8b85;">)</span>
+        <span style="color: #3d8b85;">(</span><span style="color: #a17e11;">org-datetree-file-entry-under (</span><span style="color: #3d85b7; font-weight: bold;">or</span><span style="color: #3d85b7;"> entry (</span><span style="color: #78880e; text-decoration: underline;">car</span><span style="color: #78880e;"> kill-ring</span><span style="color: #3d85b7;">)</span><span style="color: #a17e11;">)</span> <span style="color: #a17e11;">date</span><span style="color: #3d8b85;">)</span>
         <span style="color: #3d8b85;">(</span><span style="color: #a17e11; text-decoration: underline;">save-buffer</span><span style="color: #3d8b85;">)</span><span style="color: #78880e;">)</span>
     <span style="color: #78880e;">(</span><span style="color: #3d8b85; font-weight: bold;">error</span><span style="color: #3d8b85;"> (</span><span style="color: #a17e11;">unless entry</span>
 <span style="color: #a17e11;">             (</span><span style="color: #3d85b7; text-decoration: underline;">org-paste-subtree</span><span style="color: #a17e11;">)</span><span style="color: #3d8b85;">)</span>
@@ -2624,8 +2624,9 @@ See these screencasts comparing what it's like to resolve the conflict with and 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #a17e11;">(</span><span style="color: #3d85b7; font-weight: bold;">use-package</span><span style="color: #3d85b7;"> </span><span style="color: #3d85b7; font-weight: bold;">smerge-mode</span>
-<span style="color: #3d85b7;">  </span><span style="color: #3d85b7; font-weight: bold;">:after</span><span style="color: #3d85b7;"> hydra</span>
+<pre class="src src-elisp"><span style="color: #a17e11;">(</span><span style="color: #3d85b7; font-weight: bold;">use-package</span><span style="color: #3d85b7;"> </span><span style="color: #3d85b7; font-weight: bold;">hydra</span><span style="color: #a17e11;">)</span>
+
+<span style="color: #a17e11;">(</span><span style="color: #3d85b7; font-weight: bold;">use-package</span><span style="color: #3d85b7;"> </span><span style="color: #3d85b7; font-weight: bold;">smerge-mode</span>
 <span style="color: #3d85b7;">  </span><span style="color: #3d85b7; font-weight: bold;">:config</span>
 <span style="color: #3d85b7;">  (</span><span style="color: #78880e; font-weight: bold;">defhydra</span><span style="color: #78880e;"> unpackaged/smerge-hydra</span>
 <span style="color: #78880e;">    (</span><span style="color: #3d8b85; font-weight: bold;">:color</span><span style="color: #3d8b85;"> pink </span><span style="color: #3d8b85; font-weight: bold;">:hint</span><span style="color: #3d8b85;"> nil </span><span style="color: #3d8b85; font-weight: bold;">:post</span><span style="color: #3d8b85;"> (</span><span style="color: #a17e11; text-decoration: underline;">smerge-auto-leave</span><span style="color: #3d8b85;">)</span><span style="color: #78880e;">)</span>
@@ -2662,7 +2663,7 @@ See these screencasts comparing what it's like to resolve the conflict with and 
     <span style="color: #78880e;">(</span><span style="color: #65bc957591ca;">"q"</span> <span style="color: #3d8b85;">nil </span><span style="color: #65bc957591ca;">"cancel"</span> <span style="color: #3d8b85; font-weight: bold;">:color</span><span style="color: #3d8b85;"> blue</span><span style="color: #78880e;">)</span><span style="color: #3d85b7;">)</span>
   <span style="color: #3d85b7; font-weight: bold;">:hook</span><span style="color: #3d85b7;"> (</span><span style="color: #78880e; text-decoration: underline;">magit-diff-visit-file</span><span style="color: #78880e;"> . (</span><span style="color: #3d8b85; font-weight: bold;">lambda</span><span style="color: #3d8b85;"> ()</span>
                                    <span style="color: #3d8b85;">(</span><span style="color: #a17e11; font-weight: bold;">when</span><span style="color: #a17e11;"> smerge-mode</span>
-<span style="color: #a17e11;">                                     (</span><span style="color: #3d85b7; text-decoration: underline;">unpackaged/smerge-hydra/body</span><span style="color: #a17e11;">)</span><span style="color: #3d8b85;">)</span><span style="color: #78880e;">)</span><span style="color: #3d85b7;">)</span><span style="color: #a17e11;">)</span>
+<span style="color: #a17e11;">                                     (</span><span style="color: #3d85b7;">unpackaged/smerge-hydra/body</span><span style="color: #a17e11;">)</span><span style="color: #3d8b85;">)</span><span style="color: #78880e;">)</span><span style="color: #3d85b7;">)</span><span style="color: #a17e11;">)</span>
 </pre>
 </div>
 </div>
@@ -2745,7 +2746,7 @@ GPLv3
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Adam Porter</p>
-<p class="date">Created: 2020-11-21 Sat 06:20</p>
+<p class="date">Created: 2020-12-15 Tue 18:21</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
