@@ -145,6 +145,7 @@ An easy way to "whole-hog it" is to use [[https://framagit.org/steckerhalter/que
     - [[#hydra][Hydra]]
 - [[#web][Web]]
   - [[#feed-for-url][feed-for-url]]
+  - [[#customize-themes-faces][customize-themes-faces]]
   - [[#tangle-with-babel][Tangle with Babel]]
   - [[#select-image-with-helm][Select image with Helm]]
     - [[#tasks][Tasks]]
@@ -2238,6 +2239,62 @@ Return ATOM or RSS feed ~URL~ for web page at ~URL~.  Interactively, insert the 
 GPLv3
 
 * COMMENT Tasks / Ideas
+
+** TODO customize-themes-faces
+
+[2020-12-19 Sat 16:18]  See [[https://www.reddit.com/r/emacs/comments/kg8uc7/override_text_color_in_a_color_scheme/ggehxv8/][Override text color in a color scheme : emacs]].
+
+#+BEGIN_SRC elisp
+  (defun unpackaged/customize-themes-faces (themes &rest faces)
+    (declare (indent defun))
+    (unless (listp themes)
+      (setf themes (list themes)))
+    (fset 'unpackaged/enable-theme-advice
+          (lambda (_theme)
+            (when-let ((matching-enabled-themes (seq-intersection custom-enabled-themes themes)))
+              (dolist (theme matching-enabled-themes)
+                ;; Learned this trick from Gustavo Barros at
+                ;; <https://www.reddit.com/r/emacs/comments/kg8uc7/override_text_color_in_a_color_scheme/gge7u8j/>.
+                (apply #'custom-theme-set-faces theme faces)))))
+    (advice-remove #'enable-theme #'unpackaged/enable-theme-advice)
+    (advice-add #'enable-theme :after #'unpackaged/enable-theme-advice))
+
+  (defun unpackaged/customize-themes-faces (themes &rest faces)
+    (declare (indent defun))
+    (unless (listp themes)
+      (setf themes (list themes)))
+    (dolist (customized-theme themes)
+      (let ((fn-name (intern (concat "unpackaged/enable-theme-advice-for-" (symbol-name theme)))))
+        (fset fn-name
+              (lambda (enabled-theme)
+                (when (eq enabled-theme customized-theme)
+                  (apply #'custom-theme-set-faces theme faces))))
+        (advice-remove #'enable-theme fn-name)
+        (advice-add #'enable-theme :after fn-name))))
+
+  (unpackaged/customize-themes-faces 'doom-solarized-dark
+    `(org-list-dt ((t :weight bold)))
+    `(org-link ((t :inherit link :foreground ,(doom-color 'cyan) :weight normal)))
+    `(org-date ((t :weight bold))))
+
+  ;; Probably close to the final version.  Switching back to a single
+  ;; theme as argument (easy enough to call multiple times).
+  (defun unpackaged/customize-theme-faces (theme &rest faces)
+    (declare (indent defun))
+    (when (member theme custom-enabled-themes)
+      ;; Theme already enabled: apply faces now.
+      (let ((custom--inhibit-theme-enable nil))
+        (apply #'custom-theme-set-faces theme faces)))
+    (let ((fn-name (intern (concat "unpackaged/enable-theme-advice-for-" (symbol-name theme)))))
+      ;; Apply advice for next time theme is enabled.
+      (fset fn-name
+            (lambda (enabled-theme)
+              (when (eq enabled-theme theme)
+                (let ((custom--inhibit-theme-enable nil))
+                  (apply #'custom-theme-set-faces theme faces)))))
+      (advice-remove #'enable-theme fn-name)
+      (advice-add #'enable-theme :after fn-name)))
+#+END_SRC
 
 ** MAYBE Tangle with Babel
 
