@@ -146,6 +146,26 @@ With prefix, toggle `ibuffer-show-empty-filter-groups'."
                             (when (eq (widget-get widget :custom-state) 'modified)
                               (widget-apply widget :custom-set)))))))
 
+(defun unpackaged/customize-theme-faces (theme &rest faces)
+  "Customize THEME with FACES.
+Advises `enable-theme' with a function that customizes FACES when
+THEME is enabled.  If THEME is already enabled, also applies
+faces immediately.  Calls `custom-theme-set-faces', which see."
+  (declare (indent defun))
+  (when (member theme custom-enabled-themes)
+    ;; Theme already enabled: apply faces now.
+    (let ((custom--inhibit-theme-enable nil))
+      (apply #'custom-theme-set-faces theme faces)))
+  (let ((fn-name (intern (concat "unpackaged/enable-theme-advice-for-" (symbol-name theme)))))
+    ;; Apply advice for next time theme is enabled.
+    (fset fn-name
+          (lambda (enabled-theme)
+            (when (eq enabled-theme theme)
+              (let ((custom--inhibit-theme-enable nil))
+                (apply #'custom-theme-set-faces theme faces)))))
+    (advice-remove #'enable-theme fn-name)
+    (advice-add #'enable-theme :after fn-name)))
+
 ;;; Elfeed
 
 (defvar elfeed-search-filter)
