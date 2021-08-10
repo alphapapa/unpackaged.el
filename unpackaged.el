@@ -132,6 +132,14 @@ With prefix, toggle `ibuffer-show-empty-filter-groups'."
 
 ;;; Customization
 
+(defun unpackaged/custom-toggle-all-more-hide ()
+  "Toggle all \"More/Hide\" widgets in current buffer."
+  (interactive)
+  (widget-map-buttons (lambda (widget _)
+                        (pcase (widget-get widget :off)
+                          ("More" (widget-apply-action widget)))
+                        nil)))
+
 (use-package cus-edit
   :general
   (:keymaps 'custom-field-keymap

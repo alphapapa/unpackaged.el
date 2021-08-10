@@ -99,6 +99,7 @@ An easy way to "whole-hog it" is to use [[https://framagit.org/steckerhalter/que
   - [[#ibuffer][ibuffer]]
     - [[#filter-groups][Filter groups]]
 - [[#customization][Customization]]
+  - [[#expand-all-options-documentation][Expand all options' documentation]]
   - [[#set-value-of-customization-option-at-point][Set value of customization option at point]]
   - [[#customize-theme-faces][Customize theme faces]]
 - [[#elfeed][Elfeed]]
@@ -290,6 +291,18 @@ These commands toggle and move filter groups.
 #+BEGIN_SRC elisp
   ;;; Customization
 
+#+END_SRC
+
+** Expand all options' documentation
+
+#+BEGIN_SRC elisp
+  (defun unpackaged/custom-toggle-all-more-hide ()
+    "Toggle all \"More/Hide\" widgets in current buffer."
+    (interactive)
+    (widget-map-buttons (lambda (widget _)
+                          (pcase (widget-get widget :off)
+                            ("More" (widget-apply-action widget)))
+                          nil)))
 #+END_SRC
 
 ** Set value of customization option at point
