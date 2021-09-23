@@ -154,6 +154,7 @@ With prefix, toggle `ibuffer-show-empty-filter-groups'."
                             (when (eq (widget-get widget :custom-state) 'modified)
                               (widget-apply widget :custom-set)))))))
 
+;;;###autoload
 (defun unpackaged/customize-theme-faces (theme &rest faces)
   "Customize THEME with FACES.
 Advises `enable-theme' with a function that customizes FACES when

@@ -344,6 +344,7 @@ For example:
 #+END_SRC
 
 #+BEGIN_SRC elisp
+  ;;;###autoload
   (defun unpackaged/customize-theme-faces (theme &rest faces)
     "Customize THEME with FACES.
   Advises `enable-theme' with a function that customizes FACES when
