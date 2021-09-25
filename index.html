@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-09-23 Thu 02:07 -->
+<!-- 2021-09-25 Sat 02:24 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>unpackaged.el</title>
@@ -277,17 +277,45 @@
 <li><a href="#Agenda%20previews">Agenda previews</a></li>
 </ul>
 </li>
+<li><a href="#Miscellaneous">Miscellaneous</a>
+<ul>
 <li><a href="#Convert%20Elisp%20to%20Org%20format">Convert Elisp to Org format&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></a></li>
+</ul>
+</li>
+<li><a href="#Attachments">Attachments&#xa0;&#xa0;&#xa0;<span class="tag"><span class="attachments">attachments</span></span></a>
+<ul>
 <li><a href="#Download%20and%20attach%20remote%20files">Download and attach remote files</a></li>
-<li><a href="#Ensure%20blank%20lines%20between%20headings%20and%20before%20contents">Ensure blank lines between headings and before contents</a></li>
+</ul>
+</li>
+<li><a href="#Exporting">Exporting</a>
+<ul>
 <li><a href="#Export%20to%20HTML%20with%20%2Fuseful%2F%20anchors">Export to HTML with <i>useful</i> anchors</a></li>
+</ul>
+</li>
+<li><a href="#Editing">Editing</a>
+<ul>
+<li><a href="#Ensure%20blank%20lines%20between%20headings%20and%20before%20contents">Ensure blank lines between headings and before contents</a></li>
+<li><a href="#Surround%20region%20with%20emphasis%20or%20syntax%20characters">Surround region with emphasis or syntax characters</a></li>
+<li><a href="#Read-only%20trees">Read-only trees</a></li>
+<li><a href="#~org-return-dwim~"><code>org-return-dwim</code></a></li>
+</ul>
+</li>
+<li><a href="#Display">Display</a>
+<ul>
 <li><a href="#Force%20monospace%20face%20in%20tables">Force monospace face in tables</a></li>
 <li><a href="#Outline%20number%20overlays">Outline number overlays</a></li>
-<li><a href="#Surround%20region%20with%20emphasis%20or%20syntax%20characters">Surround region with emphasis or syntax characters</a></li>
+</ul>
+</li>
+<li><a href="#Refiling">Refiling</a>
+<ul>
 <li><a href="#Refile%20to%20datetree%20file%20using%20earliest%2Flatest%20timestamp%20in%20entry">Refile to datetree file using earliest/latest timestamp in entry</a></li>
-<li><a href="#~org-return-dwim~"><code>org-return-dwim</code></a></li>
-<li><a href="#Read-only%20trees">Read-only trees</a></li>
-<li><a href="#Sort%20tree%20by%20multiple%20methods%20at%20once">Sort tree by multiple methods at once</a></li>
+</ul>
+</li>
+<li><a href="#Sorting">Sorting</a>
+<ul>
+<li><a href="#Recursive%20sorting%20by%20multiple%20keys">Recursive sorting by multiple keys</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#Packages">Packages&#xa0;&#xa0;&#xa0;<span class="tag"><span class="packages">packages</span></span></a>
@@ -1267,9 +1295,13 @@ If UNSAFE is non-nil, assume point is on headline."
 </div>
 </div>
 
-<div id="outline-container-Convert%20Elisp%20to%20Org%20format" class="outline-3">
-<h3 id="Convert%20Elisp%20to%20Org%20format">Convert Elisp to Org format&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></h3>
-<div class="outline-text-3" id="text-Convert%20Elisp%20to%20Org%20format">
+<div id="outline-container-Miscellaneous" class="outline-3">
+<h3 id="Miscellaneous">Miscellaneous</h3>
+<div class="outline-text-3" id="text-Miscellaneous">
+</div>
+<div id="outline-container-Convert%20Elisp%20to%20Org%20format" class="outline-4">
+<h4 id="Convert%20Elisp%20to%20Org%20format">Convert Elisp to Org format&#xa0;&#xa0;&#xa0;<span class="tag"><span class="meta">meta</span></span></h4>
+<div class="outline-text-4" id="text-Convert%20Elisp%20to%20Org%20format">
 <p>
 These functions convert Emacs Lisp code and docstrings to Org-formatted text, helpful for inserting into readme files (like this one).
 </p>
@@ -1440,10 +1472,15 @@ last line."
 </div>
 </div>
 </div>
+</div>
 
-<div id="outline-container-Download%20and%20attach%20remote%20files" class="outline-3">
-<h3 id="Download%20and%20attach%20remote%20files">Download and attach remote files</h3>
-<div class="outline-text-3" id="text-Download%20and%20attach%20remote%20files">
+<div id="outline-container-Attachments" class="outline-3">
+<h3 id="Attachments">Attachments&#xa0;&#xa0;&#xa0;<span class="tag"><span class="attachments">attachments</span></span></h3>
+<div class="outline-text-3" id="text-Attachments">
+</div>
+<div id="outline-container-Download%20and%20attach%20remote%20files" class="outline-4">
+<h4 id="Download%20and%20attach%20remote%20files">Download and attach remote files</h4>
+<div class="outline-text-4" id="text-Download%20and%20attach%20remote%20files">
 <p>
 Download file at <code>URL</code> and attach with <code>org-attach</code>.  Interactively, look for <code>URL</code> at point, in X clipboard, and in kill-ring, prompting if not found.  With prefix, prompt for <code>URL</code>.
 </p>
@@ -1484,60 +1521,15 @@ kill-ring, prompting if not found.  With prefix, prompt for URL."
 </div>
 </div>
 </div>
-
-<div id="outline-container-Ensure%20blank%20lines%20between%20headings%20and%20before%20contents" class="outline-3">
-<h3 id="Ensure%20blank%20lines%20between%20headings%20and%20before%20contents">Ensure blank lines between headings and before contents</h3>
-<div class="outline-text-3" id="text-Ensure%20blank%20lines%20between%20headings%20and%20before%20contents">
-<p>
-Ensure that blank lines exist between headings and between headings and their contents.  With prefix, operate on whole buffer.  Ensures that blank lines exist after each headings's drawers.
-</p>
-
-<p>
-For those who prefer to maintain blank lines between headings, this makes it easy to automatically add them where necessary, to a subtree or the whole buffer.  It also adds blank lines after drawers.  Works well with <a href="#~org-return-dwim~"><code>org-return-dwim</code></a>.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-elisp">;;;###autoload
-(defun unpackaged/org-fix-blank-lines (&amp;optional prefix)
-  "Ensure that blank lines exist between headings and between headings and their contents.
-With prefix, operate on whole buffer. Ensures that blank lines
-exist after each headings's drawers."
-  (interactive "P")
-  (org-map-entries (lambda ()
-		     (org-with-wide-buffer
-		      ;; `org-map-entries' narrows the buffer, which prevents us from seeing
-		      ;; newlines before the current heading, so we do this part widened.
-		      (while (not (looking-back "\n\n" nil))
-			;; Insert blank lines before heading.
-			(insert "\n")))
-		     (let ((end (org-entry-end-position)))
-		       ;; Insert blank lines before entry content
-		       (forward-line)
-		       (while (and (org-at-planning-p)
-				   (&lt; (point) (point-max)))
-			 ;; Skip planning lines
-			 (forward-line))
-		       (while (re-search-forward org-drawer-regexp end t)
-			 ;; Skip drawers. You might think that `org-at-drawer-p' would suffice, but
-			 ;; for some reason it doesn't work correctly when operating on hidden text.
-			 ;; This works, taken from `org-agenda-get-some-entry-text'.
-			 (re-search-forward "^[ \t]*:END:.*\n?" end t)
-			 (goto-char (match-end 0)))
-		       (unless (or (= (point) (point-max))
-				   (org-at-heading-p)
-				   (looking-at-p "\n"))
-			 (insert "\n"))))
-		   t (if prefix
-			 nil
-		       'tree)))
-</pre>
-</div>
-</div>
 </div>
 
-<div id="outline-container-Export%20to%20HTML%20with%20%2Fuseful%2F%20anchors" class="outline-3">
-<h3 id="Export%20to%20HTML%20with%20%2Fuseful%2F%20anchors">Export to HTML with <i>useful</i> anchors</h3>
-<div class="outline-text-3" id="text-Export%20to%20HTML%20with%20%2Fuseful%2F%20anchors">
+<div id="outline-container-Exporting" class="outline-3">
+<h3 id="Exporting">Exporting</h3>
+<div class="outline-text-3" id="text-Exporting">
+</div>
+<div id="outline-container-Export%20to%20HTML%20with%20%2Fuseful%2F%20anchors" class="outline-4">
+<h4 id="Export%20to%20HTML%20with%20%2Fuseful%2F%20anchors">Export to HTML with <i>useful</i> anchors</h4>
+<div class="outline-text-4" id="text-Export%20to%20HTML%20with%20%2Fuseful%2F%20anchors">
 <p>
 This minor mode causes Org HTML export to use heading titles for HTML IDs and anchors.  For example, instead of:
 </p>
@@ -1662,133 +1654,65 @@ made unique when necessary."
 </div>
 </div>
 </div>
+</div>
 
-<div id="outline-container-Force%20monospace%20face%20in%20tables" class="outline-3">
-<h3 id="Force%20monospace%20face%20in%20tables">Force monospace face in tables</h3>
-<div class="outline-text-3" id="text-Force%20monospace%20face%20in%20tables">
+<div id="outline-container-Editing" class="outline-3">
+<h3 id="Editing">Editing</h3>
+<div class="outline-text-3" id="text-Editing">
+</div>
+<div id="outline-container-Ensure%20blank%20lines%20between%20headings%20and%20before%20contents" class="outline-4">
+<h4 id="Ensure%20blank%20lines%20between%20headings%20and%20before%20contents">Ensure blank lines between headings and before contents</h4>
+<div class="outline-text-4" id="text-Ensure%20blank%20lines%20between%20headings%20and%20before%20contents">
 <p>
-If you use variable-pitch (a.k.a. "proportional") fonts in Org buffers (e.g. using <a href="https://github.com/cadadr/elisp/blob/devel/org-variable-pitch.el">org-variable-pitch</a>), you probably use monospace fonts for Org tables, so they align properly.  However, other elements in a table (such as links, or perhaps timestamps) may still use variable-pitch fonts, which breaks alignment.  This code fixes that by forcibly applying the <code>org-table</code> face family to entire Org tables (which are detected by finding existing text with the <code>org-table</code> face, which makes use of Org's built-in fontification).
+Ensure that blank lines exist between headings and between headings and their contents.  With prefix, operate on whole buffer.  Ensures that blank lines exist after each headings's drawers.
 </p>
 
 <p>
-To use, activate <code>unpackaged/org-table-face-mode</code>.  You may want to add it to <code>org-mode-hook</code>.
+For those who prefer to maintain blank lines between headings, this makes it easy to automatically add them where necessary, to a subtree or the whole buffer.  It also adds blank lines after drawers.  Works well with <a href="#~org-return-dwim~"><code>org-return-dwim</code></a>.
 </p>
 
 <div class="org-src-container">
 <pre class="src src-elisp">;;;###autoload
-(define-minor-mode unpackaged/org-table-face-mode
-  "Apply `org-table' face family to all text in Org tables.
-Useful for forcibly applying the face to portions of table data
-that might have a different face, which could affect alignment."
-  :global nil
-  (let ((keywords '((unpackaged/org-table-face-matcher 0 'org-table))))
-    (if unpackaged/org-table-face-mode
-	(font-lock-add-keywords nil keywords 'append)
-      (font-lock-remove-keywords nil keywords))
-    (font-lock-flush)))
-
-(cl-defun unpackaged/org-table-face-matcher
-    (limit &amp;optional (face `(:family ,(face-attribute 'org-table :family))))
-  "Apply FACE to entire Org tables.
-A `font-lock-keywords' function that searches up to LIMIT."
-  (cl-flet* ((find-face (face &amp;optional limit not)
-			;; Return next position up to LIMIT that has FACE, or doesn't if NOT.
-			(cl-loop with prev-pos
-				 with pos = (point)
-				 while (not (eobp))
-				 do (setf pos (next-single-property-change pos 'face nil limit))
-				 while (and pos (not (equal pos prev-pos)))
-				 for face-at = (get-text-property pos 'face)
-				 for face-matches-p = (or (eq face-at face)
-							  (when (listp face-at)
-							    (member face face-at)))
-				 when (or (and not (not face-matches-p))
-					  face-matches-p)
-				 return pos
-				 do (setf prev-pos pos)))
-	     (apply-face-from (pos face)
-			      (unless (eobp)
-				(let* ((property-at-start (get-text-property pos 'face))
-				       (table-face-start (if (or (eq property-at-start 'org-table)
-								 (when (listp property-at-start)
-								   (member 'org-table property-at-start)))
-							     (point)
-							   (find-face 'org-table limit)))
-				       table-face-end)
-				  (when table-face-start
-				    (goto-char table-face-start)
-				    (setf table-face-end (line-end-position))
-				    (add-face-text-property table-face-start table-face-end face)
-				    (goto-char table-face-end))))))
-    (cl-loop with applied-p
-	     for applied = (apply-face-from (point) face)
-	     when applied
-	     do (setf applied-p t)
-	     while applied
-	     finally return applied-p)))
+(defun unpackaged/org-fix-blank-lines (&amp;optional prefix)
+  "Ensure that blank lines exist between headings and between headings and their contents.
+With prefix, operate on whole buffer. Ensures that blank lines
+exist after each headings's drawers."
+  (interactive "P")
+  (org-map-entries (lambda ()
+		     (org-with-wide-buffer
+		      ;; `org-map-entries' narrows the buffer, which prevents us from seeing
+		      ;; newlines before the current heading, so we do this part widened.
+		      (while (not (looking-back "\n\n" nil))
+			;; Insert blank lines before heading.
+			(insert "\n")))
+		     (let ((end (org-entry-end-position)))
+		       ;; Insert blank lines before entry content
+		       (forward-line)
+		       (while (and (org-at-planning-p)
+				   (&lt; (point) (point-max)))
+			 ;; Skip planning lines
+			 (forward-line))
+		       (while (re-search-forward org-drawer-regexp end t)
+			 ;; Skip drawers. You might think that `org-at-drawer-p' would suffice, but
+			 ;; for some reason it doesn't work correctly when operating on hidden text.
+			 ;; This works, taken from `org-agenda-get-some-entry-text'.
+			 (re-search-forward "^[ \t]*:END:.*\n?" end t)
+			 (goto-char (match-end 0)))
+		       (unless (or (= (point) (point-max))
+				   (org-at-heading-p)
+				   (looking-at-p "\n"))
+			 (insert "\n"))))
+		   t (if prefix
+			 nil
+		       'tree)))
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-Outline%20number%20overlays" class="outline-3">
-<h3 id="Outline%20number%20overlays">Outline number overlays</h3>
-<div class="outline-text-3" id="text-Outline%20number%20overlays">
-<p>
-This command displays outline numbers (like the ones used when exporting) in a buffer as overlays at the beginning of each heading.  It doesn't update automatically, so it must be called when the outline structure changes.
-</p>
-
-<p>
-
-</p>
-
-<div class="org-src-container">
-<pre class="src src-elisp">(defun unpackaged/org-outline-numbers (&amp;optional remove-p)
-  "Add outline number overlays to the current buffer.
-When REMOVE-P is non-nil (interactively, with prefix), remove
-them.  Overlays are not automatically updated when the outline
-structure changes."
-  ;; NOTE: This does not necessarily play nicely with org-indent-mode
-  ;; or org-bullets, but it probably wouldn't be too hard to fix that.
-  (interactive (list current-prefix-arg))
-  (cl-labels ((heading-number ()
-	       (or (when-let ((num (previous-sibling-number)))
-		     (1+ num))
-		   1))
-	      (previous-sibling-number ()
-	       (save-excursion
-		 (let ((pos (point)))
-		   (org-backward-heading-same-level 1)
-		   (when (/= pos (point))
-		     (heading-number)))))
-	      (number-list ()
-	       (let ((ancestor-numbers (save-excursion
-					 (cl-loop while (org-up-heading-safe)
-						  collect (heading-number)))))
-		 (nreverse (cons (heading-number) ancestor-numbers))))
-	      (add-overlay ()
-	       (let* ((ov-length (org-current-level))
-		      (ov (make-overlay (point) (+ (point) ov-length)))
-		      (ov-string (concat (mapconcat #'number-to-string (number-list) ".")
-					 ".")))
-		 (overlay-put ov 'org-outline-numbers t)
-		 (overlay-put ov 'display ov-string))))
-    (remove-overlays nil nil 'org-outline-numbers t)
-    (unless remove-p
-      (org-with-wide-buffer
-       (goto-char (point-min))
-       (when (org-before-first-heading-p)
-	 (outline-next-heading))
-       (cl-loop do (add-overlay)
-		while (outline-next-heading))))))
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-Surround%20region%20with%20emphasis%20or%20syntax%20characters" class="outline-3">
-<h3 id="Surround%20region%20with%20emphasis%20or%20syntax%20characters">Surround region with emphasis or syntax characters</h3>
-<div class="outline-text-3" id="text-Surround%20region%20with%20emphasis%20or%20syntax%20characters">
+<div id="outline-container-Surround%20region%20with%20emphasis%20or%20syntax%20characters" class="outline-4">
+<h4 id="Surround%20region%20with%20emphasis%20or%20syntax%20characters">Surround region with emphasis or syntax characters</h4>
+<div class="outline-text-4" id="text-Surround%20region%20with%20emphasis%20or%20syntax%20characters">
 <p>
 Define and bind interactive commands for each of <code>KEYS</code> that surround the region or insert text.  Commands are bound in <code>org-mode-map</code> to each of <code>KEYS</code>.  If the region is active, commands surround it with the key character, otherwise call <code>org-self-insert-command</code>.
 </p>
@@ -1831,97 +1755,66 @@ Used like:
 </div>
 </div>
 
-<div id="outline-container-Refile%20to%20datetree%20file%20using%20earliest%2Flatest%20timestamp%20in%20entry" class="outline-3">
-<h3 id="Refile%20to%20datetree%20file%20using%20earliest%2Flatest%20timestamp%20in%20entry">Refile to datetree file using earliest/latest timestamp in entry</h3>
-<div class="outline-text-3" id="text-Refile%20to%20datetree%20file%20using%20earliest%2Flatest%20timestamp%20in%20entry">
+<div id="outline-container-Read-only%20trees" class="outline-4">
+<h4 id="Read-only%20trees">Read-only trees</h4>
+<div class="outline-text-4" id="text-Read-only%20trees">
 <p>
-Refile current entry to datetree using timestamp found in entry.  <code>WHICH</code> should be <code>earliest</code> or <code>latest</code>. If <code>SUBTREE</code>-P is non-nil, search whole subtree.
+This code applies the <code>read-only</code> text-property to trees tagged <code>read_only</code>, preventing them from being modified accidentally.  (Note: If read-only headings appear in an Agenda buffer, it can cause slightly unusual behavior.  Usually this is not an issue.)  This was originally inspired by John Kitchin's <a href="http://kitchingroup.cheme.cmu.edu/blog/2014/09/13/Make-some-org-sections-read-only/">blog article</a> and later <a href="https://www.reddit.com/r/emacs/comments/92k7n1/guide_to_profiling_and_optimizing_an_orgrelated/">rewritten</a> in a faster version.
 </p>
 
 <p>
-This is sort of like archiving to a datetree, but it uses either the earliest or latest timestamp found in the entry or subtree rather than the current date.  It's helpful if you have an entry with lots of timestamps or log entries, and you're done with it, and you want to file it in a datetree in a leaf matching either when you started working on the entry or when you finished, using the first or last timestamp found anywhere in the entry.
-</p>
-
-<p>
-<i>Note:</i> If you can think of a more concise name for this command, please send it in!
-</p>
-
-<p>
-<b>Requires:</b> <a href="https://github.com/alphapapa/ts.el">ts</a>
+To use, load these functions, and then add to this hook to automatically mark read-only sections when an Org file is loaded:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-elisp">(require 'org)
+<pre class="src src-elisp">(add-hook 'org-mode-hook 'unpackaged/org-mark-read-only)
+</pre>
+</div>
 
-(require 'ts)
+<p>
+The functions may also be called interactively as needed.
+</p>
 
-;;;###autoload
-(defun unpackaged/org-refile-to-datetree-using-ts-in-entry (which-ts file &amp;optional subtree-p)
-  "Refile current entry to datetree in FILE using timestamp found in entry.
-WHICH should be `earliest' or `latest'. If SUBTREE-P is non-nil,
-search whole subtree."
-  (interactive (list (intern (completing-read "Which timestamp? " '(earliest latest)))
-		     (read-file-name "File: " (concat org-directory "/") nil 'mustmatch nil
-				     (lambda (filename)
-				       (string-suffix-p ".org" filename)))
-		     current-prefix-arg))
-  (require 'ts)
-  (let* ((sorter (pcase which-ts
-		   ('earliest #'ts&lt;)
-		   ('latest #'ts&gt;)))
-	 (tss (unpackaged/org-timestamps-in-entry subtree-p))
-	 (ts (car (sort tss sorter)))
-	 (date (list (ts-month ts) (ts-day ts) (ts-year ts))))
-    (unpackaged/org-refile-to-datetree file :date date)))
+<div class="org-src-container">
+<pre class="src src-elisp">(defun unpackaged/org-next-heading-tagged (tag)
+  "Move to beginning of next heading tagged with TAG and return point, or return nil if none found."
+  (when (re-search-forward (rx-to-string `(seq bol (1+ "*") (1+ blank) (optional (1+ not-newline) (1+ blank))
+					       ;; Beginning of tags
+					       ":"
+					       ;; Possible other tags
+					       (0+ (seq (1+ (not (any ":" blank))) ":") )
+					       ;; The tag that matters
+					       ,tag ":"))
+			   nil 'noerror)
+    (goto-char (match-beginning 0))))
 
-;;;###autoload
-(defun unpackaged/org-timestamps-in-entry (&amp;optional subtree-p)
-  "Return timestamp objects for all Org timestamps in entry.
- If SUBTREE-P is non-nil (interactively, with prefix), search
- whole subtree."
-  (interactive (list current-prefix-arg))
-  (save-excursion
-    (let* ((beg (org-entry-beginning-position))
-	   (end (if subtree-p
-		    (org-end-of-subtree)
-		  (org-entry-end-position))))
-      (goto-char beg)
-      (cl-loop while (re-search-forward org-tsr-regexp-both end t)
-	       collect (ts-parse-org (match-string 0))))))
+  ;;;###autoload
+(defun unpackaged/org-mark-read-only ()
+  "Mark all entries in the buffer tagged \"read_only\" with read-only text properties."
+  (interactive)
+  (org-with-wide-buffer
+   (goto-char (point-min))
+   (while (unpackaged/org-next-heading-tagged "read_only")
+     (add-text-properties (point) (org-end-of-subtree t)
+			  '(read-only t)))))
 
-;;;###autoload
-(cl-defun unpackaged/org-refile-to-datetree (file &amp;key (date (calendar-current-date)) entry)
-  "Refile ENTRY or current node to entry for DATE in datetree in FILE.
-DATE should be a list of (MONTH DAY YEAR) integers, e.g. as
-returned by `calendar-current-date'."
-  (interactive (list (read-file-name "File: " (concat org-directory "/") nil 'mustmatch nil
-				     (lambda (filename)
-				       (string-suffix-p ".org" filename)))))
-  ;; If org-datetree isn't loaded, it will cut the tree but not file
-  ;; it anywhere, losing data. I don't know why
-  ;; org-datetree-file-entry-under is in a separate package, not
-  ;; loaded with the rest of org-mode.
-  (require 'org-datetree)
-  (unless entry
-    (org-cut-subtree))
-  ;; Using a condition-case to be extra careful. In case the refile
-  ;; fails in any way, put cut subtree back.
-  (condition-case err
-      (with-current-buffer (or (org-find-base-buffer-visiting file)
-			       (find-file-noselect file))
-	(org-datetree-file-entry-under (or entry (car kill-ring)) date)
-	(save-buffer))
-    (error (unless entry
-	     (org-paste-subtree))
-	   (message "Unable to refile! %s" err))))
+(defun unpackaged/org-remove-read-only ()
+  "Remove read-only text properties from Org entries tagged \"read_only\" in current buffer."
+  (interactive)
+  (let ((inhibit-read-only t))
+    (org-with-wide-buffer
+     (goto-char (point-min))
+     (while (unpackaged/org-next-heading-tagged "read_only")
+       (remove-text-properties (point) (org-end-of-subtree t)
+			       '(read-only t))))))
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-~org-return-dwim~" class="outline-3">
-<h3 id="~org-return-dwim~"><code>org-return-dwim</code></h3>
-<div class="outline-text-3" id="text-~org-return-dwim~">
+<div id="outline-container-~org-return-dwim~" class="outline-4">
+<h4 id="~org-return-dwim~"><code>org-return-dwim</code></h4>
+<div class="outline-text-4" id="text-~org-return-dwim~">
 <p>
 A helpful replacement for <code>org-return</code>.  With prefix, call <code>org-return</code>.
 </p>
@@ -2035,85 +1928,322 @@ appropriate.  In tables, insert a new row or end the table."
 </div>
 </div>
 </div>
+</div>
 
-<div id="outline-container-Read-only%20trees" class="outline-3">
-<h3 id="Read-only%20trees">Read-only trees</h3>
-<div class="outline-text-3" id="text-Read-only%20trees">
+<div id="outline-container-Display" class="outline-3">
+<h3 id="Display">Display</h3>
+<div class="outline-text-3" id="text-Display">
+</div>
+<div id="outline-container-Force%20monospace%20face%20in%20tables" class="outline-4">
+<h4 id="Force%20monospace%20face%20in%20tables">Force monospace face in tables</h4>
+<div class="outline-text-4" id="text-Force%20monospace%20face%20in%20tables">
 <p>
-This code applies the <code>read-only</code> text-property to trees tagged <code>read_only</code>, preventing them from being modified accidentally.  (Note: If read-only headings appear in an Agenda buffer, it can cause slightly unusual behavior.  Usually this is not an issue.)  This was originally inspired by John Kitchin's <a href="http://kitchingroup.cheme.cmu.edu/blog/2014/09/13/Make-some-org-sections-read-only/">blog article</a> and later <a href="https://www.reddit.com/r/emacs/comments/92k7n1/guide_to_profiling_and_optimizing_an_orgrelated/">rewritten</a> in a faster version.
+If you use variable-pitch (a.k.a. "proportional") fonts in Org buffers (e.g. using <a href="https://github.com/cadadr/elisp/blob/devel/org-variable-pitch.el">org-variable-pitch</a>), you probably use monospace fonts for Org tables, so they align properly.  However, other elements in a table (such as links, or perhaps timestamps) may still use variable-pitch fonts, which breaks alignment.  This code fixes that by forcibly applying the <code>org-table</code> face family to entire Org tables (which are detected by finding existing text with the <code>org-table</code> face, which makes use of Org's built-in fontification).
 </p>
 
 <p>
-To use, load these functions, and then add to this hook to automatically mark read-only sections when an Org file is loaded:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-elisp">(add-hook 'org-mode-hook 'unpackaged/org-mark-read-only)
-</pre>
-</div>
-
-<p>
-The functions may also be called interactively as needed.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-elisp">(defun unpackaged/org-next-heading-tagged (tag)
-  "Move to beginning of next heading tagged with TAG and return point, or return nil if none found."
-  (when (re-search-forward (rx-to-string `(seq bol (1+ "*") (1+ blank) (optional (1+ not-newline) (1+ blank))
-					       ;; Beginning of tags
-					       ":"
-					       ;; Possible other tags
-					       (0+ (seq (1+ (not (any ":" blank))) ":") )
-					       ;; The tag that matters
-					       ,tag ":"))
-			   nil 'noerror)
-    (goto-char (match-beginning 0))))
-
-  ;;;###autoload
-(defun unpackaged/org-mark-read-only ()
-  "Mark all entries in the buffer tagged \"read_only\" with read-only text properties."
-  (interactive)
-  (org-with-wide-buffer
-   (goto-char (point-min))
-   (while (unpackaged/org-next-heading-tagged "read_only")
-     (add-text-properties (point) (org-end-of-subtree t)
-			  '(read-only t)))))
-
-(defun unpackaged/org-remove-read-only ()
-  "Remove read-only text properties from Org entries tagged \"read_only\" in current buffer."
-  (interactive)
-  (let ((inhibit-read-only t))
-    (org-with-wide-buffer
-     (goto-char (point-min))
-     (while (unpackaged/org-next-heading-tagged "read_only")
-       (remove-text-properties (point) (org-end-of-subtree t)
-			       '(read-only t))))))
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-Sort%20tree%20by%20multiple%20methods%20at%20once" class="outline-3">
-<h3 id="Sort%20tree%20by%20multiple%20methods%20at%20once">Sort tree by multiple methods at once</h3>
-<div class="outline-text-3" id="text-Sort%20tree%20by%20multiple%20methods%20at%20once">
-<p>
-Call <code>org-sort-entries</code> with multiple sorting methods specified in <code>KEYS</code>.
-</p>
-
-<p>
-This is much easier than doing <kbd>C-c ^ KEY</kbd> several times in a row.
+To use, activate <code>unpackaged/org-table-face-mode</code>.  You may want to add it to <code>org-mode-hook</code>.
 </p>
 
 <div class="org-src-container">
 <pre class="src src-elisp">;;;###autoload
-(defun unpackaged/org-sort-multi ()
-  "Call `org-sort' until \\[keyboard-quit] is pressed."
-  (interactive)
-  ;; Not sure if `with-local-quit' is necessary, but probably a good
-  ;; idea in case of recursive edit.
-  (with-local-quit
-    (cl-loop while (call-interactively #'org-sort))))
+(define-minor-mode unpackaged/org-table-face-mode
+  "Apply `org-table' face family to all text in Org tables.
+Useful for forcibly applying the face to portions of table data
+that might have a different face, which could affect alignment."
+  :global nil
+  (let ((keywords '((unpackaged/org-table-face-matcher 0 'org-table))))
+    (if unpackaged/org-table-face-mode
+	(font-lock-add-keywords nil keywords 'append)
+      (font-lock-remove-keywords nil keywords))
+    (font-lock-flush)))
+
+(cl-defun unpackaged/org-table-face-matcher
+    (limit &amp;optional (face `(:family ,(face-attribute 'org-table :family))))
+  "Apply FACE to entire Org tables.
+A `font-lock-keywords' function that searches up to LIMIT."
+  (cl-flet* ((find-face (face &amp;optional limit not)
+			;; Return next position up to LIMIT that has FACE, or doesn't if NOT.
+			(cl-loop with prev-pos
+				 with pos = (point)
+				 while (not (eobp))
+				 do (setf pos (next-single-property-change pos 'face nil limit))
+				 while (and pos (not (equal pos prev-pos)))
+				 for face-at = (get-text-property pos 'face)
+				 for face-matches-p = (or (eq face-at face)
+							  (when (listp face-at)
+							    (member face face-at)))
+				 when (or (and not (not face-matches-p))
+					  face-matches-p)
+				 return pos
+				 do (setf prev-pos pos)))
+	     (apply-face-from (pos face)
+			      (unless (eobp)
+				(let* ((property-at-start (get-text-property pos 'face))
+				       (table-face-start (if (or (eq property-at-start 'org-table)
+								 (when (listp property-at-start)
+								   (member 'org-table property-at-start)))
+							     (point)
+							   (find-face 'org-table limit)))
+				       table-face-end)
+				  (when table-face-start
+				    (goto-char table-face-start)
+				    (setf table-face-end (line-end-position))
+				    (add-face-text-property table-face-start table-face-end face)
+				    (goto-char table-face-end))))))
+    (cl-loop with applied-p
+	     for applied = (apply-face-from (point) face)
+	     when applied
+	     do (setf applied-p t)
+	     while applied
+	     finally return applied-p)))
 </pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-Outline%20number%20overlays" class="outline-4">
+<h4 id="Outline%20number%20overlays">Outline number overlays</h4>
+<div class="outline-text-4" id="text-Outline%20number%20overlays">
+<p>
+This command displays outline numbers (like the ones used when exporting) in a buffer as overlays at the beginning of each heading.  It doesn't update automatically, so it must be called when the outline structure changes.
+</p>
+
+<p>
+
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(defun unpackaged/org-outline-numbers (&amp;optional remove-p)
+  "Add outline number overlays to the current buffer.
+When REMOVE-P is non-nil (interactively, with prefix), remove
+them.  Overlays are not automatically updated when the outline
+structure changes."
+  ;; NOTE: This does not necessarily play nicely with org-indent-mode
+  ;; or org-bullets, but it probably wouldn't be too hard to fix that.
+  (interactive (list current-prefix-arg))
+  (cl-labels ((heading-number ()
+	       (or (when-let ((num (previous-sibling-number)))
+		     (1+ num))
+		   1))
+	      (previous-sibling-number ()
+	       (save-excursion
+		 (let ((pos (point)))
+		   (org-backward-heading-same-level 1)
+		   (when (/= pos (point))
+		     (heading-number)))))
+	      (number-list ()
+	       (let ((ancestor-numbers (save-excursion
+					 (cl-loop while (org-up-heading-safe)
+						  collect (heading-number)))))
+		 (nreverse (cons (heading-number) ancestor-numbers))))
+	      (add-overlay ()
+	       (let* ((ov-length (org-current-level))
+		      (ov (make-overlay (point) (+ (point) ov-length)))
+		      (ov-string (concat (mapconcat #'number-to-string (number-list) ".")
+					 ".")))
+		 (overlay-put ov 'org-outline-numbers t)
+		 (overlay-put ov 'display ov-string))))
+    (remove-overlays nil nil 'org-outline-numbers t)
+    (unless remove-p
+      (org-with-wide-buffer
+       (goto-char (point-min))
+       (when (org-before-first-heading-p)
+	 (outline-next-heading))
+       (cl-loop do (add-overlay)
+		while (outline-next-heading))))))
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-Refiling" class="outline-3">
+<h3 id="Refiling">Refiling</h3>
+<div class="outline-text-3" id="text-Refiling">
+</div>
+<div id="outline-container-Refile%20to%20datetree%20file%20using%20earliest%2Flatest%20timestamp%20in%20entry" class="outline-4">
+<h4 id="Refile%20to%20datetree%20file%20using%20earliest%2Flatest%20timestamp%20in%20entry">Refile to datetree file using earliest/latest timestamp in entry</h4>
+<div class="outline-text-4" id="text-Refile%20to%20datetree%20file%20using%20earliest%2Flatest%20timestamp%20in%20entry">
+<p>
+Refile current entry to datetree using timestamp found in entry.  <code>WHICH</code> should be <code>earliest</code> or <code>latest</code>. If <code>SUBTREE</code>-P is non-nil, search whole subtree.
+</p>
+
+<p>
+This is sort of like archiving to a datetree, but it uses either the earliest or latest timestamp found in the entry or subtree rather than the current date.  It's helpful if you have an entry with lots of timestamps or log entries, and you're done with it, and you want to file it in a datetree in a leaf matching either when you started working on the entry or when you finished, using the first or last timestamp found anywhere in the entry.
+</p>
+
+<p>
+<i>Note:</i> If you can think of a more concise name for this command, please send it in!
+</p>
+
+<p>
+<b>Requires:</b> <a href="https://github.com/alphapapa/ts.el">ts</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(require 'org)
+
+(require 'ts)
+
+;;;###autoload
+(defun unpackaged/org-refile-to-datetree-using-ts-in-entry (which-ts file &amp;optional subtree-p)
+  "Refile current entry to datetree in FILE using timestamp found in entry.
+WHICH should be `earliest' or `latest'. If SUBTREE-P is non-nil,
+search whole subtree."
+  (interactive (list (intern (completing-read "Which timestamp? " '(earliest latest)))
+		     (read-file-name "File: " (concat org-directory "/") nil 'mustmatch nil
+				     (lambda (filename)
+				       (string-suffix-p ".org" filename)))
+		     current-prefix-arg))
+  (require 'ts)
+  (let* ((sorter (pcase which-ts
+		   ('earliest #'ts&lt;)
+		   ('latest #'ts&gt;)))
+	 (tss (unpackaged/org-timestamps-in-entry subtree-p))
+	 (ts (car (sort tss sorter)))
+	 (date (list (ts-month ts) (ts-day ts) (ts-year ts))))
+    (unpackaged/org-refile-to-datetree file :date date)))
+
+;;;###autoload
+(defun unpackaged/org-timestamps-in-entry (&amp;optional subtree-p)
+  "Return timestamp objects for all Org timestamps in entry.
+ If SUBTREE-P is non-nil (interactively, with prefix), search
+ whole subtree."
+  (interactive (list current-prefix-arg))
+  (save-excursion
+    (let* ((beg (org-entry-beginning-position))
+	   (end (if subtree-p
+		    (org-end-of-subtree)
+		  (org-entry-end-position))))
+      (goto-char beg)
+      (cl-loop while (re-search-forward org-tsr-regexp-both end t)
+	       collect (ts-parse-org (match-string 0))))))
+
+;;;###autoload
+(cl-defun unpackaged/org-refile-to-datetree (file &amp;key (date (calendar-current-date)) entry)
+  "Refile ENTRY or current node to entry for DATE in datetree in FILE.
+DATE should be a list of (MONTH DAY YEAR) integers, e.g. as
+returned by `calendar-current-date'."
+  (interactive (list (read-file-name "File: " (concat org-directory "/") nil 'mustmatch nil
+				     (lambda (filename)
+				       (string-suffix-p ".org" filename)))))
+  ;; If org-datetree isn't loaded, it will cut the tree but not file
+  ;; it anywhere, losing data. I don't know why
+  ;; org-datetree-file-entry-under is in a separate package, not
+  ;; loaded with the rest of org-mode.
+  (require 'org-datetree)
+  (unless entry
+    (org-cut-subtree))
+  ;; Using a condition-case to be extra careful. In case the refile
+  ;; fails in any way, put cut subtree back.
+  (condition-case err
+      (with-current-buffer (or (org-find-base-buffer-visiting file)
+			       (find-file-noselect file))
+	(org-datetree-file-entry-under (or entry (car kill-ring)) date)
+	(save-buffer))
+    (error (unless entry
+	     (org-paste-subtree))
+	   (message "Unable to refile! %s" err))))
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-Sorting" class="outline-3">
+<h3 id="Sorting">Sorting</h3>
+<div class="outline-text-3" id="text-Sorting">
+</div>
+<div id="outline-container-Recursive%20sorting%20by%20multiple%20keys" class="outline-4">
+<h4 id="Recursive%20sorting%20by%20multiple%20keys">Recursive sorting by multiple keys</h4>
+<div class="outline-text-4" id="text-Recursive%20sorting%20by%20multiple%20keys">
+<p>
+Call <code>org-sort-entries</code> recursively on tree at point by <code>keys</code>.  <code>keys</code> is a list of characters passed as the <code>sorting-type</code> argument to <code>org-sort-entries</code>, which see.
+</p>
+
+<p>
+Suitable for use in a <code>before-save-hook</code>, like:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-org"># Local Variables:
+# before-save-hook: ((unpackaged/org-sort-recursive '(?a ?p ?o)))
+# End:
+</pre>
+</div>
+
+<p>
+<b>NOTE:</b> This doesn't work yet.  Sorting gets undone while reading the sort keys.  This is so awkward.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">;;;###autoload
+(defun unpackaged/org-sort-recursive (keys)
+  "Call `org-sort-entries' recursively on tree at point by KEYS.
+KEYS is a list of characters passed as the SORTING-TYPE argument
+to `org-sort-entries', which see."
+  (interactive
+   (list (let (keys)
+	   (save-excursion
+	     (cl-loop while (progn
+			      ;; HACK: Call the sort function just to get the key, then undo its changes.
+			      (cl-letf* ((old-fn (symbol-function 'read-char-exclusive))
+					 ((symbol-function 'read-char-exclusive)
+					  (lambda (&amp;rest args)
+					    (car (push (apply #'funcall old-fn args) keys)))))
+				;; Sort the first heading and save the sort key.
+				(let ((modified-tick (buffer-modified-tick)))
+				  (condition-case nil
+				      (progn
+					(with-local-quit
+					  (org-sort-entries))
+					(unless (equal modified-tick (buffer-modified-tick))
+					  (undo-only)))
+				    (user-error nil))))
+			      t)))
+	   (nreverse keys))))
+  (cl-macrolet ((moves-p (form)
+			 `(let ((pos-before (point)))
+			    ,form
+			    (/= pos-before (point)))))
+    (cl-labels ((sort-this-tree
+		 () (cl-loop do (when (children-p)
+				  (save-excursion
+				    (outline-next-heading)
+				    (sort-this-tree))
+				  (condition-case nil
+				      (org-sort-entries nil key)
+				    (user-error nil)))
+			     while (moves-p (org-forward-heading-same-level 1))))
+		(children-p (&amp;optional invisible)
+			    ;; Return non-nil if entry at point has child headings.
+			    ;; Only children are considered, not other descendants.
+			    ;; Code from `org-cycle-internal-local'.
+			    (save-excursion
+			      (let ((level (funcall outline-level)))
+				(outline-next-heading)
+				(and (org-at-heading-p t)
+				     (&gt; (funcall outline-level) level)))))
+		(sort-by
+		 (key) (save-excursion
+			 (save-restriction
+			   (widen)
+			   (cond
+			    ((org-before-first-heading-p)
+			     ;; Sort whole buffer.  NOTE: This assumes the first
+			     ;; heading is at level 1.
+			     (org-sort-entries nil key)
+			     (outline-next-heading)
+			     (cl-loop do (sort-this-tree)
+				      while (moves-p (org-forward-heading-same-level 1))))
+			    ((org-at-heading-p)
+			     ;; Sort this heading.
+			     (sort-this-tree))
+			    (t (user-error "Neither on a heading nor before first heading")))))))
+      (mapc #'sort-by keys))))
+</pre>
+</div>
 </div>
 </div>
 </div>
@@ -2848,7 +2978,7 @@ GPLv3
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2021-09-23 Thu 02:07</p>
+<p class="date">Created: 2021-09-25 Sat 02:24</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

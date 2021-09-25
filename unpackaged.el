@@ -750,40 +750,6 @@ kill-ring, prompting if not found.  With prefix, prompt for URL."
             (message "Attached %s (%s)" url size))
         (delete-directory temp-dir)))))
 
-;;;###autoload
-(defun unpackaged/org-fix-blank-lines (&optional prefix)
-  "Ensure that blank lines exist between headings and between headings and their contents.
-With prefix, operate on whole buffer. Ensures that blank lines
-exist after each headings's drawers."
-  (interactive "P")
-  (org-map-entries (lambda ()
-                     (org-with-wide-buffer
-                      ;; `org-map-entries' narrows the buffer, which prevents us from seeing
-                      ;; newlines before the current heading, so we do this part widened.
-                      (while (not (looking-back "\n\n" nil))
-                        ;; Insert blank lines before heading.
-                        (insert "\n")))
-                     (let ((end (org-entry-end-position)))
-                       ;; Insert blank lines before entry content
-                       (forward-line)
-                       (while (and (org-at-planning-p)
-                                   (< (point) (point-max)))
-                         ;; Skip planning lines
-                         (forward-line))
-                       (while (re-search-forward org-drawer-regexp end t)
-                         ;; Skip drawers. You might think that `org-at-drawer-p' would suffice, but
-                         ;; for some reason it doesn't work correctly when operating on hidden text.
-                         ;; This works, taken from `org-agenda-get-some-entry-text'.
-                         (re-search-forward "^[ \t]*:END:.*\n?" end t)
-                         (goto-char (match-end 0)))
-                       (unless (or (= (point) (point-max))
-                                   (org-at-heading-p)
-                                   (looking-at-p "\n"))
-                         (insert "\n"))))
-                   t (if prefix
-                         nil
-                       'tree)))
-
 (eval-when-compile
   (require 'easy-mmode)
   (require 'ox))
@@ -877,95 +843,38 @@ made unique when necessary."
         ref))))
 
 ;;;###autoload
-(define-minor-mode unpackaged/org-table-face-mode
-  "Apply `org-table' face family to all text in Org tables.
-Useful for forcibly applying the face to portions of table data
-that might have a different face, which could affect alignment."
-  :global nil
-  (let ((keywords '((unpackaged/org-table-face-matcher 0 'org-table))))
-    (if unpackaged/org-table-face-mode
-        (font-lock-add-keywords nil keywords 'append)
-      (font-lock-remove-keywords nil keywords))
-    (font-lock-flush)))
-
-(cl-defun unpackaged/org-table-face-matcher
-    (limit &optional (face `(:family ,(face-attribute 'org-table :family))))
-  "Apply FACE to entire Org tables.
-A `font-lock-keywords' function that searches up to LIMIT."
-  (cl-flet* ((find-face (face &optional limit not)
-                        ;; Return next position up to LIMIT that has FACE, or doesn't if NOT.
-                        (cl-loop with prev-pos
-                                 with pos = (point)
-                                 while (not (eobp))
-                                 do (setf pos (next-single-property-change pos 'face nil limit))
-                                 while (and pos (not (equal pos prev-pos)))
-                                 for face-at = (get-text-property pos 'face)
-                                 for face-matches-p = (or (eq face-at face)
-                                                          (when (listp face-at)
-                                                            (member face face-at)))
-                                 when (or (and not (not face-matches-p))
-                                          face-matches-p)
-                                 return pos
-                                 do (setf prev-pos pos)))
-             (apply-face-from (pos face)
-                              (unless (eobp)
-                                (let* ((property-at-start (get-text-property pos 'face))
-                                       (table-face-start (if (or (eq property-at-start 'org-table)
-                                                                 (when (listp property-at-start)
-                                                                   (member 'org-table property-at-start)))
-                                                             (point)
-                                                           (find-face 'org-table limit)))
-                                       table-face-end)
-                                  (when table-face-start
-                                    (goto-char table-face-start)
-                                    (setf table-face-end (line-end-position))
-                                    (add-face-text-property table-face-start table-face-end face)
-                                    (goto-char table-face-end))))))
-    (cl-loop with applied-p
-             for applied = (apply-face-from (point) face)
-             when applied
-             do (setf applied-p t)
-             while applied
-             finally return applied-p)))
-
-(defun unpackaged/org-outline-numbers (&optional remove-p)
-  "Add outline number overlays to the current buffer.
-When REMOVE-P is non-nil (interactively, with prefix), remove
-them.  Overlays are not automatically updated when the outline
-structure changes."
-  ;; NOTE: This does not necessarily play nicely with org-indent-mode
-  ;; or org-bullets, but it probably wouldn't be too hard to fix that.
-  (interactive (list current-prefix-arg))
-  (cl-labels ((heading-number ()
-               (or (when-let ((num (previous-sibling-number)))
-                     (1+ num))
-                   1))
-              (previous-sibling-number ()
-               (save-excursion
-                 (let ((pos (point)))
-                   (org-backward-heading-same-level 1)
-                   (when (/= pos (point))
-                     (heading-number)))))
-              (number-list ()
-               (let ((ancestor-numbers (save-excursion
-                                         (cl-loop while (org-up-heading-safe)
-                                                  collect (heading-number)))))
-                 (nreverse (cons (heading-number) ancestor-numbers))))
-              (add-overlay ()
-               (let* ((ov-length (org-current-level))
-                      (ov (make-overlay (point) (+ (point) ov-length)))
-                      (ov-string (concat (mapconcat #'number-to-string (number-list) ".")
-                                         ".")))
-                 (overlay-put ov 'org-outline-numbers t)
-                 (overlay-put ov 'display ov-string))))
-    (remove-overlays nil nil 'org-outline-numbers t)
-    (unless remove-p
-      (org-with-wide-buffer
-       (goto-char (point-min))
-       (when (org-before-first-heading-p)
-         (outline-next-heading))
-       (cl-loop do (add-overlay)
-                while (outline-next-heading))))))
+(defun unpackaged/org-fix-blank-lines (&optional prefix)
+  "Ensure that blank lines exist between headings and between headings and their contents.
+With prefix, operate on whole buffer. Ensures that blank lines
+exist after each headings's drawers."
+  (interactive "P")
+  (org-map-entries (lambda ()
+                     (org-with-wide-buffer
+                      ;; `org-map-entries' narrows the buffer, which prevents us from seeing
+                      ;; newlines before the current heading, so we do this part widened.
+                      (while (not (looking-back "\n\n" nil))
+                        ;; Insert blank lines before heading.
+                        (insert "\n")))
+                     (let ((end (org-entry-end-position)))
+                       ;; Insert blank lines before entry content
+                       (forward-line)
+                       (while (and (org-at-planning-p)
+                                   (< (point) (point-max)))
+                         ;; Skip planning lines
+                         (forward-line))
+                       (while (re-search-forward org-drawer-regexp end t)
+                         ;; Skip drawers. You might think that `org-at-drawer-p' would suffice, but
+                         ;; for some reason it doesn't work correctly when operating on hidden text.
+                         ;; This works, taken from `org-agenda-get-some-entry-text'.
+                         (re-search-forward "^[ \t]*:END:.*\n?" end t)
+                         (goto-char (match-end 0)))
+                       (unless (or (= (point) (point-max))
+                                   (org-at-heading-p)
+                                   (looking-at-p "\n"))
+                         (insert "\n"))))
+                   t (if prefix
+                         nil
+                       'tree)))
 
 ;;;###autoload
 (defmacro unpackaged/def-org-maybe-surround (&rest keys)
@@ -993,69 +902,39 @@ otherwise call `org-self-insert-command'."
 
 (unpackaged/def-org-maybe-surround "~" "=" "*" "/" "+")
 
-(require 'org)
+(add-hook 'org-mode-hook 'unpackaged/org-mark-read-only)
 
-(require 'ts)
+(defun unpackaged/org-next-heading-tagged (tag)
+  "Move to beginning of next heading tagged with TAG and return point, or return nil if none found."
+  (when (re-search-forward (rx-to-string `(seq bol (1+ "*") (1+ blank) (optional (1+ not-newline) (1+ blank))
+                                               ;; Beginning of tags
+                                               ":"
+                                               ;; Possible other tags
+                                               (0+ (seq (1+ (not (any ":" blank))) ":") )
+                                               ;; The tag that matters
+                                               ,tag ":"))
+                           nil 'noerror)
+    (goto-char (match-beginning 0))))
 
-;;;###autoload
-(defun unpackaged/org-refile-to-datetree-using-ts-in-entry (which-ts file &optional subtree-p)
-  "Refile current entry to datetree in FILE using timestamp found in entry.
-WHICH should be `earliest' or `latest'. If SUBTREE-P is non-nil,
-search whole subtree."
-  (interactive (list (intern (completing-read "Which timestamp? " '(earliest latest)))
-                     (read-file-name "File: " (concat org-directory "/") nil 'mustmatch nil
-                                     (lambda (filename)
-                                       (string-suffix-p ".org" filename)))
-                     current-prefix-arg))
-  (require 'ts)
-  (let* ((sorter (pcase which-ts
-                   ('earliest #'ts<)
-                   ('latest #'ts>)))
-         (tss (unpackaged/org-timestamps-in-entry subtree-p))
-         (ts (car (sort tss sorter)))
-         (date (list (ts-month ts) (ts-day ts) (ts-year ts))))
-    (unpackaged/org-refile-to-datetree file :date date)))
+  ;;;###autoload
+(defun unpackaged/org-mark-read-only ()
+  "Mark all entries in the buffer tagged \"read_only\" with read-only text properties."
+  (interactive)
+  (org-with-wide-buffer
+   (goto-char (point-min))
+   (while (unpackaged/org-next-heading-tagged "read_only")
+     (add-text-properties (point) (org-end-of-subtree t)
+                          '(read-only t)))))
 
-;;;###autoload
-(defun unpackaged/org-timestamps-in-entry (&optional subtree-p)
-  "Return timestamp objects for all Org timestamps in entry.
- If SUBTREE-P is non-nil (interactively, with prefix), search
- whole subtree."
-  (interactive (list current-prefix-arg))
-  (save-excursion
-    (let* ((beg (org-entry-beginning-position))
-           (end (if subtree-p
-                    (org-end-of-subtree)
-                  (org-entry-end-position))))
-      (goto-char beg)
-      (cl-loop while (re-search-forward org-tsr-regexp-both end t)
-               collect (ts-parse-org (match-string 0))))))
-
-;;;###autoload
-(cl-defun unpackaged/org-refile-to-datetree (file &key (date (calendar-current-date)) entry)
-  "Refile ENTRY or current node to entry for DATE in datetree in FILE.
-DATE should be a list of (MONTH DAY YEAR) integers, e.g. as
-returned by `calendar-current-date'."
-  (interactive (list (read-file-name "File: " (concat org-directory "/") nil 'mustmatch nil
-                                     (lambda (filename)
-                                       (string-suffix-p ".org" filename)))))
-  ;; If org-datetree isn't loaded, it will cut the tree but not file
-  ;; it anywhere, losing data. I don't know why
-  ;; org-datetree-file-entry-under is in a separate package, not
-  ;; loaded with the rest of org-mode.
-  (require 'org-datetree)
-  (unless entry
-    (org-cut-subtree))
-  ;; Using a condition-case to be extra careful. In case the refile
-  ;; fails in any way, put cut subtree back.
-  (condition-case err
-      (with-current-buffer (or (org-find-base-buffer-visiting file)
-                               (find-file-noselect file))
-        (org-datetree-file-entry-under (or entry (car kill-ring)) date)
-        (save-buffer))
-    (error (unless entry
-             (org-paste-subtree))
-           (message "Unable to refile! %s" err))))
+(defun unpackaged/org-remove-read-only ()
+  "Remove read-only text properties from Org entries tagged \"read_only\" in current buffer."
+  (interactive)
+  (let ((inhibit-read-only t))
+    (org-with-wide-buffer
+     (goto-char (point-min))
+     (while (unpackaged/org-next-heading-tagged "read_only")
+       (remove-text-properties (point) (org-end-of-subtree t)
+                               '(read-only t))))))
 
 (defun unpackaged/org-element-descendant-of (type element)
   "Return non-nil if ELEMENT is a descendant of TYPE.
@@ -1154,48 +1033,225 @@ appropriate.  In tables, insert a new row or end the table."
       ;; All other cases: call `org-return'.
       (org-return)))))
 
-(add-hook 'org-mode-hook 'unpackaged/org-mark-read-only)
+;;;###autoload
+(define-minor-mode unpackaged/org-table-face-mode
+  "Apply `org-table' face family to all text in Org tables.
+Useful for forcibly applying the face to portions of table data
+that might have a different face, which could affect alignment."
+  :global nil
+  (let ((keywords '((unpackaged/org-table-face-matcher 0 'org-table))))
+    (if unpackaged/org-table-face-mode
+        (font-lock-add-keywords nil keywords 'append)
+      (font-lock-remove-keywords nil keywords))
+    (font-lock-flush)))
 
-(defun unpackaged/org-next-heading-tagged (tag)
-  "Move to beginning of next heading tagged with TAG and return point, or return nil if none found."
-  (when (re-search-forward (rx-to-string `(seq bol (1+ "*") (1+ blank) (optional (1+ not-newline) (1+ blank))
-                                               ;; Beginning of tags
-                                               ":"
-                                               ;; Possible other tags
-                                               (0+ (seq (1+ (not (any ":" blank))) ":") )
-                                               ;; The tag that matters
-                                               ,tag ":"))
-                           nil 'noerror)
-    (goto-char (match-beginning 0))))
+(cl-defun unpackaged/org-table-face-matcher
+    (limit &optional (face `(:family ,(face-attribute 'org-table :family))))
+  "Apply FACE to entire Org tables.
+A `font-lock-keywords' function that searches up to LIMIT."
+  (cl-flet* ((find-face (face &optional limit not)
+                        ;; Return next position up to LIMIT that has FACE, or doesn't if NOT.
+                        (cl-loop with prev-pos
+                                 with pos = (point)
+                                 while (not (eobp))
+                                 do (setf pos (next-single-property-change pos 'face nil limit))
+                                 while (and pos (not (equal pos prev-pos)))
+                                 for face-at = (get-text-property pos 'face)
+                                 for face-matches-p = (or (eq face-at face)
+                                                          (when (listp face-at)
+                                                            (member face face-at)))
+                                 when (or (and not (not face-matches-p))
+                                          face-matches-p)
+                                 return pos
+                                 do (setf prev-pos pos)))
+             (apply-face-from (pos face)
+                              (unless (eobp)
+                                (let* ((property-at-start (get-text-property pos 'face))
+                                       (table-face-start (if (or (eq property-at-start 'org-table)
+                                                                 (when (listp property-at-start)
+                                                                   (member 'org-table property-at-start)))
+                                                             (point)
+                                                           (find-face 'org-table limit)))
+                                       table-face-end)
+                                  (when table-face-start
+                                    (goto-char table-face-start)
+                                    (setf table-face-end (line-end-position))
+                                    (add-face-text-property table-face-start table-face-end face)
+                                    (goto-char table-face-end))))))
+    (cl-loop with applied-p
+             for applied = (apply-face-from (point) face)
+             when applied
+             do (setf applied-p t)
+             while applied
+             finally return applied-p)))
 
-  ;;;###autoload
-(defun unpackaged/org-mark-read-only ()
-  "Mark all entries in the buffer tagged \"read_only\" with read-only text properties."
-  (interactive)
-  (org-with-wide-buffer
-   (goto-char (point-min))
-   (while (unpackaged/org-next-heading-tagged "read_only")
-     (add-text-properties (point) (org-end-of-subtree t)
-                          '(read-only t)))))
+(defun unpackaged/org-outline-numbers (&optional remove-p)
+  "Add outline number overlays to the current buffer.
+When REMOVE-P is non-nil (interactively, with prefix), remove
+them.  Overlays are not automatically updated when the outline
+structure changes."
+  ;; NOTE: This does not necessarily play nicely with org-indent-mode
+  ;; or org-bullets, but it probably wouldn't be too hard to fix that.
+  (interactive (list current-prefix-arg))
+  (cl-labels ((heading-number ()
+               (or (when-let ((num (previous-sibling-number)))
+                     (1+ num))
+                   1))
+              (previous-sibling-number ()
+               (save-excursion
+                 (let ((pos (point)))
+                   (org-backward-heading-same-level 1)
+                   (when (/= pos (point))
+                     (heading-number)))))
+              (number-list ()
+               (let ((ancestor-numbers (save-excursion
+                                         (cl-loop while (org-up-heading-safe)
+                                                  collect (heading-number)))))
+                 (nreverse (cons (heading-number) ancestor-numbers))))
+              (add-overlay ()
+               (let* ((ov-length (org-current-level))
+                      (ov (make-overlay (point) (+ (point) ov-length)))
+                      (ov-string (concat (mapconcat #'number-to-string (number-list) ".")
+                                         ".")))
+                 (overlay-put ov 'org-outline-numbers t)
+                 (overlay-put ov 'display ov-string))))
+    (remove-overlays nil nil 'org-outline-numbers t)
+    (unless remove-p
+      (org-with-wide-buffer
+       (goto-char (point-min))
+       (when (org-before-first-heading-p)
+         (outline-next-heading))
+       (cl-loop do (add-overlay)
+                while (outline-next-heading))))))
 
-(defun unpackaged/org-remove-read-only ()
-  "Remove read-only text properties from Org entries tagged \"read_only\" in current buffer."
-  (interactive)
-  (let ((inhibit-read-only t))
-    (org-with-wide-buffer
-     (goto-char (point-min))
-     (while (unpackaged/org-next-heading-tagged "read_only")
-       (remove-text-properties (point) (org-end-of-subtree t)
-                               '(read-only t))))))
+(require 'org)
+
+(require 'ts)
 
 ;;;###autoload
-(defun unpackaged/org-sort-multi ()
-  "Call `org-sort' until \\[keyboard-quit] is pressed."
-  (interactive)
-  ;; Not sure if `with-local-quit' is necessary, but probably a good
-  ;; idea in case of recursive edit.
-  (with-local-quit
-    (cl-loop while (call-interactively #'org-sort))))
+(defun unpackaged/org-refile-to-datetree-using-ts-in-entry (which-ts file &optional subtree-p)
+  "Refile current entry to datetree in FILE using timestamp found in entry.
+WHICH should be `earliest' or `latest'. If SUBTREE-P is non-nil,
+search whole subtree."
+  (interactive (list (intern (completing-read "Which timestamp? " '(earliest latest)))
+                     (read-file-name "File: " (concat org-directory "/") nil 'mustmatch nil
+                                     (lambda (filename)
+                                       (string-suffix-p ".org" filename)))
+                     current-prefix-arg))
+  (require 'ts)
+  (let* ((sorter (pcase which-ts
+                   ('earliest #'ts<)
+                   ('latest #'ts>)))
+         (tss (unpackaged/org-timestamps-in-entry subtree-p))
+         (ts (car (sort tss sorter)))
+         (date (list (ts-month ts) (ts-day ts) (ts-year ts))))
+    (unpackaged/org-refile-to-datetree file :date date)))
+
+;;;###autoload
+(defun unpackaged/org-timestamps-in-entry (&optional subtree-p)
+  "Return timestamp objects for all Org timestamps in entry.
+ If SUBTREE-P is non-nil (interactively, with prefix), search
+ whole subtree."
+  (interactive (list current-prefix-arg))
+  (save-excursion
+    (let* ((beg (org-entry-beginning-position))
+           (end (if subtree-p
+                    (org-end-of-subtree)
+                  (org-entry-end-position))))
+      (goto-char beg)
+      (cl-loop while (re-search-forward org-tsr-regexp-both end t)
+               collect (ts-parse-org (match-string 0))))))
+
+;;;###autoload
+(cl-defun unpackaged/org-refile-to-datetree (file &key (date (calendar-current-date)) entry)
+  "Refile ENTRY or current node to entry for DATE in datetree in FILE.
+DATE should be a list of (MONTH DAY YEAR) integers, e.g. as
+returned by `calendar-current-date'."
+  (interactive (list (read-file-name "File: " (concat org-directory "/") nil 'mustmatch nil
+                                     (lambda (filename)
+                                       (string-suffix-p ".org" filename)))))
+  ;; If org-datetree isn't loaded, it will cut the tree but not file
+  ;; it anywhere, losing data. I don't know why
+  ;; org-datetree-file-entry-under is in a separate package, not
+  ;; loaded with the rest of org-mode.
+  (require 'org-datetree)
+  (unless entry
+    (org-cut-subtree))
+  ;; Using a condition-case to be extra careful. In case the refile
+  ;; fails in any way, put cut subtree back.
+  (condition-case err
+      (with-current-buffer (or (org-find-base-buffer-visiting file)
+                               (find-file-noselect file))
+        (org-datetree-file-entry-under (or entry (car kill-ring)) date)
+        (save-buffer))
+    (error (unless entry
+             (org-paste-subtree))
+           (message "Unable to refile! %s" err))))
+
+;;;###autoload
+(defun unpackaged/org-sort-recursive (keys)
+  "Call `org-sort-entries' recursively on tree at point by KEYS.
+KEYS is a list of characters passed as the SORTING-TYPE argument
+to `org-sort-entries', which see."
+  (interactive
+   (list (let (keys)
+           (save-excursion
+             (cl-loop while (progn
+                              ;; HACK: Call the sort function just to get the key, then undo its changes.
+                              (cl-letf* ((old-fn (symbol-function 'read-char-exclusive))
+                                         ((symbol-function 'read-char-exclusive)
+                                          (lambda (&rest args)
+                                            (car (push (apply #'funcall old-fn args) keys)))))
+                                ;; Sort the first heading and save the sort key.
+                                (let ((modified-tick (buffer-modified-tick)))
+                                  (condition-case nil
+                                      (progn
+                                        (with-local-quit
+                                          (org-sort-entries))
+                                        (unless (equal modified-tick (buffer-modified-tick))
+                                          (undo-only)))
+                                    (user-error nil))))
+                              t)))
+           (nreverse keys))))
+  (cl-macrolet ((moves-p (form)
+                         `(let ((pos-before (point)))
+                            ,form
+                            (/= pos-before (point)))))
+    (cl-labels ((sort-this-tree
+                 () (cl-loop do (when (children-p)
+                                  (save-excursion
+                                    (outline-next-heading)
+                                    (sort-this-tree))
+                                  (condition-case nil
+                                      (org-sort-entries nil key)
+                                    (user-error nil)))
+                             while (moves-p (org-forward-heading-same-level 1))))
+                (children-p (&optional invisible)
+                            ;; Return non-nil if entry at point has child headings.
+                            ;; Only children are considered, not other descendants.
+                            ;; Code from `org-cycle-internal-local'.
+                            (save-excursion
+                              (let ((level (funcall outline-level)))
+                                (outline-next-heading)
+                                (and (org-at-heading-p t)
+                                     (> (funcall outline-level) level)))))
+                (sort-by
+                 (key) (save-excursion
+                         (save-restriction
+                           (widen)
+                           (cond
+                            ((org-before-first-heading-p)
+                             ;; Sort whole buffer.  NOTE: This assumes the first
+                             ;; heading is at level 1.
+                             (org-sort-entries nil key)
+                             (outline-next-heading)
+                             (cl-loop do (sort-this-tree)
+                                      while (moves-p (org-forward-heading-same-level 1))))
+                            ((org-at-heading-p)
+                             ;; Sort this heading.
+                             (sort-this-tree))
+                            (t (user-error "Neither on a heading nor before first heading")))))))
+      (mapc #'sort-by keys))))
 
 ;;; Packages
 
