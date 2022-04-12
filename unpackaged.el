@@ -1609,6 +1609,28 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 
 ;;; Web
 
+(defun unpackaged/imenu-eww-headings ()
+  "Return alist of HTML headings in current EWW buffer for Imenu.
+Suitable for `imenu-create-index-function'."
+  (let ((faces '(shr-h1 shr-h2 shr-h3 shr-h4 shr-h5 shr-h6 shr-heading)))
+    (save-excursion
+      (save-restriction
+        (widen)
+        (goto-char (point-min))
+        (cl-loop for next-pos = (next-single-property-change (point) 'face)
+                 while next-pos
+                 do (goto-char next-pos)
+                 for face = (get-text-property (point) 'face)
+                 when (cl-typecase face
+                        (list (cl-intersection face faces))
+                        (symbol (member face faces)))
+                 collect (cons (buffer-substring (point-at-bol) (point-at-eol)) (point))
+                 and do (forward-line 1))))))
+
+(add-hook 'eww-mode-hook
+          (lambda ()
+            (setq-local imenu-create-index-function #'unpackaged/imenu-eww-headings)))
+
 (eval-when-compile
   (require 'esxml-query))
 

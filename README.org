@@ -1,5 +1,5 @@
 #+TITLE: unpackaged.el
-#+OPTIONS: broken-links:t num:nil H:8
+#+OPTIONS: broken-links:t num:nil H:8 author:nil
 #+TAGS: Emacs
 #+SETUPFILE: export/setup/theme-darksun-local.setup
 
@@ -146,6 +146,7 @@ An easy way to "whole-hog it" is to use [[https://framagit.org/steckerhalter/que
   - [[#smerge-mode][smerge-mode]]
     - [[#hydra][Hydra]]
 - [[#web][Web]]
+  - [[#eww-imenu-support][EWW Imenu support]]
   - [[#feed-for-url][feed-for-url]]
   - [[#customize-themes-faces][customize-themes-faces]]
   - [[#tangle-with-babel][Tangle with Babel]]
@@ -2224,6 +2225,34 @@ See these screencasts comparing what it's like to resolve the conflict with [[im
   ;;; Web
 
 #+END_SRC
+
+** EWW Imenu support                                              :EWW:Imenu:
+
+This function allows Imenu to offer HTML headings in EWW buffers, which is especially helpful for navigating long, technical documents.
+
+#+begin_src elisp
+  (defun unpackaged/imenu-eww-headings ()
+    "Return alist of HTML headings in current EWW buffer for Imenu.
+  Suitable for `imenu-create-index-function'."
+    (let ((faces '(shr-h1 shr-h2 shr-h3 shr-h4 shr-h5 shr-h6 shr-heading)))
+      (save-excursion
+        (save-restriction
+          (widen)
+          (goto-char (point-min))
+          (cl-loop for next-pos = (next-single-property-change (point) 'face)
+                   while next-pos
+                   do (goto-char next-pos)
+                   for face = (get-text-property (point) 'face)
+                   when (cl-typecase face
+                          (list (cl-intersection face faces))
+                          (symbol (member face faces)))
+                   collect (cons (buffer-substring (point-at-bol) (point-at-eol)) (point))
+                   and do (forward-line 1))))))
+
+  (add-hook 'eww-mode-hook
+            (lambda ()
+              (setq-local imenu-create-index-function #'unpackaged/imenu-eww-headings)))
+#+end_src
 
 ** feed-for-url                                               :RSS:Atom:XML:
 
