@@ -1325,6 +1325,13 @@ prefix), leave old features loaded."
 
 ;;; Programming
 
+(defun unpackaged/compile-defun-debug ()
+  "Compile and evaluate the current top-level form, displaying compilation warnings.
+Calls `compile-defun' with `byte-compile-debug' non-nil."
+  (interactive)
+  (let ((byte-compile-debug t))
+    (call-interactively #'compile-defun)))
+
 (defvar unpackaged/flex-fill-paragraph-column nil
   "Last fill column used in command `unpackaged/flex-fill-paragraph'.")
 

@@ -131,6 +131,7 @@ An easy way to "whole-hog it" is to use [[https://framagit.org/steckerhalter/que
   - [[#upgrade-a-quelpa-use-package-forms-package][Upgrade a quelpa-use-package form's package]]
   - [[#upgrade-one-package-in-the-package-menu][Upgrade one package in the package menu]]
 - [[#programming][Programming]]
+  - [[#compile-top-level-form-with-warnings][Compile top-level form with warnings]]
   - [[#flexibly-fillunfill-paragraphs][Flexibly fill/unfill paragraphs]]
   - [[#iedit][iedit]]
     - [[#iedit-scoped][iedit-scoped]]
@@ -1842,6 +1843,21 @@ Mark current package for upgrading (i.e. also mark obsolete version for deletion
   ;;; Programming
 
 #+END_SRC
+
+** Compile top-level form with warnings
+
+The only way to get byte-compilation warnings for Elisp is to compile the whole file with, e.g. =byte-compile-file=, which is less convenient when one wants to debug a single function.  So this function byte-compiles just the current top-level form and displays the warnings.
+
+Since ~compile-defun~ already takes a prefix argument (i.e. =C-u C-M-x= already does something), this could be bound to, e.g. =C-M-S-x=.
+
+#+begin_src elisp
+  (defun unpackaged/compile-defun-debug ()
+    "Compile and evaluate the current top-level form, displaying compilation warnings.
+  Calls `compile-defun' with `byte-compile-debug' non-nil."
+    (interactive)
+    (let ((byte-compile-debug t))
+      (call-interactively #'compile-defun)))
+#+end_src
 
 ** Flexibly fill/unfill paragraphs
 
