@@ -3,8 +3,6 @@
 #+TAGS: Emacs
 #+SETUPFILE: export/setup/theme-darksun-local.setup
 
-#+HTML: <a href=https://alphapapa.github.io/dont-tread-on-emacs/><img src="images/dont-tread-on-emacs-150.png" align="right"></a>
-
 A collection of useful Emacs Lisp code that isn't substantial enough to be packaged.  This code will be maintained here so that it can be updated and improved over time.
 
 This can be viewed directly on the [[http://github.com/alphapapa/unpackaged.el][repository]] or as [[http://alphapapa.github.io/unpackaged.el][HTML]].
