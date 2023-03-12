@@ -1403,16 +1403,17 @@ buffer, otherwise just change the current paragraph."
     (with-temp-buffer
       (delay-mode-hooks
         (funcall mode))
+      (setq-local fill-column old-fill-column)
       (insert-buffer-substring source-buffer)
       (goto-char point)
-      (cl-loop while (and (fill-paragraph)
-                          (if fewer-lines
-                              (= original-num-lines (line-number-at-pos (point-max)))
-                            (string= hash (buffer-hash))))
+      (cl-loop while (fill-paragraph)
                ;; If filling doesn't change after 100 iterations, abort by returning nil.
                if (> (- fill-column old-fill-column) 100)
                return nil
                else do (cl-incf fill-column)
+               while (if fewer-lines
+                         (= original-num-lines (line-number-at-pos (point-max)))
+                       (string= hash (buffer-hash)))
                finally return fill-column))))
 
 ;;;###autoload
