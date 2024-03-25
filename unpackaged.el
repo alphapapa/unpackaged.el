@@ -1637,27 +1637,62 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 
 ;;; Web
 
-(defun unpackaged/imenu-eww-headings ()
-  "Return alist of HTML headings in current EWW buffer for Imenu.
-Suitable for `imenu-create-index-function'."
-  (let ((faces '(shr-h1 shr-h2 shr-h3 shr-h4 shr-h5 shr-h6 shr-heading)))
-    (save-excursion
-      (save-restriction
-        (widen)
-        (goto-char (point-min))
-        (cl-loop for next-pos = (next-single-property-change (point) 'face)
-                 while next-pos
-                 do (goto-char next-pos)
-                 for face = (get-text-property (point) 'face)
-                 when (cl-typecase face
-                        (list (cl-intersection face faces))
-                        (symbol (member face faces)))
-                 collect (cons (buffer-substring (point-at-bol) (point-at-eol)) (point))
-                 and do (forward-line 1))))))
+(require 'cl-lib)
 
-(add-hook 'eww-mode-hook
-          (lambda ()
-            (setq-local imenu-create-index-function #'unpackaged/imenu-eww-headings)))
+(defun unpackaged/eww-imenu-index ()
+  "Return Imenu index for current EWW buffer.
+Index includes links and headings."
+  (let ((shr-heading-faces '( shr-h1 shr-h2 shr-h3 shr-h4 shr-h5
+                              shr-h6 shr-heading)))
+    (cl-labels ((range-matching (property predicate)
+                  "Return (BEG . END) cons from point where PROPERTY matches PREDICATE.
+  PREDICATE is used for `text-property-search-forward', which see."
+                  (when-let ((match (text-property-search-forward property nil predicate))
+                             (end (cl-loop
+                                   for next-change-pos = (prop-match-end match) then next-change-pos
+                                   for next-change-pos = (next-single-property-change next-change-pos property)
+                                   when next-change-pos
+                                   for end-pos = next-change-pos
+                                   while (funcall predicate nil (get-text-property next-change-pos property))
+                                   finally return end-pos)))
+                    (cons (prop-match-beginning match) end)))
+                (shr-heading-p (_ value-of)
+                  (cl-typecase value-of
+                    (atom (member value-of shr-heading-faces))
+                    (list (seq-intersection value-of shr-heading-faces)))))
+      (let ((links (save-excursion
+                     (goto-char (point-min))
+                     (delete-dups
+                      (cl-loop for url = (get-text-property (point) 'shr-url)
+                               when url collect (cons (format "%s <%s>"
+                                                              (button-label (button-at (point)))
+                                                              url)
+                                                      (point))
+                               for pos = (next-single-property-change (point) 'shr-url)
+                               while pos do (goto-char pos)))))
+            (headings (save-excursion
+                        (goto-char (point-min))
+                        (cl-loop for (next-beg . next-end) = (range-matching 'face #'shr-heading-p)
+                                 while next-beg
+                                 for text = (buffer-substring next-beg next-end)
+                                 collect (cons text next-beg)
+                                 and do (goto-char next-end)))))
+        (list (cons "Links" links)
+              (cons "Headings" headings))))))
+
+(defun unpackaged/eww-imenu-goto (_label position)
+  "Go to POSITION and call `eww-follow-link' if one is there."
+  (goto-char position)
+  (when (button-at (point))
+    (declare-function eww-follow-link "eww")
+    (call-interactively #'eww-follow-link)))
+
+(defun unpackaged/eww-imenu-setup ()
+  "Setup Imenu in EWW buffers."
+  (setq-local imenu-create-index-function #'unpackaged/eww-imenu-index
+              imenu-default-goto-function #'unpackaged/eww-imenu-goto))
+
+(add-hook 'eww-mode-hook #'unpackaged/eww-imenu-setup)
 
 (eval-when-compile
   (require 'esxml-query))
