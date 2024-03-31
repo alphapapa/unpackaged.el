@@ -2308,8 +2308,8 @@ This function allows Imenu to offer links and HTML headings in EWW buffers, whic
                                    for text = (buffer-substring next-beg next-end)
                                    collect (cons text next-beg)
                                    and do (goto-char next-end)))))
-          (list (cons "Links" links)
-                (cons "Headings" headings))))))
+          (list (cons "Headings" headings)
+                (cons "Links" links))))))
 
   (defun unpackaged/eww-imenu-goto (_label position)
     "Go to POSITION and call `eww-follow-link' if one is there."
