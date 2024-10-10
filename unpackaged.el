@@ -1131,25 +1131,6 @@ appropriate.  In tables, insert a new row or end the table."
                  (insert "\n"))
                (forward-line -1)))))
 
-     ((org-at-item-checkbox-p)
-      ;; Checkbox: Insert new item with checkbox.
-      (org-insert-todo-heading nil))
-
-     ((org-in-item-p)
-      ;; Plain list.  Yes, this gets a little complicated...
-      (let ((context (org-element-context)))
-        (if (or (eq 'plain-list (car context))  ; First item in list
-                (and (eq 'item (car context))
-                     (not (eq (org-element-property :contents-begin context)
-                              (org-element-property :contents-end context))))
-                (unpackaged/org-element-descendant-of 'item context))  ; Element in list item, e.g. a link
-            ;; Non-empty item: Add new item.
-            (org-insert-item)
-          ;; Empty item: Close the list.
-          ;; TODO: Do this with org functions rather than operating on the text. Can't seem to find the right function.
-          (delete-region (line-beginning-position) (line-end-position))
-          (insert "\n"))))
-
      ((when (fboundp 'org-inlinetask-in-task-p)
         (org-inlinetask-in-task-p))
       ;; Inline task: Don't insert a new heading.
