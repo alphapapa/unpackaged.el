@@ -1529,7 +1529,7 @@ On headings, move point to position after entry content.  In lists, insert a new
 
 Inspired by [[http://kitchingroup.cheme.cmu.edu/blog/2017/04/09/A-better-return-in-org-mode/][John Kitchin]].
 
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :results none :exports code
   (defun unpackaged/org-element-descendant-of (type element)
     "Return non-nil if ELEMENT is a descendant of TYPE.
   TYPE should be an element type, like `item' or `paragraph'.
