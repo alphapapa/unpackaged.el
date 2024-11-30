@@ -576,12 +576,14 @@ If UNSAFE is non-nil, assume point is on headline."
   (unless unsafe
     ;; To improve performance in loops (e.g. with `org-map-entries')
     (org-back-to-heading))
-  (cl-loop for element = (org-element-at-point)
-           for pos = (pcase element
-                       (`(headline . ,_) (org-element-property :contents-begin element))
-                       (`(,(or 'planning 'property-drawer 'drawer) . ,_) (org-element-property :end element)))
-           while pos
-           do (goto-char pos)))
+  (save-restriction
+    (org-narrow-to-subtree)
+    (cl-loop for element = (org-element-at-point)
+             for pos = (pcase element
+                         (`(headline . ,_) (org-element-property :contents-begin element))
+                         (`(,(or 'planning 'property-drawer 'drawer) . ,_) (org-element-property :end element)))
+             while (and pos (> (- pos (point)) 1))
+             do (goto-char pos))))
 
 ;;;###autoload
 (cl-defun unpackaged/package-org-docs (&optional (package (unpackaged/buffer-provides)))
